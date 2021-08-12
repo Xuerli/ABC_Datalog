@@ -1,20 +1,3 @@
-/*
-Date: 07 Jan 2019
-
-
-
-
-*/
-
-:- dynamic verbose/1,  verbose(off).
-% Keeps track of the current result of unification (FS) which is known at the end of recursion in reform2.
-:- dynamic unifResult/0.
-
-
-
-refSuccess :- unifResult,!.
-unifResult(fail) :- \+(unifResult),!.
-
 
 %  working_directory(_,"/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/"). [main,theories/door].
 negateCl([],[]).
