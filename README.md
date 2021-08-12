@@ -7,7 +7,13 @@ This folder contains the faulty theories tested in the evaluation in our project
 
 
 # code
-This folder contains the code of the ABC repair system, which is written in Prolog. The predicate abc/0 in file main.pl is the main entrance.
+This folder contains the code of the ABC repair system, which is written in Prolog. The predicate abc/0 in file main.pl is the main entrance. An example of running the code is given below, where PATH is the directory to your code. Ideally, three commands below should be done one by one to make sure none is failed.
+
+:- working_directory(_, PATH).
+:- [main, theories/swan].
+:- abc.
+
+The output file will be under the folder named 'log'. Files with abc_*_*_faultFree.txt gives the repaire solutions of produced fault-free theories; 'abc_*_*_record.txt' gives the details of ABC's process.
 
 # sampleOutput.txt
 It is a sample output file, whose original name is of format _abc_..._faultFree.txt_.
