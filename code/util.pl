@@ -1,5 +1,5 @@
 
-%  working_directory(_,"/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/"). [main,theories/door].
+%% negate a clause.
 negateCl([],[]).
 negateCl([H|L], [H1| L1]):- negate(H, H1), negateCl(L, L1).
 
