@@ -1,5 +1,6 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
+
 
 % Birth mother
 axiom([+mum(diana,william)]).
@@ -13,5 +14,8 @@ axiom([+mum(camilla,william)]).
 trueSet([]).
 falseSet([eq(diana,camilla), eq(diana,william), eq(camilla,william)]).
 
+
 protect([eq,arity(eq),camilla, diana, william, prop(eq)]).
 heuristics([ noRuleChange, noAnalogy, noAxiomDele, noPrecDele,noAxiomAdd]).
+
+theoryFile:- pass.

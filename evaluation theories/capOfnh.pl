@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 axiom([+cap_of(london,britain)]).
@@ -13,3 +13,5 @@ trueSet([]).
 falseSet([eqq(edinburgh,london), eqq(tokyo,kyoto), eqq(london,edinburgh), eqq(kyoto,tokyo)]).
 protect([eqq, arity(eqq)]).
 heuristics([]).
+
+theoryFile:- pass. 

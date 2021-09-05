@@ -1,5 +1,7 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
+
+
 
 axiom([-hadHusband(\x),+marriedWoman(\x)]).
 axiom([-marriedWoman(\x),+notDivorced(\x)]).
@@ -15,3 +17,5 @@ falseSet([notDivorced(leticia)]).
 %
 protect([flor,leticia]).
 heuristics([ noAnalogy, noAss2Rule, noVabWeaken, noPrecDele]).
+
+theoryFile:- pass.

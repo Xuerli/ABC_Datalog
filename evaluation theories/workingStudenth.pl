@@ -1,18 +1,21 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 
 axiom([+notworking(\x),-student(\x)]).
-axiom([-student(\x),+adult(\x)]).
+axiom([-undstudent(\x),+adult(\x)]).
 axiom([-adult(\x),+working(\x)]).
-axiom([+student(lily)]).
+axiom([+undstudent(lily)]).
+axiom([-undstudent(\x),+student(\x)]).
 axiom([-working(\x),-notworking(\x)]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preferred Structure:
 
-trueSet([student(lily), adult(lily), working(lily)]).
-falseSet([notworking(lily)]).
+trueSet([undstudent(lily),  working(lily)]).
+falseSet([]).
 %
 protect([lily,adult,arity(adult)]).
 heuristics([ noAnalogy, noAss2Rule, noVabWeaken, noPrecDele]).
+
+theoryFile:- pass.

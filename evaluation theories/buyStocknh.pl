@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 axiom([-goodPrice(\x),+buyStock(\x)]).
@@ -14,7 +14,10 @@ axiom([+strong(steel)]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preferred Structure:
 
 trueSet([buyStock(acme)]).
-falseSet([dontBuyStock(acme)]).
+falseSet([]).
 
 protect([eqq,arity(eqq)]).
 heuristics([]).
+
+
+theoryFile:- pass.

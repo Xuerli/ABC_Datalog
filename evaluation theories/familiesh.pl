@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 axiom([+parent(a,b,birth)]).
@@ -10,3 +10,5 @@ trueSet([families(a,b),families(a,c)]).
 falseSet([]).
 protect([a,b,c]).
 heuristics([ noAss2Rule,noAxiomDele]).
+
+theoryFile:- pass.

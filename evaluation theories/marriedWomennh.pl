@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 
@@ -16,3 +16,5 @@ falseSet([notDivorced(leticia)]).
 %
 protect([]).
 heuristics([]).
+
+theoryFile:- pass. 

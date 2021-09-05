@@ -1,6 +1,7 @@
 
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
+
 
 
 axiom([+hasCar(car1)]).
@@ -20,3 +21,5 @@ falseSet([eastBound(load1),eastBound(car2),eastBound(car3)]).
 
 protect([]).
 heuristics([ noAssAdd, noAxiomDele,noRename]).
+
+theoryFile:- pass.

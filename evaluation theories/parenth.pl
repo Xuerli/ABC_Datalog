@@ -1,5 +1,7 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
+
+
 
 
 axiom([+parent(a,b)]).
@@ -14,5 +16,9 @@ axiom([+female(d)]).
 
 trueSet([father(a,b),father(a,c),mother(d,b)]).
 falseSet([mother(a,b),mother(a,c),father(d,b)]).
+
+
 protect([a,b,c,d,arity(parent), female, male,arity(female),arity(male)]).
 heuristics([ noReform, noAssAdd]).
+
+theoryFile:- pass.

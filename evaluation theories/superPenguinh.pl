@@ -1,5 +1,7 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
+
+
 
 
 axiom([-penguin(\x),+bird(\x)]).
@@ -13,5 +15,9 @@ axiom([-fly(\x),-cannotFly(\x)]).
 
 trueSet([fly(opus)]).
 falseSet([cannotFly(opus)]).
+
+
 protect([opus,fly,arity(fly), bird]).
 heuristics([ noAnalogy, noAss2Rule, noVabWeaken, noPrecDele, noAssAdd]).
+
+theoryFile:- pass.

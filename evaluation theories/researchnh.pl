@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 
@@ -14,3 +14,5 @@ trueSet([activeReasercher(ann)]).
 falseSet([employee(ann)]).
 protect([]).
 heuristics([]).     %noAxiomAdd
+
+theoryFile:- pass. 

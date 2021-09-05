@@ -1,19 +1,19 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 
-axiom([+mammal(tweety)]).
 axiom([+penguin(tweety)]).
-axiom([+bird(tweety)]).
+axiom([+bird(polly)]).
 axiom([-bird(\x), +fly(\x)]).
 axiom([-penguin(\y), +bird(\y)]).
-axiom([-bird(\y), +feath(\y)]).
-axiom([-mammal(\x),-bird(\x)]).
+axiom([-bird(\y), +feather(\y)]).
 
-trueSet([feath(tweety),feath(tweety), fly(tweety)]).
+trueSet([feather(tweety),feather(polly), fly(polly)]).
 falseSet([fly(tweety)]).
 
 
 
 protect([]).
 heuristics([]).
+
+theoryFile:- pass.

@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/01PHD/01program/eclipse-workspace/ABC_Clean/src/').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
 
@@ -18,3 +18,5 @@ trueSet([father(a,b),father(a,c),mother(d,b), father(f,a)]).
 falseSet([mother(a,b),mother(a,c),father(d,b), father(g,a), father(g,c)]).
 protect([]).
 heuristics([]).
+
+theoryFile:- pass.
