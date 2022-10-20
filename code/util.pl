@@ -783,6 +783,11 @@ replacePos(P, ListIn, Sub, ListOut) :-
     split_at(P, ListIn, FronList, [_| AfterList]),
     split_at(P, ListOut, FronList, [Sub| AfterList]).
 
+replacePosList([], List,_, List).
+replacePosList([H| Rest], ListIn, Sub, ListOut) :-
+    replacePos(H, ListIn, Sub, ListTem),
+    replacePosList(Rest, ListTem, Sub, ListOut).
+    
 /**********************************************************************************************
     revertFormRep: revert the writing fromat from the internal to the output format.
 ***********************************************************************************************/
