@@ -20,7 +20,7 @@ weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
             [_|[_|_]]),
     % generate the constant 
     dummyTerm(OrigCons, TheoryIn, NewCons),
-    RepPlan = weaken(V1, NewCons, TargCl)).
+    RepPlan = weaken(V1, [OrigCons], TargCl)).
 
 % the input clause is essential, then get all the essential substitutions of its
 weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
