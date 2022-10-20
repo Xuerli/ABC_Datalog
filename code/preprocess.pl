@@ -5,7 +5,7 @@ Date: 19.02.2020
 */
 
 
-:-[util, utilRevise, repairApply].
+:-[util, repairApply].
 :-     maplist(dynamic, [trueSet/1, falseSet/1, heuristics/1, protect/1,spec/1]). 
 
 /**********************************************************************************************************************
