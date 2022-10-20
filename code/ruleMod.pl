@@ -1,5 +1,5 @@
 
-:- [util, utilRevise].
+:- [util].
 
 %% All repair plans are attached with the original axiom which will be changed in that repair plan.
 
