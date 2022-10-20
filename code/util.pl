@@ -344,7 +344,7 @@ empty(X, []):- flatten(X,[]),!.
 empty(X, X):- \+flatten(X,[]).
 
 
-fileName(FileCore, Function, Name):-
+fileName(FileCore, Name):-
    date(date(_,X,Y)),
    get_time(Stamp),
    stamp_date_time(Stamp, DateTime, local),
@@ -353,7 +353,7 @@ fileName(FileCore, Function, Name):-
    string_concat(Y1,X1,Date),
    string_concat(H1,M1,Time),
    appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
-   appAll(string_concat, ['.txt',Time1, Date1,'_' , FileCore , '_' , Function, 'log/'],[''], Name, 1).
+   appAll(string_concat, ['.txt',Time1, Date1,'_' , FileCore , '_', 'log/'],[''], Name, 1).
 
 /*********************************************************************************************************************************
    general(ClauseIn, ClauseOut, ReSubs): Generalise the axiom by replace the constant which occur more than once with a variable.
