@@ -107,14 +107,19 @@ getAdjCond(Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlanS)
                 setof(vble(X), member(vble(X),ArgR), HeadVbles),
                 RepPlan = add_pre(-[dummyPred|HeadVbles], Rule),
                 writeLog([nl, write_term(' Found unprovable precondition : '), write_term(RepPlan),nl, finishLog])),
-            RepPlanS),    
-    writeLog([nl, write_term(' All found unprovable preconditions: '), write_term(RepPlanS),nl, finishLog]).
+            RepPlanSTem), 
+    sort(RepPlanSTem, RepPlanS),    % remove duplicates
+    (RepPlanS = []-> fail,
+          writeLog([nl, write_term(' ERROR: Failed in finding unprovable preconditions.'), nl, finishLog]);
+     RepPlanS = [_|_]->
+    writeLog([nl, write_term(' All found unprovable preconditions: '), write_term(RepPlanS),nl, finishLog])).
 
 % getAdjCond: adds unprovable precondition
 % SuffGoals is the sufficient goals or the substitutions of Rule in one proof of an sufficiency.
 adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):-
     writeLog([nl, write_term('-------- start to find unprovable precondition candidates based on: '),
                 write_term(P),nl, finishLog]), 
+    IncomSub \= [], % if there is no incompatibilities, no adjustment precondition is needed.
     findall([(vble(X), [C]), GoalRule],
             (member((GoalRule, SuffProofs), SuffGoals),    % heuristic: only consider the goal whose proofs all contain the rule.
              forall(member(Proof, SuffProofs),
