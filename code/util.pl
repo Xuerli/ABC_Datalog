@@ -3,6 +3,13 @@
   Update Date: 13.08.2022
 */
 
+
+adverseEnum(0,[]) :- !.
+adverseEnum(N,List) :-
+    Num is N-1,
+    adverseEnum(Num, ListFront),
+    append(ListFront,[N],List).
+
 /*********************************************************************************************************************************
     allTheoremsC(ABox, Constant, Theorems): get all theorems whose arguments include the targeted constant.
     * Inequality only between constants at the same position in arguments of predicates.
@@ -460,7 +467,16 @@ mTail(ListIn, ListTem, ListOut):-
        sort(ListTem2, ListTem3),
        mTail(TList, ListTem3, ListOut)).
 
-
+/**********************************************************************************************
+    mergeAll(ListsInput, [], ListOut) let the following true:
+    ListOut = the list of all the elements in the sublists of ListsInput.
+**********************************************************************************************/
+mergeAll([], ListOut, ListOut):-!.
+mergeAll([HList|TList], ListIn, ListOut):-
+    merge(HList, ListIn, ListTem1),    % append H and ListIn.
+    sort(ListTem1, ListTem2),      % remove duplicates.
+    mergeAll(TList, ListTem2, ListOut).
+    
 /**********************************************************************************************************************
    orderAxiom(ClIn, ClOut): then order the literals in a clause
    1. the head of the clause will be in the front of it.
@@ -481,6 +497,25 @@ orderAxiom(ClIn, ClOut):-
        append(A3, Eq, A4),
        append(A4, InEq, A5),
        append([+Head], A5, ClOut)).
+
+
+
+
+/**********************************************************************************************************************
+    negate an iterm
+***********************************************************************************************************************/
+negateCl([],[]).
+negateCl([H|L], [H1| L1]):- negate(H, H1), negateCl(L, L1).
+
+%% negate a literal.
+negate(+X,-X):- !.
+negate(-X,+X):-!.
+negate([+X],[-X]):-!.
+negate([-X],[+X]):-!.
+negate([X],[-X]):-!.
+negate(X,-X).
+negate([],[]).
+
 
 /**********************************************************************************************************************
     check existances.
@@ -713,6 +748,25 @@ replaceS(E, ListIn, ListOut):-
 replaceS(E, SubE, ListIn, ListOut):-
   replace(E, SubE, ListIn,ListOut).
 
+/**********************************************************************************************
+    repList(ListToRep, Rep, ListIn,ListOut): for each element in ListToRep,
+    replace it with Rep in ListIn and get ListOut.
+***********************************************************************************************/
+repList(_, _, [], []):-!.
+repList([], _, List, List):-!.
+repList([HEle| TEle], Rep, -ListIn, -ListOut) :- !,
+    replace(HEle, Rep, ListIn, ListTem),
+    repList(TEle, Rep, -ListTem, -ListOut).
+repList([HEle| TEle], Rep, +ListIn, +ListOut) :- !,
+    replace(HEle, Rep, ListIn, ListTem),
+    repList(TEle, Rep, +ListTem, +ListOut).
+repList([HEle| TEle], dummy, ListIn, ListOut) :- !,
+    gensym(dummy, NewEle),
+    replace(HEle, NewEle, ListIn, ListTem),
+    repList(TEle, ListTem, ListOut).
+repList([HEle| TEle], Rep, ListIn, ListOut) :- !,
+    replace(HEle, Rep, ListIn, ListTem), 
+    repList(TEle, Rep, ListTem, ListOut).
 
 /**********************************************************************************************
     replacePos(P, ListIn, Sub, ListOut): only replace position P in ListIn with Sub to get ListOut.
