@@ -1,3 +1,4 @@
+:-[fileOps].
 /*
   This file contains the basic functions/predicates that assist other ABC system's functions.
   Update Date: 13.08.2022
@@ -266,8 +267,16 @@ dropTail(ListIn, ListOut):-
 length(ListIn, L), M is L-1,
 split_at(M, ListIn, ListOut, _).
 
+/**********************************************************************************************************************
+costRepairs (R, C): calculate the cost C by split R into members one by one.
+costRepair （_, _, C）:C is 0 when (R, _) is a member of Rs, otherwise C is 1.
+************************************************************************************************************************/
+% if a name was already split, then additional splits to the same name are free
+costRepairs([], 0) :- !.
+costRepairs([R|Rs], C) :- costRepair(R, Rs, C1), costRepairs(Rs, C2), C is C1 + C2.
 
-
+costRepair((R, _), Rs, 0) :- member((R, _), Rs), !.
+costRepair(_, _, 1).
 /**********************************************************************************************************************
         dummyTerm(Term, ClP, TheoryIn, DummyTOut):
             generate the Dummy term.
@@ -343,17 +352,6 @@ dummyTermArityInc(Sorted, DefCons, UniqCons):-
 empty(X, []):- flatten(X,[]),!.
 empty(X, X):- \+flatten(X,[]).
 
-
-fileName(FileCore, Name):-
-   date(date(_,X,Y)),
-   get_time(Stamp),
-   stamp_date_time(Stamp, DateTime, local),
-   date_time_value(time, DateTime, time(H,M,_)),
-   appEach([X,Y,H,M], [term_string], [X1,Y1,H1,M1]),
-   string_concat(Y1,X1,Date),
-   string_concat(H1,M1,Time),
-   appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
-   appAll(string_concat, ['.txt',Time1, Date1,'_' , FileCore , '_', 'log/'],[''], Name, 1).
 
 /*********************************************************************************************************************************
    general(ClauseIn, ClauseOut, ReSubs): Generalise the axiom by replace the constant which occur more than once with a variable.
@@ -476,7 +474,50 @@ mergeAll([HList|TList], ListIn, ListOut):-
     merge(HList, ListIn, ListTem1),    % append H and ListIn.
     sort(ListTem1, ListTem2),      % remove duplicates.
     mergeAll(TList, ListTem2, ListOut).
-    
+
+
+/**********************************************************************************************************************
+    negate an iterm
+***********************************************************************************************************************/
+negateCl([],[]).
+negateCl([H|L], [H1| L1]):- negate(H, H1), negateCl(L, L1).
+
+%% negate a literal.
+negate(+X,-X):- !.
+negate(-X,+X):-!.
+negate([+X],[-X]):-!.
+negate([-X],[+X]):-!.
+negate([X],[-X]):-!.
+negate(X,-X).
+negate([],[]).
+
+/**********************************************************************************************************************
+    When vble(X) occur in the argument list Args, rename it with a new name which does not occur in Args.
+***********************************************************************************************************************/
+newVble(vble(X), Args, vble(NewX)):-
+    member(vble(X), Args),
+    string_concat(X,'1',Y),
+    term_string(Term, Y),
+    (notin(vble(Term), Args)->NewX = Term, !;
+     newVble(vble(Term), Args, vble(NewX))).
+
+/**********************************************************************************************************************
+    check existances.
+***********************************************************************************************************************/
+
+notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
+notin(X, List):- \+member(X, List), !.
+
+notEss2suff([], _).
+notEss2suff([(_,Proofs)|Rest], Axiom):-
+    forall(member(Proof, Proofs), member((_,Axiom,_,_,_), Proof)),
+    !, fail;
+    notEss2suff(Rest, Axiom).
+
+
+occur(_, List):- \+is_list(List), nl,print('ERROR: '), print(List), print(' is not a list'),nl, fail,!.
+occur(X, List):- member(X, List), !.    % avoid redo member(_, List) where '_' is assigned values
+
 /**********************************************************************************************************************
    orderAxiom(ClIn, ClOut): then order the literals in a clause
    1. the head of the clause will be in the front of it.
@@ -497,42 +538,6 @@ orderAxiom(ClIn, ClOut):-
        append(A3, Eq, A4),
        append(A4, InEq, A5),
        append([+Head], A5, ClOut)).
-
-
-
-
-/**********************************************************************************************************************
-    negate an iterm
-***********************************************************************************************************************/
-negateCl([],[]).
-negateCl([H|L], [H1| L1]):- negate(H, H1), negateCl(L, L1).
-
-%% negate a literal.
-negate(+X,-X):- !.
-negate(-X,+X):-!.
-negate([+X],[-X]):-!.
-negate([-X],[+X]):-!.
-negate([X],[-X]):-!.
-negate(X,-X).
-negate([],[]).
-
-
-/**********************************************************************************************************************
-    check existances.
-***********************************************************************************************************************/
-
-notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
-notin(X, List):- \+member(X, List), !.
-
-notEss2suff([], _).
-notEss2suff([(_,Proofs)|Rest], Axiom):-
-    forall(member(Proof, Proofs), member((_,Axiom,_,_,_), Proof)),
-    !, fail;
-    notEss2suff(Rest, Axiom).
-
-
-occur(_, List):- \+is_list(List), nl,print('ERROR: '), print(List), print(' is not a list'),nl, fail,!.
-occur(X, List):- member(X, List), !.    % avoid redo member(_, List) where '_' is assigned values
 
 
 /**********************************************************************************************
@@ -765,7 +770,7 @@ repList([HEle| TEle], dummy, ListIn, ListOut) :- !,
     replace(HEle, NewEle, ListIn, ListTem),
     repList(TEle, ListTem, ListOut).
 repList([HEle| TEle], Rep, ListIn, ListOut) :- !,
-    replace(HEle, Rep, ListIn, ListTem), 
+    replace(HEle, Rep, ListIn, ListTem),
     repList(TEle, Rep, ListTem, ListOut).
 
 /**********************************************************************************************
@@ -778,6 +783,31 @@ replacePos(P, ListIn, Sub, ListOut) :-
     split_at(P, ListIn, FronList, [_| AfterList]),
     split_at(P, ListOut, FronList, [Sub| AfterList]).
 
+/**********************************************************************************************
+    revertFormRep: revert the writing fromat from the internal to the output format.
+***********************************************************************************************/
+
+revertFormRep(dele_pre(-Pre, RuleIn), dele_pre(-PreA, RuleOut)):- !,
+    revert(Pre, PreA),
+    appEach(RuleIn, [appLiteral,  revert], RuleOut).
+
+revertFormRep(add_pre(-Pre, RuleIn), add_pre(-PreA, RuleOut)):- !,
+    revert(Pre, PreA),
+    appEach(RuleIn, [appLiteral,  revert], RuleOut).
+
+revertFormRep(delete(Clause), delete(ClauseOut)):- !,
+    appEach(Clause, [appLiteral,  revert], ClauseOut).
+
+revertFormRep(expand(Clause), expand(ClauseOut)):- !,
+    appEach(Clause, [appLiteral,  revert], ClauseOut).
+
+revertFormRep(analogy(R1, R2), analogy(R1Out, R2Out)):- !,
+    appEach([R1, R2], [appEach, [appLiteral,  revert]], [R1Out, R2Out]).
+
+revertFormRep(ass2rule(R1, R2), ass2rule(R1Out, R2Out)):- !,
+    appEach([R1, R2], [appEach, [appLiteral,  revert]], [R1Out, R2Out]).
+
+revertFormRep(X,X).
 /**********************************************************************************************************************
     rewriteVble(Goals, InputClause, ClNew, AllSubs):
             rewrite the variables in InputClause which occur in the Goals.
@@ -955,93 +985,21 @@ pairwise([[H1]|T1],[[H2]|T2], POut) :- % Otherwise, pair up the heads
 pairwise([H1|T1],[H2|T2],[H1=H2|T]) :- % Otherwise, pair up the heads
      pairwise(T1,T2,T).                % and recurse on the tails.
 
-%
 /**********************************************************************************************************************
-    relAxiom(AboxF, RulesF, PST, PSF, RelAboxF, RelRulesF): extract the relevant triples and rules based on PS
-    Input:  AboxF and RulesF are the directories of the original KG.
-            PST, PSF  are the directories of the true set and false set of the preferred structure.
-            HeuF is the directory of the heuristics file.
-    Output: RelAboxF is the file of the relevant triples.
-            HeuF is expanded with the theory graph.
-
-
-relAxiom(AboxF, RulesF, PST, PSF, HeuF, RelAboxF):-
-  % get the inputs: the banned and applied repairs; heuristics and the proofs of sufficiencies and insufficiencies
-  init([AboxF, RulesF, PST, PSF],  [Abox, Rules, TrueSetE, FalseSetE]),
-  theoryGraph(Rules, Graph),
-  open(HeuF, write, StreamHeuF),
-  write_term(StreamHeuF, 'TheoryGraph: '),
-  write_term(StreamHeuF, Graph),
-  append(TrueSetE, FalseSetE, PS),
-
-  % Get all triples that contain constants/individuals involved in PS.
-  findall([+[P2| Args2]],
-          (member([+[P| Args1]], PS),
-           member([+[P2| Args2]], Abox),
-           intersection(Args1, Args2, [_])),  % contain at least one same constant.
-           TriplesRle1),
-
-  append(PS, TriplesRle1, TargetTriples),
-
-  % Get all relevant predicates.
-  findall(Pred,
-          (member([+[P| _]], TargetTriples),
-           member(Branch, Graph),
-           member(P, Branch),)
-          PredR),
-
-  % find all newly discovered relevant triples based on PredR.
-  findall([+[P| Args1]],
-          (member([+[P| Args1]], Abox),
-           member(P, PredR),
-           notin([+[P| Args1]], TriplesRle1)),
-           TriplesRle2),
-  % get the new Abox which only contain relevant triples.
-  append(TriplesRle1, TriplesRle2, AboxNew),
-  length(AboxNew, AboxNewLen),
-  length(Abox, AboxLen),
-  write('There are '), write_term(AboxNewLen),
-  write(' relevant triples out of '), write_term(AboxLen),
-
-  % write the relevant Abox to the output file.
-  open(RelAboxF, write, StreamRelAbox),
-  write_term(StreamRelAbox, AboxNew).
-
+    termOcc(LF, Theory, OccF): count term F's occurances in the theory
+        Input:  F: a constant/predicate;
+                Theory: a list of axioms
+        Output: OccF: the number of F's occurances in Theory.
 ************************************************************************************************************************/
-
-/**********************************************************************************************************************
-    writeLog: write log files.
-    This function is unavailable in python-swipl ABC.
-***********************************************************************************************************************/
-writeLogSep(_).
-writeLog(_).
-
-/**********************************************************************************************************************
-    writeFile(Directory, OutFiles, DataList)
-            Write output files in Directory with the given output data.
-    Input:  Directory is the directory of output files.
-            FileName is a list of the names of output files.
-            DataList is a list of output data to write in order.
-***********************************************************************************************************************/
-writeFiles(_, [], []).
-writeFiles(Directory, [FileName| RestNames], [Data| RestData]):-
-  atom_concat(Directory, FileName, FilePath),
-  open(FilePath, write, StreamFile),
-  % write a list line by line
-  writeAll(StreamFile, Data),
-  close(StreamFile),
-  writeFiles(Directory, RestNames, RestData).
-
-% FileName is the full path.
-writeFiles([], []).
-writeFiles([FileName| RestNames], [Data| RestData]):-
-  open(FileName, write, StreamFile),
-  % write a list line by line
-  writeAll(StreamFile, Data),
-  close(StreamFile),
-  writeFiles(RestNames, RestData).
-
-
-% write a list line by line
-writeAll(_, []):- !.
-writeAll(Stream1,[C|Cs]) :- write(Stream1, C), write(Stream1, '.'), nl(Stream1), writeAll(Stream1, Cs).
+termOcc(F, Theory, OccF):-
+    cterm(F, Theory, 0, OccF).
+cterm(_, [], Num, Num):-!.
+cterm(F, [Axiom| RestAxioms], NumIn, NumOut):-
+    findall(Prop, (member(+Prop, Axiom); member(-Prop, Axiom)),
+            AllProp),
+    flatten(AllProp, Props),
+    delete(Props, F, PRest),
+    length(Props, L1),
+    length(PRest, L2),
+    NumNew is L1 - L2 + NumIn,
+    cterm(F, RestAxioms, NumNew, NumOut).

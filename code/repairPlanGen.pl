@@ -23,7 +23,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
                 intersection(RepPlans, RsList, [])),
             RepPlansTem),
     sort(RepPlansTem, RepPlansOut),
-    print('bbbbbb RepPlansOut:'),nl, write_termAll(RepPlansOut),nl,
+    print('------ RepPlansOut:'),nl, write_termAll(RepPlansOut),nl,
     statistics(walltime, [E1,_]),
 
     SFRTime is E1-S1,
@@ -230,7 +230,7 @@ buildP([], _, _, _):-fail,!.
 buildP(([], []), _, _, _):-fail,!.
 
 
-buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):-
+buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):- 
     spec(heuris(Heuristics)),
     writeLog([nl,write_term('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
     Goal \= [],
@@ -297,7 +297,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allTheoremsC(TheoryIn, EC, C, Theorems),
+                 allTheoremsC(TheoryIn, EC, C, Theorems), %
                  member(Theorem, Theorems),
                  Theorem = [+[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -334,37 +334,40 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     generalise([+PropG| AllPred], RuleTem)),
 
     % check incompatibilities.
-      findall(Proof,
-               (member([+[Pre| Args]], FalseSetE),
-                % skip equalities/inequalities which have been tackled.
-                notin(Pre, [\=, =]),
-                NVioSent = [-[Pre| Args]],
-                % get all of a proof of Goal
-                slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
-                Proof \= []),                                       % Detect incompatibility based on refutation.
-           Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
-    (Incompat = []-> RuleNew = RuleTem;
-    Incompat = [_|_]->
-        % check if there is an incompatibility caused by RuleR6
-        findall(Subs,
-                (member(IncompProof, Incompat),
-                 member((_,RuleTem,Subs,_,_), IncompProof)),
-                IncomSubsRaw),
+    findall(Proof,
+             (member([+[Pre| Args]], FalseSetE),
+              % skip equalities/inequalities which have been tackled.
+              notin(Pre, [\=, =]),
+              NVioSent = [-[Pre| Args]],
+              % get all of a proof of Goal
+              slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
+              Proof \= []),                                       % Detect incompatibility based on refutation.
+         Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
+  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)];
+  Incompat = [_|_]->
+      % check if there is an incompatibility caused by RuleR6
+      findall(Subs,
+              (member(IncompProof, Incompat),
+               member((_,RuleTem,Subs,_,_), IncompProof)),
+              IncomSubsRaw),
 
-        sort(IncomSubsRaw, IncomSubs),
-        findall(Proof,
-                    (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
-                    Proof \=[]),
-                Proofs),
+      sort(IncomSubsRaw, IncomSubs),
+      % if the new rule is not involved in any inconsistencies, then no adjustment precondition is needed.
+      (IncomSubs = []->BigPlan = [([expand(RuleTem)], RuleTem)];
+      IncomSubs = [_|_]->
+              findall(Proof,
+                          (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
+                          Proof \=[]),
+                      Proofs),
 
-        getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll),
-        (findall([expand(RuleNew)],
-                (member(add_pre(Precondition, _), CandAll),
-                 sort([Precondition| RuleTem], RuleNew)),
-                 RuleNews);
-         CandAll = []-> RuleNews = [[expand(RuleTem)]])),
+              getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll),
+              (findall(([expand(RuleTem2)], RuleTem2),
+                      (member(add_pre(Precondition, _), CandAll),
+                       sort([Precondition| RuleTem], RuleTem2)),
+                       BigPlan);
+              CandAll = []-> BigPlan = [([expand(RuleTem)], RuleTem)]))),
 
-    member(RepPlans, RuleNews),
+    member((RepPlans, RuleNew), BigPlan),
     % get all of the clauses which constitute the target proof to unblock
 
     findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
