@@ -3,7 +3,7 @@
 %% Xue Li Feb 2019 %%
 
 %% This file contains the functions/predicates of dealing with proofs.
-:- [util, utilRevise].
+:- [util].
 :- use_module(library(lists)).
 
 /**********************************************************************************************
