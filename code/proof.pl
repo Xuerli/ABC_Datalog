@@ -73,9 +73,9 @@ slRL(_, [], _, [], [], []):-!.
 
 % Rewrite the input goal and the theory.
 slRL(Goal, _, EC, _, _, _):-
-    (\+is_list(Goal), nl,print('ERROR: slRL\'s Goal is not a list'),nl; 
+    (\+is_list(Goal), nl,print('ERROR: slRL\'s Goal is not a list'),nl;
     \+is_list(EC), nl,print('ERROR: slRL\'s EC is not a list'),nl), fail, !.
-    
+
 % Rewrite the input goal and the theory.
 slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % Set an depth limit of the resoluton according to the length of the thoery.
@@ -144,10 +144,10 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Equ| GRest],          % get the predicate of the left most sub-goal to resolve.
     Equ = [PG|_],
-    member(PG, [=, \=]), 
+    member(PG, [=, \=]),
      % if there is a variable in the sub-goal's arguments,
      % and not all of the goal predicates are equality/inequality predicate.
-    
+
      % There is other predicates in the goal clause
      setof(P, (member(-[P|_], GRest), notin(P, [=, \=])),_)->
         % move the equality or inequality to the end of the goal clause.
@@ -159,11 +159,11 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
                      reverse([+P| [-Equ| GTail]], GoalsNew)),
         updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
          slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit).
-         
+
 %% slRLMain33: Use an input assertion to resolve Goal which does not have = as its predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
-    Goals = [-[P| Arg]| GoalsRest], 
-    notin(P, [=, \=]), 
+    Goals = [-[P| Arg]| GoalsRest],
+    notin(P, [=, \=]),
     (notin(vble(_), Arg)->
                 member([+[P| Arg]], TheoryIn),
                 InputClause = [+[P| Arg]],
@@ -224,7 +224,7 @@ slRLMain(Goals, Deriv, _, _, [], Evidence, [], _):-
 slRLMain(Goals, Deriv, _, EC, Proof, Evidence, Theorem, RCostLimit):-
     forall(member(-[P|_], Goals), occur(P, [=, \=])),    % all of the goal predicates are equality/inequality predicates.
     % update the number of remaining goals fromt the non-equality/non-inequality to equality/inequality.
-    findall((RS, RSNew), 
+    findall((RS, RSNew),
                 (member(RS, Deriv),
                 RS = (CG, Inp, GN, Sub, [Num1, Num2]),
                 Num1 \= 0,
@@ -380,6 +380,7 @@ updatePreDer([H|Rest], PairsIn, [HNew| RestNew]):-
             Derivations is a list of derivation steps.
             Derivations = [(Goal, InputClause, SubNew, NextGoal, RemCondNum), ....]
 ****************************************************************************************************************/
+noloopBack(_, []):- !.    % anygoal cannot cause a loop with the empty previous derivation.
 noloopBack([], _):- !.    % empty goal clause could not cause a loop.
 noloopBack(_, []):- !.
 noloopBack(_, Deriv):-         % a loop is found when there is already an empty goal clause.
@@ -430,8 +431,8 @@ traceBackPos([P|ArgT], [(Goal, _,_,_,_)], NegLit, InputClause, Subs):-
 traceBackPos(TargProp, Deriv, NegLit, InputClause, Subs):-
     dropTail(Deriv, Ances),    % try the ancestors.
     traceBackPos(TargProp, Ances, NegLit, InputClause, Subs).
-    
-    
+
+
 /***************************************************************************************************************
     traceBackC(C, Deriv, NegLit, InputClause, Subs):
             Find the original input clause which introduces the targeted constant.
@@ -442,36 +443,36 @@ traceBackPos(TargProp, Deriv, NegLit, InputClause, Subs):-
     * InputClause is a Horn clause which has its positive literal as the head.
 ****************************************************************************************************************/
 % Find the input clause which introduces the targeted proposition.
-traceBackC(C, [([+[P|Args]], [],[],[+[P|Args]],[0,0])], [+[P|Args]]):- 
+traceBackC(C, [([+[P|Args]], [],[],[+[P|Args]],[0,0])], [+[P|Args]]):-
     member(C, Args), !.
 traceBackC(C, Deriv, Clause):-
     Deriv = [(Goals,InputCl,_,_,_)| _],
-    % Try if c comes from the goal clause over the head of the input clause. 
-    findall(Prop, (member(-Prop, Goals), occur(C, Prop)), Props), 
-    (Props \= [], Clause = Goals, !; 
+    % Try if c comes from the goal clause over the head of the input clause.
+    findall(Prop, (member(-Prop, Goals), occur(C, Prop)), Props),
+    (Props \= [], Clause = Goals, !;
      Props = []->
-         (% try if c comes from the body of the input clause. 
-         findall(Prop2, (member(-Prop2, InputCl), occur(C, Prop2)), Props2), 
-         Props2 \= [], Clause = InputCl, !; 
+         (% try if c comes from the body of the input clause.
+         findall(Prop2, (member(-Prop2, InputCl), occur(C, Prop2)), Props2),
+         Props2 \= [], Clause = InputCl, !;
         last(Deriv, GoalLast),
-        findall(PropL, (member(-PropL, GoalLast), occur(C, PropL)), Propsl), 
-        (Propsl \= [], Flag = true; 
-         Props = []-> Flag = false), 
+        findall(PropL, (member(-PropL, GoalLast), occur(C, PropL)), Propsl),
+        (Propsl \= [], Flag = true;
+         Props = []-> Flag = false),
         traceBackCTail(C, Deriv, Flag, Clause))).    % get the original negative literal.
 
 traceBackCTail(_, [], []):- fail, !.
-    
+
 traceBackCTail(C, Deriv, Flag, Output):-
     last(Deriv, (Goals,InputClause,_,_,_)),
     findall(Prop, (member(-Prop, Goals),occur(C, Prop)), Props),
     (Props = [], ( Flag == true ->  InputClause = Output, !; % find the last goal which does not contain the target, so the input clause in this step introduces the target.
-                  Flag == false -> 
+                  Flag == false ->
                       dropTail(Deriv, Ances), !,    % try the ancestors.
-                    traceBackCTail(C, Ances, false, Output));        % the target constant has gone from the goal clause previously.    
+                    traceBackCTail(C, Ances, false, Output));        % the target constant has gone from the goal clause previously.
     Props \= [],( Flag == true    ->
                     dropTail(Deriv, Ances), !,    % try the ancestors.
                     traceBackCTail(C, Ances, true, Output);            % the target constant has occured.
-                  Flag == false -> 
+                  Flag == false ->
                     dropTail(Deriv, Ances), !,    % try the ancestors.
                     traceBackCTail(C, Ances, true, Output))).
 
@@ -483,7 +484,7 @@ traceBackCTail(C, Deriv, Flag, Output):-
 **********************************************************************************************************************************/
 allTheoremsP([], _, _,[]):- !.
 allTheoremsP(TheoryIn, P, EC, AllTheorems):-
-    notin(P, [=, \=]), 
+    notin(P, [=, \=]),
     % find all proofs of an equality, where Proof is the list of all proofs.
     findall(([+[P| ArgsS]], Proof),
             (% get an axiom whose head predicate is P
@@ -503,7 +504,7 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
                   (P = (=)->sort(ArgsT, ArgsS), length(ArgsS, L), L>1;
                               ArgsS = ArgsT))),
             AllT),
-    
+
     % remove duplicates.
     mergeTailSort(AllT, AllTheorems),
     writeLog([write_term('-- The theorems of Predicate -'), write_term(P),

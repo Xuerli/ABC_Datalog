@@ -4,37 +4,37 @@
             reformation relevant.
 **********************************************************************************************************************************/
 
-% reformation repair plans generated based on a pair of unified arguments 
+% reformation repair plans generated based on a pair of unified arguments
 weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
     spec(heuris(Heuristics)),
     notEss2suff(Suffs, TargCl), !,    % TODO: or being sufficient by having the variable being bound with one constant
     (notin(noRename, Heuristics),
-    member(C, CCP), 
+    member(C, CCP),
     RepPlan = rename(C, TargLit, TargCl);
     notin(noVabWeaken, Heuristics),
     member((V1, OrigCons), VCP),
     % Heuristic1: check that there must be more than one argument in the target rule. Otherwise, the rule would contain no variables after weaken one to a constant.
-    setof(vble(V), 
+    setof(vble(V),
                 ((member(+[_|Args], TargCl); member(-[_|Args], TargCl)),
                 member(vble(V), Args)),
             [_|[_|_]]),
-    % generate the constant 
+    % generate the constant
     dummyTerm(OrigCons, TheoryIn, NewCons),
-    RepPlan = weaken(V1, [OrigCons], TargCl)).
+    RepPlan = weaken(V1, NewCons, TargCl)).
 
 % the input clause is essential, then get all the essential substitutions of its
 weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
     spec(heuris(Heuristics)),
     notin(noVabWeaken, Heuristics),
     essSubs(Suffs, TargCl, SubstList),
-    member((_, V1), VCP), 
+    member((_, V1), VCP),
     % if the variable is bound to one constant in the proofs of the sufficiency where the input clause is essential.
-    setof(C,    (member(Subst, SubstList), 
-                subst(Subst, V1, C)), 
+    setof(C,    (member(Subst, SubstList),
+                subst(Subst, V1, C)),
         [CSuff]),
     % then the variable can be weaken to that constant so it won't introduce insufficiency.
     RepPlan = weaken(V1, CSuff, TargCl).
- 
+
 /**********************************************************************************************************************
    mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls)
         Generate a repair plan of merge predicate
@@ -54,26 +54,26 @@ mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls
     length(ArgsT, ArityT),
     length(ArgsG, ArityG),
     (intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, [])->
-        (ArityT > ArityG-> 
-            % make PG's arity ArityT, and replace all PG with PR 
+        (ArityT > ArityG->
+            % make PG's arity ArityT, and replace all PG with PR
             RepPlan = merge(PT, PG, ArgsG, dec);
-        ArgDiff = []-> 
-            % replace all PG with PR 
+        ArgDiff = []->
+            % replace all PG with PR
             RepPlan = merge(PT, PG, ArgsG, equ);
         ArityT < ArityG->
-            % increase PG's arity by adding ArgDiff and then replace all PG with PR 
+            % increase PG's arity by adding ArgDiff and then replace all PG with PR
             RepPlan = merge(PT, PG, ArgDiff, inc)),
         findall(Cl, (member(Cl, TheoryIn), (member(+[PT|_], Cl);member(-[PT|_], Cl))), TargCls);
-    % When PG is under protected, only refom the literal not all accurance of PG, 
+    % When PG is under protected, only refom the literal not all accurance of PG,
     % if that Literal is not the only occurance of PG.
     intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, Int), Int =[_|_]->
      termOcc(PT, TheoryIn, Occurance),
      Occurance > 1,         % reform that literal won't make PG gone.
-     (ArityT > ArityG-> 
-            % make PG's arity Arity, and rename the PG with PR 
+     (ArityT > ArityG->
+            % make PG's arity Arity, and rename the PG with PR
             RepPlan = rename(PT, PG, ArgsG, TargetLit, TargCl, dec);
-      ArgDiff = []-> 
-            % replace all PG with PR 
+      ArgDiff = []->
+            % replace all PG with PR
             RepPlan = rename(PT, PG, ArgsG, TargetLit, TargCl, equ);
       ArityT < ArityG->
             % increase PG's arity by adding ArgDiff and then rename the PG with PT
@@ -83,19 +83,19 @@ mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls
 % Only rename the instance of the mismatched predicate in the target clause.
 renamePred(Mismatches, [PG| _], TargetLit, TargCl, RepPlan, [TargCl]):-
     Mismatches = (predicate, []),
-    appLiteral(TargetLit, [replacePos, 1, 0, PG], LitNew),    
-    appLiteral(TargetLit, [nth0, 1, 0], PT),    
+    appLiteral(TargetLit, [replacePos, 1, 0, PG], LitNew),
+    appLiteral(TargetLit, [nth0, 1, 0], PT),
     replace(TargetLit, LitNew, TargCl, ClNew),
     RepPlan = rename(PT, PG, TargCl, ClNew).
 
 % generate reformation repair plan when the predicate is matched but arguments.
-renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):- 
+renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):-
     Mismatches = [_|_],
     spec(protList(ProtectedList)),
     writeLog([nl,write_term('--renameArgs: Mismatches:'),nl,write_term(Mismatches),nl,
       write_term(ProtectedList),nl,finishLog]),
-    
-     setof([(COrig, CTarget, C1Cl), C1Cl],    
+
+     setof([(COrig, CTarget, C1Cl), C1Cl],
                 (member((C1, C2),Mismatches),
                 nth0(Nth, [C1, C2], COrig),    % Get the target constant.
                 delete([C1, C2], COrig, [CTarget]),    % rename Corig by CTarget.
@@ -108,18 +108,18 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
                 asserProCheck(C1Cl, ProtectedList),
                 notEss2suff(SuffGoals, C1Cl)),
                 RS),
-     length(RS, MisNum),     % have found the clause of all mismached pairs 
+     length(RS, MisNum),     % have found the clause of all mismached pairs
     transposeF(RS, [MisPairs, TargCls]),
     RepPlan = rename(MisPairs),
-    writeLog([nl,write_term('--renameArgs: RepPlanS:'),nl,write_term(RepPlan),nl, 
+    writeLog([nl,write_term('--renameArgs: RepPlanS:'),nl,write_term(RepPlan),nl,
         nl,write_term('--renameArgs: TargCls:'),nl,write_term(TargCls),nl, finishLog]).
 
 % generate reformation repair plan of extend a constant to a variable when the predicate is matched but arguments.
-extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):- 
+extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):-
     Mismatches = [_|_],
     spec(protList(ProtectedList)),
     %((Mismatches =  [([load3], [load1])]; Mismatches =  [([load1], [load3])])->pause;true),
-     setof([(COrig, NewVble, C1Cl), C1Cl],    
+     setof([(COrig, NewVble, C1Cl), C1Cl],
                 (member((C1, C2),Mismatches),
                 nth0(Nth, [C1, C2], COrig),    % Get the target constant.
                 notin(COrig, ProtectedList),
@@ -135,13 +135,13 @@ extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):-
                         AvoidList),
                 getNewVble([COrig], AvoidList, [(COrig, NewVble)], _)),
                 RS),
-     length(RS, MisNum),     % have found the clause of all mismached pairs 
+     length(RS, MisNum),     % have found the clause of all mismached pairs
     transposeF(RS, [MisPairs, TargCls]),
     RepPlan = extC2V(MisPairs),
-    writeLog([nl,write_term('--extC2V: RepPlanS:'),nl,write_term(RepPlan),nl, 
+    writeLog([nl,write_term('--extC2V: RepPlanS:'),nl,write_term(RepPlan),nl,
         nl,write_term('--extC2V: TargCls:'),nl,write_term(TargCls),nl, finishLog]).
 
-    
+
 /*********************************************************************************************************************************
     reformUnblock(UnresSubGoals, EC, Evi, SuffGoals, Theory,  Output):
             unblock a proof by reformation
@@ -160,23 +160,23 @@ reformUnblock([], _, _, _, _, []).
 reformUnblock([H|T], Evi, ClUsed, SuffGoals, TheoryState, [HOut| RestOut]):-
         refUnblock(H, Evi, ClUsed, SuffGoals, TheoryState, HOut),
         reformUnblock(T, Evi, ClUsed, SuffGoals, TheoryState, RestOut).
-        
+
 refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls]):-
     TheoryState = [[_, RsBanned],EC, _, TheoryIn, _, _],
     % Get the original negative literal and its clause where -GTarg comes from.
     traceBackPos([PG| ArgsG], Evi, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
     spec(protList(ProtectedList)),
     writeLog([nl,write_term('Reformation: targeted evidence'),nl,write_term([PG| ArgsG]), finishLog]),
-    
+
     setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, Proof),
-            (member(Axiom, TheoryIn),    
+            (member(Axiom, TheoryIn),
              \+member(Axiom, ClUsed),    % the clause that has been used in the proof should not be a candidate to change for resolving the remaining sub-goal, otherwise, the evidence will be broken.
              %occur(-_, Rule), % it is possible to merge an assertion's predicate with the goal's predicate
-             slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]), 
+             slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]),
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.
              (PT = PG->    argsMis(ArgsG, ArgsT, Mismatches, MisPairPos),
-                         length(Mismatches, MisNum); 
+                         length(Mismatches, MisNum);
              PT \= PG-> diff(ArgsG, ArgsT, ArgDiff),     % TODO:consider variables in ArgsG
                         Mismatches = (predicate, ArgDiff),
                         length(ArgDiff, MisNum),
@@ -186,7 +186,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     member((Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, ProofRest), Cand),
     writeLog([nl,write_term('---------------Axiom is 1  '),write_term(Axiom), finishLog]),
     writeLog([nl,write_term('---------------Mismatches is 1  '),write_term(Mismatches), finishLog]),
-    
+
     spec(heuris(Heuristics)),
     (% if the irresolvable sub-goal is not from the preferred structure, reform the sub-goal
         % Or if the Axiom is not under protected, reform it
@@ -198,13 +198,13 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
                 (% generate repair plan of merge(PP, PT, ArgDiff, inc) or rename(PP, PT, ArityT, TargetLit, TargCl, dec/inc).
                 notin(noRename, Heuristics),
-                (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);    
-                renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);     
+                (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
+                renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
                 renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
                 extCons2Vble(Mismatches, 0, Evi, _, MisNum, TheoryIn, RepPlan, TargCls)));
-        
+
         % if both irresolvable sub-goal and Axiom are not under protected, try to generate repair plan of decrease the arity of PG.
-        (   notin(noArityChange, Heuristics), 
+        (   notin(noArityChange, Heuristics),
             Mismatches = [_|_], InpCl2 \= [], notin(InpCl2, ProtectedList), notin(Axiom, ProtectedList),
             % do not decrease the arity of a predicate if its arity is 1.
             length(ArgsG, ArityG), ArityG > 1,
@@ -214,22 +214,11 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             forall(member(Axiom, ProtectedList), (notin(+[PG|_], Axiom), notin(-[PG|_], Axiom))),
             % check that the arity of PG is larger than 1
             findall(Pos, nth1(Pos, MisPairPos, [_|_]), PosMis),
-            % check if the argument is under protected 
+            % check if the argument is under protected
             forall(member(ArgDele, PosMis), notin(deleArg(PG, ArgDele), RsBanned)),
             findall(Cl, (member(Cl, TheoryIn),
                         (member(+[PG|_], Cl); member(-[PG|_], Cl))),
                         TargCls),
-                
+
             % Then decrease the arity of PG by deleting the arguments on the mismatched positions.
             RepPlan = arityDec(PG, TargCls, PosMis))).
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        

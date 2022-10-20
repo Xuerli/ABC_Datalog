@@ -6,7 +6,7 @@ Date: 19.02.2020
 
 
 :-[util, repairApply].
-:-     maplist(dynamic, [trueSet/1, falseSet/1, heuristics/1, protect/1,spec/1]). 
+:-     maplist(dynamic, [trueSet/1, falseSet/1, heuristics/1, protect/1,spec/1]).
 
 /**********************************************************************************************************************
     initTheory(Theory): Read Theory from a collection of axiom assertions. (Expected format of the Theory.)
@@ -113,24 +113,7 @@ checkPSPrint(Conflicts):-
     nl, write_termAll(Conflicts),
     nl, write_term('-------Please revise the preferred structure, Thanks.'),nl,nl.
 
-/**********************************************************************************************
-    orphanVb: check if there is orhpan variable in the input theory
-    Input: an axiom
-    Output: The axiom and the orphans if there are orphan variables, otherwise, [].
-**********************************************************************************************/
-orphanVb([], []):- !.
-orphanVb(Axiom,  OpVbles):-
-    member(+[_| ArgsHead], Axiom),
-    findall(vble(X), (member(-[_| ArgsBody], Axiom), member(vble(X), ArgsBody)), BodyVbles),
-    % exists orphan variables.
-    setof(vble(X),
-            (member(vble(X), ArgsHead),
-             notin(vble(X), BodyVbles)),    % vble(X) is not a member of BodyVbles
-            OpVbles), !,
-    nl, nl,nl,write_term('---------- Error: orphan variable is found in: ----------'), nl,
-    write_term(Axiom), nl, write_term(OpVbles).
 
-orphanVb(_, []).
 initTheory(Axioms, Clauses):-
     findall(ClOut,
                 (member(Axiom, Axioms),
@@ -233,7 +216,7 @@ initProtList:-
                  member((_,Source), ArityInfo),
                  occur(Source, [trueSet, falseSet])),           % This predicate occur in the preferred structure.
             PPs),                                          % The set of arity of each predicate in preferred structure.
-    
+
     % protect the predicate symbol that is from the preferred structure.
     findall([Predicate],
                ( member((Predicate, ArityInfo, _), Signature),   % Get a predicate occur in the theory or preferred structure
@@ -242,7 +225,7 @@ initProtList:-
             PPP),                                          % The set of arity of each predicate in preferred structure.
     append(Protected, PPs, P1),
     append(P1,PPP, ProtectedList),
-    
+
     assert(spec(protList(ProtectedList))).
 
 /**********************************************************************************************************************
@@ -269,11 +252,11 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     smaller(TheoryIn, EC, RsIn, Axioms, Minimal, RsOut):
     Input:      TheoryIn is a list of clauses.
         EC is the equivalence classes.
-        RsIn is the current list of repair plans that has been applied 
+        RsIn is the current list of repair plans that has been applied
     Intermediate: Axioms is a list of axioms found.
     Output:     Minimal is the minimal set of TheoryIn that is found first.
                 RsOut is the revised repair plans.
-************************************************************************************************************************/    
+************************************************************************************************************************/
 smaller([], _, Rs, Minimal, Minimal, Rs).
 % Cl is a theorem rather than an axiom.
 smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
@@ -282,7 +265,7 @@ smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
     slRL(Goal, TheoryTem, EC, [_|_],_,_), !,  % Goal is a theorem of the rest clauses in the theory. Do not continue to try the next branch of smaller/6.
     delete(RsIn, expand(Cl), RsNew),    % If Cl is added by a repair plan, reject that repair plan.
     smaller(ClRest, EC, RsNew, Axioms, Minimal, RsOut).
-    
+
 % Cl is an axiom, record it and then examine the next clause.
 smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
     smaller(ClRest, EC, RsIn, [Cl| Axioms], Minimal, RsOut).
@@ -295,7 +278,7 @@ smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
     * Update protected list!
 **********************************************************************************************/
 resetIndepVble(TheoryIn, TheoryOut):-
-    findall([V, Num], 
+    findall([V, Num],
                 (   % get arguments in axioms.
                     (member(Cl, TheoryIn),
                     (member(+[_|Args], Cl); member(-[_|Args], Cl))),
@@ -305,58 +288,11 @@ resetIndepVble(TheoryIn, TheoryOut):-
             InVInfoTem),
     sort(InVInfoTem, InVInfo), % remove duplicates.
     transposeF(InVInfo, [OldInVbleList, SerialNums]),
-    length(SerialNums, TotalNum), % Get the total number of serial numbers, 
+    length(SerialNums, TotalNum), % Get the total number of serial numbers,
     adverseEnum(TotalNum, ResetSerials),
     findall((vble(OldInVble), vble(NewInVble)),
             (nth1(I, OldInVbleList, OldInVble),        % OldInVble is the Ith proposition in OldInVbleList.
-             nth1(I, ResetSerials, SNum),    
+             nth1(I, ResetSerials, SNum),
              atom_concat(iv, SNum, NewInVble)),
             RenameList),
     appEach(TheoryIn, [appEach, [appLiteral, [replace, 1, RenameList]]], TheoryOut).
-
-/**********************************************************************************************************************
-    orderAxiom(ClIn, ClOut): then order the literals in a clause
-    1. the head of the clause will be in the front of it.
-    2. the equalities/inequalities literals will be the end of its body.
-    3. the equalities will be in front of the inequalities.
-    * the order is for the reduce the search space of sl resolution.
-************************************************************************************************************************/
-orderAxiom(ClIn, ClOut):-
-    findall(-[=|Arg], member(-[=|Arg], ClIn), Eq),
-    findall(-[\=|Arg], member(-[\=|Arg], ClIn), InEq),
-    subtract(ClIn, Eq, A1),
-    subtract(A1, InEq, A2),
-    (notin(+_, A2)->    % A2 has no + literal
-        append(A2, Eq, A4),
-        append(A4, InEq, ClOut);
-    member(+Head, A2)->
-        subtract(A2, [+Head], A3),
-        append(A3, Eq, A4),
-        append(A4, InEq, A5),
-        append([+Head], A5, ClOut)).
-
-
-/**********************************************************************************************************************
-    theoryGraph(Graph): the theory graph based on rules.
-    1. the head of the clause will be in the front of it.
-    2. the equalities/inequalities literals will be the end of its body.
-    3. the equalities will be in front of the inequalities.
-    * the order is for the reduce the search space of sl resolution.
-************************************************************************************************************************/
-theoryGraph(Theory, Graph):-
-    findall(Branch,
-            (member([+[Pred|_]], Theory),    % get an axiom Q, whose predicate is Pred.
-             extBranch(Theory, [Pred], Branch)),
-            Branches),
-    sort(Branches, Graph).
-
-% get the branch by extending BranchIn.
-extBranch(Theory, BranchIn, BranchOut):-
-    last(BranchIn, Pred),
-    member([+[Pred2|_]|Body], Theory),
-    delete(Theory, [+[Pred2|_]|Body], RestTheory),
-    occur(-[Pred|_], Body),
-    (notin(Pred2, BranchIn)-> append(BranchIn, [Pred2], BranchNew), !;
-     member(Pred2, BranchIn)-> BranchNew = BranchIn),
-    extBranch(RestTheory, BranchNew, BranchOut).
-extBranch(_, Branch, Branch).

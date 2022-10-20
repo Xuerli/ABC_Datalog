@@ -34,54 +34,24 @@ abc:-
     initTheory(Theory),    % clear previous data and initialise new ones.
     precheckPS,
     % setup log
-    fileName('record', Fname),
-    open(Fname, write, StreamRec),
-    
-    fileName('repNum', Fname2),
-    open(Fname2, write, StreamRepNum),
-    assert(spec(repNum(StreamRepNum))),
-    
-    (exists_file('repTimeHeu.txt')->
-     open('repTimeHeu.txt', append, StreamRepTimeH);
-    \+exists_file('repTimeHeu.txt')->
-    open('repTimeHeu.txt', write, StreamRepTimeH)),
-    assert(spec(repTimeH(StreamRepTimeH))),
-
-    (exists_file('repTimenNoH.txt')->
-     open('repTimenNoH.txt', append, StreamRepTimeNH);
-    \+exists_file('repTimenNoH.txt')->
-    open('repTimenNoH.txt', write, StreamRepTimeNH)),
-    assert(spec(repTimeNH(StreamRepTimeNH))),
-        
-    maplist(assert, [spec(debugMode(1)), spec(logStream(StreamRec))]),
-    %(OverloadedPred \= [] -> concepChange(OverloadedPred,  AllSents, RepSents, CCRepairs, Signature, RSignature);        %Detect if there is conceptual changes: a predicate has multiple arities.
-    %RepSents = AllSents, CCRepairs = []),
-    
+    initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
     %statistics(walltime, [_ | [ExecutionTime1]]),
-    statistics(walltime, [S,_]),%statistics(walltime, Result) sets Result as a list, with the head being the total time since the Prolog instance was started, and the tail being a single-element list representing the time since the last
-    
+    statistics(walltime, [S,_]),
+
     % writeLog([nl,write_term('--------------executation time 1---'), nl,write_term('time takes'),nl, write_term(ExecutionTime1),nl]),
     % repair process
     detRep(Theory, AllRepStates),
     writeLog([nl,write_term('--------------AllRepStates: '),write_termAll(AllRepStates),nl, finishLog]),
 
-    % Sort and remove duplicate repairs.
-    %quicksort(AllRepTheos, RepairsSorted),
-    %eliminateDuplicates(RepairsSorted, SetOfRepairs),
-    % output
-    
     statistics(walltime, [E,_]),
     ExecutionTime is E-S,
-    
+
     writeLog([nl,write_term('--------------executation time 2---'),
                 nl,write_term('time takes'),nl, write_term(ExecutionTime),nl]),
     %ExecutionTime is ExecutionTime1 + ExecutionTime2,
     output(AllRepStates, ExecutionTime),
-    close(StreamRec),
-    close(StreamRepNum),
-    close(StreamRepTimeNH),
-    close(StreamRepTimeH),
-    nl,write_term('-------------- Finish. --------------'),nl.
+    maplist(close, [StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH]),
+    nl, print('-------------- Finish. --------------'), nl.
 
 /**********************************************************************************************************************
     detRep(Theory, RepTheories):
@@ -95,20 +65,20 @@ detRep(Theory, AllRepSolutions):-
             (% calculate equivalence classes, and then detect and repair the unae faults.
             unaeMain(Theory,  OptimalUnae),
             member((TheoryState, InsufIncomp), OptimalUnae),
-            
+
             InsufIncomp = (_,INSUFF,ICOM),
             length(INSUFF,InsuffNum),
             length(ICOM,IncompNum),
             assert(spec(faultsNum(InsuffNum, IncompNum))),
-            
+
              (InsufIncomp = (_,[],[])->
                      TheoryRep = ([fault-free, 0, TheoryState]);    % if the theory is fault free.
              % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
               InsufIncomp \= (_,[],[])->
                       repInsInc(TheoryState, 0, InsufIncomp, TheoryRep))),
-            AllRepTheos1), 
+            AllRepTheos1),
     % Only select the minimal repairs w.r.t. the number of repair plans.
-    findall((Len, Rep), 
+    findall((Len, Rep),
                 (member(Rep, AllRepTheos1),
                  Rep = [_,_ ,[[RepPlans,_]|_]],
                  length(RepPlans, Len)),
@@ -129,7 +99,7 @@ detRep(Theory, AllRepSolutions):-
                         InSuffs: the unprovable goals from pf(T).
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
-detInsInc(TheoryState, FaultState):- 
+detInsInc(TheoryState, FaultState):-
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     writeLog([nl, write_term('---------Start detInsInc, Input theory is:------'), nl,
     nl,write_term(Theory),nl,write_termAll(Theory),nl,finishLog]),
@@ -144,7 +114,7 @@ detInsInc(TheoryState, FaultState):-
               % Get all proofs and failed proofs of the goal.
               findall( [Proof, Evidence],
                      ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
-                     Proofs1),    
+                     Proofs1),
               % Proofs1= [[P1, []],[P2, []],[[],E1]...]; Proofs2 = [[P1,P2,[]],[[],[],E]]
               transposeF(Proofs1, [Proofs, Evis]),
               % only collect none empty proofs/evidences
@@ -225,12 +195,12 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     writeLog([nl, write_term('--------- Start repInsInc round: '), write_term(R),nl, finishLog]),
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
-    
+
     /*
     % repair insufficiencies first and then incompatibilities.
     (InsuffsIn \= [] ->
         appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans), !;    % detect the remaining faults in the current theory in TheoryState.
-    InsuffsIn = [] -> 
+    InsuffsIn = [] ->
         appEach(IncompsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans)),
     */
     % member(Insuff, InsuffsIn),
@@ -243,17 +213,17 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     writeLog([nl, write_term(RepPlansLen),write_term(' fault\'s new repair plans found: '), write_term(RepPlans), nl,nl,nl,write_term(TheoryIn),nl, finishLog]),
 
     repCombine(RepPlans, TheoryIn, RepSolutions),
-    
+
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
-    %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,        
+    %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,
     sort(RepStatesTem, RepStatesAll),
     length(RepStatesAll, LengthO),
     writeLog([nl, write_term('-- There are '), write_term(LengthO),
                   write_term(' repaired states: '),nl,write_termAll(RepStatesAll), nl, finishLog]),
     % prune the redundancy.
-    mergeRs(RepStatesAll, RepStatesFine), 
+    mergeRs(RepStatesAll, RepStatesFine),
     writeLog([nl, write_term('-- RepStatesFine '), write_term(RepStatesFine),nl, finishLog]),
-    %print('111111 RepStatesFine'),print(RepStatesFine),nl,nl,            
+    %print('111111 RepStatesFine'),print(RepStatesFine),nl,nl,
     findall((FNum1, FNum2, RepState, FaultStateNew),
                     (member(RepState, RepStatesFine),
                       detInsInc(RepState, FaultStateNew),
@@ -268,7 +238,7 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
      % pruning the sub-optimal.
     pareOpt(AllRepStates, Optimals),
     length(Optimals, LO),
-    %print(Optimals),nl,nl,print(LO),nl,nl, 
+    %print(Optimals),nl,nl,print(LO),nl,nl,
 %(Optimals =[([[[expand([+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]]),expand([+[parent,[f],[a]]])],[]],[[[a]],[[b]],[[c]],[[d]],[[f]],[[g]]],[],[[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[+[female,[b]]],[+[female,[d]]],[+[male,[a]]],[+[male,[c]]],[+[male,[f]]],[+[male,[g]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]],[+[parent,[d],[b]]],[+[parent,[f],[a]]]],[[+[father,[a],[b]]],[+[father,[a],[c]]],[+[mother,[d],[b]]],[+[father,[f],[a]]]],[[+[mother,[a],[b]]],[+[mother,[a],[c]]],[+[father,[d],[b]]],[+[father,[g],[a]]],[+[father,[g],[c]]]]],[([-[father,[a],[b]]],[[([-[father,[a],[b]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[male,[a]],-[parent,[a],[b]]],[0,0]),([-[male,[a]],-[parent,[a],[b]]],[+[male,[a]]],[],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[father,[a],[c]]],[[([-[father,[a],[c]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[male,[a]],-[parent,[a],[c]]],[0,0]),([-[male,[a]],-[parent,[a],[c]]],[+[male,[a]]],[],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]]),([-[mother,[d],[b]]],[[([-[mother,[d],[b]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[[b]/vble(z),[d]/vble(y)],[-[female,[d]],-[parent,[d],[b]]],[0,0]),([-[female,[d]],-[parent,[d],[b]]],[+[female,[d]]],[],[-[parent,[d],[b]]],[0,0]),([-[parent,[d],[b]]],[+[parent,[d],[b]]],[],[],[0,0])]]),([-[father,[f],[a]]],[[([-[father,[f],[a]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(y),[f]/vble(x)],[-[male,[f]],-[parent,[f],[a]]],[0,0]),([-[male,[f]],-[parent,[f],[a]]],[+[male,[f]]],[],[-[parent,[f],[a]]],[0,0]),([-[parent,[f],[a]]],[+[parent,[f],[a]]],[],[],[0,0])]])],[],[]),([[[expand([+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]]),expand([+[father,[f],[a]]])],[]],[[[a]],[[b]],[[c]],[[d]],[[f]],[[g]]],[],[[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[+[father,[f],[a]]],[+[female,[b]]],[+[female,[d]]],[+[male,[a]]],[+[male,[c]]],[+[male,[f]]],[+[male,[g]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]],[+[parent,[d],[b]]]],[[+[father,[a],[b]]],[+[father,[a],[c]]],[+[mother,[d],[b]]],[+[father,[f],[a]]]],[[+[mother,[a],[b]]],[+[mother,[a],[c]]],[+[father,[d],[b]]],[+[father,[g],[a]]],[+[father,[g],[c]]]]],[([-[father,[a],[b]]],[[([-[father,[a],[b]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[male,[a]],-[parent,[a],[b]]],[0,0]),([-[male,[a]],-[parent,[a],[b]]],[+[male,[a]]],[],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[father,[a],[c]]],[[([-[father,[a],[c]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[male,[a]],-[parent,[a],[c]]],[0,0]),([-[male,[a]],-[parent,[a],[c]]],[+[male,[a]]],[],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]]),([-[mother,[d],[b]]],[[([-[mother,[d],[b]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[[b]/vble(z),[d]/vble(y)],[-[female,[d]],-[parent,[d],[b]]],[0,0]),([-[female,[d]],-[parent,[d],[b]]],[+[female,[d]]],[],[-[parent,[d],[b]]],[0,0]),([-[parent,[d],[b]]],[+[parent,[d],[b]]],[],[],[0,0])]]),([-[father,[f],[a]]],[[([-[father,[f],[a]]],[+[father,[f],[a]]],[],[],[0,0])]])],[],[])],    pause;true),
     writeLog([    nl, write_term('--The number of Optimals: '), write_term(LO), nl, write_termAll(Optimals), finishLog]),
     % get one optimal repaired theory along with its remaining faults and applied repairs Rep.
@@ -287,7 +257,7 @@ pareOpt([], []).
 % if the sub-optimal pruning is not applied, return the input.
 pareOpt(StatesFaultsAll, TheoryStateOut):-
     spec(heuris(H)),
-    member(noOpt, H), 
+    member(noOpt, H),
     findall([FNum, (TheoryState, FaultState)],
             (member((N1, N2, TheoryState, FaultState), StatesFaultsAll),
              FNum is N1 +N2),
@@ -310,7 +280,7 @@ pareOpt(StatesFaultsAll, OptStates):-
                       Cost2 >= Cost1))),    % The repaired theory is not strictly dominated by any others.
             OptStates).
 
-% domination if f11*<f21 and f12 *< f22        
+% domination if f11*<f21 and f12 *< f22
 pareOptBak(StatesFaultsAll, OptStates):-
     writeLog([nl, write_term('--------- start pruning the sub-optimals ---------'),nl, finishLog]),
     findall((TheoryState, FaultState),
@@ -349,4 +319,3 @@ mR([H|Rest], SIn, Sout):-
 % H is not in SIn yet
 mR([H|Rest], SIn, Sout):-
     mR(Rest, [H| SIn], Sout).
-    
