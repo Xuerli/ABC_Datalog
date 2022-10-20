@@ -23,7 +23,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
                 intersection(RepPlans, RsList, [])),
             RepPlansTem),
     sort(RepPlansTem, RepPlansOut),
-    print('bbbbbb RepPlansOut:'),nl, write_termAll(RepPlansOut),nl,
+    print('------ RepPlansOut:'),nl, write_termAll(RepPlansOut),nl,
     statistics(walltime, [E1,_]),
 
     SFRTime is E1-S1,
@@ -230,7 +230,7 @@ buildP([], _, _, _):-fail,!.
 buildP(([], []), _, _, _):-fail,!.
 
 
-buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):- print('2222222222222\n'),
+buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):- 
     spec(heuris(Heuristics)),
     writeLog([nl,write_term('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
     Goal \= [],
@@ -284,7 +284,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
 
 
 %% Repair the insufficiency by adding a rule whose head is the goal.
-buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-print('1111111111\n'),
+buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     %% Repair the insufficiency by abduction.
     spec(heuris(Heuris)),
     notin(noAxiomAdd, Heuris),
@@ -377,7 +377,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-print('11
    writeLog([nl,write_term('--Unblocking 2: RepPlanS/CLE'),nl,write_term(RepPlans),nl,write_termAll(ClS),nl, finishLog]).
 
 %% Repair the insufficiency by analogising an existing rule and give them different preconditions.
-buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-print('333333333333\n'),
+buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
     notin(noRuleChange, Heuristics),
     notin(noAnalogy, Heuristics),
