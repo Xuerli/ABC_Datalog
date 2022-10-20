@@ -161,6 +161,78 @@ compose1(Sub, SublistIn, SublistOut) :-     % Append new substitution
      Sub = _/_-> SubTem = [Sub|SublistMid]),
     sort(SubTem, SublistOut).     % remove duplicates.
 
+/**********************************************************************************************************************
+    convertClause(In, Clause): convert input axiom into Horn clause form with head at the front and body in the end.
+    Input:    In is an input axiom
+    Output: Clause is a Horn clause.
+        For reducing the search space of resolution, the Clause has its head at the front and body in the end.
+************************************************************************************************************************/
+convertClause(AxiomIn, Clause) :-
+    appEach(AxiomIn, [appLiteral, convert],  Clause1),
+    sort(Clause1, Clause).        % Remove duplicate literals and sort literals where positive literal will be the head of Clause.
+
+
+%% convert(In,Out): convert normal Prolog syntax to internal representation or
+%% vice versa.
+
+%% These variable/constant conventions need revisiting for serious use
+
+% X is a variable
+convert(\X,vble(X)) :-  !.                      % Convert X into a variable
+/*    atom_chars(X,[?|T]),              % variable is start with ?
+    Out = vble(T),!.
+    atomic(X), atom_chars(X,[H|_]),             % if first letter
+    char_code(H,N), 109<N, N<123, !.            % is n-z
+*/
+
+convert(vble(X),vble(X)) :-  !.                      % Convert X into a variable
+
+% A is a constant
+convert(A,[A]) :-             % Convert A into a constant, where A is either an atom or a number
+    atomic(A), !.
+
+% A is a number
+convert(A,[A]) :-             % Convert A into a constant
+    number(A),!.
+
+
+
+% E is compound
+convert(E,[F|NArgs]) :-
+    var(E), !,                                  % If E is output and input compound
+    maplist(convert,Args,NArgs), E=..[F|Args].  % Recurse on all args of F
+
+
+convert(E,[F|NArgs]) :-                     % If E is input and compound then
+    \+ var(E), \+ atomic(E), !,
+    E=..[F|Args],  % break it into components
+    maplist(convert,Args,NArgs).                % and recurse on them
+
+/*renvert internal representation to normal Prolog syntax */
+
+revert([],[]):- !.
+
+% X is a variable
+revert(vble(X),\X) :-  !.                     % revert a variable
+
+% A is a constant or number
+revert([A],A) :- !.                          % revert a constant and number
+
+%% These variable/constant conventions need revisiting for serious use
+% E is compound
+revert(E,E) :-
+    atomic(E), !.                               % If E is output and input compound
+
+% E is compound: F(NArgs).
+revert(E,FactE) :-
+    is_list(E),!,                                  % If E is output and input compound
+    E =[F|Args],
+    maplist(revert,Args,NArgs), FactE=..[F|NArgs].  % Recurse on all args of F
+
+revert(E,[F|NArgs]) :-
+    var(E), !,                                  % If E is output and input compound
+    maplist(revert,Args,NArgs), E=..[F|Args].  % Recurse on all args of F
+
 /**********************************************************************************************
     deleteAll(ListsInput, ListDel, ListOut) let the following true:
     ListOut = ListsInput - ListDel
