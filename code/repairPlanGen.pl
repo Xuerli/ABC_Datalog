@@ -1,4 +1,4 @@
-:-[ruleMod, reformation, util, utilRevise].
+:-[ruleMod, reformation, util].
 
 %% No goal.
 repairPlan(Goal, TheoryState, _, TheoryState):-
