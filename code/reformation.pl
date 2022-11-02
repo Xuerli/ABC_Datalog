@@ -27,7 +27,7 @@ weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
     spec(heuris(Heuristics)),
     notin(noVabWeaken, Heuristics),
     essSubs(Suffs, TargCl, SubstList),
-    member((_, V1), VCP),
+    member((V1, _), VCP),
     % if the variable is bound to one constant in the proofs of the sufficiency where the input clause is essential.
     setof(C,    (member(Subst, SubstList),
                 subst(Subst, V1, C)),
