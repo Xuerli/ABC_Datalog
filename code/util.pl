@@ -353,6 +353,37 @@ empty(X, []):- flatten(X,[]),!.
 empty(X, X):- \+flatten(X,[]).
 
 
+
+/*****************************************************************************************************************
+essSubs(Suffs, Rule, SubsList):-
+    get the substitutions of Rule if it is involved in all proofs of a preferred proposition.
+Input:     Suffs: a list of sufficiencies.
+        Rule: a rule.
+Outpt:    SubsList: a list of substitutions [Subs1, Subs2,...]
+                    where Subs1 is the substitutions applied to Rule in a proof.
+****************************************************************************************************************/
+essSubs([], _, []).
+
+% if there is one proof which does not contain Rule, then Rule is not essential for this sufficiency.
+essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
+setof(Proof, (member(Proof, Proofs),
+               notin((_,Rule,_,_,_), Proof)),
+         [_|_]), !,
+essSubs(Rest, Rule, SubsOut).        % continue checking the next.
+% Otherwise, record the substitutions of Rule in these proofs where it is essential.
+essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
+findall(Subs, (    member(Proof, Proofs),
+                 member((_,Rule,Subs,_,_), Proof)),
+         AllSubs),
+essSubs(Rest, Rule, SubsRest),        % continue checking the next.
+append(AllSubs, SubsRest, SubsOut).
+
+notEss2suff([], _).
+notEss2suff([(_,Proofs)|Rest], Axiom):-
+    forall(member(Proof, Proofs), member((_,Axiom,_,_,_), Proof)),
+    !, fail;
+    notEss2suff(Rest, Axiom).
+
 /*********************************************************************************************************************************
    general(ClauseIn, ClauseOut, ReSubs): Generalise the axiom by replace the constant which occur more than once with a variable.
    Input:  ClauseIn: the clause to be generalised.
@@ -507,12 +538,6 @@ newVble(vble(X), Args, vble(NewX)):-
 
 notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
 notin(X, List):- \+member(X, List), !.
-
-notEss2suff([], _).
-notEss2suff([(_,Proofs)|Rest], Axiom):-
-    forall(member(Proof, Proofs), member((_,Axiom,_,_,_), Proof)),
-    !, fail;
-    notEss2suff(Rest, Axiom).
 
 
 occur(_, List):- \+is_list(List), nl,print('ERROR: '), print(List), print(' is not a list'),nl, fail,!.
@@ -783,11 +808,11 @@ replacePos(P, ListIn, Sub, ListOut) :-
     split_at(P, ListIn, FronList, [_| AfterList]),
     split_at(P, ListOut, FronList, [Sub| AfterList]).
 
+
 replacePosList([], List,_, List).
 replacePosList([H| Rest], ListIn, Sub, ListOut) :-
     replacePos(H, ListIn, Sub, ListTem),
     replacePosList(Rest, ListTem, Sub, ListOut).
-    
 /**********************************************************************************************
     revertFormRep: revert the writing fromat from the internal to the output format.
 ***********************************************************************************************/
