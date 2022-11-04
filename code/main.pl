@@ -4,13 +4,13 @@ Macintosh HD⁩/⁨Users⁩/lixue⁩/GoogleDrive⁩/01PHD⁩/01program⁩/eclips
 */
 
 :- use_module(library(lists)).
-:-[preprocess, concepChange, equalities, repairPlanGen, repairApply].
+:-[preprocess, equalities, repairPlanGen, repairApply, vitality].
     % clear all assertions. So main has to be compiling before the input theory file.
 :-    maplist(retractall, [trueSet(_), falseSet(_), heuristics(_), protect(_), spec(_)]).
 
 /********************************************************************************************************************** Global Variable and their values.
-debugMode:    0 -- no write_term information.
-            1 -- write_term informaiton.
+debugMode:    0 -- no write_term_c information.
+            1 -- write_term_c informaiton.
 spec(pft(:        the true set of the preferred structure in the internal format.
 spec(pff:        the false set of the preferrd structure in the internal format.
 costLimit:    the maximum length of the repair plans.
@@ -38,16 +38,16 @@ abc:-
     %statistics(walltime, [_ | [ExecutionTime1]]),
     statistics(walltime, [S,_]),
 
-    % writeLog([nl,write_term('--------------executation time 1---'), nl,write_term('time takes'),nl, write_term(ExecutionTime1),nl]),
+    % writeLog([nl,write_term_c('--------------executation time 1---'), nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime1),nl]),
     % repair process
     detRep(Theory, AllRepStates),
-    writeLog([nl,write_term('--------------AllRepStates: '),write_termAll(AllRepStates),nl, finishLog]),
+    writeLog([nl,write_term_c('--------------AllRepStates: '),write_term_All(AllRepStates),nl, finishLog]),
 
     statistics(walltime, [E,_]),
     ExecutionTime is E-S,
 
-    writeLog([nl,write_term('--------------executation time 2---'),
-                nl,write_term('time takes'),nl, write_term(ExecutionTime),nl]),
+    writeLog([nl,write_term_c('--------------executation time 2---'),
+                nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime),nl]),
     %ExecutionTime is ExecutionTime1 + ExecutionTime2,
     output(AllRepStates, ExecutionTime),
     maplist(close, [StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH]),
@@ -78,13 +78,20 @@ detRep(Theory, AllRepSolutions):-
                       repInsInc(TheoryState, 0, InsufIncomp, TheoryRep))),
             AllRepTheos1),
     % Only select the minimal repairs w.r.t. the number of repair plans.
+    spec(heuris(Heuristics)),
+    (notin(minicost, Heuristics)->AllRepTheos1 = AllRepSolutions;
+    member(minicost, Heuristics),
     findall((Len, Rep),
                 (member(Rep, AllRepTheos1),
                  Rep = [_,_ ,[[RepPlans,_]|_]],
                  length(RepPlans, Len)),
             AllRepTheos2),
+    length(AllRepTheos2, L222),
+    writeLog([nl, write_term_c(L222), write_term_c(' AllRepTheos2 is:------'), nl,write_term_All(AllRepTheos2),nl,finishLog]),
     sort(AllRepTheos2, [(MiniCost, _)|_]),
-    setof(RepState, member((MiniCost, RepState), AllRepTheos2), AllRepSolutions).
+    writeLog([nl, write_term_c(' MiniCost is:------'), nl,write_term_c(MiniCost),nl,finishLog]),
+
+    setof(RepState, member((MiniCost, RepState), AllRepTheos2), AllRepSolutions)).
 
 /**********************************************************************************************************************
     detInsInc(TheoryState, FaultState)
@@ -101,8 +108,8 @@ detRep(Theory, AllRepSolutions):-
 ************************************************************************************************************************/
 detInsInc(TheoryState, FaultState):-
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
-    writeLog([nl, write_term('---------Start detInsInc, Input theory is:------'), nl,
-    nl,write_term(Theory),nl,write_termAll(Theory),nl,finishLog]),
+    writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
+    nl,write_term_c(Theory),nl,write_term_All(Theory),nl,finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
     findall( [Suff, InSuff],
             ( % Each preferred sentence is negated, and then added into Theory.
@@ -124,29 +131,33 @@ detInsInc(TheoryState, FaultState):-
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
 
-     writeLog([nl, write_term('---------SufGoals is------'), nl,write_term(Suffs),
-     nl, write_term('---------InsufGoals is------'), nl,write_term(InSuffs), finishLog]),
+     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs), finishLog]),
 
     % detect the incompatibilities
-      findall(UnwProof,
+      findall((Goal, UnwProofs),
            (member([+[Pre| Args]], FalseSetE),
             % skip equalities/inequalities which have been tackled.
             notin(Pre, [\=, =]),
             Goal = [-[Pre| Args]],
             % get all of a proof of Goal
-            slRL(Goal, Theory, EC, UnwProof, [], []),
-            UnwProof \= []),    % Detected incompatibility based on refutation.
+            findall(Proof,
+                    slRL(Goal, Theory, EC, Proof, [], []),
+                    UnwProofs),
+            UnwProofs \= []),    % Detected incompatibility based on refutation.
            InComps),             % Find all incompatibilities.
 
-    writeLog([nl, write_term('---------InComps are------'),nl, write_termAll(InComps), finishLog]),
+    writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
     % detect the inconsistencies due to the violation of constrains
-    findall(UnwProof,
+    findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
                notin(+_, Constrain),
-               slRL(Constrain, Theory, EC, UnwProof, [], []),
-               UnwProof \= []),
+               findall(Proof,
+                        slRL(Constrain, Theory, EC, Proof, [], []),
+                        UnwProofs),
+                UnwProofs \= []),
           Violations),
-      writeLog([nl, write_term('---------Violations are------'),nl, write_termAll(Violations), finishLog]),
+      writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
@@ -162,7 +173,7 @@ detInsInc(TheoryState, FaultState):-
 ************************************************************************************************************************/
 % If there is no faults in the theory, terminate with the fault-free theory.
 repInsInc(TheoryState, Layer, (_, [], []), [fault-free, (Layer/N),  TheoryState]):-
-    writeLog([nl,write_term('******** A solution is reached. *******'),nl]), !,
+    writeLog([nl,write_term_c('******** A solution is reached. *******'),nl]), !,
     TheoryState = [[RepPlans,_]|_],
     length(RepPlans, Len),
     spec(repNum(StreamRepNum)),
@@ -181,36 +192,28 @@ repInsInc(TheoryState, Layer, (_, Insuf, Incomp), [fault, (Layer/N), TheoryState
     NewN is N+1,
     assert(spec(roundNum(NewN))),
     (Cost >= CostLimit; RoundLimit \= 0, N >= RoundLimit), !,
-    write_term('******** Cost Limit is reached. *******'),nl,
-    writeLog([nl, write_term('******** Cost Limit is reached. *******'),nl,
-        write_term('Cost is: '), write_term(Cost), write_term('; Round: '), write_term(N),
-        write_term('---------The current faulty TheoryState is------'), nl,write_termAll(TheoryState),
-    nl, write_term('---------The remaining inffuficiencies are------'), nl,write_termAll(Insuf),
-    nl, write_term('---------The remaining incompatibilities are------'), nl,write_termAll(Incomp), finishLog]).
+    write_term_c('******** Cost Limit is reached. *******'),nl,
+    writeLog([nl, write_term_c('******** Cost Limit is reached. *******'),nl,
+        write_term_c('Cost is: '), write_term_c(Cost), write_term_c('; Round: '), write_term_c(N),
+        write_term_c('---------The current faulty TheoryState is------'), nl,write_term_All(TheoryState),
+    nl, write_term_c('---------The remaining inffuficiencies are------'), nl,write_term_All(Insuf),
+    nl, write_term_c('---------The remaining incompatibilities are------'), nl,write_term_All(Incomp), finishLog]).
 
 
 % repair theory
 repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     spec(roundNum(R)),
-    writeLog([nl, write_term('--------- Start repInsInc round: '), write_term(R),nl, finishLog]),
+    writeLog([nl, write_term_c('--------- Start repInsInc round: '), write_term_c(R),nl, finishLog]),
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
+    findall(Proof, (member((_, UnwProofs), IncompsIn), member(Proof, UnwProofs)),  IncompsProofs),
 
-    /*
-    % repair insufficiencies first and then incompatibilities.
-    (InsuffsIn \= [] ->
-        appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans), !;    % detect the remaining faults in the current theory in TheoryState.
-    InsuffsIn = [] ->
-        appEach(IncompsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans)),
-    */
-    % member(Insuff, InsuffsIn),
-    % repairPlan(Insuff, TheoryStateIn, SuffsIn, RepPlan1),
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
-    appEach(IncompsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
+    appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
-    writeLog([nl, write_term(RepPlansLen),write_term(' fault\'s new repair plans found: '), write_term(RepPlans), nl,nl,nl,write_term(TheoryIn),nl, finishLog]),
+    writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
 
     repCombine(RepPlans, TheoryIn, RepSolutions),
 
@@ -218,11 +221,11 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,
     sort(RepStatesTem, RepStatesAll),
     length(RepStatesAll, LengthO),
-    writeLog([nl, write_term('-- There are '), write_term(LengthO),
-                  write_term(' repaired states: '),nl,write_termAll(RepStatesAll), nl, finishLog]),
+    writeLog([nl, write_term_c('-- There are '), write_term_c(LengthO),
+                  write_term_c(' repaired states: '),nl,write_term_All(RepStatesAll), nl, finishLog]),
     % prune the redundancy.
     mergeRs(RepStatesAll, RepStatesFine),
-    writeLog([nl, write_term('-- RepStatesFine '), write_term(RepStatesFine),nl, finishLog]),
+    writeLog([nl, write_term_c('-- RepStatesFine '), write_term_c(RepStatesFine),nl, finishLog]),
     %print('111111 RepStatesFine'),print(RepStatesFine),nl,nl,
     findall((FNum1, FNum2, RepState, FaultStateNew),
                     (member(RepState, RepStatesFine),
@@ -232,17 +235,29 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
                       length(InCompNew, FNum2)),
              AllRepStates),
     length(AllRepStates, Length),
-    writeLog([nl, write_term('-- All faulty states: '), write_term(Length),nl,
-                write_termAll(AllRepStates), finishLog]),
+    writeLog([nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,
+                write_term_All(AllRepStates), finishLog]),
 
      % pruning the sub-optimal.
-    pareOpt(AllRepStates, Optimals),
-    length(Optimals, LO),
-    %print(Optimals),nl,nl,print(LO),nl,nl,
-%(Optimals =[([[[expand([+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]]),expand([+[parent,[f],[a]]])],[]],[[[a]],[[b]],[[c]],[[d]],[[f]],[[g]]],[],[[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[+[female,[b]]],[+[female,[d]]],[+[male,[a]]],[+[male,[c]]],[+[male,[f]]],[+[male,[g]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]],[+[parent,[d],[b]]],[+[parent,[f],[a]]]],[[+[father,[a],[b]]],[+[father,[a],[c]]],[+[mother,[d],[b]]],[+[father,[f],[a]]]],[[+[mother,[a],[b]]],[+[mother,[a],[c]]],[+[father,[d],[b]]],[+[father,[g],[a]]],[+[father,[g],[c]]]]],[([-[father,[a],[b]]],[[([-[father,[a],[b]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[male,[a]],-[parent,[a],[b]]],[0,0]),([-[male,[a]],-[parent,[a],[b]]],[+[male,[a]]],[],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[father,[a],[c]]],[[([-[father,[a],[c]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[male,[a]],-[parent,[a],[c]]],[0,0]),([-[male,[a]],-[parent,[a],[c]]],[+[male,[a]]],[],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]]),([-[mother,[d],[b]]],[[([-[mother,[d],[b]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[[b]/vble(z),[d]/vble(y)],[-[female,[d]],-[parent,[d],[b]]],[0,0]),([-[female,[d]],-[parent,[d],[b]]],[+[female,[d]]],[],[-[parent,[d],[b]]],[0,0]),([-[parent,[d],[b]]],[+[parent,[d],[b]]],[],[],[0,0])]]),([-[father,[f],[a]]],[[([-[father,[f],[a]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(y),[f]/vble(x)],[-[male,[f]],-[parent,[f],[a]]],[0,0]),([-[male,[f]],-[parent,[f],[a]]],[+[male,[f]]],[],[-[parent,[f],[a]]],[0,0]),([-[parent,[f],[a]]],[+[parent,[f],[a]]],[],[],[0,0])]])],[],[]),([[[expand([+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]]),expand([+[father,[f],[a]]])],[]],[[[a]],[[b]],[[c]],[[d]],[[f]],[[g]]],[],[[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[+[father,[f],[a]]],[+[female,[b]]],[+[female,[d]]],[+[male,[a]]],[+[male,[c]]],[+[male,[f]]],[+[male,[g]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]],[+[parent,[d],[b]]]],[[+[father,[a],[b]]],[+[father,[a],[c]]],[+[mother,[d],[b]]],[+[father,[f],[a]]]],[[+[mother,[a],[b]]],[+[mother,[a],[c]]],[+[father,[d],[b]]],[+[father,[g],[a]]],[+[father,[g],[c]]]]],[([-[father,[a],[b]]],[[([-[father,[a],[b]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[male,[a]],-[parent,[a],[b]]],[0,0]),([-[male,[a]],-[parent,[a],[b]]],[+[male,[a]]],[],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[father,[a],[c]]],[[([-[father,[a],[c]]],[+[father,vble(x),vble(y)],-[male,vble(x)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[male,[a]],-[parent,[a],[c]]],[0,0]),([-[male,[a]],-[parent,[a],[c]]],[+[male,[a]]],[],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]]),([-[mother,[d],[b]]],[[([-[mother,[d],[b]]],[+[mother,vble(y),vble(z)],-[female,vble(y)],-[parent,vble(y),vble(z)]],[[b]/vble(z),[d]/vble(y)],[-[female,[d]],-[parent,[d],[b]]],[0,0]),([-[female,[d]],-[parent,[d],[b]]],[+[female,[d]]],[],[-[parent,[d],[b]]],[0,0]),([-[parent,[d],[b]]],[+[parent,[d],[b]]],[],[],[0,0])]]),([-[father,[f],[a]]],[[([-[father,[f],[a]]],[+[father,[f],[a]]],[],[],[0,0])]])],[],[])],    pause;true),
-    writeLog([    nl, write_term('--The number of Optimals: '), write_term(LO), nl, write_termAll(Optimals), finishLog]),
+    pareOpt(AllRepStates, Optimals1),
+    length(Optimals1, LO1),
+    writeLog([nl, write_term_c('--The number of Optimals: '), write_term_c(LO1), nl, write_term_All(Optimals1), finishLog]),
+    % pruning the sub-optimal based on the vitality.
+    % vitalityOpt(AllRepStates, Optimals2),
+    % length(Optimals2, LO2),
+    % writeLog([nl, write_term_c('--The number of Vitality Optimals: '), write_term_c(LO2), nl, write_term_All(Optimals2), finishLog]),
+    %
+    % subtract(Optimals1, Optimals2, In1Not2),
+    % subtract(Optimals2, Optimals1, In2Not1),
+    % length(In1Not2, LO3),
+    % length(In2Not1, LO4),
+    %
+    % writeLog([nl, write_term_c('--The solution in 1 not in 2 include: '), write_term_c(LO3), nl, nl, write_term_All(In1Not2), finishLog]),
+    % writeLog([nl, write_term_c('--The solution in 2 not in 1 include: '), write_term_c(LO4), nl, nl, write_term_All(In2Not1), finishLog]),
+    %
+
     % get one optimal repaired theory along with its remaining faults and applied repairs Rep.
-    member((TheoryStateOp, FaultStateOp), Optimals),
+    member((TheoryStateOp, FaultStateOp), Optimals1),
     NewLayer is Layer+1,
     repInsInc(TheoryStateOp, NewLayer, FaultStateOp, TheoryRep).
 
@@ -266,7 +281,7 @@ pareOpt(StatesFaultsAll, TheoryStateOut):-
     transposeF(TheoryStateTem2, [_, TheoryStateOut]),!.
 
 pareOpt(StatesFaultsAll, OptStates):-
-    %writeLog([nl, write_term('--------- Pruning the sub-optimals with Threshod: '), write_term(Theres), nl, finishLog]),
+    %writeLog([nl, write_term_c('--------- Pruning the sub-optimals with Threshod: '), write_term_c(Theres), nl, finishLog]),
     findall((TheoryState1, FaultState1),
             (member((NumF11, NumF12, TheoryState1, FaultState1), StatesFaultsAll),
              TheoryState1 = [[Rs1, _]|_],
@@ -276,19 +291,44 @@ pareOpt(StatesFaultsAll, OptStates):-
                       TheoryState2 = [[Rs2, _]|_],
                      length(Rs2, NumR2),
                      Cost2 is NumR2 + NumF21 + NumF22),
-                    (%writeLog([nl, write_term('Cost1 & Cost2 is ---------'),nl,write_term(Cost1), write_term(Cost2), finishLog]),
-                      Cost2 >= Cost1))),    % The repaired theory is not strictly dominated by any others.
+                    (%writeLog([nl, write_term_c('Cost1 & Cost2 is ---------'),nl,write_term_c(Cost1), write_term_c(Cost2), finishLog]),
+                      Cost2 >= Cost1)),
+             writeLog([nl, write_term_c('An Optimal repaired theory with cost:'), write_term_c(Cost1),
+             write_term_c(' and the fault state: '), write_term_c(FaultState1), nl, write_term_c(TheoryState1), finishLog])),    % The repaired theory is not strictly dominated by any others.
             OptStates).
 
-% domination if f11*<f21 and f12 *< f22
-pareOptBak(StatesFaultsAll, OptStates):-
-    writeLog([nl, write_term('--------- start pruning the sub-optimals ---------'),nl, finishLog]),
-    findall((TheoryState, FaultState),
-            (member((NumF11, NumF12, TheoryState, FaultState), StatesFaultsAll),
-             forall(member((NumF21, NumF22, _, _), StatesFaultsAll),
-                     \+strDominated([NumF21, NumF22], [NumF11, NumF12]))),    % The repaired theory is not strictly dominated by any others.
-            OptStates).
+/**********************************************************************************************************************
+    vitalityOpt(StatesFaultsAll, OptStates):
+            return a repaired theory w.r.t. one fault among the FaultStates by only selecting the optimal based on vitality scores
+    Input:  StatesFaultsAll is a list: [(FNum1, FNum2, TheoryState, FaultState),...]
+    Output: OptStates is also a list of (TheoryState, FaultState) by pruning the sub-optimals.
+            For more information about TheoryState/FaultState, please see detInsInc.
+************************************************************************************************************************/
+% if the sub-optimal pruning is not applied, return the input.
+vitalityOpt(StatesFaultsAll, TheoryStateOut):-
+    spec(heuris(H)),
+    member(noOpt, H),
+    findall([FNum, (TheoryState, FaultState)],
+            (member((N1, N2, TheoryState, FaultState), StatesFaultsAll),
+             FNum is N1 +N2),
+            TheoryStateTem),
+    sort(TheoryStateTem, TheoryStateTem2),
+    transposeF(TheoryStateTem2, [_, TheoryStateOut]),!.
 
+vitalityOpt(StatesFaultsAll, VitOptStates):-
+    %writeLog([nl, write_term_c('--------- Pruning the sub-optimals with Threshod: '), write_term_c(Theres), nl, finishLog]),
+    findall([TotalScores, TheoryState1, FaultState1],
+            (member((_, _, TheoryState1, FaultState1), StatesFaultsAll),
+             TheoryState1 = [_,_, _, TheoryIn, _, _],
+             vitality(FaultState1, TheoryIn, [], VitState, (0,0), TotalScores),
+             writeLog([nl, write_term_c('The vitality of the repaired theory is :'), write_term_c(VitState), nl,
+                       write_term_c(' Vitality TotalScores are: '), write_term_c(TotalScores), nl, finishLog])),    % The repaired theory is not strictly dominated by any others.
+            VitalStates),
+    sort(VitalStates, Sorted),
+    last(Sorted, [MaxScore, _, _]),  % get the scores of the most vital axiom.
+    findall((TheoryState1, FaultState1),
+              member([MaxScore, TheoryState1, FaultState1], Sorted),
+            VitOptStates).
 
 /**********************************************************************************************************************
     mergeRs(RepStates, RepStatesNew):- if the theory of two states are same, then merge these two states.

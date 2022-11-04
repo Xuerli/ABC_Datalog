@@ -53,7 +53,7 @@ initTheory(Theory):-
         assert(spec(heuris(HeursOld)))),
     length(Theory, Size),
     assert(spec(inputTheorySize(Size))).
-    %nl, write_term('Complete initialising the input theory, signature and the preferred structure.'),nl.   % Get all sentences from both the theory and the preferred structure.
+    %nl, write_term_c('Complete initialising the input theory, signature and the preferred structure.'),nl.   % Get all sentences from both the theory and the preferred structure.
 
 
 % only clear the internal assertions, not ones from the input theory, e.g., trueSet, falseSet..
@@ -75,16 +75,16 @@ supplyInput:-
     Input: the assertions of trueSet([...]) and falseSet([...])
 **********************************************************************************************/
 precheckPS:-
-    %nl,nl,write_term('-------Start the consistency check on the preferred structure--------'),nl,
+    %nl,nl,write_term_c('-------Start the consistency check on the preferred structure--------'),nl,
     % no conflicts in the preferred structure
     spec(pft(Trues)),
     spec(pff(Falses)),
     % get the conflicts between the preferred structure and the constrain axioms in the thoery.
     findall(('Constraint', Constrain),
             (spec(protList(ProtectedList)),
-               member(Constrain, ProtectedList),
-             notin(+_, Constrain),    % get a constraint axiom from the theory
+             member(Constrain, ProtectedList),
              Constrain=[-_|_],
+             notin(+_, Constrain),    % get a constraint axiom from the theory
              slRL(Constrain, Trues, [], [_|_], [], [])),    % Proof [_|_] exist which is not an empty list.
             Conflict),
     % C1: the propositions that occur in both the true set and the false set.
@@ -106,12 +106,12 @@ precheckPS:-
     checkPSPrint(Conflicts).
 
 
-checkPSPrint([]):- !.% nl,write_term('-------Check finished. The preferred structure is consistent.').
+checkPSPrint([]):- !.% nl,write_term_c('-------Check finished. The preferred structure is consistent.').
 checkPSPrint(Conflicts):-
     Conflicts \= [],
-    nl,nl, write_term('-------Consistency check failed due to the following propositions:'),
-    nl, write_termAll(Conflicts),
-    nl, write_term('-------Please revise the preferred structure, Thanks.'),nl,nl.
+    nl,nl, write_term_c('-------Consistency check failed due to the following propositions:'),
+    nl, write_term_All(Conflicts),
+    nl, write_term_c('-------Please revise the preferred structure, Thanks.'),nl,nl.
 
 
 initTheory(Axioms, Clauses):-
@@ -126,7 +126,7 @@ initTheory(Axioms, Clauses):-
     initSignature(Theory): based on the input theory in the original format, e.g., axiom([=(a,b)])
         Input:           Theory: clauses in the internal format.
         Output:        assert the signature information to global variable 'signature'.
-                    To write_term it, please use: spec(signature(X)),write(X).
+                    To write_term_c it, please use: spec(signature(X)),write(X).
         Example: X = (X1, X2),
                  X1 = [(a, [(1, theory)], [[[diana]]]),  ((=), [(2, falseSet),  (2, theory)], [[[diana]], [[camilla]]]),  (vum, [(2, theory)], [[[camilla]], [[...]]]),  (women, [(1, theory)], [[]])]
                  X2 = [[camilla], [diana], [william]]
@@ -190,9 +190,9 @@ mergeArity(SigTemp, [(Pred, Arities, ArgsDomains)| TMerged], ConsAll):-
         mergeArity(SigRest, TMerged, ConsList2),
         append(ConsList1, ConsList2, ConsAll);
       % transposeF fails if the arity is not in same sizes.
-        nl, write_term('---------- Error: Predicate is overloaded: ----------'), nl,
-        write_term("The arities of "), write_term(Pred), write_term(" include "), write_term(Arities), nl,
-          nl, write_term('Please correct it first.'), fail).
+        nl, write_term_c('---------- Error: Predicate is overloaded: ----------'), nl,
+        write_term_c("The arities of "), write_term_c(Pred), write_term_c(" include "), write_term_c(Arities), nl,
+          nl, write_term_c('Please correct it first.'), fail).
 
 
 /**********************************************************************************************************************
@@ -246,8 +246,9 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     deleteAll(TheoryIn, Assertions, Rules),
     append(Assertions, Rules, TheorySorted),
     smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut),
-    resetIndepVble(MinimalTem, Minimal).
+    resetIndepVble(TheoryIn, Minimal).
 
+smaller(TheorySorted,  _, RsIn, [], TheorySorted, RsIn).
 /**********************************************************************************************************************
     smaller(TheoryIn, EC, RsIn, Axioms, Minimal, RsOut):
     Input:      TheoryIn is a list of clauses.
@@ -256,10 +257,11 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     Intermediate: Axioms is a list of axioms found.
     Output:     Minimal is the minimal set of TheoryIn that is found first.
                 RsOut is the revised repair plans.
-************************************************************************************************************************/
+smaller([[+[bird, [polly]]], [+[penguin, [tweety]]], [+[bird, vble(y)], -[penguin, vble(y)]], [+[feather, vble(y)], -[bird, vble(y)]], [+[fly, vble(x)], -[bird, vble(x)]]], [[[polly]], [[tweety]]], [], [], _93064, []).
+
 smaller([], _, Rs, Minimal, Minimal, Rs).
 % Cl is a theorem rather than an axiom.
-smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
+smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):- pause,
     negateCl(Cl, Goal),
     append(Axioms, ClRest, TheoryTem),    % Get the candidates of the minimal set.
     slRL(Goal, TheoryTem, EC, [_|_],_,_), !,  % Goal is a theorem of the rest clauses in the theory. Do not continue to try the next branch of smaller/6.
@@ -267,8 +269,9 @@ smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
     smaller(ClRest, EC, RsNew, Axioms, Minimal, RsOut).
 
 % Cl is an axiom, record it and then examine the next clause.
-smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
+smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-pause,
     smaller(ClRest, EC, RsIn, [Cl| Axioms], Minimal, RsOut).
+    ************************************************************************************************************************/
 
 
 /**********************************************************************************************

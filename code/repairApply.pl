@@ -14,18 +14,19 @@
             RsBanOut: updated the list of banned repair plans.
 ***********************************************************************************************************************/
 appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
-    writeLog([nl, write_term('-------- Start to apply repair plans:'), nl, write_termAll(RepPlans),nl,finishLog]),
+    writeLog([nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,finishLog]),
     TheoryStateIn = [[RsIn, RsBanIn],EC, Eproof, TheoryIn, TrueSet, FalseSet],
-    appRepair(RepPlans, TheoryIn, RsBanIn, TheoryOut, RsBanOut),
-    append(RsIn, RepPlans, RsOut),
+    appRepair(RepPlans, [], TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied),
+    append(RsIn, RsApplied, RsOut),
     TheoryStateOut = [[RsOut, RsBanOut],EC, Eproof, TheoryOut, TrueSet, FalseSet].
 
-appRepair([], Theory, RsBan, Theory, RsBan):-!,
-    writeLog([nl, write_term('-------- Finish applying repair plans.'), nl, finishLog]).
-appRepair([Rs1|Rest], TheoryIn, RsBanIn, TheoryOut, RsBanOut):-
+appRepair([], RsApplied, Theory, RsBan, Theory, RsBan, RsApplied):-!,
+    writeLog([nl, write_term_c('-------- Finish applying repair plans.'), nl, finishLog]).
+appRepair([Rs1|Rest], RsAppliedIn, TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied):-
     appRepair(Rs1, TheoryIn, RsBanIn, TheoryTem, RsBanTem),
-    verifyRep(TheoryIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2),
-    appRepair(Rest, TheoryTem2, RsBanTem2, TheoryOut, RsBanOut).
+    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),
+    sort(TheoryTem2, TheoryTem3),
+    appRepair(Rest, RsAppliedInNew, TheoryTem3, RsBanTem2, TheoryOut, RsBanOut, RsApplied).
 
 %% Belief revision: delete unwanted clauses from the original Theory.
 appRepair(delete(Clause), TheoryIn, RsBan, TheoryOut, RsBan):-
@@ -52,10 +53,13 @@ appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):-
     replaceS(Rule, RuleNew, TheoryIn, TheoryOut),!.
 
 
-%% Apply weaken a variable to a constant.
+%% Apply weaken a variable to a constant, unless it results in a rule with no variables.
 appRepair(weaken(vble(X), TargCons, TargCl), TheoryIn, RsBan, TheoryOut, RsBan):-
     appEach(TargCl, [appLiteral, [replace, 2, vble(X), TargCons]], ClNew),
-    replaceS(TargCl, ClNew, TheoryIn, TheoryOut), !.
+    findall(vble(X), ((member(+Prop, ClNew); member(-Prop, ClNew)), member(vble(X), Prop)), RemainingVbles),
+    (RemainingVbles = []-> TheoryOut = TheoryIn,
+     writeLog([nl, write_term_c('********  Warning : a rule without variables is resulted, so refuse the repair: '), nl,write_term_c(weaken(vble(X), TargCons, TargCl)),nl,finishLog]);
+    RemainingVbles \= [], replaceS(TargCl, ClNew, TheoryIn, TheoryOut), !).
 
 appRepair(extC2V(X), TheoryIn, RsBanIn, TheoryOut, RsBanOut):-
     appRepair(rename(X), TheoryIn, RsBanIn, TheoryOut, RsBanOut).
@@ -73,14 +77,14 @@ appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):
     replaceS(TargetCl, ClNewSorted, TheoryIn, TheoryOut),
     termOcc(F, TheoryOut, OccF),    % calculate the number occurances of F in the new theory.
     (OccF == 0, occur(F, ProtectedList)->
-                writeLog([nl, write_term('******** Warning1: Cannot apply repair plan:'),
-                write_term(rename(F)),nl,
-                write_term('--Otherwise the predicate is gone:'), nl, finishLog]),
+                writeLog([nl, write_term_c('******** Warning1: Cannot apply repair plan:'),
+                write_term_c(rename(F)),nl,
+                write_term_c('--Otherwise the predicate is gone:'), nl, finishLog]),
                 fail;    % F is gone, which is not allowed. Go to the last branch of appRepair
      OccF < 2, occur(F,ProtectedList)->
-                 RsBanOut = [rename(F)| RsBanIn], writeLog([nl, write_term('******** Warning2 do not apply:'),
-                 write_term(rename(F)),nl, write_term(' more.'), nl, finishLog]),!;     % do not rename F further
-     RsBanOut = RsBanIn, writeLog([nl, write_term('******** Finish renaming.'),nl, finishLog]),!).
+                 RsBanOut = [rename(F)| RsBanIn], writeLog([nl, write_term_c('******** Warning2 do not apply:'),
+                 write_term_c(rename(F)),nl, write_term_c(' more.'), nl, finishLog]),!;     % do not rename F further
+     RsBanOut = RsBanIn, writeLog([nl, write_term_c('******** Finish renaming.'),nl, finishLog]),!).
 
 appRepair(rename(_, _, InpClOld, ClNew), TheoryIn, RsBan, TheoryOut, RsBan):-
     replaceS(InpClOld, ClNew, TheoryIn, TheoryOut).
@@ -104,7 +108,7 @@ appRepair(merge(POld, PNew, ArgDiff, Op), TheoryIn, RsBan, TheoryOut, RsBan):-
 
 
 appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):-
-    writeLog([nl, write_term('-------- Start apply arityDec-------- '),nl, write_term(arityDec(PG, TargCls, PosMis)), finishLog]),
+    writeLog([nl, write_term_c('-------- Start apply arityDec-------- '),nl, write_term_c(arityDec(PG, TargCls, PosMis)), finishLog]),
      % decrease the arity of PG by replacing the arguments which need to be deleted with [] and then delete [].
      findall((ClOld, ClNew),
                  (member(ClOld, TargCls),
@@ -128,8 +132,8 @@ appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):-
 %% The input theory does not include propositions in preferred structure(PS).
 %% Therefore, arityInc which blocks the unification of a proposition from PS and a input proposition will fail.
 appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):-
-    writeLog([nl, write_term('-------- Start apply arityInc-------- '),nl,
-        write_term(arityInc(P, TargetL, TargetCl)), finishLog]),
+    writeLog([nl, write_term_c('-------- Start apply arityInc-------- '),nl,
+        write_term_c(arityInc(P, TargetL, TargetCl)), finishLog]),
 
     % collect the existing dummy terms in the input theory.
     findall(Num, (member(Clause, TheoryIn),
@@ -183,19 +187,21 @@ appRename((COld, CNew, ClOld), TheoryIn, TheoryOut):-
             RsBanIn: the banned list of repair plans.
     Output: RsBanOut: the revised banned list of repair plans.
 ***********************************************************************************************************************/
-verifyRep(Theory, Theory, RepPlan, RsBanIn, [RepPlan|RsBanIn], Theory):- !.    % the repair plan makes no difference
+verifyRep(Theory, RsAppliedIn, Theory, RepPlan, RsBanIn, [RepPlan|RsBanIn], Theory, RsAppliedIn):- !.    % the repair plan makes no difference
 % no orphan variable allowed
-verifyRep(TheoryOld, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
     %  orphan Vb
     appEach(TheoryNew, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
     sort(Ophans, OpOrdered), % remove duplicates.
     % check that there should not be any axiom with orphan variable.
     flatten(OpOrdered, [_|_]), !,
-    writeLog([nl, write_term('******** Warning: verifyRep found orphans:'), write_term(RepPlan),nl,
-            nl, write_termAll(TheoryNew),nl, finishLog]).
+    writeLog([nl, write_term_c('******** Warning: verifyRep found orphans:'), write_term_c(RepPlan),nl,
+            nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % no protected axioms should gone.
-verifyRep(TheoryOld, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+    writeLog([nl, write_term_c('******** RepPlan: '), write_term_c(RepPlan),nl]),
+    RepPlan \= arityInc(_,_,_,_,_),
     spec(protList(ProtectedList)),
     deleteAll(TheoryOld, TheoryNew, AxiomsGone),
     spec(protList(ProtectedList)),
@@ -204,16 +210,16 @@ verifyRep(TheoryOld, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld):
     member(X, AxiomsGone),
     occur(delte(X), RsBanIn)), !,
      % at least one protected axiom is gone due to the merge, which is not allowed. Go to the last branch of appRepair
-    writeLog([nl, write_term('******** Warning: verifyRep:'), write_term(RepPlan),nl,
-                write_term(' failed.'),nl, write_termAll(TheoryNew),nl, finishLog]).
+    writeLog([nl, write_term_c('******** Warning: verifyRep:'), write_term_c(RepPlan),nl,
+                write_term_c(' failed.'),nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % Heuristic4: no mirror rule is allowed
-verifyRep(TheoryOld, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
     setof([+Y,-X], (member([+X,-Y], TheoryNew), member([+Y,-X], TheoryNew)), LoopRule),
     % at least one mirror rule is found.
-    writeLog([nl, write_term('******** Warning: verifyRep found a loop rule:'), write_term(LoopRule), nl, finishLog]).
+    writeLog([nl, write_term_c('******** Warning: verifyRep found a loop rule:'), write_term_c(LoopRule), nl, finishLog]).
 % Finish the verification.
-verifyRep(_, TheoryNew, _, RsBan, RsBan, TheoryNew).
+verifyRep(_, RsAppliedIn, TheoryNew, RepPlan, RsBan, RsBan, TheoryNew, [RepPlan|RsAppliedIn]).
 
 /**********************************************************************************************************************
     repCombine(RepPlans, Theory, RepSolsOut):-
@@ -241,7 +247,7 @@ repCombine(RepPlans, Theory, RepSolsOut):-
                               deleteAll(Group, Group2, [_|_]))),
             RepSols),
     sort(RepSols, RepSolsOut),
-    writeLog([nl, write_term('All collections of repair plans are: '), nl, write_termAll(RepSolsOut),nl, finishLog]).
+    writeLog([nl, write_term_c('All collections of repair plans are: '), nl, write_term_All(RepSolsOut),nl, finishLog]).
 
 
 repCombine([], _, Solutions, Solutions).
@@ -267,7 +273,7 @@ updGroup(Group, Rep,Theory, GroupsOut):-
                     (member(RepS, Group),
                     RepS = [FTypeS, (_, TargClsS), ClS],
                     repConflict(FType1, FTypeS, Theory, TargCls1, TargClsS, Cl1, ClS)),
-                    %writeLog([nl,write_term('--Conflicts of repairs:'),nl, write_term(FType1),write_term(' vs '), write_term(FTypeS),nl, write_term(Rep),nl,write_term(RepS),nl, finishLog])),
+                    %writeLog([nl,write_term_c('--Conflicts of repairs:'),nl, write_term_c(FType1),write_term_c(' vs '), write_term_c(FTypeS),nl, write_term_c(Rep),nl,write_term_c(RepS),nl, finishLog])),
             Confs),
     (Confs = [_|_]->
         deleteAll(Group, Confs, Fusion), !,
@@ -313,7 +319,7 @@ repConflict(insuff, insuff, Theory, TargetCls1, TargetCls2, ClE1, ClE2):-
             intersection(PBranch, PCl1, Int),
             Int = [_|_]),
         Conflicts)),
-    writeLog([nl,write_term('--Conflicts of insuff vs insuff:'),write_term(Conflicts),nl, finishLog]).
+    writeLog([nl,write_term_c('--Conflicts of insuff vs insuff:'),write_term_c(Conflicts),nl, finishLog]).
 
 repConflict(insuff, incomp, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
     repConflict(incomp, insuff, Theory, TargetCls2, TargetCls1, ClP2, ClP1).
@@ -331,4 +337,4 @@ repConflict(incomp, insuff, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
             intersection(PBranch, PCl2, Int),
             Int = [_|_]),    % there is an axiom which constitutes the proof of repairing the insufficiency whose predicate is under the scope of P's influence
         Conflicts),
-    writeLog([nl,write_term('--Conflicts of incomp vs insuff:'),write_term(Conflicts),nl, finishLog]).
+    writeLog([nl,write_term_c('--Conflicts of incomp vs insuff:'),write_term_c(Conflicts),nl, finishLog]).

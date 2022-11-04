@@ -92,8 +92,8 @@ renamePred(Mismatches, [PG| _], TargetLit, TargCl, RepPlan, [TargCl]):-
 renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):-
     Mismatches = [_|_],
     spec(protList(ProtectedList)),
-    writeLog([nl,write_term('--renameArgs: Mismatches:'),nl,write_term(Mismatches),nl,
-      write_term(ProtectedList),nl,finishLog]),
+    writeLog([nl,write_term_c('--renameArgs: Mismatches:'),nl,write_term_c(Mismatches),nl,
+      write_term_c(ProtectedList),nl,finishLog]),
 
      setof([(COrig, CTarget, C1Cl), C1Cl],
                 (member((C1, C2),Mismatches),
@@ -111,8 +111,8 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
      length(RS, MisNum),     % have found the clause of all mismached pairs
     transposeF(RS, [MisPairs, TargCls]),
     RepPlan = rename(MisPairs),
-    writeLog([nl,write_term('--renameArgs: RepPlanS:'),nl,write_term(RepPlan),nl,
-        nl,write_term('--renameArgs: TargCls:'),nl,write_term(TargCls),nl, finishLog]).
+    writeLog([nl,write_term_c('--renameArgs: RepPlanS:'),nl,write_term_c(RepPlan),nl,
+        nl,write_term_c('--renameArgs: TargCls:'),nl,write_term_c(TargCls),nl, finishLog]).
 
 % generate reformation repair plan of extend a constant to a variable when the predicate is matched but arguments.
 extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):-
@@ -138,8 +138,8 @@ extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):-
      length(RS, MisNum),     % have found the clause of all mismached pairs
     transposeF(RS, [MisPairs, TargCls]),
     RepPlan = extC2V(MisPairs),
-    writeLog([nl,write_term('--extC2V: RepPlanS:'),nl,write_term(RepPlan),nl,
-        nl,write_term('--extC2V: TargCls:'),nl,write_term(TargCls),nl, finishLog]).
+    writeLog([nl,write_term_c('--extC2V: RepPlanS:'),nl,write_term_c(RepPlan),nl,
+        nl,write_term_c('--extC2V: TargCls:'),nl,write_term_c(TargCls),nl, finishLog]).
 
 
 /*********************************************************************************************************************************
@@ -166,7 +166,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     % Get the original negative literal and its clause where -GTarg comes from.
     traceBackPos([PG| ArgsG], Evi, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
     spec(protList(ProtectedList)),
-    writeLog([nl,write_term('Reformation: targeted evidence'),nl,write_term([PG| ArgsG]), finishLog]),
+    writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
 
     setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, Proof),
             (member(Axiom, TheoryIn),
@@ -182,10 +182,10 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
                         length(ArgDiff, MisNum),
                         MisPairPos = [])),
             Cand),
-    writeLog([nl,write_term('--------Reformation Candidates------'),nl, write_term(Cand), finishLog]),
+    writeLog([nl,write_term_c('--------Reformation Candidates------'),nl, write_term_c(Cand), finishLog]),
     member((Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, ProofRest), Cand),
-    writeLog([nl,write_term('---------------Axiom is 1  '),write_term(Axiom), finishLog]),
-    writeLog([nl,write_term('---------------Mismatches is 1  '),write_term(Mismatches), finishLog]),
+    writeLog([nl,write_term_c('---------------Axiom is 1  '),write_term_c(Axiom), finishLog]),
+    writeLog([nl,write_term_c('---------------Mismatches is 1  '),write_term_c(Mismatches), finishLog]),
 
     spec(heuris(Heuristics)),
     (% if the irresolvable sub-goal is not from the preferred structure, reform the sub-goal

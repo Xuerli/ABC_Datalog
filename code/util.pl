@@ -79,7 +79,7 @@ appEach([H| T], [Predicate| Args], Output):- !,
     Expression =..EList,
     (call(Expression)-> Output = [HOut| TOut], !;
     \+call(Expression)-> Output = TOut,
-    writeLog([nl,write_term('--Failed to apply '),nl,write_term(Expression),nl,  finishLog])),
+    writeLog([nl,write_term_c('--Failed to apply '),nl,write_term_c(Expression),nl,  finishLog])),
     appEach(T, [Predicate| Args], TOut).
 
 /**********************************************************************************************
@@ -579,8 +579,8 @@ orphanVb(Axiom,  OpVbles):-
             (member(vble(X), ArgsHead),
              notin(vble(X), BodyVbles)),    % vble(X) is not a member of BodyVbles
             OpVbles), !,
-    nl, nl,nl,write_term('---------- Error: orphan variable is found in: ----------'), nl,
-    write_term(Axiom), nl, write_term(OpVbles).
+    nl, nl,nl,write_term_c('---------- Error: orphan variable is found in: ----------'), nl,
+    write_term_c(Axiom), nl, write_term_c(OpVbles).
 
 orphanVb(_, []).
 
