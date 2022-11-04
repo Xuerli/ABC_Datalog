@@ -261,7 +261,7 @@ smaller([[+[bird, [polly]]], [+[penguin, [tweety]]], [+[bird, vble(y)], -[pengui
 
 smaller([], _, Rs, Minimal, Minimal, Rs).
 % Cl is a theorem rather than an axiom.
-smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):- pause,
+smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):- 
     negateCl(Cl, Goal),
     append(Axioms, ClRest, TheoryTem),    % Get the candidates of the minimal set.
     slRL(Goal, TheoryTem, EC, [_|_],_,_), !,  % Goal is a theorem of the rest clauses in the theory. Do not continue to try the next branch of smaller/6.
@@ -269,7 +269,7 @@ smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):- pause,
     smaller(ClRest, EC, RsNew, Axioms, Minimal, RsOut).
 
 % Cl is an axiom, record it and then examine the next clause.
-smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-pause,
+smaller([Cl| ClRest], EC, RsIn, Axioms, Minimal, RsOut):-
     smaller(ClRest, EC, RsIn, [Cl| Axioms], Minimal, RsOut).
     ************************************************************************************************************************/
 
