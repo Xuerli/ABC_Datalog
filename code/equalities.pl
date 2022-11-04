@@ -35,8 +35,8 @@ unaeMain(TheoryIn, OptStateRep):-
     appEach(TheoryIn, [repEquVab], Theory1),
     % replace constants in the theory and the preferred structure with their equality class representatives respectively.
     equClass(Theory1, ECState),
-    writeLog([nl, write_term('---------The ECState are------'),
-            write_termAll(ECState), finishLog]),
+    writeLog([nl, write_term_c('---------The ECState are------'),
+            write_term_All(ECState), finishLog]),
 
     TheoryState = ([]| ECState),    % initialise the repair as [].
     % calculate equivalence classes, and then detect the faults based on the preferred structure and UNAE.
@@ -74,9 +74,9 @@ equClass(TheoryIn, EStateOut):-
     appEach(FalseSet, [appLiteral, [rewConsRep, EqClasses]], FalseSetNew),
     EStateOut= [EqClasses, EAll, EProofs, TheoryNew, TrueSetNew, FalseSetNew],
 
-    writeLog([write_term('Complete equlities computation.'),
-            nl, write_term('--------The Equality Class is:--------'),
-            nl,write_termAll(EqClasses), finishLog]).
+    writeLog([write_term_c('Complete equlities computation.'),
+            nl, write_term_c('--------The Equality Class is:--------'),
+            nl,write_term_All(EqClasses), finishLog]).
 
 /**********************************************************************************************************************
     unaeFaultDet(TheoryStateIn, Output): detect unae faults.
@@ -276,8 +276,8 @@ unaeOptimal(TheoryFaultsIn, TheoryFaultsOpt):-
              forall(member([_,_,_,_,_,NumFaults2], TheoryFaultsIn),
                      \+strDominated(NumFaults2, NumFaults1))),
             TheoryFaultsOpt),
-    writeLog([nl, write_term('---------The UNAE Optimals are------'),
-            write_termAll(TheoryFaultsOpt), finishLog]).
+    writeLog([nl, write_term_c('---------The UNAE Optimals are------'),
+            write_term_All(TheoryFaultsOpt), finishLog]).
 
 /**********************************************************************************************************************
     updateEC((ECOld, EProofsOld), TheoryIn, (ECNew, EProofsNew)): update equivalence classes and their proofs.
@@ -369,11 +369,11 @@ repEquVab(Axiom, AxiomOut):-
           member(-[=, vble(X), vble(Y)], Axiom),
           EquPairLists), !,   % get all equalities of variables in the axiom.
     appAll(makeEqual, EquPairLists, EquPairLists, NewEqualVabLists, 2),    % update the variables' equality class.
-    writeLog([nl,write_term('--------------------NewEqualVabLists ---------------------'),nl,
-            write_term(NewEqualVabLists), finishLog]),
+    writeLog([nl,write_term_c('--------------------NewEqualVabLists ---------------------'),nl,
+            write_term_c(NewEqualVabLists), finishLog]),
     appEach(Axiom, [appLiteral, [rewConsRep, NewEqualVabLists]], AxiomOut),
-    writeLog([nl,write_term('--------------------AxiomNew ---------------------'),nl,
-            write_term(AxiomOut), finishLog]).
+    writeLog([nl,write_term_c('--------------------AxiomNew ---------------------'),nl,
+            write_term_c(AxiomOut), finishLog]).
 
 repEquVab(Axiom, Axiom).
 

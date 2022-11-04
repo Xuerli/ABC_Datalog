@@ -44,19 +44,19 @@ initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
 
 
 /**********************************************************************************************
-   output: write_term screen and write record file abc_record.txt.
+   output: write_term_c screen and write record file abc_record.txt.
 ***********************************************************************************************/
 % If no repairs found, output the current result of semi-repairs.
 output(AllRepStates, ExecutionTime):-
     notin([fault-free|_], AllRepStates),!,
     fileName('faulty', Fname2),
     open(Fname2, write, Stream2),
-    write_term('******************************************'),
-    write_term('Execution took '),
-    write_term(ExecutionTime),
-    write_term(' ms.'),nl,
-    nl, write_term('The faulty theory cannot be repaired.'),
-    write_term('The semi-repaired theories are:'),
+    write_term_c('******************************************'),
+    write_term_c('Execution took '),
+    write_term_c(ExecutionTime),
+    write_term_c(' ms.'),nl,
+    nl, write_term_c('The faulty theory cannot be repaired.'),
+    write_term_c('The semi-repaired theories are:'),
 
     findall(RepTheory, member([fault,_,[[_,_], _, _, RepTheory, _, _]], AllRepStates),TBS),
     deleteAll(TBS, [], TBS1),
@@ -66,46 +66,13 @@ output(AllRepStates, ExecutionTime):-
 
     write_Spec(Stream2, ExecutionTime, 0, SemiNum),
     writeFile(fault, Stream2, TBSS, AllRepStates),
-    writeLog([nl, write_term('------------- TBSS -------------'), nl,
-                  write_termAll(TBSS),nl,nl,nl,
-                  write_term('SemiNumRaw is: '), write_term(SemiNumRaw),nl,
-                  write_term('SemiNum is: '), write_term(SemiNum),nl, finishLog]),
+    writeLog([nl, write_term_c('------------- TBSS -------------'), nl,
+                  write_term_All(TBSS),nl,nl,nl,
+                  write_term_c('SemiNumRaw is: '), write_term_c(SemiNumRaw),nl,
+                  write_term_c('SemiNum is: '), write_term_c(SemiNum),nl, finishLog]),
     close(Stream2),
-    nl, write_term('In total, there are ',[]), write_term(SemiNum,[]), write_term(' semi-repaired theories.',[nl]).
+    nl, write_term_c('In total, there are ',[]), write_term_c(SemiNum,[]), write_term_c(' semi-repaired theories.'), nl.
 
-output(AllRepStates, ExecutionTime):-
-    forall(member([fault-free, X,[_,_,_,_,_,_]], AllRepStates), X ==0),
-    findall(ClS, (axiom(Cl), sort(Cl, ClS)), Facts),
-    sort(Facts, OrigTheory),
-    fileName('faultFree', Fname1),
-    open(Fname1, write, Stream1),
-    writeLog([nl, write_term('------------- AllRepStates -------------'), nl,
-                  write_termAll(AllRepStates),nl,nl,nl, finishLog]),
-
-    % output the execution time.
-    (exists_file('aacur.txt')->
-        open('aacur.txt', append, StreamC), nl(StreamC),
-        write(StreamC, ExecutionTime),
-        close(StreamC);
-    \+exists_file('aacur.txt')->
-        open('aacur.txt', write, StreamC), nl(StreamC),
-        write(StreamC, ExecutionTime),
-        close(StreamC)),
-
-    trueSet(TrueSet),
-    falseSet(FalseSet),
-    write_term('Execution took ',[quoted(false)]),
-    write_term(ExecutionTime,[quoted(false)]),
-    write_term(' ms.',[quoted(false)]), nl,
-    write(Stream1, 'The original theory is fault-free.'), nl(Stream1),!,
-    write(Stream1, 'The fault-free theory : '), nl(Stream1),
-    writeAll(Stream1, OrigTheory), nl(Stream1),
-    write(Stream1, 'The true set:'), nl(Stream1),
-    (TrueSet \= [] ->  writeAll(Stream1, TrueSet), !;
-             write(Stream1, '[]')), nl(Stream1),
-    write(Stream1, 'The false set: '), nl(Stream1),
-    (FalseSet \= [] -> writeAll(Stream1, FalseSet), !;
-             write(Stream1, '[]')), nl(Stream1),close(Stream1).
 
 output(AllRepStates, ExecutionTime):-
     setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
@@ -124,22 +91,22 @@ output(AllRepStates, ExecutionTime):-
         write(StreamC, ExecutionTime),
         close(StreamC)),
 
-    writeLog([nl, write_term('------------- AllRepStates -------------'), nl,
-              write_termAll(AllRepStates),nl,nl,nl, finishLog]),
+    writeLog([nl, write_term_c('------------- AllRepStates -------------'), nl,
+              write_term_All(AllRepStates),nl,nl,nl, finishLog]),
 
     trueSet(TrueSet),
     falseSet(FalseSet),
-    write_term('Execution took ',[quoted(false)]),
-    write_term(ExecutionTime,[quoted(false)]),
-    write_term(' ms.',[quoted(false)]), nl,nl,
+    write_term_c('Execution took '),
+    write_term_c(ExecutionTime),
+    write_term_c(' ms.'), nl,nl,
 
 
-    nl, write_term('The original theory : ', [nl]), write_termAll(OrigTheory), nl,
+    nl, write_term_c('The original theory : '), nl, write_term_All(OrigTheory), nl,
 
-    (TrueSet \= [] -> write_term('The original True  Set is: ', [nl]), trueSet(TS), write_termAll(TS), !;
-      TrueSet == []->         write_term('The original True  Set is empty.', [nl])),
-    (FalseSet \= [] -> write_term('The original False Set is: ', [nl]), falseSet(FS), write_termAll(FS), !;
-     FalseSet == []->    write_term('The original False Set is empty.', [nl])),
+    (TrueSet \= [] -> write_term_c('The original True  Set is: '), nl, trueSet(TS), write_term_All(TS), !;
+      TrueSet == []->         write_term_c('The original True  Set is empty.'), nl),
+    (FalseSet \= [] -> write_term_c('The original False Set is: '), nl, falseSet(FS), write_term_All(FS), !;
+     FalseSet == []->    write_term_c('The original False Set is empty.'), nl),
 
     findall([TheoryA, RepPlan, TheoryB],
             (member([fault-free, _,[[RepPlan,_],_,_,TheoryA,_,_]], AllRepStates), TheoryB = [];
@@ -157,14 +124,14 @@ output(AllRepStates, ExecutionTime):-
     length(TBS1, SemiNumRaw),
     length(TBSS, SemiNum),
 
-    writeLog([nl, write_term('------------- TASS -------------'), nl,
-                    write_term('FullyNumRaw is: '), write_term(FullyNumRaw),nl,
-                    write_term('FullyNum is: '), write_term(FullyNum),nl,nl,nl,
-                  write_termAll(TASS),nl,nl,nl,
-                  write_term('------------- TBSS -------------'), nl,
-                  write_term('SemiNumRaw is: '), write_term(SemiNumRaw),nl,
-                  write_term('SemiNum is: '), write_term(SemiNum),nl,nl,nl,
-                  write_termAll(TBSS),nl,nl,nl, finishLog]),
+    writeLog([nl, write_term_c('------------- TASS -------------'), nl,
+                    write_term_c('FullyNumRaw is: '), write_term_c(FullyNumRaw),nl,
+                    write_term_c('FullyNum is: '), write_term_c(FullyNum),nl,nl,nl,
+                  write_term_All(TASS),nl,nl,nl,
+                  write_term_c('------------- TBSS -------------'), nl,
+                  write_term_c('SemiNumRaw is: '), write_term_c(SemiNumRaw),nl,
+                  write_term_c('SemiNum is: '), write_term_c(SemiNum),nl,nl,nl,
+                  write_term_All(TBSS),nl,nl,nl, finishLog]),
 
 
     write_Spec(Stream1, ExecutionTime, FullyNum, SemiNum),
@@ -177,10 +144,11 @@ output(AllRepStates, ExecutionTime):-
     (FalseSet \= [] -> writeAll(Stream1, FalseSet), !;
              write(Stream1, '[]')), nl(Stream1),
 
-    length(RepPlanAll, RPNum),
-    write(Stream1, 'All of '),  write(Stream1, RPNum),
-    write(Stream1, ' repair plans are: '), nl(Stream1),
+    write(Stream1, 'All of '),  write(Stream1, FullyNum),
+    write(Stream1, ' sorted repair plans are from: '), nl(Stream1),
     writeAll(Stream1, RepPlanAll), nl(Stream1),
+
+
 
     writeFile(fault-free, Stream1, TASS, AllRepStates),
     (TBSS \=[]-> fileName('faulty', Fname2),
@@ -190,18 +158,22 @@ output(AllRepStates, ExecutionTime):-
                 close(Stream2); true),
 
     findall(R, spec(round(R)), RoundsA),
-    sort(RoundsA, RoundsAs), write_term(RoundsAs),
+    sort(RoundsA, RoundsAs), write_term_c(RoundsAs),
 
     write(Stream1, 'Solutions are found at rounds:'),write(Stream1,RoundsAs),nl(Stream1),nl,
-    nl, write_term('In total, there are '), write_term(FullyNum), write_term(' solutions with '),
+    nl, write_term_c('In total, there are '), write_term_c(FullyNum), write_term_c(' solutions with '),
     close(Stream1),
-    write_term(SemiNum), write_term(' semi-solutions remaining.',[nl]).
+    write_term_c(SemiNum), write_term_c(' semi-solutions remaining.'),nl.
 
 
 /**********************************************************************************************************************
     writeLog: write log files.
     This function is unavailable in python-swipl ABC.
 ***********************************************************************************************************************/
+write_term_c(X):- var(X), print('Error: an uninstantiated variable!'), pause, fail, !.
+write_term_c(X):- write_term(X, [quoted(false)]).
+
+
 writeLogSep(_).
 writeLog(_):- spec(debugMode(X)), X \=1, !.
 writeLog([]):-!.
@@ -209,19 +181,26 @@ writeLog(List):- !, spec(logStream(Stream))-> writeLog(Stream, List).
 writeLog(_,[]):-!.
 writeLog(_, [finishLog]):-!.
 writeLog(Stream, [nl|T]):- nl(Stream), !, writeLog(Stream, T).
-writeLog(Stream, [write_term(String)|T]):-
+writeLog(_, [write_term_c(String)|_]):- var(String), print('Error: an uninstantiated variable!'), pause, fail, !.
+writeLog(Stream, [write_term_c(String)|T]):-
     write(Stream, String), !,
     writeLog(Stream, T).
-writeLog(Stream, [write_termAll(List)|T]):-
+writeLog(_, [write_term_All(List)|_]):-
+    setof(X, (member(X, List), var(X)), _),
+    print('Error: an uninstantiated variable in the List!'), pause, fail, !.
+writeLog(Stream, [write_term_All(List)|T]):-
     forall(member(X, List), (write(Stream, X), nl(Stream))),
     writeLog(Stream, T), !.
 
 
 
-% write_terms  alist line by line
-write_termAll([]) :- !.
-write_termAll([C|Cs]) :-
-    write_term(C, [quoted(false)]),nl, write_termAll(Cs).
+% write_term_cs  alist line by line
+write_term_All([]) :- !.
+write_term_All([C|_]) :-
+    var(C),    % error: an uninstantiated variable.
+    print('Error: an uninstantiated variable!'), pause, fail, !.
+write_term_All([C|Cs]) :-
+    write_term_c(C),nl,nl, write_term_All(Cs).
 
 /**********************************************************************************************************************
     writeFile(Directory, OutFiles, DataList)
@@ -264,11 +243,11 @@ writeFile(Type, Stream, Theories, AllStates):-
                    appEach(RepTheory,[appEach, [appLiteral,revert]], Axioms),
 
                    (Type == fault-free, spec(screenOutput(true))->!,
-                nl, write_term('------------------ Solution No. '), write_term(Rank),
-                    write_term(' as below ------------------',[nl]),
-                forall(member((RR,Rep), RepInfo),(write_term('Repair plans found at Layer/CallNum '),
-                                    write_term(RR), write_term(' :'),nl,write_termAll(Rep),nl)),
-                nl, write_term('Repaired theory: ',[nl]),write_termAll(Axioms),nl;true),
+                nl, write_term_c('------------------ Solution No. '), write_term_c(Rank),
+                    write_term_c(' as below ------------------'), nl,
+                forall(member((RR,Rep), RepInfo),(write_term_c('Repair plans found at Layer/CallNum '),
+                                    write_term_c(RR), write_term_c(' :'),nl,write_term_All(Rep), nl)),
+                nl, write_term_c('Repaired theory: '), nl,write_term_All(Axioms),nl;true),
 
                 write(Stream, '------------------ Solution No. '), write(Stream, Rank),
                 write(Stream, ' as below------------------'), nl(Stream),
@@ -285,7 +264,7 @@ writeFile(Type, Stream, Theories, AllStates):-
 writeAll(_, []):- !.
 writeAll(Stream1,[C|Cs]) :- write(Stream1, C), write(Stream1, '.'), nl(Stream1), writeAll(Stream1, Cs).
 
-write_term(X):- write_term(X, [quoted(false)]).
+
 
 write_Spec(Stream, ExecutionTime, FullyNum, SemiNum):-
     spec(costLimit(Cost)),

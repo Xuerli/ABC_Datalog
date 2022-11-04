@@ -23,7 +23,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
                 intersection(RepPlans, RsList, [])),
             RepPlansTem),
     sort(RepPlansTem, RepPlansOut),
-    print('------ RepPlansOut:'),nl, write_termAll(RepPlansOut),nl,
+    %print('RepPlansOut:'),nl, write_term_All(RepPlansOut),nl,
     statistics(walltime, [E1,_]),
 
     SFRTime is E1-S1,
@@ -34,8 +34,8 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
-    writeLog([nl,write_term(N), write_term('repair plans  for buildP:'),write_term([Goal, Evidences]),
-            nl,nl,nl,write_termAll(RepPlansOut),nl, finishLog]).
+    writeLog([nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
+            nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
 repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     ProofInp = [_|_],
@@ -65,7 +65,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
-    writeLog([nl,write_term(N),write_term(' repair plans for blockP:'),write_term(ProofInp), nl,nl,nl,write_termAll(RepPlansOut),nl, finishLog]).
+    writeLog([nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
 
 /**********************************************************************************************************************
@@ -84,10 +84,10 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     spec(heuris(Heuristics)),
     % not all three heuristics are employed.
     deleteAll([noRuleChange, noPrecAdd, noAss2Rule, noAxiomDele], Heuristics, [_|_]),
-    writeLog([nl, write_term('-------- Start blockProof1: -------- '),
-            nl, write_termAll(Proof), finishLog]),
+    writeLog([nl, write_term_c('-------- Start blockProof1: -------- '),
+            nl, write_term_All(Proof), finishLog]),
     TheoryState = [_, EC, _, TheoryIn, TrueSetE, FalseSetE],
-    writeLog([nl, write_term('TheoryIn is: '), write_term(TheoryIn),nl,nl,write_termAll(TheoryIn), finishLog]),
+    writeLog([nl, write_term_c('TheoryIn is: '), write_term_c(TheoryIn),nl,nl,write_term_All(TheoryIn), finishLog]),
 
     % get the clauses in the unwanted proof.
     findall([Cl, Subs],
@@ -96,7 +96,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
             CandRules),
     transposeF(CandRules, [ClS, _]),
     member([Axiom, IncomSubs], CandRules),    % target at one clause,
-    writeLog([nl, write_term('Original Axiom is: '), write_term(Axiom),nl, finishLog]),
+    writeLog([nl, write_term_c('Original Axiom is: '), write_term_c(Axiom),nl, finishLog]),
 
     spec(protList(ProtectedList)),
     notin(Axiom, ProtectedList),
@@ -113,7 +113,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
         % RepPlan = [(ass2rule(Axiom, NewRule), Axiom),...]
         asser2rule(Axiom, EC, SuffGoals, TheoryIn, TrueSetE, FalseSetE, RepCands),
         member(RepPlan, RepCands);
-    notin(noAxiomDele, Heuristics),  notEss2suff(SuffGoals, Axiom),
+    notin(noAxiomDele, Heuristics),  notEss2suff(SuffGoals, Axiom), notin(Axiom, ProtectedList),
         (occur(-_, Axiom); Axiom=[+[Pred|_]], notin(asst(Pred), ProtectedList)),
         % if the axiom is not essential to an sufficiency, it can be deleted.
         RepPlan = delete(Axiom)),
@@ -132,9 +132,9 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
 
 
     findall(Cl, (member((_, Cl, _, _, _), Proof), is_list(Cl)), ClS),
-    writeLog([nl, write_term('-------- Start blockProof2: reformation -------- '),
-            nl, write_term('-------- Proof is:'),nl,write_term(Proof), nl,nl,
-            nl, write_term('-------- SuffGoals is:'),nl,write_term(SuffGoals), nl,nl, finishLog]),
+    writeLog([nl, write_term_c('-------- Start blockProof2: reformation -------- '),
+            nl, write_term_c('-------- Proof is:'),nl,write_term_c(Proof), nl,nl,
+            nl, write_term_c('-------- SuffGoals is:'),nl,write_term_c(SuffGoals), nl,nl, finishLog]),
 
     %print(' Proof is ' ), nl,print(Proof),nl,
     member(TrgResStep, Proof),
@@ -181,7 +181,6 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
             TargLit = +[P| ArgsCl1],
             TargCl = InpCl1,
             (notin([arity(P)], ProtectedList), %notEss2suff(SuffGoals, TargCl),
-             print(ProtectedList),nl,
              RepPlan = arityInc(P, TargLit, TargCl, -[P| ArgsG], InpCl2);
              findall(C, member((_, C), VCPG), CS),    % if the variable is from the goal literal and the constant is from InpCl1
              append(CS, CCP, ConsIn),    % get all the constants contained by InpCl1 which contribute to the unification.
@@ -198,7 +197,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
                    notin([+[P|ArgsTem]], [InpCl1, InpCl2])),
                       [_|_]),
              % and if 2.P is not under protected,
-             notin([arity(P)], ProtectedList),print(ProtectedList),nl,
+             notin([arity(P)], ProtectedList),
              % then the goal literal could be the unique one.
              RepPlan = arityInc(P, TargLit, TargCl, +[P| ArgsCl1], InpCl1)));
         (member(InpCl1, ProtectedList), notin(InpCl2, ProtectedList),
@@ -207,12 +206,12 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
             findall(C, member((_, C), VCPIn), CS),    % if the variable is from the goal literal and the constant is from InpCl1
              append(CS, CCP, ConsG),
             (weakenVble(TargLit, TargCl, SuffGoals, ConsG, VCPG, TheoryIn, RepPlan);
-             notin([arity(P)], ProtectedList),print(ProtectedList),nl,
+             notin([arity(P)], ProtectedList),
              RepPlan = arityInc(P, TargLit, TargCl, +[P| ArgsCl1], InpCl1)))),
     %nl,nl,print(' RepPlan is '), nl, print(RepPlan),nl,nl,
-    writeLog([nl, write_term('--Blocking Repair Plan11 InpClause:'),
-                nl, write_term(TargCl),nl, nl,
-                write_term(RepPlan),nl, finishLog]).
+    writeLog([nl, write_term_c('--Blocking Repair Plan11 InpClause:'),
+                nl, write_term_c(TargCl),nl, nl,
+                write_term_c(RepPlan),nl, finishLog]).
 
 /**********************************************************************************************************************
    buildProof(Evidences, TheoryState, Suffs, Output):
@@ -230,9 +229,9 @@ buildP([], _, _, _):-fail,!.
 buildP(([], []), _, _, _):-fail,!.
 
 
-buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):- 
+buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):-
     spec(heuris(Heuristics)),
-    writeLog([nl,write_term('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
+    writeLog([nl,write_term_c('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
     Goal \= [],
     TheoryState = [_,EC, _, TheoryIn, _, _],
     % Get one partial proof Evd and its clauses information lists ClsList.
@@ -253,14 +252,14 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     sort(Rems, SortedRems),
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
-    writeLog([nl,write_term('-- Unresolvables and ProofCur is :'),nl,write_term(Unresolvables),nl,write_term(ProofCur),nl,  finishLog]),
+    writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
 
     (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions
-        writeLog([nl,write_term('--Deleting unprovable preconditions:'),nl,write_term(Unresolvables),nl,  finishLog]),
+        writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         delPreCond(Unresolvables, Evi, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
     notin(noReform, Heuristics),    % by reformation.
-        writeLog([nl,write_term('--Reformation: Unresolvables:'),nl,write_term(Unresolvables),nl,  finishLog]),
+        writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed),
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
         transposeF(RepInfo, [RepPlans, TargClsList]),
@@ -279,7 +278,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     append(TargCls, ClE1, ClS1),
     delete(ClS1, [], ClS),
 
-    writeLog([nl,write_term('--Unblocking 1: RepPlanS:'),nl,write_term(RepPlans),nl, write_termAll(TargCls),nl, finishLog]).
+    writeLog([nl,write_term_c('--Unblocking 1: RepPlanS:'),nl,write_term_c(RepPlans),nl, write_term_All(TargCls),nl, finishLog]).
 
 
 
@@ -289,7 +288,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     spec(heuris(Heuris)),
     notin(noAxiomAdd, Heuris),
     notin(noRuleChange, Heuris),
-    writeLog([nl,write_term('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
+    writeLog([nl,write_term_c('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
     TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
     Goal = [-PropG|_],
 
@@ -322,9 +321,9 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                  member(Constrain, ResCons),    % check based on a protected constrain axiom.
                  % there is a proof of the violation of the constrain.
                  slRL(Constrain, [[+Prop], [+PropG]], EC, [_|_], [], []),
-                 writeLog([nl,write_term('**** Constrains check failed: '),nl,
-                     write_term([+PropG, -Prop]),
-                    write_term(' vs '),write_term(Constrain),nl])),    % proof exists
+                 writeLog([nl,write_term_c('**** Constrains check failed: '),nl,
+                     write_term_c([+PropG, -Prop]),
+                    write_term_c(' vs '),write_term_c(Constrain),nl])),    % proof exists
             VioCand),
     deleteAll(Cands3, VioCand, RuleCands),
 
@@ -374,7 +373,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 member((_,Cl,_,_,_), ProofUnblocked),
                 is_list(Cl)),     % do not record keyword 'unae'
             ClS),
-   writeLog([nl,write_term('--Unblocking 2: RepPlanS/CLE'),nl,write_term(RepPlans),nl,write_termAll(ClS),nl, finishLog]).
+   writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 %% Repair the insufficiency by analogising an existing rule and give them different preconditions.
 buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
@@ -382,8 +381,8 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
     notin(noRuleChange, Heuristics),
     notin(noAnalogy, Heuristics),
     spec(protList(ProtectedList)),
-    writeLog([nl,write_term('--------Start unblocking 3: by Analogical Abduction for ------'),
-              nl,  write_term(Goal),nl, finishLog]),
+    writeLog([nl,write_term_c('--------Start unblocking 3: by Analogical Abduction for ------'),
+              nl,  write_term_c(Goal),nl, finishLog]),
     TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
     findall(Rule,
             (member((_, Proofs), Suffs),
@@ -395,7 +394,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
              L>1),
             RulesUseful),
      (RulesUseful = []->
-         writeLog([nl, write_term('******** No rules are useful, Analogy fails.'),nl, finishLog]);
+         writeLog([nl, write_term_c('******** No rules are useful, Analogy fails.'),nl, finishLog]);
          RulesUseful = [_|_]),
 
      findall(GoalRem,
@@ -410,7 +409,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
                 length(GoalRem, 1)),
            SingleGs),
     sort([Goal| SingleGs], SingleGoalList),        % get the list of the single unresolvable subgoal.
-    writeLog([nl,write_term('-- The single unresolvable subgoal. is :'),nl,write_term(SingleGoalList),nl,  finishLog]),
+    writeLog([nl,write_term_c('-- The single unresolvable subgoal. is :'),nl,write_term_c(SingleGoalList),nl,  finishLog]),
 
     setof(Relevancy,
             (member(RuleC, RulesUseful),        % get a rule candidate
@@ -420,8 +419,8 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
     % get the most relevant rule w.r.t. the goal.
     last(Relevancies, (S1, S2, RuleSR, TGoal, PreCondRel, PPs)),
        findall(-P, (member(-P, RuleSR), notin(-P, PreCondRel)), PSIrrela),
-    writeLog([nl, write_term('The scored relevant rule is '), nl, write_term(RuleSR), nl,
-            write_term(S1), write_term(','), write_term(S2), nl, finishLog]),
+    writeLog([nl, write_term_c('The scored relevant rule is '), nl, write_term_c(RuleSR), nl,
+            write_term_c(S1), write_term_c(','), write_term_c(S2), nl, finishLog]),
 
     % remove irrelevant preconditions
     deleteAll(RuleSR, PSIrrela, RuleR),
@@ -450,14 +449,14 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
 
     % get the introduction preconditions for MMPs.
     getIntro(MMPsAll, EC, TheoryIn, IntroPs),
-    writeLog([nl, write_term('The introduction preconditions are '), nl,
-                write_termAll(IntroPs), nl, finishLog]),
+    writeLog([nl, write_term_c('The introduction preconditions are '), nl,
+                write_term_All(IntroPs), nl, finishLog]),
     append(RuleR4, IntroPs, RuleR5),
 
     % generalisation
     generalise(RuleR5, RuleR6, _, _),    % e.g., Subs65 is [[a]/vble(z)]
-    writeLog([nl, write_term('The generalised rule RuleR6 is'), nl,
-                write_term(RuleR6), nl, finishLog]),
+    writeLog([nl, write_term_c('The generalised rule RuleR6 is'), nl,
+                write_term_c(RuleR6), nl, finishLog]),
 
     % check incompatibilities.
       findall(Proof,
@@ -486,10 +485,10 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
     (member(add_pre(Precondition, _), CandAll)-> sort([Precondition| RuleR6], RuleR7);
      CandAll = []-> RuleR7 = RuleR6),
 
-   writeLog([nl, write_term('--------The incompatibilities of R6 include'),
-                nl, write_termAll(R6IncomSubs), nl,
-               nl, write_term('--------The resulted rules of analogise RuleSR include'),
-               nl, write_termAll(RuleR7), finishLog]),
+   writeLog([nl, write_term_c('--------The incompatibilities of R6 include'),
+                nl, write_term_All(R6IncomSubs), nl,
+               nl, write_term_c('--------The resulted rules of analogise RuleSR include'),
+               nl, write_term_All(RuleR7), finishLog]),
 
     %convertForm([RuleSR, RuleR7], [SRAxiom, RuleNew]),    % rever the internal format of rules back to axioms
     RepPlans = [analogy(RuleSR, RuleR7)],

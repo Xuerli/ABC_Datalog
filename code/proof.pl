@@ -90,11 +90,11 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     slRLMain(GoalNew, [], TheoryIn, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
     cleanSubMid(ProofTem, Proof),
     cleanSubMid(EvidenceTem, Evidence).
-    /* writeLog([nl,write_term('--------SL Resolution with Goal: '),
-            write_term(Goal), write_term('--------'),nl,
-            write_term('Proof is:'),write_term(Proof),nl,
-            write_term('Evidence is:'),write_term(Evidence),nl,
-            write_term('Theorem is:'),write_term(Theorem),nl, finishLog]).
+    /* writeLog([nl,write_term_c('--------SL Resolution with Goal: '),
+            write_term_c(Goal), write_term_c('--------'),nl,
+            write_term_c('Proof is:'),write_term_c(Proof),nl,
+            write_term_c('Evidence is:'),write_term_c(Evidence),nl,
+            write_term_c('Theorem is:'),write_term_c(Theorem),nl, finishLog]).
     */
 
 %% slRLMain1: No goals remain to resolve, a theorem is found, output the whole proof ([], Ancestors).
@@ -396,9 +396,9 @@ noloopBack(GoalsCur, Deriv):-
                      forall(member(-CurSubG, GoalsCur),
                                 unification(PreSubG, CurSubG, [], [], _, _, [_|_]))),
                       _))-> true, !;
-     writeLog([nl, write_term('******** Warning: Loop resolution ********'), nl,
-            write_term('Current goal is: '), nl, write_term(GoalsCur), nl,
-            write_term('The derivation steps are: '), nl,write_term(Deriv), finishLog]),fail).
+     writeLog([nl, write_term_c('******** Error: Loop resolution ********'), nl,
+            write_term_c('Current goal is: '), nl, write_term_c(GoalsCur), nl,
+            write_term_c('The derivation steps are: '), nl,write_term_c(Deriv), finishLog]),fail).
 
 
 /***************************************************************************************************************
@@ -507,8 +507,8 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
 
     % remove duplicates.
     mergeTailSort(AllT, AllTheorems),
-    writeLog([write_term('-- The theorems of Predicate -'), write_term(P),
-            write_term('-- are:'),nl, write_term(AllTheorems), finishLog]).
+    writeLog([write_term_c('-- The theorems of Predicate -'), write_term_c(P),
+            write_term_c('-- are:'),nl, write_term_c(AllTheorems), finishLog]).
 
 /*********************************************************************************************************************************
     allTheoremsC(Theory, EC, Constant, Theorems): get all theorems whose arguments include the targeted constant.

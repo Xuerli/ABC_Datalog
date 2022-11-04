@@ -17,11 +17,10 @@
 **********************************************************************************************************************************/
 % based on the wanted substitutions, get the pairs of a variable and its instanted constants in wanted proofs.
 asser2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
-    writeLog([nl, write_term('-------- start asser2rule to find unprovable precondition'), nl,
-            write_term('-- IncomSub='), write_term(IncomSub),nl,
-            nl, write_term('-- SuffGoals='), write_term(IncomSub),nl,
-            nl, write_term('-- Theory='), write_term(Theory),nl,
-            nl,nl, write_termAll(Theory),nl, finishLog]),
+    writeLog([nl, write_term_c('-------- start asser2rule to find unprovable precondition'), nl,
+            nl, write_term_c('-- SuffGoals='), write_term_c(SuffGoals),nl,
+            nl, write_term_c('-- Theory='), write_term_c(Theory),nl,
+            nl,nl, write_term_All(Theory),nl, finishLog]),
     Axiom = [+[PA|ArgA]], !,
 
     % check if the axiom is essential to an sufficiency, do not make it unprovable.
@@ -82,7 +81,9 @@ asser2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
 **********************************************************************************************************************************/
 getAdjCond(_, [], _, _, _, _, _, []).
 getAdjCond(Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlanS):-
-    writeLog([nl, write_term('-------- getAdjCond for  Rule: '), write_term(Rule),nl, finishLog]),
+    spec(protList(ProtectedList)),
+    notin(Rule, ProtectedList),
+    writeLog([nl, write_term_c('-------- getAdjCond for  Rule: '), write_term_c(Rule),nl, finishLog]),
     member(+[PR| ArgR], Rule),
     % get the list of predicates which cannot be the predicate of the target precondition
     findall(AvoidPred,
@@ -100,25 +101,25 @@ getAdjCond(Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlanS)
                 notin(Predicate, AvoidPList)),
         PreCandsRaw),
     sort(PreCandsRaw, PreCands),    % remove dupliates
-    writeLog([nl, write_term(' PreCands are: '), write_term(PreCands),nl, finishLog]),
+    writeLog([nl, write_term_c(' PreCands are: '), write_term_c(PreCands),nl, finishLog]),
     findall(RepPlan,
                 (member(Pred, PreCands),
                 adjCond(Pred, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan);
                 setof(vble(X), member(vble(X),ArgR), HeadVbles),
                 RepPlan = add_pre(-[dummyPred|HeadVbles], Rule),
-                writeLog([nl, write_term(' Found unprovable precondition : '), write_term(RepPlan),nl, finishLog])),
+                writeLog([nl, write_term_c(' Found unprovable precondition : '), write_term_c(RepPlan),nl, finishLog])),
             RepPlanSTem),
     sort(RepPlanSTem, RepPlanS),    % remove duplicates
     (RepPlanS = []-> fail,
-          writeLog([nl, write_term(' ERROR: Failed in finding unprovable preconditions.'), nl, finishLog]);
+          writeLog([nl, write_term_c(' ERROR: Failed in finding unprovable preconditions.'), nl, finishLog]);
      RepPlanS = [_|_]->
-    writeLog([nl, write_term(' All found unprovable preconditions: '), write_term(RepPlanS),nl, finishLog])).
+    writeLog([nl, write_term_c(' All found unprovable preconditions: '), write_term_c(RepPlanS),nl, finishLog])).
 
 % getAdjCond: adds unprovable precondition
 % SuffGoals is the sufficient goals or the substitutions of Rule in one proof of an sufficiency.
 adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):-
-    writeLog([nl, write_term('-------- start to find unprovable precondition candidates based on: '),
-                write_term(P),nl, finishLog]),
+    writeLog([nl, write_term_c('-------- start to find unprovable precondition candidates based on: '),
+                write_term_c(P),nl, finishLog]),
     IncomSub \= [], % if there is no incompatibilities, no adjustment precondition is needed.
     findall([(vble(X), [C]), GoalRule],
             (member((GoalRule, SuffProofs), SuffGoals),    % heuristic: only consider the goal whose proofs all contain the rule.
@@ -131,7 +132,7 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
     % get substitution pairs and the goals that Rule is essential.
     transposeF(RuleSuff, [VbCons, GoalRs]),
     mergeTailSort(VbCons, VbConsSC),
-    %writeLog([nl, write_term('VbCons: '), nl, write_term(VbCons),nl, finishLog]),
+    %writeLog([nl, write_term_c('VbCons: '), nl, write_term_c(VbCons),nl, finishLog]),
 
     % get all constant arguments of the rule in the unwanted proof.
     subst(IncomSub, Rule, InstRule),
@@ -141,7 +142,7 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
             ArgsAllRaw),
     % ArgsAll are the instantiated arguments of the rule in the unwanted proof.
     sort(ArgsAllRaw, ArgsAll),
-    % writeLog([nl, write_term('ArgsAll: '), nl, write_term(ArgsAll),nl]),
+    % writeLog([nl, write_term_c('ArgsAll: '), nl, write_term_c(ArgsAll),nl]),
     % get all of the theorems of the predicate P which can be derived without Rule and the ones from the true set.
     delete(Theory, Rule, Theory2),
     spec(signature(Sig, _)),
@@ -171,7 +172,7 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
                   member(Cl, Theory), member(-[P|Args], Cl)),
                 Extras),
     append(TS, Extras, TSAll),
-    writeLog([nl, write_term('Found TSAll for: '),    write_term(P),nl, write_term(TSAll),nl, finishLog]),
+    writeLog([nl, write_term_c('Found TSAll for: '),    write_term_c(P),nl, write_term_c(TSAll),nl, finishLog]),
 
     % get the domains of each argument of P baed on these theorems.
     findall(ArgsP, member([+[P|ArgsP]], TSAll), ArgThs),
@@ -179,11 +180,11 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
     transposeF(ArgThs, ArgCat),
     % get the argument domains which contains only constants.
     appEach(ArgCat, [delete,vble(_)], ArgDomains),
-    %writeLog([nl, write_term('ArgDomains: '), nl, write_term(ArgDomains),nl, finishLog]),
+    %writeLog([nl, write_term_c('ArgDomains: '), nl, write_term_c(ArgDomains),nl, finishLog]),
     % collect the diffrences of these theorems w.r.t. ArgsAll
     findall((Dif, [P| ArgsV]),            % collect a theorem's difference score together with the proposition of that theorem.
             (setArgs(ArgDomains, VbConsSC, ArgsAll, IncomSub, ArgsV),    % get candidates of the arguments of the precondition
-             writeLog([nl, write_term(' upArg ArgsV is '),nl,write_term(ArgsV),nl, finishLog]),
+             writeLog([nl, write_term_c(' upArg ArgsV is '),nl,write_term_c(ArgsV),nl, finishLog]),
              member(vble(X), ArgsV),    % there is at least one variable in the argument candidate.
              Precondition = [+[P| ArgsV]],
              subst(IncomSub, Precondition, PT),
@@ -196,10 +197,10 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
              length(ArgRest, Dif)),        % the difference score of the theorem w.r.t. ArgsAll
              Diff),
     (Diff = []->
-        writeLog([nl, write_term('******** Warning: No adjustment precondition candidates found'),nl, finishLog]),
+        writeLog([nl, write_term_c('******** Warning: No adjustment precondition candidates found'),nl, finishLog]),
         fail;
-     Diff = [_|_]->    writeLog([nl, write_term('-------- The adjustment precondition candidates:'),
-                     nl, write_termAll(Diff), finishLog])),
+     Diff = [_|_]->    writeLog([nl, write_term_c('-------- The adjustment precondition candidates:'),
+                     nl, write_term_All(Diff), finishLog])),
     mergeTailSort(Diff, [(_,Cands)|_]),    % get one of the most relevant proposition.
 
     % the precondition with the most variables will be the head.
@@ -232,8 +233,8 @@ delPreCond(Unresolvables, Evi, RepPlan, ClsOld):-
     % Generate the repair plan of deleting unprovale preconditions from ClOld.
     RepPlan = dele_pre(RulePairs),
 
-    writeLog([nl,write_term('--------Finish generating repair plan of deleting the unprovable precondition------'),
-                nl, write_term(RepPlan), finishLog]).
+    writeLog([nl,write_term_c('--------Finish generating repair plan of deleting the unprovable precondition------'),
+                nl, write_term_c(RepPlan), finishLog]).
 
 
 /**********************************************************************************************************************
@@ -287,10 +288,10 @@ mmMatches(-[Pred| Arg], Theorems, Partner, MisPairs):-
              argsMis(Arg, Arg2, Mismatches,_),
              length(Mismatches, Num)),    % the length of Rs is the number of the mismatched arguments.
             M),
-    %writeLog([nl,nl,write_term('---------M are-------'),nl,write_term(M),nl,finishLog]),
+    %writeLog([nl,nl,write_term_c('---------M are-------'),nl,write_term_c(M),nl,finishLog]),
     mergeTailSort(M, [(_,Candidates)|_]),    % sort according to the length of Rs, and then the first is the minimal matches
     member((Partner, MisPairs),Candidates).
-    %writeLog([nl,nl,write_term('---------MisPairs are-------'),nl,write_term(MisPairs),nl, finishLog]).
+    %writeLog([nl,nl,write_term_c('---------MisPairs are-------'),nl,write_term_c(MisPairs),nl, finishLog]).
 
 /**********************************************************************************************************************
     getIntro(Cons, EC, TheoryIn, IntroPs)):-get the introduction preconditions for constants in Cons.
