@@ -1,0 +1,1548 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[families,[a],[c]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[families,[a],[c]]]
+
+--Reformation: Unresolvables:
+[-[families,[a],[c]]]
+
+Reformation: targeted evidence
+[families,[a],[c]]
+--------Reformation Candidates------
+[([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],(predicate,[[step]]),1,[],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  predicate,[[step]]
+--Unblocking 1: RepPlanS:
+[merge(parent,families,[[a],[c]],dec)]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[families,[a],[c]]])]
+[+[families,[a],[c]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[parent,[a],[c],[birth]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[parent,[a],[c],[birth]]]
+
+--Reformation: Unresolvables:
+[-[parent,[a],[c],[birth]]]
+
+Reformation: targeted evidence
+[parent,[a],[c],[birth]]
+--------Reformation Candidates------
+[([+[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[([c],[b])],1,[[],[([c],[b])],[]],[([+[parent,[a],[b],[birth]]],[],[],[+[parent,[a],[b],[birth]]],[0,0])]),([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[([birth],[step])],1,[[],[],[([birth],[step])]],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[b],[birth]]]
+---------------Mismatches is 1  [([c],[b])]
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  [([birth],[step])]
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: RepPlanS:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+--renameArgs: TargCls:
+[[+[parent,[a],[c],[step]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[+[parent,[a],[c],[step]]]
+
+
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--extC2V: RepPlanS:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+--extC2V: TargCls:
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[parent,[a],[c],[birth]]])]
+[+[parent,[a],[c],[birth]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[families,[a],[c]]]
+
+-- The single unresolvable subgoal. is :
+[[-[families,[a],[c]]],[-[parent,[a],[c],[birth]]]]
+-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+1,1
+
+The introduction preconditions are 
+-[\=,[b],[c]]
+
+
+The generalised rule RuleR6 is
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[parent,vble(z),vble(y),[birth]]
+-[\=,vble(y),vble(x)]
+
+-------- getAdjCond for  Rule: [+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+ PreCands are: []
+
+ Found unprovable precondition : add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+ All found unprovable preconditions: [add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[\=,vble(y),vble(x)]
+-[dummyPred,vble(x),vble(z)]
+-[parent,vble(z),vble(y),[birth]]
+
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+0,1
+
+10repair plans  for buildP:[[-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]]]
+
+
+[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]]
+[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]]
+[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([merge(parent,families,[[a],[c]],dec)],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]],[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]],[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([merge(parent,families,[[a],[c]],dec)],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]]]
+
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+
+All collections of repair plans are: 
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[expand([+[families,[a],[c]]])]
+[expand([+[parent,[a],[c],[birth]]])]
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+[merge(parent,families,[[a],[c]],dec)]
+
+
+-------- Start to apply repair plans:
+expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+
+******** RepPlan: expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[families,[a],[c]]])
+
+
+******** RepPlan: expand([+[families,[a],[c]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[parent,[a],[c],[birth]]])
+
+
+******** RepPlan: expand([+[parent,[a],[c],[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+
+******** RepPlan: extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+
+******** RepPlan: rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])
+
+
+-------- Start apply arityDec-------- 
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])
+******** Warning: verifyRep found orphans:arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])
+
+[+[families,vble(x),vble(y)],-[parent,vble(x),[birth]]]
+[+[parent,[a],[birth]]]
+[+[parent,[a],[step]]]
+
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+
+-------- Start apply arityDec-------- 
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+******** RepPlan: arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(parent,families,[[a],[c]],dec)
+
+
+******** RepPlan: merge(parent,families,[[a],[c]],dec)
+
+******** Warning: verifyRep found a loop rule:[[+[families,vble(x),vble(y)],-[families,vble(x),vble(y)]]]
+
+-------- Finish applying repair plans.
+
+-- There are 10 repaired states: 
+[[[],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[],[merge(parent,families,[[a],[c]],dec)]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+
+
+-- RepStatesFine [[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]]
+[+[parent,[a],[b]]]
+[+[parent,[a],[c]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,[a],[c]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 9
+0,0,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+1,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])],[]
+0,0,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+1,0,[[[],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+[[[],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+--The number of Optimals: 8
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+--------- Start repInsInc round: 2
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[families,[a],[c]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[families,[a],[c]]]
+
+--Reformation: Unresolvables:
+[-[families,[a],[c]]]
+
+Reformation: targeted evidence
+[families,[a],[c]]
+--------Reformation Candidates------
+[([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],(predicate,[[step]]),1,[],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  predicate,[[step]]
+--Unblocking 1: RepPlanS:
+[merge(parent,families,[[a],[c]],dec)]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[families,[a],[c]]])]
+[+[families,[a],[c]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[parent,[a],[c],[birth]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[parent,[a],[c],[birth]]]
+
+--Reformation: Unresolvables:
+[-[parent,[a],[c],[birth]]]
+
+Reformation: targeted evidence
+[parent,[a],[c],[birth]]
+--------Reformation Candidates------
+[([+[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[([c],[b])],1,[[],[([c],[b])],[]],[([+[parent,[a],[b],[birth]]],[],[],[+[parent,[a],[b],[birth]]],[0,0])]),([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[([birth],[step])],1,[[],[],[([birth],[step])]],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[b],[birth]]]
+---------------Mismatches is 1  [([c],[b])]
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  [([birth],[step])]
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: RepPlanS:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+--renameArgs: TargCls:
+[[+[parent,[a],[c],[step]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[+[parent,[a],[c],[step]]]
+
+
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--extC2V: RepPlanS:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+--extC2V: TargCls:
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[parent,[a],[c],[birth]]])]
+[+[parent,[a],[c],[birth]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[families,[a],[c]]]
+
+-- The single unresolvable subgoal. is :
+[[-[families,[a],[c]]],[-[parent,[a],[c],[birth]]]]
+-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+1,1
+
+The introduction preconditions are 
+-[\=,[b],[c]]
+
+
+The generalised rule RuleR6 is
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[parent,vble(z),vble(y),[birth]]
+-[\=,vble(y),vble(x)]
+
+-------- getAdjCond for  Rule: [+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+ PreCands are: []
+
+ Found unprovable precondition : add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+ All found unprovable preconditions: [add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[\=,vble(y),vble(x)]
+-[dummyPred,vble(x),vble(z)]
+-[parent,vble(z),vble(y),[birth]]
+
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+0,1
+
+9repair plans  for buildP:[[-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]]]
+
+
+[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]]
+[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]]
+[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([merge(parent,families,[[a],[c]],dec)],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]],[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]],[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([merge(parent,families,[[a],[c]],dec)],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]]]
+
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+
+All collections of repair plans are: 
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[expand([+[families,[a],[c]]])]
+[expand([+[parent,[a],[c],[birth]]])]
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+[merge(parent,families,[[a],[c]],dec)]
+
+
+-------- Start to apply repair plans:
+expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+
+******** RepPlan: expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[families,[a],[c]]])
+
+
+******** RepPlan: expand([+[families,[a],[c]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[parent,[a],[c],[birth]]])
+
+
+******** RepPlan: expand([+[parent,[a],[c],[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+
+******** RepPlan: extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+
+******** RepPlan: rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+
+-------- Start apply arityDec-------- 
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+******** RepPlan: arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(parent,families,[[a],[c]],dec)
+
+
+******** RepPlan: merge(parent,families,[[a],[c]],dec)
+
+******** Warning: verifyRep found a loop rule:[[+[families,vble(x),vble(y)],-[families,vble(x),vble(y)]]]
+
+-------- Finish applying repair plans.
+
+-- There are 9 repaired states: 
+[[[],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+
+
+-- RepStatesFine [[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]]
+[+[parent,[a],[b]]]
+[+[parent,[a],[c]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,[a],[c]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 9
+0,0,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+1,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])],[]
+0,0,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+1,0,[[[],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+[[[],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+--The number of Optimals: 8
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]])],[]
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+--------- Start repInsInc round: 3
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[families,[a],[c]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[families,[a],[c]]]
+
+--Reformation: Unresolvables:
+[-[families,[a],[c]]]
+
+Reformation: targeted evidence
+[families,[a],[c]]
+--------Reformation Candidates------
+[([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],(predicate,[[step]]),1,[],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  predicate,[[step]]
+--Unblocking 1: RepPlanS:
+[merge(parent,families,[[a],[c]],dec)]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[families,[a],[c]]])]
+[+[families,[a],[c]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[parent,[a],[c],[birth]]]
+[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[parent,[a],[c],[birth]]]
+
+--Reformation: Unresolvables:
+[-[parent,[a],[c],[birth]]]
+
+Reformation: targeted evidence
+[parent,[a],[c],[birth]]
+--------Reformation Candidates------
+[([+[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[([c],[b])],1,[[],[([c],[b])],[]],[([+[parent,[a],[b],[birth]]],[],[],[+[parent,[a],[b],[birth]]],[0,0])]),([+[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[([birth],[step])],1,[[],[],[([birth],[step])]],[([+[parent,[a],[c],[step]]],[],[],[+[parent,[a],[c],[step]]],[0,0])])]
+---------------Axiom is 1  [+[parent,[a],[b],[birth]]]
+---------------Mismatches is 1  [([c],[b])]
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: Mismatches:
+[([c],[b])]
+[a,b,c,[arity(families)],[families]]
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------------Axiom is 1  [+[parent,[a],[c],[step]]]
+---------------Mismatches is 1  [([birth],[step])]
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--renameArgs: RepPlanS:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+--renameArgs: TargCls:
+[[+[parent,[a],[c],[step]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[+[parent,[a],[c],[step]]]
+
+
+--renameArgs: Mismatches:
+[([birth],[step])]
+[a,b,c,[arity(families)],[families]]
+
+--extC2V: RepPlanS:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+--extC2V: TargCls:
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+
+
+--Unblocking 1: RepPlanS:
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[parent,[a],[c],[birth]]])]
+[+[parent,[a],[c],[birth]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[c],[step]]]
+
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[families,[a],[c]]]
+
+-- The single unresolvable subgoal. is :
+[[-[families,[a],[c]]],[-[parent,[a],[c],[birth]]]]
+-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]-- The theorems of Predicate -parent-- are:
+[([+[parent,[a],[b],[birth]]],[[([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([+[parent,[a],[c],[step]]],[[([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+1,1
+
+The introduction preconditions are 
+-[\=,[b],[c]]
+
+
+The generalised rule RuleR6 is
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[parent,vble(z),vble(y),[birth]]
+-[\=,vble(y),vble(x)]
+
+-------- getAdjCond for  Rule: [+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+
+ PreCands are: []
+
+ Found unprovable precondition : add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+ All found unprovable preconditions: [add_pre(-[dummyPred,vble(x),vble(z)],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+
+--------The incompatibilities of R6 include
+
+
+--------The resulted rules of analogise RuleSR include
++[families,vble(z),vble(x)]
+-[\=,vble(y),vble(x)]
+-[dummyPred,vble(x),vble(z)]
+-[parent,vble(z),vble(y),[birth]]
+
+The scored relevant rule is 
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+0,1
+
+8repair plans  for buildP:[[-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])]]]
+
+
+[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]]
+[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]]
+[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]]
+[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]),[[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[c],[step]]]]],[insuff,([expand([+[families,[a],[c]]])],[[+[families,[a],[c]]]]),[[+[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([expand([+[parent,[a],[c],[birth]]])],[[+[parent,[a],[c],[birth]]]]),[[+[parent,[a],[c],[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[[+[parent,[a],[c],[step]]]]),[[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]),[]],[insuff,([analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]),[[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]]]],[insuff,([arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]),[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]]]]]
+
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+
+All collections of repair plans are: 
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])]
+[expand([+[families,[a],[c]]])]
+[expand([+[parent,[a],[c],[birth]]])]
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])]
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])]
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])]
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])]
+
+
+-------- Start to apply repair plans:
+expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+
+******** RepPlan: expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[families,[a],[c]]])
+
+
+******** RepPlan: expand([+[families,[a],[c]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[parent,[a],[c],[birth]]])
+
+
+******** RepPlan: expand([+[parent,[a],[c],[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+
+******** RepPlan: extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+
+******** RepPlan: rename([([step],[birth],[+[parent,[a],[c],[step]]])])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+
+******** RepPlan: analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+
+-------- Start apply arityDec-------- 
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+******** RepPlan: arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])
+
+-------- Finish applying repair plans.
+
+-- There are 8 repaired states: 
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+
+
+-- RepStatesFine [[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]]
+[+[parent,[a],[b]]]
+[+[parent,[a],[c]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,[a],[c]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]]
+[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]]
+[+[parent,[a],[b],[birth]]]
+[+[parent,[a],[c],[step]]]
+
+
+---------SufGoals is------
+[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 8
+0,0,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+1,0,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]])],[([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[1,0])],[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[\=,vble(y),vble(x)],-[dummyPred,vble(x),vble(z)],-[parent,vble(z),vble(y),[birth]]],[[a]/vble(z),[c]/vble(x)],[-[\=,vble(y),[c]],-[dummyPred,[c],[a]],-[parent,[a],vble(y),[birth]]],[2,1])]])],[]
+0,0,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+0,0,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+An Optimal repaired theory with cost:1 and the fault state: [([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]
+--The number of Optimals: 7
+[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b]]],[0,0]),([-[parent,[a],[b]]],[+[parent,[a],[b]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c]]],[0,0]),([-[parent,[a],[c]]],[+[parent,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[[a]/vble(z),[b]/vble(y),[c]/vble(x)],[-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[0,0]),([-[parent,[a],vble(y),[birth]],-[\=,vble(y),[c]]],[+[parent,[a],[b],[birth]]],[],[-[\=,[b],[c]]],[0,0]),([-[\=,[b],[c]]],unae,[],[],[0,0])]])],[],[]
+[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[b]/vble(y),[birth]/vble(z)],[-[parent,[a],[b],vble(z)]],[0,0]),([-[parent,[a],[b],vble(z)]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[[a]/vble(x),[c]/vble(y),[step]/vble(z)],[-[parent,[a],[c],vble(z)]],[0,0]),([-[parent,[a],[c],vble(z)]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[c]/vble(y)],[-[parent,[a],[c],[birth]]],[0,0]),([-[parent,[a],[c],[birth]]],[+[parent,[a],[c],[birth]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,[a],[c]]],[],[],[0,0])]])],[],[]
+[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]],[([-[families,[a],[b]]],[[([-[families,[a],[b]]],[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[[a]/vble(x),[b]/vble(y)],[-[parent,[a],[b],[birth]]],[0,0]),([-[parent,[a],[b],[birth]]],[+[parent,[a],[b],[birth]]],[],[],[0,0])]]),([-[families,[a],[c]]],[[([-[families,[a],[c]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[[a]/vble(z),[c]/vble(y)],[-[parent,[a],[c],[step]]],[0,0]),([-[parent,[a],[c],[step]]],[+[parent,[a],[c],[step]]],[],[],[0,0])]])],[],[]
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+******** A solution is reached. *******
+
+--------------AllRepStates: [fault-free,1/1,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+
+
+--------------executation time 2---
+time takes
+29
+
+------------- AllRepStates -------------
+[fault-free,1/1,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[parent,[a],[c],[birth]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[families,[a],[c]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,1/1,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[parent,[a],[c],[birth]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[families,[a],[c]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,2/2,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[rename([([step],[birth],[+[parent,[a],[c],[step]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[parent,[a],[c],[birth]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[families,[a],[c]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+[fault-free,3/3,[[[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])],[merge(parent,families,[[a],[c]],dec),arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[2])]],[[[a]],[[b]],[[birth]],[[c]],[[step]]],[],[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[[+[families,[a],[b]]],[+[families,[a],[c]]]],[]]]
+
+
+
+
+------------- TASS -------------
+FullyNumRaw is: 21
+FullyNum is: 7
+
+
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y)]],[+[parent,[a],[b]]],[+[parent,[a],[c]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),vble(z)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,[a],[c]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]]]
+[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[birth]]],[+[parent,[a],[c],[step]]]]
+
+
+
+------------- TBSS -------------
+SemiNumRaw is: 0
+SemiNum is: 0
+
+
+
+
+

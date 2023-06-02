@@ -1,0 +1,149 @@
+date(2023,5,28)
+----------------------------------------------------------------------------------
+Theory size: 3
+Faults Number: 1,0
+Cost Limit is: 50
+RoundLimit is: 0
+Running time: 29 ms.
+Heuristics applied:[noAss2Rule,noAxiomDele]
+The protected item(s):[a,b,c,[arity(families)],[families]]
+Total Solution number is: 7
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+parent(a,b,birth)].
+[+parent(a,c,step)].
+
+The true set:
+families(a,b).
+families(a,c).
+
+The false set: 
+[]
+All of 7 sorted repair plans are from: 
+[expand([+[families,vble(z),vble(y)],-[parent,vble(z),vble(y),[step]]])].
+[expand([+[families,[a],[c]]])].
+[expand([+[parent,[a],[c],[birth]]])].
+[extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])])].
+[rename([([step],[birth],[+[parent,[a],[c],[step]]])])].
+[analogy([+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[families,vble(z),vble(x)],-[parent,vble(z),vble(y),[birth]],-[\=,vble(y),vble(x)]])].
+[arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3])].
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/1 :
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3]).
+
+Repair plans found at Round 2/2 :
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3]).
+
+Repair plans found at Round 3/3 :
+arityDec(parent,[[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]],[+[parent,[a],[b],[birth]]],[+[parent,[a],[c],[step]]]],[3]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y)].
+[+parent(a,b)].
+[+parent(a,c)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/1 :
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])]).
+
+Repair plans found at Round 2/2 :
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])]).
+
+Repair plans found at Round 3/3 :
+extC2V([([birth],vble(z),[+[families,vble(x),vble(y)],-[parent,vble(x),vble(y),[birth]]])]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,\z)].
+[+parent(a,b,birth)].
+[+parent(a,c,step)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/1 :
+analogy([+families(\x,\y),-parent(\x,\y,birth)],[+families(\z,\x),-parent(\z,\y,birth),- (\y\= \x)]).
+
+Repair plans found at Round 2/2 :
+analogy([+families(\x,\y),-parent(\x,\y,birth)],[+families(\z,\x),-parent(\z,\y,birth),- (\y\= \x)]).
+
+Repair plans found at Round 3/3 :
+analogy([+families(\x,\y),-parent(\x,\y,birth)],[+families(\z,\x),-parent(\z,\y,birth),- (\y\= \x)]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+families(\z,\x),-parent(\z,\y,birth),- (\y\= \x)].
+[+parent(a,b,birth)].
+[+parent(a,c,step)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/1 :
+expand([+families(\z,\y),-parent(\z,\y,step)]).
+
+Repair plans found at Round 2/2 :
+expand([+families(\z,\y),-parent(\z,\y,step)]).
+
+Repair plans found at Round 3/3 :
+expand([+families(\z,\y),-parent(\z,\y,step)]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+families(\z,\y),-parent(\z,\y,step)].
+[+parent(a,b,birth)].
+[+parent(a,c,step)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/1 :
+expand([+families(a,c)]).
+
+Repair plans found at Round 2/2 :
+expand([+families(a,c)]).
+
+Repair plans found at Round 3/3 :
+expand([+families(a,c)]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+families(a,c)].
+[+parent(a,b,birth)].
+[+parent(a,c,step)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/1 :
+rename([([step],[birth],[+[parent,[a],[c],[step]]])]).
+
+Repair plans found at Round 2/2 :
+rename([([step],[birth],[+[parent,[a],[c],[step]]])]).
+
+Repair plans found at Round 3/3 :
+rename([([step],[birth],[+[parent,[a],[c],[step]]])]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+parent(a,b,birth)].
+[+parent(a,c,birth)].
+
+------------------ Solution No. 7 as below------------------
+Repair plans found at Round 1/1 :
+expand([+parent(a,c,birth)]).
+
+Repair plans found at Round 2/2 :
+expand([+parent(a,c,birth)]).
+
+Repair plans found at Round 3/3 :
+expand([+parent(a,c,birth)]).
+
+
+Repaired Theory: 
+[+families(\x,\y),-parent(\x,\y,birth)].
+[+parent(a,b,birth)].
+[+parent(a,c,birth)].
+[+parent(a,c,step)].
+
+Solutions are found at rounds:[1/1,2/2,3/3]
