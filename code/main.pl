@@ -40,7 +40,7 @@ abc:-
 
     % writeLog([nl,write_term_c('--------------executation time 1---'), nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime1),nl]),
     % repair process
-    detRep(Theory, AllRepStates),
+    detRep(Theory, AllRepStates), %Entrypoint of repair proces
     writeLog([nl,write_term_c('--------------AllRepStates: '),write_term_All(AllRepStates),nl, finishLog]),
 
     statistics(walltime, [E,_]),
@@ -66,12 +66,12 @@ detRep(Theory, AllRepSolutions):-
             unaeMain(Theory,  OptimalUnae),
             member((TheoryState, InsufIncomp), OptimalUnae),
 
-            InsufIncomp = (_,INSUFF,ICOM),
+            InsufIncomp = (_,INSUFF,ICOM), % Insufficiency and Incompatibility faults here. 1. sufficiencies, 2. insufficienies, 3. incompatability
             length(INSUFF,InsuffNum),
             length(ICOM,IncompNum),
             assert(spec(faultsNum(InsuffNum, IncompNum))),
 
-             (InsufIncomp = (_,[],[])->
+             (InsufIncomp = (_,[],[])-> % if 2 and 3 are empty then it is fault free
                      TheoryRep = ([fault-free, 0, TheoryState]);    % if the theory is fault free.
              % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
               InsufIncomp \= (_,[],[])->
@@ -207,14 +207,14 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
     findall(Proof, (member((_, UnwProofs), IncompsIn), member(Proof, UnwProofs)),  IncompsProofs),
-
+    %appEach is kind of like a foreach loop
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
-
+    % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
     repCombine(RepPlans, TheoryIn, RepSolutions),
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),

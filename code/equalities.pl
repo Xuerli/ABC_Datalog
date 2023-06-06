@@ -30,7 +30,7 @@ unaeMain(TheoryIn, OptStateRep):-
     OptStateRep = [(TheoryState, InsufIncomp)].
 
 
-unaeMain(TheoryIn, OptStateRep):-
+unaeMain(TheoryIn, OptStateRep):- % This one is not run
     % replace equal variable in each axiom.
     appEach(TheoryIn, [repEquVab], Theory1),
     % replace constants in the theory and the preferred structure with their equality class representatives respectively.

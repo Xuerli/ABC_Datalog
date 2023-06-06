@@ -178,7 +178,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
-
+% ORganize into like thesis 7.8 example 
 %% slRLMain33: Use an input rule to resolve Goal which does not have == as its predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Goal| GoalsRest],
