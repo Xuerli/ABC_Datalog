@@ -1,4 +1,4 @@
-:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
+:- working_directory(_, 'C:/Users/turtleburrito/Documents/GitHub/ABC_Datalog/code').
 :-[main].
 
 axiom([-goodPrice(\x),+buyStock(\x)]).

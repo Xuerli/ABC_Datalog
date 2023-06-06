@@ -77,7 +77,7 @@ supplyInput:-
 precheckPS:-
     %nl,nl,write_term_c('-------Start the consistency check on the preferred structure--------'),nl,
     % no conflicts in the preferred structure
-    spec(pft(Trues)),
+    spec(pft(Trues)), % This is just to retrieve variables from 
     spec(pff(Falses)),
     % get the conflicts between the preferred structure and the constrain axioms in the thoery.
     findall(('Constraint', Constrain),
