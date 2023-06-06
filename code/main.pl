@@ -40,6 +40,7 @@ abc:-
 
     % writeLog([nl,write_term_c('--------------executation time 1---'), nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime1),nl]),
     % repair process
+    
     detRep(Theory, AllRepStates), %Entrypoint of repair proces
     writeLog([nl,write_term_c('--------------AllRepStates: '),write_term_All(AllRepStates),nl, finishLog]),
 
