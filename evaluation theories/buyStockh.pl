@@ -1,4 +1,4 @@
-:- working_directory(_, 'C:/Users/turtleburrito/Documents/GitHub/ABC_Datalog/code').
+:- working_directory(_, '../code').
 :-[main].
 
 axiom([-goodPrice(\x),+buyStock(\x)]).

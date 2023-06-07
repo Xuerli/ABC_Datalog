@@ -1,4 +1,4 @@
-:- working_directory(_, 'C:/Users/turtleburrito/Documents/GitHub/ABC_Datalog/code').
+:- working_directory(_, '../code').
 :-[main].
 
 
@@ -19,3 +19,6 @@ protect([eq,arity(eq),camilla, diana, william, prop(eq)]).
 heuristics([ noRuleChange, noAnalogy, noAxiomDele, noPrecDele,noAxiomAdd]).
 
 theoryFile:- pass.
+
+
+% working_directory(_, 'C:/Users/turtleburrito/Documents/GitHub/ABC_Datalog/evaluation theories').

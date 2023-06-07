@@ -19,9 +19,21 @@ The output file will be under the folder named 'log'. Files with abc_*_*_faultFr
 It is a sample output file, whose original name is of format _abc_..._faultFree.txt_.
 
 # How to run the code
-Step1. Prepare the theory input file e.g., any file in folder 'evaluation theories'. It has to include a Datalog theory given by _axiom([...])_, and the preferred structure given by _trueSet([...])_ and _falseSet([...])_. Then one can put the items to protect from being changed in _protect([...])_, and heuristics to apply in _heuristics([...])._
+Step1. Prepare the theory input file e.g., any file in folder 'evaluation theories'. It has to include a Datalog theory given by _axiom([...])_, and the preferred structure given by _trueSet([...])_ and _falseSet([...])_. Then one can put the items to protect from being changed in _protect([...])_, and heuristics to apply in _heuristics([...])._ Add the following lines at the top of the theory input file:  
 
-Step2. Load the theory file and main.pl in a Prolog console.
+```
+:- working_directory(_, '../code').
+:-[main].
+```
+
+Step2. In a prolog console, consult the theory input file, for example:
+```
+1 ?- working_directory(_,'./evaluation theories').
+true.
+
+2 ?- [mumh].
+true.
+```
 
 Step3. Call predicate _abc._ The output files include _abc_..._faultFree.txt_ which contains the repair solutions; _abc_..._record.txt_ which has the log information of ABC's procedure, and _abc_..._repNum.txt_ which is the pruned sub-optimal.
 
