@@ -108,17 +108,21 @@ detRep(Theory, AllRepSolutions):-
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
 detInsInc(TheoryState, FaultState):-
+    write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
     nl,write_term_c(Theory),nl,write_term_All(Theory),nl,finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
+    write_term_c('---------Start detInsInc, Input theory is:------'), nl,
+    write_term_All(Theory),nl,
+    write_term_c("---------Checking true set insuff and suffs--------"),nl,
     findall( [Suff, InSuff],
             ( % Each preferred sentence is negated, and then added into Theory.
               member([+[Pre| Args]], TrueSetE),
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
               Goal = [-[Pre| Args]],
-
+            write_term_c(Goal),nl,
               % Get all proofs and failed proofs of the goal.
               findall( [Proof, Evidence],
                      ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
@@ -131,16 +135,18 @@ detInsInc(TheoryState, FaultState):-
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-
+    write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
      writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
      nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs), finishLog]),
-
+    write_term_c('---------Checking incompatibilities------'), nl,
     % detect the incompatibilities
       findall((Goal, UnwProofs),
            (member([+[Pre| Args]], FalseSetE),
             % skip equalities/inequalities which have been tackled.
             notin(Pre, [\=, =]),
             Goal = [-[Pre| Args]],
+            write_term_c(Goal),nl,
             % get all of a proof of Goal
             findall(Proof,
                     slRL(Goal, Theory, EC, Proof, [], []),
@@ -149,6 +155,7 @@ detInsInc(TheoryState, FaultState):-
            InComps),             % Find all incompatibilities.
 
     writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
+    write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
     % detect the inconsistencies due to the violation of constrains
     findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
@@ -159,6 +166,8 @@ detInsInc(TheoryState, FaultState):-
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
+      write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
+      write_term_c('-----end---------'),nl,nl,fail,!,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************

@@ -79,6 +79,7 @@ slRL(Goal, _, EC, _, _, _):-
 % Rewrite the input goal and the theory.
 slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % Set an depth limit of the resoluton according to the length of the thoery.
+    write_term_c("-----start slRL---------"),nl,
     length(TheoryIn, L),
     RCostLimit is L*L,    % the depth limit of a proof.
       % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
@@ -86,10 +87,17 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
                             append(RestGoal, [+Head], GoalNew),!;
     notin(+_, Goal) -> GoalNew = Goal),
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
-
+    write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
+    write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
+    write_term_c("EC is "), write_term_c(EC),nl,
+    write_term_c("Proof  is uninitialized"), nl,
+    write_term_c("Evidence is uninitialized"), nl,
+    write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
     slRLMain(GoalNew, [], TheoryIn, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
+    write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
     cleanSubMid(EvidenceTem, Evidence).
+    
     /* writeLog([nl,write_term_c('--------SL Resolution with Goal: '),
             write_term_c(Goal), write_term_c('--------'),nl,
             write_term_c('Proof is:'),write_term_c(Proof),nl,
