@@ -1,8 +1,3 @@
-/*
-Date: 07 Jan 2019
-Macintosh HD⁩/⁨Users⁩/lixue⁩/GoogleDrive⁩/01PHD⁩/01program⁩/eclipse-workspace⁩/ABC_Clean⁩/src⁩
-*/
-
 :- use_module(library(lists)).
 :-[preprocess, equalities, repairPlanGen, repairApply, vitality].
     % clear all assertions. So main has to be compiling before the input theory file.
