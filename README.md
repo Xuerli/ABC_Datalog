@@ -37,4 +37,7 @@ true.
 
 Step3. Call predicate _abc._ The output files include _abc_..._faultFree.txt_ which contains the repair solutions; _abc_..._record.txt_ which has the log information of ABC's procedure, and _abc_..._repNum.txt_ which is the pruned sub-optimal.
 
+# Reserved keywords
+- `func` : reserved for describing functions.
+
 
