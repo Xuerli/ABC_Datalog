@@ -12,6 +12,7 @@ mySqrt(X,Y) :- %Y is output
 %Problem: 
     % 1. how to call this "function" and get the output?
     % 2. how to do type conversion e.g. from int to float?
+    % 3. how to guarantee the name is not another reserved in our prolog program? (can hard code, deal later)
 
 %Success: 
     % axiom(X), 
