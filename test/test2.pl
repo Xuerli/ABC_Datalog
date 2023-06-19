@@ -13,6 +13,7 @@ mySqrt(X,Y) :- %Y is output
     % axiom(X), 
     % length(X,Y), 
     % Y is 2, 
+    % !,
     % Z = -P,  
     % nth1(1,X,Z), 
     % P =..L, 
@@ -21,6 +22,6 @@ mySqrt(X,Y) :- %Y is output
     % call(FuncName,16,Ans). 
 
 %Problem: 
-    % 1. how to call this "function" and get the output?
+    % 1. how to call this "function" and get the output? (DO I need to?)
     % 2. how to do type conversion e.g. from int to float?
     % 3. how to guarantee the name is not another reserved in our prolog program? (can hard code, deal later)
