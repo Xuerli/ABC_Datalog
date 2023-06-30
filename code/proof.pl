@@ -400,7 +400,7 @@ noloopBack(_, Deriv):-         % a loop is found when there is already an empty 
 noloopBack(GoalsCur, Deriv):-
     % Check for any previous goal PreGoal,
     (forall(member((_, _, _, PreGoal, _), Deriv),
-            %there is a subgoal PreSubG which cannot be resolved with any subgoal in the current goal GoalPar.
+            %there is a subgoal PreSubG which cannot be resolved with any subgoal in the current goal GoalCur.
             setof(PreSubG,
                     (member(-PreSubG, PreGoal),
                      % not resolvable with any current subgoal
