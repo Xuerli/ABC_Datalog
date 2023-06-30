@@ -21,13 +21,12 @@ initTheory(Theory):-
     findall(ClOut,
                 (axiom(Axiom),
                 convertClause(Axiom, Cl), %simply to convert each literal with "convert" predicate.
-                %UP TILL HERE
-                orderAxiom(Cl, ClOut)),
+                orderAxiom(Cl, ClOut)), %reorder to put head first, then equality / inequality last.
             TheoryRaw),
-
     sort(TheoryRaw, Theory), % do not change the literal order in an axiom.
     % get the theory graph based on rules.
     theoryGraph(Theory, Graph),
+    % Here we process the true set and false set (no need change now)
     findall(ConvPClause,
             ( (    trueSet(Trues), member(Cl,Trues), Cl\=[];
                 % convert the equalities and inequalities in False set to True set.
@@ -40,12 +39,14 @@ initTheory(Theory):-
                 Cl\=[], Cl\= (C1=C2), Cl\= (C1\=C2),    % skip the equalities and inequalities.
                 convertClause([+Cl], ConvVClause)),
             FalseSet),   % convert each axiom to internal representation
-    appEach(Theory, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
-    sort(Ophans, OpOrdered), % remove duplicates.
-    % check that there should not be any axiom with orphan variable.
-    flatten(OpOrdered, []),
+    % ==========================
+    %% CHECK OF ORPHAN VARIABNLES ARE REMOVED.
+    % appEach(Theory, [orphanVb], Ophans),  % Check if there are Orphans
+    % sort(Ophans, OpOrdered), % remove duplicates.
+    % % check that there should not be any axiom with orphan variable.
+    % flatten(OpOrdered, []),
     maplist(assert, [spec(tgraph(Graph)), spec(pft(TrueSet)), spec(pff(FalseSet))]),
-    recSignature(Theory),
+    recSignature(Theory), %Register signature (no change at Fault Detection Stage)
     % Initialise the protected list and heuristics.
     initProtList,
     heuristics(HeursOld),

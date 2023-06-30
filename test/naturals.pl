@@ -10,7 +10,7 @@ axiom([-naturals(\x),+naturals(suc(\x))]).
 suc(X,Y):-
     Y is X + 1.
 
-trueSet([naturals(zero),naturals(one)]).
+trueSet([]).
 falseSet([]).
 protect([]).
 heuristics([]).
