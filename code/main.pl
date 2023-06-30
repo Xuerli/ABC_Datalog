@@ -27,9 +27,10 @@ abc:-
     supplyInput, %OK: This simply inits the PS if they are not present.
     % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
     initTheory(Theory),    % clear previous data and initialise new ones.
-    write_term_All(Theory),nl,
-    write_term_c("============="),nl,
-    fail,
+    % write_term_All(Theory),nl,
+    % write_term_c("============="),nl,
+    % fail,
+    %OK Up to here.
     precheckPS,
     % setup log
     initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
