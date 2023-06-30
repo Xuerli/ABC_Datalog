@@ -20,9 +20,11 @@ initTheory(Theory):-
     % Notice that only the ones within [] is a clause, others could be heuristics, e.g., axiom(una).
     findall(ClOut,
                 (axiom(Axiom),
-                convertClause(Axiom, Cl),
+                convertClause(Axiom, Cl), %simply to convert each literal with "convert" predicate.
+                %UP TILL HERE
                 orderAxiom(Cl, ClOut)),
             TheoryRaw),
+
     sort(TheoryRaw, Theory), % do not change the literal order in an axiom.
     % get the theory graph based on rules.
     theoryGraph(Theory, Graph),

@@ -170,7 +170,7 @@ compose1(Sub, SublistIn, SublistOut) :-     % Append new substitution
     sort(SubTem, SublistOut).     % remove duplicates.
 
 /**********************************************************************************************************************
-    convertClause(In, Clause): convert input axiom into Horn clause form with head at the front and body in the end.
+    convertClause(In, Clause): convert input axiom into CNF form with head at the front and body in the end.
     Input:    In is an input axiom
     Output: Clause is a Horn clause.
         For reducing the search space of resolution, the Clause has its head at the front and body in the end.
