@@ -82,8 +82,8 @@ precheckPS:-
     % no conflicts in the preferred structure
     spec(pft(Trues)), % This is just to retrieve variables from 
     spec(pff(Falses)),
-    % get the conflicts between the preferred structure and the constrain axioms in the thoery.
-    findall(('Constraint', Constrain),
+    % get the conflicts between the preferred structure and the constraint axioms in the thoery.
+    findall(('Constraint', Constrain), %TODO check if changes needed later.
             (spec(protList(ProtectedList)),
              member(Constrain, ProtectedList),
              Constrain=[-_|_],
@@ -248,7 +248,7 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     findall([+[P|Args]], member([+[P|Args]], TheorySorted1), Assertions),
     deleteAll(TheoryIn, Assertions, Rules),
     append(Assertions, Rules, TheorySorted),
-    smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut),
+    smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut), %seems to be useless here.
     resetIndepVble(TheoryIn, Minimal).
 
 smaller(TheorySorted,  _, RsIn, [], TheorySorted, RsIn).

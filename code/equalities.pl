@@ -17,40 +17,18 @@
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
 % if there is no '=' or '\=' in the signature. Do not comput equivalence class.
+% NOTE: seems '=' and '\=' is not supported in this version of ABC now.
 unaeMain(TheoryIn, OptStateRep):-
     spec(signature(Predicates, Constants)),
     notin((=,_), Predicates), !,    % = is not in the signature
     findall([C], member(C,Constants), EC),    % initialise the equivalence classes
-    minimal(TheoryIn, EC, [], MinimalT, []),
+    minimal(TheoryIn, EC, [], MinimalT, []), %remove duplicates and reorder theories.
     spec(pft(TrueSet)),
     spec(pff(FalseSet)),
     TheoryState = [[[],[]], EC, [], MinimalT, TrueSet, FalseSet],
     % detect the faults of incompatibilities and insufficiencies.
     detInsInc(TheoryState, InsufIncomp),
     OptStateRep = [(TheoryState, InsufIncomp)].
-
-
-% unaeMain(TheoryIn, OptStateRep):- % This one is not run
-%     write_term_c("this one is run!!!!!!!!!!!!!!!!!!"),!,
-%     % replace equal variable in each axiom.
-%     appEach(TheoryIn, [repEquVab], Theory1),
-%     % replace constants in the theory and the preferred structure with their equality class representatives respectively.
-%     equClass(Theory1, ECState),
-%     writeLog([nl, write_term_c('---------The ECState are------'),
-%             write_term_All(ECState), finishLog]),
-
-%     TheoryState = ([]| ECState),    % initialise the repair as [].
-%     % calculate equivalence classes, and then detect the faults based on the preferred structure and UNAE.
-%     unaeFaultDet(TheoryState, TheoryFault),
-%     TheoryFault = [_, _, _, _, UnaeFaults, _],
-
-%     (UnaeFaults = [[],[],[]]->     % if the theory is fault free.
-%             OptStateRep = TheoryFault;
-%     % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
-%     UnaeFaults \= [[],[],[]]->
-%             findall(OptOut,
-%                     unaeTheoryRep(TheoryFault, OptOut),
-%                     OptStateRep)).
 
 /**********************************************************************************************************************
     equClass(TheoryIn, TheoryStateOut): calculate equivalence classes and their proofs.

@@ -27,11 +27,7 @@ abc:-
     supplyInput, %OK: This simply inits the PS if they are not present.
     % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
     initTheory(Theory),    % clear previous data and initialise new ones.
-    % write_term_All(Theory),nl,
-    % write_term_c("============="),nl,
-    % fail,
-    %OK Up to here.
-    precheckPS,
+    precheckPS, %TODO check how constraint axioms need to be handled - any changes?
     % setup log
     initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
     %statistics(walltime, [_ | [ExecutionTime1]]),
@@ -106,7 +102,7 @@ detRep(Theory, AllRepSolutions):-
                         InSuffs: the unprovable goals from pf(T).
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
-detInsInc(TheoryState, FaultState):-
+detInsInc(TheoryState, FaultState):- %TODO up till here
     write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
