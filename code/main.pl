@@ -110,13 +110,15 @@ detInsInc(TheoryState, FaultState):- %TODO up till here
     % Find all proofs or failed proofs of each preferred proposition.
     write_term_c('---------Start detInsInc, Input theory is:------'), nl,
     write_term_All(Theory),nl,
+    write_term_c('----------This is the True set:-------------'),nl,
+    write_term_All(TrueSetE),nl,
     write_term_c("---------Checking true set insuff and suffs--------"),nl,
     findall( [Suff, InSuff],
             ( % Each preferred sentence is negated, and then added into Theory.
-              member([+[Pre| Args]], TrueSetE),
+              member([+[Pre| Args]], TrueSetE), % This is not changed for now until have better representation scheme.
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
-              Goal = [-[Pre| Args]],
+              Goal = [-[Pre| Args]], 
             write_term_c(Goal),nl,
               % Get all proofs and failed proofs of the goal.
               findall( [Proof, Evidence],

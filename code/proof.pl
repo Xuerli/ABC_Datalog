@@ -53,7 +53,7 @@ unification([A = B| Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
 unification(Ununifiable,Sigma, Unis, Unis, Sigma, Ununifiable).        % the remaining failed unifications.
 
 /**********************************************************************************************************************
-    slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem): SL resolution based on reputation.
+    slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem): SL resolution based on refutation.
     Input:  Goal: Goal is the main goal, which could be a list of subgoals.
              TheoryIn is the input theory;
              EC is the equivalence classes.
@@ -82,10 +82,11 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     write_term_c("-----start slRL---------"),nl,
     length(TheoryIn, L),
     RCostLimit is L*L,    % the depth limit of a proof.
-      % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
-    (member(+Head, Goal) -> delete(Goal, +Head, RestGoal),
-                            append(RestGoal, [+Head], GoalNew),!;
-    notin(+_, Goal) -> GoalNew = Goal),
+    %   % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
+    % (member(+Head, Goal) -> delete(Goal, +Head, RestGoal),
+    %                         append(RestGoal, [+Head], GoalNew),!;
+    % notin(+_, Goal) -> GoalNew = Goal),
+    GoalNew = Goal, % There is no need to distinguish +/- now as everything needs to be resolved.
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
     write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
     write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
@@ -97,57 +98,19 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
     cleanSubMid(EvidenceTem, Evidence).
-    
-    /* writeLog([nl,write_term_c('--------SL Resolution with Goal: '),
-            write_term_c(Goal), write_term_c('--------'),nl,
-            write_term_c('Proof is:'),write_term_c(Proof),nl,
-            write_term_c('Evidence is:'),write_term_c(Evidence),nl,
-            write_term_c('Theorem is:'),write_term_c(Theorem),nl, finishLog]).
-    */
 
 %% slRLMain1: No goals remain to resolve, a theorem is found, output the whole proof ([], Ancestors).
 % When a proof is found, do not search further, and the evidence of partial proof is empty.
 % This cases considers the goal becoming "=> P(x)" which is a theorem.
-slRLMain([+Literal], Evi, _, _, ProofOut, [], Theorem, _):- 
-    (Evi = [] -> ProofOut = [([+Literal],[],[],[+Literal],[0,0])]; % If Evidence is empty, theorem is proof
-     Evi = [_|_] -> ProofOut = Evi), % If evidence non-empty, theorem = proof
-    Theorem = [+Literal], !.
+% slRLMain([+Literal], Evi, _, _, ProofOut, [], Theorem, _):- 
+%     (Evi = [] -> ProofOut = [([+Literal],[],[],[+Literal],[0,0])]; % If Evidence is empty, theorem is proof
+%      Evi = [_|_] -> ProofOut = Evi), % If evidence non-empty, theorem = proof
+%     Theorem = [+Literal], !.
+% NOTE : This is deleted as all positive literals need to be resolved as well.
 
 %% slRLMain2: No goals to resolve, output the whole proof ([], Ancestors) with [] for Evidence and Theorem.
 % When a proof is found, do not search further
 slRLMain([], Proof, _,_, Proof, [], [],_):- !. % The proof is output. Reset the proofStatus to the default value 0.
-
-/*
-%% slRLMain3: reorder subgoals in Goal by moving the first equality predicate to the end.
-slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
-    Goals = [-Equ| GRest],          % get the predicate of the left most sub-goal to resolve.
-    member(Equ, [[=| Args], [\=| Args]]),
-
-    (% resolve the fist sub-goal if its arguments are all constants.
-     forall(member(X, Args), is_cons(X))->
-             retractall(spec(proofStatus(_))), assert(spec(proofStatus(1))),         % Set the proofStatus as 1, so the first sub-goal will be resolved if it can be.
-            equalSub(Equ, EC, Subs),
-            subst(Subs, GRest, GoalsNew),
-            noloopBack(GoalsNew, Deriv),      % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
-            retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),      % Reset the proofStatus flag to the default value 0.
-            CurDerStep = ((Goals, Subs), (unae, []), GoalsNew, [0, 0]),
-            updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
-            slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit); % Resolve the rest goals.
-
-     % if there is a variable in the sub-goal's arguments,
-     % and not all of the goal predicates are equality/inequality predicate.
-     occur(vble(_), Args),
-     setof(P, (member(-[P|_], GRest), notin(P, [=, \=])),_)->
-        % move the equality or inequality to the end of the goal clause.
-        % keep the positive literal in the end if there is one.
-        (last(GRest, -_) ->
-                    append(GRest, [-Equ], GoalsNew);
-         last(GRest, +_) ->
-                     reverse(GRest, [+P|GTail]),
-                     reverse([+P| [-Equ| GTail]], GoalsNew)),
-        updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
-         slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit)).
-*/
 
 %% slRLMain3: reorder subgoals in Goal by moving the first equality predicate to the end.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
@@ -156,7 +119,6 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     member(PG, [=, \=]),% check if current goal is in the form of = or \=
      % if there is a variable in the sub-goal's arguments,
      % and not all of the goal predicates are equality/inequality predicate.
-
      % IF there are other predicates in the goal clause (IF not, this whole thing will be false.)
      setof(P, (member(-[P|_], GRest), notin(P, [=, \=])),_)->
         % move the equality or inequality to the end of the goal clause.
@@ -169,7 +131,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
         updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
          slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit).
 
-%% slRLMain33: Use an input ASSERTION to resolve Goal which does not have = as its predicate.
+%% slRLMain3.1: Use an input ASSERTION to resolve Goal which does not have = as its predicate.
 % This resolves the current goal if there exists an input assertion +[P|Arg] that resolves -[P|Arg] directly.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-[P| Arg]| GoalsRest],
@@ -188,6 +150,24 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
+%% slRLMain3.2: Use a constraint theorem -[P|Arg] to resolve theorem +[P|Arg].
+slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
+    Goals = [+[P| Arg]| GoalsRest],
+    notin(P, [=, \=]),
+    (notin(vble(_), Arg)-> %The case where no variable is considered.
+                member([-[P| Arg]], TheoryIn), % Find an exact match with all constants?
+                InputClause = [+[P| Arg]],
+                GoalsNew = GoalsRest,
+                SG =[];
+     occur(vble(_), Arg)->
+                 member([-[P| Arg2]], TheoryIn), % find a match where the predicate name matches with any arguments
+                 InputClause = [-[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
+                 unification([P| Arg], [P| Arg2], [],[],_, SG, []), %attempt unification of variables
+                 subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
+    CurDerStep = ((Goals, SG), (InputClause, []), GoalsNew, [0, 0]), %Ref. 7.8 of thesis
+    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
+    slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
+
 
 %% slRLMain33: Use an input rule to resolve Goal which does not have == as its predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
@@ -198,7 +178,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(1))),   % Set the proofStatus as 1, so the first sub-goal will be resolved if it can be.
     length(Deriv, RDepth),
     RDepth < RCostLimit,    % The current proof depth is not larger than the limit.
-    % Require that the head of a clause should be its first literal.
+    % Require that the head of a clause should be its first literal. (This should be relaxed)
     InputClause = [+[Pred| _]| [_|_]],    % get a rule whose tail is also a list.
     member(InputClause, TheoryIn),             % Successfully get one input clause whose head has the same predicate with the predicate of the goal. % It could be a clause added by abduction
     % rewrite the shared variable in Goals if that variable occurs both in the goal and the input clause.

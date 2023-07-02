@@ -5,14 +5,15 @@
 % axiom([-naturals(\x),+naturals(suc(\x,suc(suc(\y))))]).
 
 axiom([+naturals(0)]).
-axiom([-naturals(\x),+naturals(suc(\x))]).
+axiom([-naturals(pre(\x)),+naturals((\x))]).
 
-suc(X,Y):-
-    Y is X + 1.
+pre(X,Y):-
+    Y is X - 1.
 
-trueSet([]).
+trueSet([naturals(1)]).
 falseSet([]).
 protect([]).
 heuristics([]).
 
 theoryFile:- pass.
+
