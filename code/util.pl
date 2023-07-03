@@ -144,9 +144,11 @@ argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
 argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
     Cons1 \= Cons2.
 
-% In datalog, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v).
+% In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).
-arg(X):- is_cons(X); X = vble(_).
+arg(X):- is_cons(X),!.
+arg(X):- X = vble(_),!.
+arg(X):- X = [P | Rest],!, length(Rest,LRest), LRest > 0, P \= vble(_).
 
 % Assertion protect check
 asserProCheck([_|_],_):- !. % for rules, pass.
@@ -536,7 +538,7 @@ newVble(vble(X), Args, vble(NewX)):-
     check existances.
 ***********************************************************************************************************************/
 
-nestedNotin(_,List):-\+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
+nestedNotin(_,List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
 nestedNotin(X,List):- \+memberNested(X,List), !.
 
 notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
@@ -1086,3 +1088,21 @@ memberNested(Elem,[_|R]):-
     memberNested(Elem,R).
 
 memberNested(_,[]):- fail.
+
+
+occursCheck(X,Funclist):-
+    \+memberNested(vble(X), Funclist),!.
+
+noTautology(Goals):-
+    findall(Pred,
+        (
+            X = -[Pred|_],
+            Y = +[Pred|_],
+            member(X,Goals),
+            member(Y,Goals),
+            X = -Xpred,
+            Y = +Ypred,
+            unification(Xpred,Ypred,[],[],_,_,[])
+        )
+        ,Preds),
+    length(Preds,0).

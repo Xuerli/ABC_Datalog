@@ -25,8 +25,8 @@ unification([],Sigma, Unis, Unis, Sigma, []) :- !.   % Fail if failure wanted, b
 %Unification of two functions or two predicates.
 unification([[F1|Args1]=[F2|Args2]|Old], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
     F1==F2, !, length(Args1,L), length(Args2,L),       % If functors and arities agree
-    pairwise(Args1, Args2, New),                      % Pair up corresponding subterms
-    append(New, Old, Rest),                           % Add them to the Old problems
+    pairwise(Args1, Args2, New),                   % Pair up corresponding subterms
+    append(New, Old, Rest),                   % Add them to the Old problems
     unification(Rest, SigmaIn, [([F1|Args1]=[F2|Args2])|UnisIn], UnisOut, SigmaOut, UniResult).        % Repair either from recursive part
 
 %Unification of two variables of the SAME name.
@@ -41,15 +41,32 @@ unification([vble(X)=vble(Y)|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResul
     subst(SigmaMid,Rest,NewRest),                             % substitute one for the other in the problems
     unification(NewRest, SigmaMid, [(vble(X)=vble(Y))|UnisIn], UnisOut, SigmaOut, UniResult).              % Recurse with new problem
 
-%Unification of variable and constant, or variable and functions. (TODO: functions. TODO: occursCheck.)
+%Unification of constant and constant
 unification([A = B| Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
-    member(A = B, [(vble(X) = C), (C=vble(X))]),!,
-    is_list(C), length(C, 1),                              % Constant is a constant
+    is_list(A), length(A, 1),  
+    is_list(B), length(B, 1),                            
+    A == B,
+    unification(Rest, SigmaIn, [(A = B)|UnisIn], UnisOut, SigmaOut, UniResult).
+
+%Unification of variable and constant
+unification([A = B| Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
+    member(A = B, [(vble(X) = C), (C=vble(X))]),
+    is_list(C), length(C, 1),!,                         % Constant is a constant
     Subst1 = C/vble(X),
     compose1(Subst1,SigmaIn,SigmaMid),                         % Compose new substitution with old one
     subst(SigmaMid,Rest,NewRest),
     unification(NewRest, SigmaMid, [(A = B)|UnisIn], UnisOut, SigmaOut, UniResult).
 
+%Unification of variable and functions
+unification([A = B| Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
+    member(A = B, [(vble(X) = C), (C=vble(X))]),
+    is_list(C), length(C, Len),   
+    Len > 1,
+    occursCheck(X,C),!,                         
+    Subst1 = C/vble(X),
+    compose1(Subst1,SigmaIn,SigmaMid),                         % Compose new substitution with old one
+    subst(SigmaMid,Rest,NewRest),
+    unification(NewRest, SigmaMid, [(A = B)|UnisIn], UnisOut, SigmaOut, UniResult).
 
 unification(Ununifiable,Sigma, Unis, Unis, Sigma, Ununifiable).        % the remaining failed unifications.
 
@@ -147,6 +164,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
                  member([+[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
                  InputClause = [+[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
                  unification([P| Arg], [P| Arg2], [],[],_, SG, []), %attempt unification of variables
+                 print('substitution check'),nl,print(SG),nl,
                  subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
     CurDerStep = ((Goals, SG), (InputClause, []), GoalsNew, [0, 0]), %Ref. 7.8 of thesis
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
@@ -193,6 +211,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     unification(Goal, [Pred| ArgCl], [],[],_, SubsRes, []),        % If successful resolution
     append(Body, GoalsRest, GoalsTem2),    % Get the resulting clause C with newly introduced literals Body in front.
     subst(SubsRes, GoalsTem2, GoalsNew),
+    noTautology(GoalsNew),
     noloopBack(GoalsNew, Deriv),        % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),      % Reset the flag to the default value 0.
     %* Do not remove duplicated sub-goals which will effect trace-back process.

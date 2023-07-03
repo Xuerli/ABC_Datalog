@@ -2,9 +2,9 @@
 :-[main].
 
 axiom([+haha(x)]).
-axiom([+p2(\x,func(\x))]).
+axiom([+p2(\x,func(\y))]).
 
-trueSet([p2(\x,\y)]).
+trueSet([p2(\x,\x)]).
 falseSet([]).
 protect([]).
 heuristics([]).
