@@ -244,6 +244,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     unification(Goal, [Pred| ArgCl], [],[],_, SubsRes, []),        % If successful resolution
     append(Body, GoalsRest, GoalsTem2),    % Get the resulting clause C with newly introduced literals Body in front.
     subst(SubsRes, GoalsTem2, GoalsNew),
+    noTautology(GoalsNew),
     noloopBack(GoalsNew, Deriv),        % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),      % Reset the flag to the default value 0.
     %* Do not remove duplicated sub-goals which will effect trace-back process.
