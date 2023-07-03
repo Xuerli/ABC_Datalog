@@ -15,10 +15,10 @@ compute([H|R],Rem,L,A):- %Choose not to append H to L (only if length of R > 0)
     append(Rem,[H],Rem2),
     compute(R,Rem2,L,A).
 
-search([H|R],X,H):-
-    member(X,H).
-search([H|R],X,Out):-
-    search(R,X,Out).
+% search([H|R],X,H):-
+%     member(X,H).
+% search([H|R],X,Out):-
+%     search(R,X,Out).
 
 
 loopAll(L):-
@@ -34,4 +34,14 @@ startdo:-
     !.
 
 
+memberNested(Elem,List):-
+    member(Elem,List),!.
 
+memberNested(Elem,[H|_]):-
+    is_list(H),
+    memberNested(Elem,H).
+
+memberNested(Elem,[_|R]):-
+    memberNested(Elem,R).
+
+memberNested(_,[]):- fail.

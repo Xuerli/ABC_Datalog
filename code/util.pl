@@ -526,15 +526,18 @@ negate([],[]).
     When vble(X) occur in the argument list Args, rename it with a new name which does not occur in Args.
 ***********************************************************************************************************************/
 newVble(vble(X), Args, vble(NewX)):-
-    member(vble(X), Args),
+    memberNested(vble(X), Args),
     string_concat(X,'1',Y),
     term_string(Term, Y),
-    (notin(vble(Term), Args)->NewX = Term, !;
+    (nestedNotin(vble(Term), Args)->NewX = Term, !;
      newVble(vble(Term), Args, vble(NewX))).
 
 /**********************************************************************************************************************
     check existances.
 ***********************************************************************************************************************/
+
+nestedNotin(_,List):-\+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
+nestedNotin(X,List):- \+memberNested(X,List), !.
 
 notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
 notin(X, List):- \+member(X, List), !.
@@ -855,8 +858,8 @@ rewriteVble(_, [], [], []):- !.
 rewriteVble(Goals, InputClause, ClNew, AllSubs):-
     % generate substitutions which replace old variable vble(X) with its new name vble(NewX).
     findall(vble(NewX)/vble(X),
-            (member(-[_|Args], Goals),
-             member(vble(X), Args),
+            (member([_|Args], Goals),
+             memberNested(vble(X), Args),
              member(Literal, InputClause),
              ( Literal = -[_| ArgsInCl];
                Literal = +[_| ArgsInCl]),
@@ -1070,3 +1073,16 @@ reorderClause(Target,[H|R],Out):-
     Target \= H,
     append(R,[H],NewL),
     reorderClause(Target,NewL,Out).
+
+
+memberNested(Elem,List):-
+    member(Elem,List),!.
+
+memberNested(Elem,[H|_]):-
+    is_list(H),
+    memberNested(Elem,H).
+
+memberNested(Elem,[_|R]):-
+    memberNested(Elem,R).
+
+memberNested(_,[]):- fail.

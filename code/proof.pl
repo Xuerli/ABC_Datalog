@@ -16,23 +16,24 @@
             SigmaOut: all of the applied substitutions.
             Result: [] if all equations success, or the remaining equations.
 ***********************************************************************************************/
-unification(E1, E2, SigmaIn, UnisIn, UnisOut, SigmaOut, Result):-
+unification(E1, E2, SigmaIn, UnisIn, UnisOut, SigmaOut, Result):- %/7
     pairwise([E1], [E2], Equations),
-    unification(Equations, SigmaIn, UnisIn, UnisOut, SigmaOut, Result).
+    unification(Equations, SigmaIn, UnisIn, UnisOut, SigmaOut, Result). %/6
 
 unification([],Sigma, Unis, Unis, Sigma, []) :- !.   % Fail if failure wanted, but base case is successful
 
+%Unification of two functions or two predicates.
 unification([[F1|Args1]=[F2|Args2]|Old], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
     F1==F2, !, length(Args1,L), length(Args2,L),       % If functors and arities agree
     pairwise(Args1, Args2, New),                      % Pair up corresponding subterms
     append(New, Old, Rest),                           % Add them to the Old problems
     unification(Rest, SigmaIn, [([F1|Args1]=[F2|Args2])|UnisIn], UnisOut, SigmaOut, UniResult).        % Repair either from recursive part
 
-%
+%Unification of two variables of the SAME name.
 unification([vble(X)=vble(X)|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-   % If two vars and same then
     !, unification(Rest, SigmaIn, [(vble(X)=vble(X))|UnisIn], UnisOut, SigmaOut, UniResult).                   % ignore them and carry on with the rest
 
-% Case VV/=: variables are different
+%UNification of two variables of different names
 unification([vble(X)=vble(Y)|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
     X\==Y, !,                                                    % If two vars are different then
     Subst1 = vble(Y)/vble(X),                                 % some subst needed
@@ -40,7 +41,7 @@ unification([vble(X)=vble(Y)|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResul
     subst(SigmaMid,Rest,NewRest),                             % substitute one for the other in the problems
     unification(NewRest, SigmaMid, [(vble(X)=vble(Y))|UnisIn], UnisOut, SigmaOut, UniResult).              % Recurse with new problem
 
-%% Switch expressions if in wrong order
+%Unification of variable and constant, or variable and functions. (TODO: functions. TODO: occursCheck.)
 unification([A = B| Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-
     member(A = B, [(vble(X) = C), (C=vble(X))]),!,
     is_list(C), length(C, 1),                              % Constant is a constant
@@ -186,7 +187,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     findClause(+[Pred| _],TheoryWithAncestor,InputClause),
     reorderClause(+[Pred| _],InputClause,ReorderedClause),
     % rewrite the shared variable in Goals if that variable occurs both in the goal and the input clause.
-    rewriteVble(Goals, ReorderedClause, RewClause, SubsVG),
+    rewriteVble(Goals, ReorderedClause, RewClause, SubsVG), %Does not seem to be important, if input is properly "standardized apart". Skip.
     RewClause = [+[Pred| ArgCl]| Body], %This is from the input clause. Body is later appended into the other goals.
     % between two variables, SubsRes replace the goal's variable with the input clause's variable
     unification(Goal, [Pred| ArgCl], [],[],_, SubsRes, []),        % If successful resolution
