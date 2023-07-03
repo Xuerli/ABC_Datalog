@@ -1033,3 +1033,22 @@ cterm(F, [Axiom| RestAxioms], NumIn, NumOut):-
     length(PRest, L2),
     NumNew is L1 - L2 + NumIn,
     cterm(F, RestAxioms, NumNew, NumOut).
+
+
+
+/********************************************
+addAncestor: combine new goals (ancestors) with theory.
+*******************************************/
+addAncestor(Theory,[],Theory). %If no derivation, just output the theory.
+addAncestor(Theory,[Head|Rest],Out):-
+    Head = (_,_,_,NewGoal,_),
+    is_list(NewGoal),
+    NewGoal = [],
+    addAncestor(Theory,Rest,Out).
+addAncestor(Theory,[Head|Rest],Out):-
+    Head = (_,_,_,NewGoal,_),
+    is_list(NewGoal),
+    NewGoal \= [],
+    append(Theory,[NewGoal],TheoryNew),
+    addAncestor(TheoryNew,Rest,Out).
+

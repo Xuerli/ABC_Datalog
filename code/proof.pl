@@ -108,11 +108,11 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
 %     Theorem = [+Literal], !.
 % NOTE : This is deleted as all positive literals need to be resolved as well.
 
-%% slRLMain2: No goals to resolve, output the whole proof ([], Ancestors) with [] for Evidence and Theorem.
+%% slRLMain1: No goals to resolve, output the whole proof ([], Ancestors) with [] for Evidence and Theorem.
 % When a proof is found, do not search further
 slRLMain([], Proof, _,_, Proof, [], [],_):- !. % The proof is output. Reset the proofStatus to the default value 0.
 
-%% slRLMain3: reorder subgoals in Goal by moving the first equality predicate to the end.
+%% slRLMain2: reorder subgoals in Goal by moving the first equality predicate to the end.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Equ| GRest],          % get the predicate of the left most sub-goal to resolve.
     Equ = [PG|_],
@@ -136,13 +136,14 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
+    addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
     (notin(vble(_), Arg)-> %The case where no variable is considered.
-                member([+[P| Arg]], TheoryIn), % Find an exact match with all constants?
+                member([+[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
                 InputClause = [+[P| Arg]],
                 GoalsNew = GoalsRest,
                 SG =[];
      occur(vble(_), Arg)->
-                 member([+[P| Arg2]], TheoryIn), % find a match where the predicate name matches with any arguments
+                 member([+[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
                  InputClause = [+[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
                  unification([P| Arg], [P| Arg2], [],[],_, SG, []), %attempt unification of variables
                  subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
@@ -154,13 +155,14 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [+[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
+    addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
     (notin(vble(_), Arg)-> %The case where no variable is considered.
-                member([-[P| Arg]], TheoryIn), % Find an exact match with all constants?
+                member([-[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
                 InputClause = [+[P| Arg]],
                 GoalsNew = GoalsRest,
                 SG =[];
      occur(vble(_), Arg)->
-                 member([-[P| Arg2]], TheoryIn), % find a match where the predicate name matches with any arguments
+                 member([-[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
                  InputClause = [-[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
                  unification([P| Arg], [P| Arg2], [],[],_, SG, []), %attempt unification of variables
                  subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
@@ -169,7 +171,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
 
-%% slRLMain33: Use an input rule to resolve Goal which does not have == as its predicate.
+%% slRLMain4: Use an input rule to resolve Goal which does not have == as its predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Goal| GoalsRest],
     Goal = [Pred| _],            % get the predicate of the left most sub-goal to resolve.
