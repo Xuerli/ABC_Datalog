@@ -132,7 +132,7 @@ detInsInc(TheoryState, FaultState):- %TODO up till here
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-    write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
+    write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
      nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
      writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
      nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs), finishLog]),

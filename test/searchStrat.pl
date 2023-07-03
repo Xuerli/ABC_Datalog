@@ -1,4 +1,4 @@
-axiom([q,r,y,i,op,p]).
+axiom([[a,b,c],[a,b],[b,c]]).
 doSomething(A):-
     print(A),nl.
 
@@ -15,9 +15,15 @@ compute([H|R],Rem,L,A):- %Choose not to append H to L (only if length of R > 0)
     append(Rem,[H],Rem2),
     compute(R,Rem2,L,A).
 
+search([H|R],X,H):-
+    member(X,H).
+search([H|R],X,Out):-
+    search(R,X,Out).
+
+
 loopAll(L):-
     is_list(L),
-    findall(Ls, compute(L,[],[],Ls),Ans), % can use setof if there will be duplicates but do not want
+    findall(Ls, search(L,a,Ls),Ans), % can use setof if there will be duplicates but do not want
     print(Ans),nl,
     length(Ans,X),
     print(X),nl.
@@ -26,3 +32,6 @@ startdo:-
     axiom(X),
     loopAll(X),
     !.
+
+
+

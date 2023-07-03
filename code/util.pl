@@ -1052,3 +1052,21 @@ addAncestor(Theory,[Head|Rest],Out):-
     append(Theory,[NewGoal],TheoryNew),
     addAncestor(TheoryNew,Rest,Out).
 
+/********************************************
+findClause: find the clause in theoryl.
+reorderClause: make target the first clause in the list.
+*******************************************/
+findClause(Target,[H|_],H):-
+    member(Target,H),
+    length(H,X),
+    X > 1.
+findClause(Target,[_|R],Out):-
+    findClause(Target,R,Out).
+
+reorderClause(Target,[H|R],[H|R]):-
+    Target = H,!.
+
+reorderClause(Target,[H|R],Out):-
+    Target \= H,
+    append(R,[H],NewL),
+    reorderClause(Target,NewL,Out).

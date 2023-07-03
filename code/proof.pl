@@ -158,7 +158,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
     (notin(vble(_), Arg)-> %The case where no variable is considered.
                 member([-[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
-                InputClause = [+[P| Arg]],
+                InputClause = [-[P| Arg]],
                 GoalsNew = GoalsRest,
                 SG =[];
      occur(vble(_), Arg)->
@@ -172,19 +172,21 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
 
 
 %% slRLMain4: Use an input rule to resolve Goal which does not have == as its predicate.
+%If goal is -
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Goal| GoalsRest],
     Goal = [Pred| _],            % get the predicate of the left most sub-goal to resolve.
     notin(Pred, [=, \=]),    % Pred is not = neither \=.
+    addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
     %**Caution: any CUT here will cause the issue of unable to find all proofs even under findall/3. Therefore, a Flag proofStatus is applied.
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(1))),   % Set the proofStatus as 1, so the first sub-goal will be resolved if it can be.
     length(Deriv, RDepth),
     RDepth < RCostLimit,    % The current proof depth is not larger than the limit.
-    % Require that the head of a clause should be its first literal. (This should be relaxed)
-    InputClause = [+[Pred| _]| [_|_]],    % get a rule whose tail is also a list.
-    member(InputClause, TheoryIn),             % Successfully get one input clause whose head has the same predicate with the predicate of the goal. % It could be a clause added by abduction
+    % Require that the head of a clause should be its first literal. (This should be relaxed) + reordering
+    findClause(+[Pred| _],TheoryWithAncestor,InputClause),
+    reorderClause(+[Pred| _],InputClause,ReorderedClause),
     % rewrite the shared variable in Goals if that variable occurs both in the goal and the input clause.
-    rewriteVble(Goals, InputClause, RewClause, SubsVG),
+    rewriteVble(Goals, ReorderedClause, RewClause, SubsVG),
     RewClause = [+[Pred| ArgCl]| Body], %This is from the input clause. Body is later appended into the other goals.
     % between two variables, SubsRes replace the goal's variable with the input clause's variable
     unification(Goal, [Pred| ArgCl], [],[],_, SubsRes, []),        % If successful resolution
@@ -201,7 +203,39 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
-%% slRLMain4: When there the firs sub-goal is irresolvable,return the evidence of the partial proof with [] as the proof and theorem.
+%% slRLMain4: Use an input rule to resolve Goal which does not have == as its predicate.
+% If goal is +
+slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
+    Goals = [+Goal| GoalsRest],
+    Goal = [Pred| _],            % get the predicate of the left most sub-goal to resolve.
+    notin(Pred, [=, \=]),    % Pred is not = neither \=.
+    addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
+    %**Caution: any CUT here will cause the issue of unable to find all proofs even under findall/3. Therefore, a Flag proofStatus is applied.
+    retractall(spec(proofStatus(_))), assert(spec(proofStatus(1))),   % Set the proofStatus as 1, so the first sub-goal will be resolved if it can be.
+    length(Deriv, RDepth),
+    RDepth < RCostLimit,    % The current proof depth is not larger than the limit.
+    % Require that the head of a clause should be its first literal. (This should be relaxed) + reordering
+    findClause(-[Pred| _],TheoryWithAncestor,InputClause),
+    reorderClause(-[Pred| _],InputClause,ReorderedClause),
+    % rewrite the shared variable in Goals if that variable occurs both in the goal and the input clause.
+    rewriteVble(Goals, ReorderedClause, RewClause, SubsVG),
+    RewClause = [-[Pred| ArgCl]| Body], %This is from the input clause. Body is later appended into the other goals.
+    % between two variables, SubsRes replace the goal's variable with the input clause's variable
+    unification(Goal, [Pred| ArgCl], [],[],_, SubsRes, []),        % If successful resolution
+    append(Body, GoalsRest, GoalsTem2),    % Get the resulting clause C with newly introduced literals Body in front.
+    subst(SubsRes, GoalsTem2, GoalsNew),
+    noloopBack(GoalsNew, Deriv),        % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
+    retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),      % Reset the flag to the default value 0.
+    %* Do not remove duplicated sub-goals which will effect trace-back process.
+    length(Body, RemCondNum),            % the number of the remaining preconditions in the NewGoal.
+    subDiv(SubsRes, Goals, SG),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
+    subDiv(SubsRes, InputClause, SI),
+    compose1(SubsVG, SI, SubsCl),
+    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsNew, [RemCondNum, 0]),
+    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
+    slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
+
+%% slRLMain5: When there the firs sub-goal is irresolvable,return the evidence of the partial proof with [] as the proof and theorem.
 %% Notice that only the first subgoal in Goals is gaurenteed to be unresolvable. The following subgoals could be resolvable.
 slRLMain(Goals, Deriv, _, _, [], Evidence, [], _):-
     spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
