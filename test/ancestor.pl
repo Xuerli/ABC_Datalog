@@ -7,7 +7,7 @@ axiom([-b(x),+c(x)]).
 axiom([-c(x),+a(x)]).
 axiom([+a(x),+b(x),+c(x)]).
 
-trueSet([a(x),b(x),c(x)]).
+trueSet([a(x)]).
 falseSet([]).
 protect([]).
 heuristics([]).

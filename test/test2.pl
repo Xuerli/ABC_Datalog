@@ -6,8 +6,8 @@ axiom([+specialNumber(5)]).
 axiom([-specialNumber([func,mySqrt,\x]), +superSpecialNumber(\x)]).
 % 16 and 25 are super special numbers
 
-mySqrt(X,Y) :- %Y is output
-    Y is integer(sqrt(X)).
+mySqrt(X,Z,Y) :- %Y is output
+    Y is integer(sqrt(X+Z)).
 
 %Success: 
     % axiom(X), 
