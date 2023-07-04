@@ -164,7 +164,7 @@ detInsInc(TheoryState, FaultState):- %TODO up till here
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
       write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
-      write_term_c('-----end---------'),nl,nl,fail,!,
+      write_term_c('-----end---------'),nl,nl,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
