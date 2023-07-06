@@ -1,7 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-
+theoryName(marriedWomenh).
 
 axiom([-hadHusband(\x),+marriedWoman(\x)]).
 axiom([-marriedWoman(\x),+notDivorced(\x)]).

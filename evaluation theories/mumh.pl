@@ -1,6 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(mumh).
 
 % Birth mother
 axiom([+mum(diana,william)]).

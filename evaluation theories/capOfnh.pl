@@ -1,6 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(capOfnh).
+
 axiom([+cap_of(london,britain)]).
 axiom([+cap_of(edinburgh,britain)]).
 %axiom([+cap_of(tokyo,japan)]).

@@ -1,6 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(researchh).
+
 axiom([-activeReasercher(\x),+writes(\x, papers)]).
 axiom([-writes(\x, papers),+author(\x)]).
 axiom([-author(\x),+employee(\x)]).

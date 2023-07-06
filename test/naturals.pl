@@ -1,9 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
-% axiom([+naturals(happy),+naturals(sad)]).
-% axiom([-naturals(\x),+naturals(suc(\x,suc(suc(\y))))]).
-
+theoryName(naturals).
+ 
 axiom([+naturals(0)]).
 axiom([-naturals(pre(\x)),+naturals((\x))]).
 

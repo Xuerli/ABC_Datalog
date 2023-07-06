@@ -1,8 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-
-
+theoryName(parenth).
 
 axiom([+parent(a,b)]).
 axiom([+parent(a,c)]).

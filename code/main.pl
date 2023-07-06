@@ -134,8 +134,8 @@ detInsInc(TheoryState, FaultState):- %TODO up till here
      transposeF(AllP, [Suffs, InSuffs]),
     write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
      nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
-     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs), finishLog]),
+     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
     write_term_c('---------Checking incompatibilities------'), nl,
     % detect the incompatibilities
       findall((Goal, UnwProofs),

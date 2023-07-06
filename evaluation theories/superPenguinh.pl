@@ -1,8 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-
-
+theoryName(superPenguinh).
 
 axiom([-penguin(\x),+bird(\x)]).
 axiom([-bird(\x),+fly(\x)]).

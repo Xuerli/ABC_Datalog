@@ -18,10 +18,14 @@ fileName(FileCore, Name):-
 ***********************************************************************************************/
 initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
   (\+exists_directory('log')-> make_directory('log'); nl),
-  fileName('record', Fname),
+  (\+theoryName(_)-> assert(theoryName(unNamed)),!;true),
+  theoryName(Name),
+  string_concat(Name,'record',NR),
+  fileName(NR, Fname),
   open(Fname, write, StreamRec),
 
-  fileName('repNum', Fname2),
+  string_concat(Name,'repNum',NR2),
+  fileName(NR2, Fname2),
   open(Fname2, write, StreamRepNum),
   assert(spec(repNum(StreamRepNum))),
 

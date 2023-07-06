@@ -1,6 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(tweetynh).
 
 axiom([+penguin(tweety)]).
 axiom([+bird(polly)]).
