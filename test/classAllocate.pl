@@ -14,11 +14,16 @@ axiom([+acceptScoreElite(70)]).
 axiom([+acceptScoreNormal(69)]).
 axiom([-acceptScoreElite(\d),-acceptScoreNormal(\d)]).
 axiom([-oldClassSize(\e,\f),-allocate(\g,\e),+newClassSize(\e,suc(\f))]).
-axiom([-newClassSize(\h,16)]).
+
+suc(X,Y):-
+    Y is X + 1.
+
+avg(X,Y,Z):-
+    Y is integer((X + Y)/2).
 
 
 trueSet([allocate(paul,normal)]).
-falseSet([]).
+falseSet([newClassSize(normal,16),newClassSize(elite,16)]).
 protect([]).
 heuristics([]).
 
