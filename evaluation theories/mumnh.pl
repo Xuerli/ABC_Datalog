@@ -1,6 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(mumnh).
+
 % Birth mother
 axiom([+mum(diana,william)]).
 % Step mother

@@ -1,6 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(buyStockh).
+
 axiom([-goodPrice(\x),+buyStock(\x)]).
 axiom([-goodPrice(\x),-riskyCompany(\y),+dontBuyStock(\x)]).
 axiom([-inFusion(\x,steel),+riskyCompany(\x)]).

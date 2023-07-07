@@ -1,7 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-
+theoryName(loadedCarh).
 
 axiom([+hasCar(car1)]).
 axiom([+hasLoad(car1,load1)]).
