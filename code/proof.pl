@@ -105,38 +105,8 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     %                         append(RestGoal, [+Head], GoalNew),!;
     % notin(+_, Goal) -> GoalNew = Goal),
     GoalNew = Goal, % There is no need to distinguish +/- now as everything needs to be resolved.
+    spec(equalities(EQs)),
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
-    write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
-    write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
-    write_term_c("EC is "), write_term_c(EC),nl,
-    write_term_c("Proof  is uninitialized"), nl,
-    write_term_c("Evidence is uninitialized"), nl,
-    write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
-    slRLMain(GoalNew, [], TheoryIn, [], EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
-    write_term_c("-----end slRL---------"),nl,
-    cleanSubMid(ProofTem, Proof),
-    cleanSubMid(EvidenceTem, Evidence).
-
-slRL(_, [],_, _, [], [], []):-!.
-
-% Rewrite the input goal and the theory.
-slRL(Goal, _,_, EC, _, _, _):-
-    (\+is_list(Goal), nl,print('ERROR: slRL\'s Goal is not a list'),nl;
-    \+is_list(EC), nl,print('ERROR: slRL\'s EC is not a list'),nl), fail, !.
-
-% Rewrite the input goal and the theory.
-slRL(Goal, TheoryIn, EQs, EC, Proof, Evidence, Theorem):-!,
-    % Set an depth limit of the resoluton according to the length of the thoery.
-    write_term_c("-----start slRL---------"),nl,
-    length(TheoryIn, L),
-    RCostLimit is L*L,    % the depth limit of a proof.
-    %   % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
-    % (member(+Head, Goal) -> delete(Goal, +Head, RestGoal),
-    %                         append(RestGoal, [+Head], GoalNew),!;
-    % notin(+_, Goal) -> GoalNew = Goal),
-    GoalNew = Goal, % There is no need to distinguish +/- now as everything needs to be resolved.
-    retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
-    assert(spec(movedProof([]))),
     write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
     write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
     write_term_c("EC is "), write_term_c(EC),nl,
@@ -146,7 +116,8 @@ slRL(Goal, TheoryIn, EQs, EC, Proof, Evidence, Theorem):-!,
     slRLMain(GoalNew, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
     write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
-    cleanSubMid(EvidenceTem, Evidence).
+    cleanSubMid(EvidenceTem, Evidence),
+    retractall(spec(proofNum(X))), assert(spec(proofNum(X+1))).
 
 %% slRLMain1: No goals remain to resolve, a theorem is found, output the whole proof ([], Ancestors).
 % When a proof is found, do not search further, and the evidence of partial proof is empty.
@@ -353,6 +324,7 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
 %Unable to resolve: reorder goals
 slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
+    spec(proofNum(0)), %Only allow using at the first one.
     Goals = [FirstGoal|Rest],
     length(Rest,LRest),
     LRest > 0,
@@ -577,9 +549,10 @@ noloopBack(GoalsCur, Deriv):-
                 G1 + G2 > 0
             )
             )-> true, !;
-     writeLog([nl, write_term_c('******** Error: Loop resolution ********'), nl,
-            write_term_c('Current goal is: '), nl, write_term_c(GoalsCur), nl,
-            write_term_c('The derivation steps are: '), nl,write_term_c(Deriv), finishLog]),fail).
+    %  writeLog([nl, write_term_c('******** Error: Loop resolution ********'), nl,
+    %         write_term_c('Current goal is: '), nl, write_term_c(GoalsCur), nl,
+    %         write_term_c('The derivation steps are: '), nl,write_term_c(Deriv), finishLog]),
+            fail).
 
 % noloopBack(GoalsCur, Deriv):-
 %     % Check for any previous goal PreGoal,

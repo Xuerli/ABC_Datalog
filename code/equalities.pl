@@ -18,7 +18,7 @@
 ************************************************************************************************************************/
 % if there is no '=' or '\=' in the signature. Do not comput equivalence class.
 % NOTE: seems '=' and '\=' is not supported in this version of ABC now.
-unaeMain(TheoryIn,EQs, OptStateRep):-
+unaeMain(TheoryIn, OptStateRep):-
     spec(signature(Predicates, Constants)),
     notin((=,_), Predicates), !,    % = is not in the signature
     findall([C], member(C,Constants), EC),    % initialise the equivalence classes
@@ -27,7 +27,7 @@ unaeMain(TheoryIn,EQs, OptStateRep):-
     spec(pff(FalseSet)),
     TheoryState = [[[],[]], EC, [], MinimalT, TrueSet, FalseSet],
     % detect the faults of incompatibilities and insufficiencies.
-    detInsInc(TheoryState, EQs,InsufIncomp),
+    detInsInc(TheoryState, InsufIncomp),
     OptStateRep = [(TheoryState, InsufIncomp)].
 
 /**********************************************************************************************************************
@@ -110,7 +110,7 @@ unaeFaultDet(TheoryStateIn, Output):-
             UnaeSuff),
 
     % get other incompatibilities and insufficiencies.
-    detInsInc(TheoryStateIn,[], (Suffs, InSuffs, InComps)), %TODO check
+    detInsInc(TheoryStateIn,(Suffs, InSuffs, InComps)), %TODO check
     appemd(UnaeSuff, Suffs, SuffAll),
     FaultState = (SuffAll, InSuffs, InComps),
     % calculate the total number of fautls
@@ -146,6 +146,7 @@ unaeRepair(1, Fault, TheoryFaultsIn, RsNew, TheoryNew):-
                 member(C2G, EC2),
                  NegProp = [-[=, C1G, C2G]],
                 % Get all proofs and failed proofs of the goal.
+                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall(Evidence,
                         (slRL(NegProp, TheoryIn, EC, _, Evidence, [])),
                         Evis)),

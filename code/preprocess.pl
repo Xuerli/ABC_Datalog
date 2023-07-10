@@ -75,7 +75,9 @@ specification:- retractall(spec(_)),
                                 spec(roundLimit(0)),
                                 spec(proofStatus(0)),
                                 spec(threshold(1)),
-                                spec(roundNum(0))]).
+                                spec(roundNum(0)),
+                                spec(proofNum(0))
+                                ]).
 supplyInput:-
     (\+trueSet(_)-> assert(trueSet([])),!;true),
     (\+falseSet(_)-> assert(falseSet([])),!;true),
@@ -97,6 +99,7 @@ precheckPS:-
              member(Constrain, ProtectedList),
              Constrain=[-_|_],
              notin(+_, Constrain),    % get a constraint axiom from the theory
+             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
              slRL(Constrain, Trues, [], [_|_], [], [])),    % Proof [_|_] exist which is not an empty list.
             Conflict),
     % C1: the propositions that occur in both the true set and the false set.

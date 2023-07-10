@@ -18,6 +18,8 @@ axiom([-oldClassSize(\e,\f),-allocate(\g,\e),+newClassSize(\e,suc(\f))]).
 eqAxiom([avg(69,71),70]).
 eqAxiom([suc(14),15]).
 eqAxiom([suc(15),16]).
+
+
 % avg(X,Y,Z):-
 %     Z is integer((X+Y)/2).
 
