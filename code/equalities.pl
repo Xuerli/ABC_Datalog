@@ -18,7 +18,7 @@
 ************************************************************************************************************************/
 % if there is no '=' or '\=' in the signature. Do not comput equivalence class.
 % NOTE: seems '=' and '\=' is not supported in this version of ABC now.
-unaeMain(TheoryIn, OptStateRep):-
+unaeMain(TheoryIn,EQs, OptStateRep):-
     spec(signature(Predicates, Constants)),
     notin((=,_), Predicates), !,    % = is not in the signature
     findall([C], member(C,Constants), EC),    % initialise the equivalence classes
@@ -27,7 +27,7 @@ unaeMain(TheoryIn, OptStateRep):-
     spec(pff(FalseSet)),
     TheoryState = [[[],[]], EC, [], MinimalT, TrueSet, FalseSet],
     % detect the faults of incompatibilities and insufficiencies.
-    detInsInc(TheoryState, InsufIncomp),
+    detInsInc(TheoryState, EQs,InsufIncomp),
     OptStateRep = [(TheoryState, InsufIncomp)].
 
 /**********************************************************************************************************************
@@ -110,7 +110,7 @@ unaeFaultDet(TheoryStateIn, Output):-
             UnaeSuff),
 
     % get other incompatibilities and insufficiencies.
-    detInsInc(TheoryStateIn, (Suffs, InSuffs, InComps)),
+    detInsInc(TheoryStateIn,[], (Suffs, InSuffs, InComps)), %TODO check
     appemd(UnaeSuff, Suffs, SuffAll),
     FaultState = (SuffAll, InSuffs, InComps),
     % calculate the total number of fautls

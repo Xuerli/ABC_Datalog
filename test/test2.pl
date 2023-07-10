@@ -25,3 +25,7 @@ mySqrt(X,Z,Y) :- %Y is output
     % 1. how to call this "function" and get the output? (DO I need to?)
     % 2. how to do type conversion e.g. from int to float?
     % 3. how to guarantee the name is not another reserved in our prolog program? (can hard code, deal later)
+
+
+check([H|T]):-
+    print(T),nl.

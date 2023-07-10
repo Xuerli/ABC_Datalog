@@ -146,9 +146,11 @@ argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
 
 % In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).
+is_func(X):- X = [P | Rest],!, length(Rest,LRest), LRest > 0, P \= vble(_).
 arg(X):- is_cons(X),!.
 arg(X):- X = vble(_),!.
-arg(X):- X = [P | Rest],!, length(Rest,LRest), LRest > 0, P \= vble(_).
+arg(X):- is_func(X),!.
+
 
 % Assertion protect check
 asserProCheck([_|_],_):- !. % for rules, pass.
@@ -181,6 +183,9 @@ convertClause(AxiomIn, Clause) :-
     appEach(AxiomIn, [appLiteral, convert],  Clause1),
     sort(Clause1, Clause).        % Remove duplicate literals and sort literals where positive literal will be the head of Clause.
 
+convertEq(AxiomIn,Clause) :-
+    appEach(AxiomIn,[appProp,convert], Clause1),
+    sort(Clause1,Clause).
 
 %% convert(In,Out): convert normal Prolog syntax to internal representation or
 %% vice versa.
@@ -898,11 +903,12 @@ subst([Subst|Substs], E,NE) :- subst(Subst,E,NE1), subst(Substs,NE1,NE), !.
 subst(_,[],[]) :-!.                          % If E1 is empty problem then do nothing
 subst([],E,E) :-!.
 subst(C/C, E, E):- arg(C), !.
+subst(D/C, C, D):- arg(C), arg(D),  !.
 
 %subst(Subst,[F|Args1],[F|Args2]) :-
   % atomic(F), maplist(subst(Subst),Args1,Args2),!. % If E1 is compound then recurse on args.
 subst(Subst,[E1=E2|Tl],[NE1=NE2|NTl]) :-       % If E1 is unification problem then
-   subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
+  subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
    subst(Subst,Tl,NTl),!.                        % then recurse on tails
 
 subst(Subst,[+E|T],[+NE|NT]) :-         % for substituting resolution ready clauses
@@ -926,7 +932,7 @@ subst(Subst, [Els1|T], [Els2|TSub]) :-
 % only substitute a constant, which is a list of one element, or a variable, which is vble(X).
 subst(_/C, Y, Y):- %arg(C), arg(Y),
     Y \= C, !.
-subst(D/C, C, D):- arg(C), arg(D),  !.
+
 
 /**********************************************************************************************
    based on transpose from clpfd: https://github.com/SWI-Prolog/swipl-devel/blob/master/library/clp/clpfd.pl#L6371
@@ -1106,3 +1112,31 @@ noTautology(Goals):-
         )
         ,Preds),
     length(Preds,0).
+
+checkEq([]).
+checkEq([H|R]):-
+    is_list(H),
+    length(H,2),
+    H = [A,B],
+    is_cons_or_func(A),
+    is_cons_or_func(B),
+    checkEq(R).
+
+is_cons_or_func(A):-
+    is_cons(A).
+
+is_cons_or_func(A):-
+    is_func(A).
+
+
+notLastEQ([],_).
+notLastEQ(L,_):-
+    last(L,Concern),
+    Concern = (_,AxiomIn,_,_,_),
+    AxiomIn \= [eqAxiom|_].
+notLastEQ(L,EQ):-
+    last(L,Concern),
+    Concern = (_,AxiomIn,_,_,_),
+    AxiomIn = [eqAxiom,_|T],
+    T \= EQ. %Use the built-in unification since it is all constants.
+
