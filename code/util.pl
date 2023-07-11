@@ -1102,13 +1102,11 @@ occursCheck(X,Funclist):-
 noTautology(Goals):-
     findall(Pred,
         (
-            X = -[Pred|_],
-            Y = +[Pred|_],
+            X = -[Pred|Arg],
+            Y = +[Pred|Arg2],
             member(X,Goals),
             member(Y,Goals),
-            X = -Xpred,
-            Y = +Ypred,
-            unification(Xpred,Ypred,[],[],_,_,[])
+            Arg == Arg2
         )
         ,Preds),
     length(Preds,0).
@@ -1140,3 +1138,35 @@ notLastEQ(L,EQ):-
     AxiomIn = [eqAxiom,_|T],
     T \= EQ. %Use the built-in unification since it is all constants.
 
+
+sortGoals(Goals,GoalsOut):-
+    removeDuplicates(Goals,[],GoalsSorted), %sort AND removed duplicates.
+    sepFuncNonfunc(GoalsSorted,[],[],NonFuncGoals,FuncGoals),
+    append(NonFuncGoals,FuncGoals,GoalsOut).
+
+sepFuncNonfunc([],X,Y,X,Y). %Finished
+
+sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
+    hasFunc(H),
+    append(TFGoals,[H],NewTFGoals),
+    sepFuncNonfunc(R,TNFGoals,NewTFGoals,NFGoals,FGoals).
+
+sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
+    \+hasFunc(H),
+    append(TNFGoals,[H],NewTNFGoals),
+    sepFuncNonfunc(R,NewTNFGoals,TFGoals,NFGoals,FGoals).
+
+hasFunc(Goal):-
+    member(Goal,[+[P|Args],-[P|Args]]),
+    member([_,_|_],Args).
+
+removeDuplicates([],_,[]):-!.
+
+removeDuplicates([H|T],Current,[H|T2]):-
+    \+member(H,Current),!,
+    append(Current,[H],Current2),
+    removeDuplicates(T,Current2,T2).
+
+removeDuplicates([H|T],Current,T2):-
+    member(H,Current),!,
+    removeDuplicates(T,Current,T2).

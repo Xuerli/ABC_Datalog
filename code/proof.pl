@@ -113,7 +113,8 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     write_term_c("Proof  is uninitialized"), nl,
     write_term_c("Evidence is uninitialized"), nl,
     write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
-    slRLMain(GoalNew, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
+    sortGoals(GoalNew,GoalNewSorted),
+    slRLMain(GoalNewSorted, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
     write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
     cleanSubMid(EvidenceTem, Evidence),
@@ -172,10 +173,10 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     subDiv(SG, Goals, SG1),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SG, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
-    subst(SubsCl,InputClause,SubInputClause),
-    fullResolution(GoalsNew,[],SubInputClause,SG1,SubsCl,GoalsResolved,SGResolved,SIResolved),
-    evaluation(GoalsResolved,[],GoalsEval),
-    CurDerStep = ((Goals, SGResolved), (InputClause, SIResolved), GoalsEval, [0, 0]), %Ref. 7.8 of thesis
+    % subst(SubsCl,InputClause,SubInputClause),
+    % fullResolution(GoalsNew,[],SubInputClause,SG1,SubsCl,GoalsResolved,SGResolved,SIResolved),
+    evaluation(GoalsNew,[],GoalsEval),
+    CurDerStep = ((Goals, SG1), (InputClause, SubsCl), GoalsEval, [0, 0]), %Ref. 7.8 of thesis
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsEval, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
@@ -199,10 +200,10 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     subDiv(SG, Goals, SG1),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SG, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
-    subst(SubsCl,InputClause,SubInputClause),
-    fullResolution(GoalsNew,[],SubInputClause,SG1,SubsCl,GoalsResolved,SGResolved,SIResolved),
-    evaluation(GoalsResolved,[],GoalsEval),
-    CurDerStep = ((Goals, SGResolved), (InputClause, SIResolved), GoalsEval, [0, 0]), %Ref. 7.8 of thesis
+    % subst(SubsCl,InputClause,SubInputClause),
+    % fullResolution(GoalsNew,[],SubInputClause,SG1,SubsCl,GoalsResolved,SGResolved,SIResolved),
+    evaluation(GoalsNew,[],GoalsEval),
+    CurDerStep = ((Goals, SG1), (InputClause, SubsCl), GoalsEval, [0, 0]), %Ref. 7.8 of thesis
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsEval, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
@@ -237,12 +238,13 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     subDiv(SubsRes, Goals, SG),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SubsRes, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
-    subst(SubsCl,InputClause,SubInputClause),
-    fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
-    evaluation(GoalsResolved,[],GoalsEval),
-    CurDerStep = ((Goals, SGResolved), (InputClause, SIResolved), GoalsEval, [RemCondNum, 0]),
+    % subst(SubsCl,InputClause,SubInputClause),
+    % fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
+    evaluation(GoalsNew,[],GoalsEval),
+    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEval, [RemCondNum, 0]),
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
-    slRLMain(GoalsEval, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
+    sortGoals(GoalsEval,GoalsEvalSorted),
+    slRLMain(GoalsEvalSorted, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
 %% slRLMain4: Use an input rule to resolve Goal which does not have == as its predicate.
 % If goal is +
@@ -274,12 +276,13 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     subDiv(SubsRes, Goals, SG),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SubsRes, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
-    subst(SubsCl,InputClause,SubInputClause),
-    fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
-    evaluation(GoalsResolved,[],GoalsEval),
-    CurDerStep = ((Goals, SGResolved), (InputClause, SIResolved), GoalsEval, [RemCondNum, 0]),
+    % subst(SubsCl,InputClause,SubInputClause),
+    % fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
+    evaluation(GoalsNew,[],GoalsEval),
+    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEval, [RemCondNum, 0]),
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
-    slRLMain(GoalsEval, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
+    sortGoals(GoalsEval,GoalsEvalSorted),
+    slRLMain(GoalsEvalSorted, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
 %Resolve simple Equality (1)
 slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
@@ -321,22 +324,22 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(Body, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
-%Unable to resolve: reorder goals
-slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
-    spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
-    spec(proofNum(0)), %Only allow using at the first one.
-    Goals = [FirstGoal|Rest],
-    length(Rest,LRest),
-    LRest > 0,
-    spec(movedProof(Moved)),
-    \+member(FirstGoal,Moved),
-    append(Moved,[FirstGoal],MovedNew),
-    retractall(spec(movedProof(_))), assert(spec(movedProof(MovedNew))),
-    append(Rest,[FirstGoal],GoalsNew),
-    length(GoalsNew,RemCondNum),
-    CurDerStep = ((Goals, []), ([rotateGoals], []), GoalsNew, [RemCondNum, 0]),
-    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
-    slRLMain(GoalsNew, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit).
+% %Unable to resolve: reorder goals
+% slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
+%     spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
+%     spec(proofNum(0)), %Only allow using at the first one.
+%     Goals = [FirstGoal|Rest],
+%     length(Rest,LRest),
+%     LRest > 0,
+%     spec(movedProof(Moved)),
+%     \+member(FirstGoal,Moved),
+%     append(Moved,[FirstGoal],MovedNew),
+%     retractall(spec(movedProof(_))), assert(spec(movedProof(MovedNew))),
+%     append(Rest,[FirstGoal],GoalsNew),
+%     length(GoalsNew,RemCondNum),
+%     CurDerStep = ((Goals, []), ([rotateGoals], []), GoalsNew, [RemCondNum, 0]),
+%     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
+%     slRLMain(GoalsNew, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit).
 
 
 %% slRLMain5: When there the firs sub-goal is irresolvable,return the evidence of the partial proof with [] as the proof and theorem.
@@ -826,43 +829,43 @@ cleanSubMid([RS| Rest], [RSC| RestC]):-
 /****************************************************
     fullResolution: Offers full resolution)
 ***************/
-%Base case: All goals are checked.
-fullResolution([],Goals,_,SG,SI,Goals,SG,SI):- !.
-%Successful Resolution of a clause
-fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
-    Head = [+[P|Arg]],
-    InputClause = [-[P|Arg2]],
-    unification([P| Arg], [P| Arg2], [],[],_, SubNew, []),
-    !,
-    subst(SubNew,Rest,Rest2),
-    subst(SubNew,Goals,Goals2),
-    subst(SubNew,InputClause,SubInputClause),
-    append(Rest,GoalsResolved,AllSubGoals),
-    subDiv(SubNew,InputClause,SINew),
-    subDiv(SubNew,AllSubGoals,SGNew),
-    compose1(SG,SGNew,SGFinal),
-    compose1(SI,SINew,SIFinal),
-    fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
+% %Base case: All goals are checked.
+% fullResolution([],Goals,_,SG,SI,Goals,SG,SI):- !.
+% %Successful Resolution of a clause
+% fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
+%     Head = [+[P|Arg]],
+%     InputClause = [-[P|Arg2]],
+%     unification([P| Arg], [P| Arg2], [],[],_, SubNew, []),
+%     !,
+%     subst(SubNew,Rest,Rest2),
+%     subst(SubNew,Goals,Goals2),
+%     subst(SubNew,InputClause,SubInputClause),
+%     append(Rest,GoalsResolved,AllSubGoals),
+%     subDiv(SubNew,InputClause,SINew),
+%     subDiv(SubNew,AllSubGoals,SGNew),
+%     compose1(SG,SGNew,SGFinal),
+%     compose1(SI,SINew,SIFinal),
+%     fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
 
-fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
-    Head = [-[P|Arg]],
-    InputClause = [+[P|Arg2]],
-    unification([P| Arg], [P| Arg2], [],[],_, SubNew, []),
-    !,
-    subst(SubNew,Rest,Rest2),
-    subst(SubNew,Goals,Goals2),
-    subst(SubNew,InputClause,SubInputClause),
-    append(Rest,GoalsResolved,AllSubGoals),
-    subDiv(SubNew,InputClause,SINew),
-    subDiv(SubNew,AllSubGoals,SGNew),
-    compose1(SG,SGNew,SGFinal),
-    compose1(SI,SINew,SIFinal),
-    fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
+% fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
+%     Head = [-[P|Arg]],
+%     InputClause = [+[P|Arg2]],
+%     unification([P| Arg], [P| Arg2], [],[],_, SubNew, []),
+%     !,
+%     subst(SubNew,Rest,Rest2),
+%     subst(SubNew,Goals,Goals2),
+%     subst(SubNew,InputClause,SubInputClause),
+%     append(Rest,GoalsResolved,AllSubGoals),
+%     subDiv(SubNew,InputClause,SINew),
+%     subDiv(SubNew,AllSubGoals,SGNew),
+%     compose1(SG,SGNew,SGFinal),
+%     compose1(SI,SINew,SIFinal),
+%     fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
 
-%Unsuccessful resolution
-fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
-    append(Goals,[Head],Goal2),
-    fullResolution(Rest,Goal2,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved).
+% %Unsuccessful resolution
+% fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
+%     append(Goals,[Head],Goal2),
+%     fullResolution(Rest,Goal2,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved).
 
 evaluation([],RestGoals,RestGoals).
 evaluation([+[P|Args]|Rest],RestGoals,OutGoals):-
