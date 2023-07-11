@@ -836,12 +836,13 @@ fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIRe
     !,
     subst(SubNew,Rest,Rest2),
     subst(SubNew,Goals,Goals2),
+    subst(SubNew,InputClause,SubInputClause),
     append(Rest,GoalsResolved,AllSubGoals),
     subDiv(SubNew,InputClause,SINew),
     subDiv(SubNew,AllSubGoals,SGNew),
     compose1(SG,SGNew,SGFinal),
     compose1(SI,SINew,SIFinal),
-    fullResolution(Rest2,Goals2,InputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
+    fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
 
 fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
     Head = [-[P|Arg]],
@@ -850,12 +851,13 @@ fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIRe
     !,
     subst(SubNew,Rest,Rest2),
     subst(SubNew,Goals,Goals2),
+    subst(SubNew,InputClause,SubInputClause),
     append(Rest,GoalsResolved,AllSubGoals),
     subDiv(SubNew,InputClause,SINew),
     subDiv(SubNew,AllSubGoals,SGNew),
     compose1(SG,SGNew,SGFinal),
     compose1(SI,SINew,SIFinal),
-    fullResolution(Rest2,Goals2,InputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
+    fullResolution(Rest2,Goals2,SubInputClause,SGFinal,SIFinal,GoalsResolved,SGResolved,SIResolved).
 
 %Unsuccessful resolution
 fullResolution([Head|Rest],Goals,InputClause,SG,SI,GoalsResolved,SGResolved,SIResolved):-
