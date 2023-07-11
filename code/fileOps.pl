@@ -75,7 +75,7 @@ output(AllRepStates, ExecutionTime):-
                   write_term_c('SemiNumRaw is: '), write_term_c(SemiNumRaw),nl,
                   write_term_c('SemiNum is: '), write_term_c(SemiNum),nl, finishLog]),
     close(Stream2),
-    nl, write_term_c('In total, there are ',[]), write_term_c(SemiNum,[]), write_term_c(' semi-repaired theories.'), nl.
+    nl, write_term_c('In total, there are '), write_term_c(SemiNum), write_term_c(' semi-repaired theories.'), nl.
 
 
 output(AllRepStates, ExecutionTime):-

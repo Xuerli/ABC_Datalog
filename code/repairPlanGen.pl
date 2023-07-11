@@ -239,6 +239,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
 
     findall((Num, GoalsRem, ProofCur),
                ((member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
+               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall([SubG, Proof],
                             (member(SubG, Subgoals),
                             slRL([SubG], TheoryIn, EC, Proof,_,_),
@@ -320,6 +321,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 (member([+Prop], Cands3),
                  member(Constrain, ResCons),    % check based on a protected constrain axiom.
                  % there is a proof of the violation of the constrain.
+                 retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                  slRL(Constrain, [[+Prop], [+PropG]], EC, [_|_], [], []),
                  writeLog([nl,write_term_c('**** Constrains check failed: '),nl,
                      write_term_c([+PropG, -Prop]),
@@ -339,6 +341,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
               notin(Pre, [\=, =]),
               NVioSent = [-[Pre| Args]],
               % get all of a proof of Goal
+              retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
               Proof \= []),                                       % Detect incompatibility based on refutation.
          Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
@@ -354,6 +357,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
       % if the new rule is not involved in any inconsistencies, then no adjustment precondition is needed.
       (IncomSubs = []->BigPlan = [([expand(RuleTem)], RuleTem)];
       IncomSubs = [_|_]->
+            retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall(Proof,
                           (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
                           Proof \=[]),
@@ -368,7 +372,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
 
     member((RepPlans, RuleNew), BigPlan),
     % get all of the clauses which constitute the target proof to unblock
-
+    retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
     findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
                 member((_,Cl,_,_,_), ProofUnblocked),
                 is_list(Cl)),     % do not record keyword 'unae'
@@ -400,6 +404,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
      findall(GoalRem,
                (member(Evi, Evidences),
                 (member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
+                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall(SubG,
                             (member(SubG, Subgoals),
                             slRL([SubG], TheoryIn, EC, Proof,_,_),
@@ -465,6 +470,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
                 notin(Pre, [\=, =]),
                 NVioSent = [-[Pre| Args]],
                 % get all of a proof of Goal
+                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 slRL(NVioSent, [RuleR6| TheoryIn], EC, Proof, [], []),
                 Proof \= []),                                       % Detect incompatibility based on refutation.
            Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
@@ -476,6 +482,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
             R6IncomSubsRaw),
 
     sort(R6IncomSubsRaw, R6IncomSubs),
+    retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
     findall(Proof,
                 (slRL(Goal, [RuleR6| TheoryIn], EC, Proof, [], []),
                 Proof \=[]),
@@ -492,7 +499,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
 
     %convertForm([RuleSR, RuleR7], [SRAxiom, RuleNew]),    % rever the internal format of rules back to axioms
     RepPlans = [analogy(RuleSR, RuleR7)],
-
+    retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
     % get all of the clauses which constitute the target proof to unblock
     findall(Cl, (slRL(Goal, [RuleR7|TheoryIn], EC, ProofUnblocked, [], []),
                 member((_,Cl,_,_,_), ProofUnblocked),

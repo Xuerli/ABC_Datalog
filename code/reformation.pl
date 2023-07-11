@@ -172,6 +172,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             (member(Axiom, TheoryIn),
              \+member(Axiom, ClUsed),    % the clause that has been used in the proof should not be a candidate to change for resolving the remaining sub-goal, otherwise, the evidence will be broken.
              %occur(-_, Rule), % it is possible to merge an assertion's predicate with the goal's predicate
+             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
              slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]),
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.

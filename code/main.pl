@@ -1,8 +1,3 @@
-/*
-Date: 07 Jan 2019
-Macintosh HD⁩/⁨Users⁩/lixue⁩/GoogleDrive⁩/01PHD⁩/01program⁩/eclipse-workspace⁩/ABC_Clean⁩/src⁩
-*/
-
 :- use_module(library(lists)).
 :-[preprocess, equalities, repairPlanGen, repairApply, vitality].
     % clear all assertions. So main has to be compiling before the input theory file.
@@ -29,10 +24,11 @@ pause.
 
 abc:-
     % Initialisation
-    supplyInput,
+    supplyInput, %OK: This simply inits the PS if they are not present.
     % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
-    initTheory(Theory),    % clear previous data and initialise new ones.
-    precheckPS,
+    initTheoryNew(Theory,EQs),    % clear previous data and initialise new ones.
+    assert(spec(equalities(EQs))),
+    precheckPS, %TODO check how constraint axioms need to be handled - any changes?
     % setup log
     initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
     %statistics(walltime, [_ | [ExecutionTime1]]),
@@ -41,7 +37,7 @@ abc:-
     % writeLog([nl,write_term_c('--------------executation time 1---'), nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime1),nl]),
     % repair process
     
-    detRep(Theory, AllRepStates), %Entrypoint of repair proces
+    detRep(Theory,AllRepStates), %Entrypoint of repair proces
     writeLog([nl,write_term_c('--------------AllRepStates: '),write_term_All(AllRepStates),nl, finishLog]),
 
     statistics(walltime, [E,_]),
@@ -61,10 +57,10 @@ abc:-
     Output: AllRepSolutions is a list of [(Repairs, TheoryRepaired),....],
             where Repairs is the list of repairs applied to Theory resulting TheoryRepaired.
 ************************************************************************************************************************/
-detRep(Theory, AllRepSolutions):-
+detRep(Theory,AllRepSolutions):-
     findall(TheoryRep,
             (% calculate equivalence classes, and then detect and repair the unae faults.
-            unaeMain(Theory,  OptimalUnae),
+            unaeMain(Theory,OptimalUnae),
             member((TheoryState, InsufIncomp), OptimalUnae),
 
             InsufIncomp = (_,INSUFF,ICOM), % Insufficiency and Incompatibility faults here. 1. sufficiencies, 2. insufficienies, 3. incompatability
@@ -107,19 +103,28 @@ detRep(Theory, AllRepSolutions):-
                         InSuffs: the unprovable goals from pf(T).
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
-detInsInc(TheoryState, FaultState):-
+detInsInc(TheoryState,FaultState):- %TODO up till here
+    write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
+    spec(equalities(EQs)),
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
-    nl,write_term_c(Theory),nl,write_term_All(Theory),nl,finishLog]),
+    nl,write_term_c(Theory),nl,write_term_All(Theory),nl,nl, write_term_c('---------Equivalent classes are:------'),nl, write_term_All(EQs),finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
+
+    write_term_c('---------Start detInsInc, Input theory is:------'), nl,
+    write_term_All(Theory),nl,
+    write_term_c('----------This is the True set:-------------'),nl,
+    write_term_All(TrueSetE),nl,
+    write_term_c("---------Checking true set insuff and suffs--------"),nl,
     findall( [Suff, InSuff],
             ( % Each preferred sentence is negated, and then added into Theory.
-              member([+[Pre| Args]], TrueSetE),
+              member([+[Pre| Args]], TrueSetE), % This is not changed for now until have better representation scheme.
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
-              Goal = [-[Pre| Args]],
-
+              Goal = [-[Pre| Args]], 
+            write_term_c(Goal),nl,
               % Get all proofs and failed proofs of the goal.
+              retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall( [Proof, Evidence],
                      ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
                      Proofs1),
@@ -131,17 +136,20 @@ detInsInc(TheoryState, FaultState):-
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-
-     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_c(Suffs),
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs), finishLog]),
-
+    write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
+     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
+    write_term_c('---------Checking incompatibilities------'), nl,
     % detect the incompatibilities
       findall((Goal, UnwProofs),
            (member([+[Pre| Args]], FalseSetE),
             % skip equalities/inequalities which have been tackled.
             notin(Pre, [\=, =]),
             Goal = [-[Pre| Args]],
+            write_term_c(Goal),nl,
             % get all of a proof of Goal
+            retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
             findall(Proof,
                     slRL(Goal, Theory, EC, Proof, [], []),
                     UnwProofs),
@@ -149,16 +157,20 @@ detInsInc(TheoryState, FaultState):-
            InComps),             % Find all incompatibilities.
 
     writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
+    write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
     % detect the inconsistencies due to the violation of constrains
     findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
                notin(+_, Constrain),
+               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                findall(Proof,
-                        slRL(Constrain, Theory, EC, Proof, [], []),
+                        slRL(Constrain, Theory,  EC, Proof, [], []),
                         UnwProofs),
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
+      write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
+      write_term_c('-----end---------'),nl,nl,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
@@ -230,7 +242,7 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     %print('111111 RepStatesFine'),print(RepStatesFine),nl,nl,
     findall((FNum1, FNum2, RepState, FaultStateNew),
                     (member(RepState, RepStatesFine),
-                      detInsInc(RepState, FaultStateNew),
+                      detInsInc(RepState,FaultStateNew), 
                       FaultStateNew = (_, InSuffNew, InCompNew),
                       length(InSuffNew, FNum1),
                       length(InCompNew, FNum2)),

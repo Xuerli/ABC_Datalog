@@ -144,9 +144,13 @@ argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
 argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
     Cons1 \= Cons2.
 
-% In datalog, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v).
+% In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).
-arg(X):- is_cons(X); X = vble(_).
+is_func(X):- X = [P | Rest],!, length(Rest,LRest), LRest > 0, P \= vble(_).
+arg(X):- is_cons(X),!.
+arg(X):- X = vble(_),!.
+arg(X):- is_func(X),!.
+
 
 % Assertion protect check
 asserProCheck([_|_],_):- !. % for rules, pass.
@@ -170,7 +174,7 @@ compose1(Sub, SublistIn, SublistOut) :-     % Append new substitution
     sort(SubTem, SublistOut).     % remove duplicates.
 
 /**********************************************************************************************************************
-    convertClause(In, Clause): convert input axiom into Horn clause form with head at the front and body in the end.
+    convertClause(In, Clause): convert input axiom into CNF form with head at the front and body in the end.
     Input:    In is an input axiom
     Output: Clause is a Horn clause.
         For reducing the search space of resolution, the Clause has its head at the front and body in the end.
@@ -179,6 +183,9 @@ convertClause(AxiomIn, Clause) :-
     appEach(AxiomIn, [appLiteral, convert],  Clause1),
     sort(Clause1, Clause).        % Remove duplicate literals and sort literals where positive literal will be the head of Clause.
 
+convertEq(AxiomIn,Clause) :-
+    appEach(AxiomIn,[appProp,convert], Clause1),
+    sort(Clause1,Clause).
 
 %% convert(In,Out): convert normal Prolog syntax to internal representation or
 %% vice versa.
@@ -526,15 +533,18 @@ negate([],[]).
     When vble(X) occur in the argument list Args, rename it with a new name which does not occur in Args.
 ***********************************************************************************************************************/
 newVble(vble(X), Args, vble(NewX)):-
-    member(vble(X), Args),
+    memberNested(vble(X), Args),
     string_concat(X,'1',Y),
     term_string(Term, Y),
-    (notin(vble(Term), Args)->NewX = Term, !;
+    (nestedNotin(vble(Term), Args)->NewX = Term, !;
      newVble(vble(Term), Args, vble(NewX))).
 
 /**********************************************************************************************************************
     check existances.
 ***********************************************************************************************************************/
+
+nestedNotin(_,List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
+nestedNotin(X,List):- \+memberNested(X,List), !.
 
 notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
 notin(X, List):- \+member(X, List), !.
@@ -855,8 +865,8 @@ rewriteVble(_, [], [], []):- !.
 rewriteVble(Goals, InputClause, ClNew, AllSubs):-
     % generate substitutions which replace old variable vble(X) with its new name vble(NewX).
     findall(vble(NewX)/vble(X),
-            (member(-[_|Args], Goals),
-             member(vble(X), Args),
+            (member([_|Args], Goals),
+             memberNested(vble(X), Args),
              member(Literal, InputClause),
              ( Literal = -[_| ArgsInCl];
                Literal = +[_| ArgsInCl]),
@@ -893,11 +903,12 @@ subst([Subst|Substs], E,NE) :- subst(Subst,E,NE1), subst(Substs,NE1,NE), !.
 subst(_,[],[]) :-!.                          % If E1 is empty problem then do nothing
 subst([],E,E) :-!.
 subst(C/C, E, E):- arg(C), !.
+subst(D/C, C, D):- arg(C), arg(D),  !.
 
 %subst(Subst,[F|Args1],[F|Args2]) :-
   % atomic(F), maplist(subst(Subst),Args1,Args2),!. % If E1 is compound then recurse on args.
 subst(Subst,[E1=E2|Tl],[NE1=NE2|NTl]) :-       % If E1 is unification problem then
-   subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
+  subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
    subst(Subst,Tl,NTl),!.                        % then recurse on tails
 
 subst(Subst,[+E|T],[+NE|NT]) :-         % for substituting resolution ready clauses
@@ -921,7 +932,7 @@ subst(Subst, [Els1|T], [Els2|TSub]) :-
 % only substitute a constant, which is a list of one element, or a variable, which is vble(X).
 subst(_/C, Y, Y):- %arg(C), arg(Y),
     Y \= C, !.
-subst(D/C, C, D):- arg(C), arg(D),  !.
+
 
 /**********************************************************************************************
    based on transpose from clpfd: https://github.com/SWI-Prolog/swipl-devel/blob/master/library/clp/clpfd.pl#L6371
@@ -1033,3 +1044,129 @@ cterm(F, [Axiom| RestAxioms], NumIn, NumOut):-
     length(PRest, L2),
     NumNew is L1 - L2 + NumIn,
     cterm(F, RestAxioms, NumNew, NumOut).
+
+
+
+/********************************************
+addAncestor: combine new goals (ancestors) with theory.
+*******************************************/
+addAncestor(Theory,[],Theory). %If no derivation, just output the theory.
+addAncestor(Theory,[Head|Rest],Out):-
+    Head = (_,_,_,NewGoal,_),
+    is_list(NewGoal),
+    NewGoal = [],
+    addAncestor(Theory,Rest,Out).
+addAncestor(Theory,[Head|Rest],Out):-
+    Head = (_,_,_,NewGoal,_),
+    is_list(NewGoal),
+    NewGoal \= [],
+    append(Theory,[NewGoal],TheoryNew),
+    addAncestor(TheoryNew,Rest,Out).
+
+/********************************************
+findClause: find the clause in theoryl.
+reorderClause: make target the first clause in the list.
+*******************************************/
+findClause(Target,[H|_],H):-
+    member(Target,H),
+    length(H,X),
+    X > 1.
+findClause(Target,[_|R],Out):-
+    findClause(Target,R,Out).
+
+reorderClause(Target,[H|R],[H|R]):-
+    Target = H,!.
+
+reorderClause(Target,[H|R],Out):-
+    Target \= H,
+    append(R,[H],NewL),
+    reorderClause(Target,NewL,Out).
+
+
+memberNested(Elem,List):-
+    member(Elem,List),!.
+
+memberNested(Elem,[H|_]):-
+    is_list(H),
+    memberNested(Elem,H).
+
+memberNested(Elem,[_|R]):-
+    memberNested(Elem,R).
+
+memberNested(_,[]):- fail.
+
+
+occursCheck(X,Funclist):-
+    \+memberNested(vble(X), Funclist),!.
+
+noTautology(Goals):-
+    findall(Pred,
+        (
+            X = -[Pred|Arg],
+            Y = +[Pred|Arg2],
+            member(X,Goals),
+            member(Y,Goals),
+            Arg == Arg2
+        )
+        ,Preds),
+    length(Preds,0).
+
+checkEq([]).
+checkEq([H|R]):-
+    is_list(H),
+    length(H,2),
+    H = [A,B],
+    is_cons_or_func(A),
+    is_cons_or_func(B),
+    checkEq(R).
+
+is_cons_or_func(A):-
+    is_cons(A).
+
+is_cons_or_func(A):-
+    is_func(A).
+
+
+notLastEQ([],_).
+notLastEQ(L,_):-
+    last(L,Concern),
+    Concern = (_,AxiomIn,_,_,_),
+    AxiomIn \= [eqAxiom|_].
+notLastEQ(L,EQ):-
+    last(L,Concern),
+    Concern = (_,AxiomIn,_,_,_),
+    AxiomIn = [eqAxiom,_|T],
+    T \= EQ. %Use the built-in unification since it is all constants.
+
+
+sortGoals(Goals,GoalsOut):-
+    removeDuplicates(Goals,[],GoalsSorted), %sort AND removed duplicates.
+    sepFuncNonfunc(GoalsSorted,[],[],NonFuncGoals,FuncGoals),
+    append(NonFuncGoals,FuncGoals,GoalsOut).
+
+sepFuncNonfunc([],X,Y,X,Y). %Finished
+
+sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
+    hasFunc(H),
+    append(TFGoals,[H],NewTFGoals),
+    sepFuncNonfunc(R,TNFGoals,NewTFGoals,NFGoals,FGoals).
+
+sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
+    \+hasFunc(H),
+    append(TNFGoals,[H],NewTNFGoals),
+    sepFuncNonfunc(R,NewTNFGoals,TFGoals,NFGoals,FGoals).
+
+hasFunc(Goal):-
+    member(Goal,[+[P|Args],-[P|Args]]),
+    member([_,_|_],Args).
+
+removeDuplicates([],_,[]):-!.
+
+removeDuplicates([H|T],Current,[H|T2]):-
+    \+member(H,Current),!,
+    append(Current,[H],Current2),
+    removeDuplicates(T,Current2,T2).
+
+removeDuplicates([H|T],Current,T2):-
+    member(H,Current),!,
+    removeDuplicates(T,Current,T2).

@@ -14,18 +14,19 @@ Date: 19.02.2020
                    EqClasses: equal classes. An equal class is a list of equal constants.
                    Inequality Set: a list of constants which are unequal to each other based on UNAE.
 ***********************************************************************************************************************/
-initTheory(Theory):-
+initTheoryNew(Theory,EQs):-
     specification,
     % Convert each clause to internal representation convention.
     % Notice that only the ones within [] is a clause, others could be heuristics, e.g., axiom(una).
     findall(ClOut,
                 (axiom(Axiom),
-                convertClause(Axiom, Cl),
-                orderAxiom(Cl, ClOut)),
+                convertClause(Axiom, Cl), %simply to convert each literal with "convert" predicate.
+                orderAxiom(Cl, ClOut)), %reorder to put head first, then equality / inequality last.
             TheoryRaw),
     sort(TheoryRaw, Theory), % do not change the literal order in an axiom.
     % get the theory graph based on rules.
     theoryGraph(Theory, Graph),
+    % Here we process the true set and false set (no need change now)
     findall(ConvPClause,
             ( (    trueSet(Trues), member(Cl,Trues), Cl\=[];
                 % convert the equalities and inequalities in False set to True set.
@@ -38,12 +39,22 @@ initTheory(Theory):-
                 Cl\=[], Cl\= (C1=C2), Cl\= (C1\=C2),    % skip the equalities and inequalities.
                 convertClause([+Cl], ConvVClause)),
             FalseSet),   % convert each axiom to internal representation
-    appEach(Theory, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
-    sort(Ophans, OpOrdered), % remove duplicates.
-    % check that there should not be any axiom with orphan variable.
-    flatten(OpOrdered, []),
+    findall(ClOut2,
+        (
+            eqAxiom(Axiom),
+            convertEq(Axiom,ClOut2)
+        ),EQRaw),
+    print(EQRaw),nl,
+    (EQRaw = [[]] -> EQs = []; sort(EQRaw,EQs)),
+    checkEq(EQs),
+    % ==========================
+    %% CHECK OF ORPHAN VARIABNLES ARE REMOVED.
+    % appEach(Theory, [orphanVb], Ophans),  % Check if there are Orphans
+    % sort(Ophans, OpOrdered), % remove duplicates.
+    % % check that there should not be any axiom with orphan variable.
+    % flatten(OpOrdered, []),
     maplist(assert, [spec(tgraph(Graph)), spec(pft(TrueSet)), spec(pff(FalseSet))]),
-    recSignature(Theory),
+    recSignature(Theory), %Register signature (no change at Fault Detection Stage)
     % Initialise the protected list and heuristics.
     initProtList,
     heuristics(HeursOld),
@@ -64,12 +75,15 @@ specification:- retractall(spec(_)),
                                 spec(roundLimit(0)),
                                 spec(proofStatus(0)),
                                 spec(threshold(1)),
-                                spec(roundNum(0))]).
+                                spec(roundNum(0)),
+                                spec(proofNum(0))
+                                ]).
 supplyInput:-
     (\+trueSet(_)-> assert(trueSet([])),!;true),
     (\+falseSet(_)-> assert(falseSet([])),!;true),
     (\+heuristics(_)-> assert(heuristics([])),!;true),
-    (\+protect(_)-> assert(protect([])),!;true).
+    (\+protect(_)-> assert(protect([])),!;true),
+    (\+current_predicate(eqAxiom/1)-> assert(eqAxiom([])),!;true).
 /**********************************************************************************************
     precheckPS: check if the preferred structure is self-conflicting.
     Input: the assertions of trueSet([...]) and falseSet([...])
@@ -79,12 +93,13 @@ precheckPS:-
     % no conflicts in the preferred structure
     spec(pft(Trues)), % This is just to retrieve variables from 
     spec(pff(Falses)),
-    % get the conflicts between the preferred structure and the constrain axioms in the thoery.
-    findall(('Constraint', Constrain),
+    % get the conflicts between the preferred structure and the constraint axioms in the thoery.
+    findall(('Constraint', Constrain), %TODO check if changes needed later.
             (spec(protList(ProtectedList)),
              member(Constrain, ProtectedList),
              Constrain=[-_|_],
              notin(+_, Constrain),    % get a constraint axiom from the theory
+             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
              slRL(Constrain, Trues, [], [_|_], [], [])),    % Proof [_|_] exist which is not an empty list.
             Conflict),
     % C1: the propositions that occur in both the true set and the false set.
@@ -245,7 +260,7 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     findall([+[P|Args]], member([+[P|Args]], TheorySorted1), Assertions),
     deleteAll(TheoryIn, Assertions, Rules),
     append(Assertions, Rules, TheorySorted),
-    smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut),
+    smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut), %seems to be useless here.
     resetIndepVble(TheoryIn, Minimal).
 
 smaller(TheorySorted,  _, RsIn, [], TheorySorted, RsIn).
