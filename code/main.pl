@@ -104,7 +104,7 @@ detRep(Theory,AllRepSolutions):-
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
 detInsInc(TheoryState,FaultState):- 
-    write_term_c("---------hello--------"),nl,
+    % write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     spec(equalities(EQs)),
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
@@ -122,7 +122,7 @@ detInsInc(TheoryState,FaultState):-
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
               Goal = [-[Pre| Args]], 
-            write_term_c(Goal),nl,
+            % write_term_c(Goal),nl,
               % Get all proofs and failed proofs of the goal.
               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall( [Proof, Evidence],
@@ -216,15 +216,19 @@ repInsInc(TheoryState, Layer, (_, Insuf, Incomp), [fault, (Layer/N), TheoryState
 % repair theory
 repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     spec(roundNum(R)),
-    nl, write_term_c('--------- Start repInsInc round: '), write_term_c(R),nl,
-    writeLog([nl, write_term_c('--------- Start repInsInc round: '), write_term_c(R),nl, finishLog]),fail,
+    nl, write_term_c('--Start repInsInc round: '), write_term_c(R),nl,
+    writeLog([nl, write_term_c('--------- Start repInsInc round: '), write_term_c(R),nl, finishLog]),
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
     findall(Proof, (member((_, UnwProofs), IncompsIn), member(Proof, UnwProofs)),  IncompsProofs),
+    nl,write_term_c('----Insufficiencies:-------'),nl,write_term_All(InsuffsIn),nl,
+    nl,write_term_c('----Incompatabilities:-------'),nl,write_term_All(IncompsProofs),nl,
     %appEach is kind of like a foreach loop
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
+    nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
+    fail,
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),

@@ -97,7 +97,7 @@ slRL(Goal, _, EC, _, _, _):-
 % Rewrite the input goal and the theory.
 slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % Set an depth limit of the resoluton according to the length of the thoery.
-    write_term_c("-----start slRL---------"),nl,
+    % write_term_c("-----start slRL---------"),nl,
     length(TheoryIn, L),
     RCostLimit is L*L,    % the depth limit of a proof.
     %   % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
@@ -107,15 +107,15 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     GoalNew = Goal, % There is no need to distinguish +/- now as everything needs to be resolved.
     spec(equalities(EQs)),
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
-    write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
-    write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
-    write_term_c("EC is "), write_term_c(EC),nl,
-    write_term_c("Proof  is uninitialized"), nl,
-    write_term_c("Evidence is uninitialized"), nl,
-    write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
+    % write_term_c("GoalNew is "), write_term_c(GoalNew),nl,
+    % write_term_c("TheoryIn is "), write_term_c(TheoryIn),nl,
+    % write_term_c("EC is "), write_term_c(EC),nl,
+    % write_term_c("Proof  is uninitialized"), nl,
+    % write_term_c("Evidence is uninitialized"), nl,
+    % write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
     sortGoals(GoalNew,GoalNewSorted),
     slRLMain(GoalNewSorted, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
-    write_term_c("-----end slRL---------"),nl,
+    % write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
     cleanSubMid(EvidenceTem, Evidence),
     retractall(spec(proofNum(X))), assert(spec(proofNum(X+1))).
