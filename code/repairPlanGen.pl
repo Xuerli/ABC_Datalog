@@ -5,7 +5,10 @@ repairPlan(Goal, TheoryState, _, TheoryState):-
     occur(Goal, [(_, []), [], ([],_)]), !.
 
 % TODO: MERGE insufficiencies goals with same predicate and then add the rule which proves all of them
+
+%Build a proof of insufficiency
 repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
+    write_term_c('------repair plan 1 for insuff--------'),nl,write_term_All(Goal),nl,write_term_All(Suffs),nl,
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
 
     spec(heuris(Heuristics)),
@@ -14,7 +17,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     delete(Heuristics, noOpt, [_|_])->    % Has heuristics
         spec(repTimeH(RunTimeFile))),
     statistics(walltime, [S1,_]),
-    findall(RepairInfo,
+    findall(RepairInfo, %TODO ok until this.
                 (buildP((Goal, Evidences), TheoryState, Suffs, RepairInfo),
                 RepairInfo = [insuff, (RepPlans, _), _],
                 RepPlans \= [],
@@ -37,6 +40,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     writeLog([nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
             nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
+%Block a proof of incompatability
 repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     ProofInp = [_|_],
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
@@ -225,24 +229,24 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
                TargCls: a list of clauses to which the repair plan will apply.
                ClE: a collection of the remaining unprovabe sub-goals in all the evidences of that Goal.
 ************************************************************************************************************************/
+%Nothing to build it it is empty.
 buildP([], _, _, _):-fail,!.
 buildP(([], []), _, _, _):-fail,!.
-
 
 buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):-
     spec(heuris(Heuristics)),
     writeLog([nl,write_term_c('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
     Goal \= [],
     TheoryState = [_,EC, _, TheoryIn, _, _],
-    % Get one partial proof Evd and its clauses information lists ClsList.
-    member(Evi, Evidences),
+    % Get one partial proof Evi and its clauses information lists ClsList.
+    member(Evi, Evidences), %This is the whole proof until something cannot be proved
 
-    findall((Num, GoalsRem, ProofCur),
+    findall((Num, GoalsRem,ResGs, ProofCur),
                ((member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall([SubG, Proof],
                             (member(SubG, Subgoals),
-                            slRL([SubG], TheoryIn, EC, Proof,_,_),
+                            slRL([SubG], TheoryIn, EC, Proof,_,[]),
                             Proof = [_|_]),        % found a non-empty proof
                         ResovlableG),
                 transposeF(ResovlableG, [ResGs, SubGProofs]),    % get all resolvable sub-goals
@@ -251,6 +255,10 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
                 appAll(append, SubGProofs,[Evi], ProofCur,1)),    % ProofCur is a set of RS ignoring their order that results the remaining irresolvalble sub-goals only.
            Rems),
     sort(Rems, SortedRems),
+    write_term_c('---sortedRems----'),nl,
+    write_term_All(SortedRems),nl,
+    write_term_c('---end sortedRems----'),nl,
+    fail,
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
     writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
@@ -283,7 +291,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
 
 
 
-%% Repair the insufficiency by adding a rule whose head is the goal.
+%% Repair the insufficiency by adding a rule whose head is the goal. == SR4
 buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     %% Repair the insufficiency by abduction.
     spec(heuris(Heuris)),
