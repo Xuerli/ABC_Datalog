@@ -228,7 +228,7 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
     nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
-    fail,
+    fail, %TODO delete this
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),

@@ -258,16 +258,16 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     write_term_c('---sortedRems----'),nl,
     write_term_All(SortedRems),nl,
     write_term_c('---end sortedRems----'),nl,
-    fail,
+    % fail,
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
     writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
 
-    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions
+    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5
         writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         delPreCond(Unresolvables, Evi, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
-    notin(noReform, Heuristics),    % by reformation.
+    notin(noReform, Heuristics),    % by reformation. (SR1,SR2)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed),
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
@@ -275,7 +275,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
         setof(Cl, (member(List, TargClsList),
                     member(Cl, List)),
               TargCls);
-    intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal.
+    intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal. (SR3, SR4)
         setof([expand([+Prop]),    [+Prop]],
                     (member(-PropG, Unresolvables),
                     replace(vble(_), [dummy_vble_1], PropG, Prop)),
@@ -387,7 +387,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
             ClS),
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
-%% Repair the insufficiency by analogising an existing rule and give them different preconditions.
+%% Repair the insufficiency by analogising an existing rule and give them different preconditions. SR4 again?
 buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
     notin(noRuleChange, Heuristics),
