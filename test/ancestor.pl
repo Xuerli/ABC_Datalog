@@ -4,7 +4,7 @@
 theoryName(ancestor).
 
 
-axiom([-a(x),+b(x)]).
+% axiom([-a(x),+b(x)]).
 axiom([-b(x),+c(x)]).
 axiom([-c(x),+a(x)]).
 axiom([+a(x),+b(x),+c(x)]).

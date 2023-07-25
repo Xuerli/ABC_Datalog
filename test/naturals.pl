@@ -9,6 +9,8 @@ axiom([-naturals(\x),+naturals(suc(\x))]).
 eqAxiom([suc(0),1]).
 eqAxiom([suc(1),2]).
 
+suc(X,Y):-
+    Y is X + 1.
 
 trueSet([naturals(1),naturals(2)]).
 falseSet([]).
