@@ -241,7 +241,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     % Get one partial proof Evi and its clauses information lists ClsList.
     member(Evi, Evidences), %This is the whole proof until something cannot be proved
 
-    findall((Num, GoalsRem,ResGs, ProofCur),
+    findall((Num, GoalsRem, ProofCur),
                ((member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall([SubG, Proof],
@@ -254,27 +254,29 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
                 length(GoalsRem, Num),
                 appAll(append, SubGProofs,[Evi], ProofCur,1)),    % ProofCur is a set of RS ignoring their order that results the remaining irresolvalble sub-goals only.
            Rems),
-    sort(Rems, SortedRems),
-    write_term_c('---sortedRems----'),nl,
-    write_term_All(SortedRems),nl,
-    write_term_c('---end sortedRems----'),nl,
-    % fail,
+    sort(Rems, SortedRems), %Each entry is one of the RS, with all the subgoals that failed.
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
     writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
+    write_term_c('---Unresolvables and proofcur----'),nl,
+    write_term_c(Unresolvables),nl,
+    write_term_c(ProofCur),nl,
+    write_term_c('---end unresolvables----'),nl, 
 
     (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5
         writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
-        delPreCond(Unresolvables, Evi, RepPlans1, TargCls),
+        delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
+
     notin(noReform, Heuristics),    % by reformation. (SR1,SR2)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
-        findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed),
+        findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed), %TODO up till here
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
         transposeF(RepInfo, [RepPlans, TargClsList]),
         setof(Cl, (member(List, TargClsList),
                     member(Cl, List)),
               TargCls);
+
     intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal. (SR3, SR4)
         setof([expand([+Prop]),    [+Prop]],
                     (member(-PropG, Unresolvables),

@@ -216,22 +216,30 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
     Output: RepPlan: the repair plan of deleting which precondition from a rule.
             ClOld: the rule whose precondition is deleted.
 ************************************************************************************************************************/
-delPreCond(Unresolvables, Evi, RepPlan, ClsOld):-
+delPreCond(Unresolvables, Evi,TheoryIn, RepPlan, ClsOld):- %SR5
     spec(protList(ProtectedList)),
-
+    
      % Get the original clause information which introduces all the remaining Subgoals, where the last subgoal is the one irresolvable.
     setof([OrigCl, (OrigCl, ClNew)],
-                (member(-UnG, Unresolvables),
-                traceBackPos(UnG, Evi, OrigLi, OrigCl, _),    % Get the original negative literal and its clause where -GTarg comes from.
+                ((member(-UnG, Unresolvables),
+                traceBackPos(-UnG, Evi,TheoryIn, OrigLi, OrigCl, _);
+                member(+UnG, Unresolvables),
+                traceBackPos(+UnG, Evi,TheoryIn, OrigLi, OrigCl, _)
+                ),    % Get the original negative literal and its clause where -GTarg comes from.
+                % print('*********print and check***********'),nl,
+                % print(UnG),nl,print(Evi),nl,print(OrigLi),nl,print(OrigCl),nl,
+                % print('*********print and check**********'),nl,sleep(5),
                 notin(OrigCl, [[]|ProtectedList]),            % That input clause is not protected from being deleted.
                 length(OrigCl, L),
                 L>2,                                        % Do not delete the unique precondition.
-                delete(OrigCl, OrigLi, ClNew),                % remove the precondition which introduces the unprovable subgoal.
-                orphanVb(ClNew, [])),                        % The resulting clause should not have any orphan variable.
+                delete(OrigCl, OrigLi, ClNew)                % remove the precondition which introduces the unprovable subgoal.
+                % orphanVb(ClNew, [])                      % REMOVED: The resulting clause should not have any orphan variable.
+                ),                        
             Pairs),
     transposeF(Pairs, [ClsOld, RulePairs]),
     % Generate the repair plan of deleting unprovale preconditions from ClOld.
-    RepPlan = dele_pre(RulePairs),
+
+    RepPlan = dele_pre(RulePairs), 
 
     writeLog([nl,write_term_c('--------Finish generating repair plan of deleting the unprovable precondition------'),
                 nl, write_term_c(RepPlan), finishLog]).

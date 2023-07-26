@@ -587,16 +587,57 @@ noloopBack(GoalsCur, Deriv):-
     * InputClause is a Horn clause which has its positive literal as the head.
 ****************************************************************************************************************/
 % Find the input clause which introduces the targeted proposition.
-traceBackPos([P|ArgT], Deriv, NegLit, InputClause, Subs):-
+%The input clause of the last deriv is the required clause (negative)
+traceBackPos(-[P|ArgT], Deriv,TheoryIn, NegLit, InputClause, Subs):-
     last(Deriv, CurResStep),
     CurResStep = (_, InputClause, Subs,_,_),
     setof(-[P|Arg],
             ( member(-[P|Arg], InputClause),
               unification([P|ArgT], [P|Arg],[],[],_,_,[])),
-            [NegLit|_]), !.    % get the original negative literal.
+            [NegLit|_]),
+    member(InputClause,TheoryIn), %Make sure the input clause is in the theory. Otherwise it is an ancestor.
+    !.    % get the original negative literal.
+
+%Positive version
+traceBackPos(+[P|ArgT], Deriv,TheoryIn, PosLit, InputClause, Subs):-
+    last(Deriv, CurResStep),
+    CurResStep = (_, InputClause, Subs,_,_),
+    setof(+[P|Arg],
+            ( member(+[P|Arg], InputClause),
+              unification([P|ArgT], [P|Arg],[],[],_,_,[])),
+            [PosLit|_]),
+    member(InputClause,TheoryIn), %Make sure the input clause is in the theory. Otherwise it is an ancestor.
+    !.    % get the original negative literal.
+
+%The last input clause matches but it is an ancestor
+traceBackPos(-[P|ArgT], Deriv,TheoryIn, NegLit, InputClause, Subs):-
+    last(Deriv, CurResStep),
+    CurResStep = (_, InputClauseTemp, _,_,_),
+    setof(-[P|Arg],
+            ( member(-[P|Arg], InputClauseTemp),
+              unification([P|ArgT], [P|Arg],[],[],_,_,[])),
+            [_|_]),
+    \+member(InputClauseTemp,TheoryIn), %It is an ancestor
+    findAncestor(Deriv,InputClauseTemp,DerivNew),
+    !,   %restart from ancestor
+    traceBackPos(-[P|ArgT],DerivNew,TheoryIn,NegLit,InputClause,Subs).
+
+%Positive version
+traceBackPos(+[P|ArgT], Deriv,TheoryIn, PosLit, InputClause, Subs):-
+    last(Deriv, CurResStep),
+    CurResStep = (_, InputClauseTemp, _,_,_),
+    setof(+[P|Arg],
+            ( member(+[P|Arg], InputClauseTemp),
+              unification([P|ArgT], [P|Arg],[],[],_,_,[])),
+            [_|_]),
+    \+member(InputClauseTemp,TheoryIn), %It is an ancestor
+    findAncestor(Deriv,InputClauseTemp,DerivNew),
+    !,   %restart from ancestor
+    traceBackPos(+[P|ArgT],DerivNew,TheoryIn,PosLit,InputClause,Subs).
 
 % if it is the first step, then the targeted negative proposition is from preferred structure.
-traceBackPos([P|ArgT], [(Goal, _,_,_,_)], NegLit, InputClause, Subs):-
+%This is only for negative literals since we restrict goal to be ground assertions.
+traceBackPos(-[P|ArgT], [(Goal, _,_,_,_)], _,NegLit, InputClause, Subs):-
     member(-[P| Argori], Goal),
     unification([P|ArgT], [P| Argori],[],[],_,Subs,[]), !,
     (Goal = [_|[_|_]] ->    % the original goal clause have at least two proposition, then it is a constran axiom from the input theory.
@@ -604,9 +645,12 @@ traceBackPos([P|ArgT], [(Goal, _,_,_,_)], NegLit, InputClause, Subs):-
      Goal = [-_] -> InputClause = [], NegLit= -[P|ArgT]).    % Otherwise, it comes from the preferred structure.
 
 % otherwise, try the ancestors.
-traceBackPos(TargProp, Deriv, NegLit, InputClause, Subs):-
+traceBackPos(TargProp, Deriv, TheoryIn,NegLit, InputClause, Subs):-
     dropTail(Deriv, Ances),    % try the ancestors.
-    traceBackPos(TargProp, Ances, NegLit, InputClause, Subs).
+    traceBackPos(TargProp, Ances,TheoryIn, NegLit, InputClause, Subs).
+
+%Safety fallback for positive literals
+traceBackPos(Anything,[],_,Anything,[],[]).
 
 
 /***************************************************************************************************************

@@ -260,7 +260,7 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     findall([+[P|Args]], member([+[P|Args]], TheorySorted1), Assertions),
     deleteAll(TheoryIn, Assertions, Rules),
     append(Assertions, Rules, TheorySorted),
-    smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut), %seems to be useless here.
+    smaller(TheorySorted,  EC, RsIn, [], _, RsOut), %seems to be useless here.
     resetIndepVble(TheoryIn, Minimal).
 
 smaller(TheorySorted,  _, RsIn, [], TheorySorted, RsIn).

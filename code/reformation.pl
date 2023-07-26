@@ -164,8 +164,8 @@ reformUnblock([H|T], Evi, ClUsed, SuffGoals, TheoryState, [HOut| RestOut]):-
 refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls]):-
     TheoryState = [[_, RsBanned],EC, _, TheoryIn, _, _],
     % Get the original negative literal and its clause where -GTarg comes from.
-    traceBackPos([PG| ArgsG], Evi, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
-    spec(protList(ProtectedList)),
+    traceBackPos([PG| ArgsG], Evi,TheoryIn, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
+    spec(protList(ProtectedList)), %TODO check above
     writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
 
     setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, Proof),

@@ -1170,3 +1170,12 @@ removeDuplicates([H|T],Current,[H|T2]):-
 removeDuplicates([H|T],Current,T2):-
     member(H,Current),!,
     removeDuplicates(T,Current,T2).
+
+% Finding ancestor from deriv list
+findAncestor(Deriv,IC,Deriv):-
+    last(Deriv, CurDerStep),
+    CurDerStep = (_,_,_,IC,_),!.
+
+findAncestor(Deriv,IC,NewDeriv):-
+    dropTail(Deriv,Ances),
+    findAncestor(Ances,IC,NewDeriv).
