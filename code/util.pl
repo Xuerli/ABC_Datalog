@@ -138,11 +138,24 @@ argsMis([A1| Args1], [A2| Args2], MisPairs, [MisPair1| MisPos2]):-
     append(MisPair1, MisPairs2, MisPairs).
 
 argPairMis(C, C, [],[]):- !.
-argPairMis([Cons], vble(X), [Cons]/vble(X), []):- !.
-argPairMis(vble(X), [Cons], [Cons]/vble(X), []):- !.
+argPairMis(Y, vble(X), Y/vble(X), []):- (is_cons(Y);is_func(Y)), !.
+argPairMis(vble(X), Y, Y/vble(X), []):- (is_cons(Y);is_func(Y)),!.
 argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
 argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
     Cons1 \= Cons2.
+argPairMis([Func1|F1Arg],[Func2|F2Arg],[],[([Func1|F1Arg], [Func2|F2Arg])]):- 
+    Func1 \= Func2.
+argPairMis([Func1|F1Arg],[Func1|F2Arg],Sigma, MisPair):- 
+    argsMisFunc(F1Arg,F2Arg,Sigma,MisPair).
+
+argsMisFunc([],[],[],[]):- !.
+argsMisFunc([A1|Args1],[A2|Args2],Sigma,MisPairs):-
+    argPairMis(A1,A2,Sigma2,MisPair1),
+    subst(Sigma2, Args1, ArgsSb1),
+    subst(Sigma2, Args2, ArgsSb2),
+    argsMisFunc(ArgsSb1,ArgsSb2,SigmaR,MisPairsR),
+    compose1(Sigma2,SigmaR,Sigma),
+    append(MisPair1,MisPairsR,MisPairs).
 
 % In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).

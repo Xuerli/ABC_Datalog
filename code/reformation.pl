@@ -52,8 +52,8 @@ mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls
     % Get the predicate in the targeted literal
     prop(TargetLit, [PT| ArgsT]),
     length(ArgsT, ArityT),
-    length(ArgsG, ArityG),
-    (intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, [])->
+    length(ArgsG, ArityG), %TODO up till here
+    (intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, [])-> %If it is not protecterd
         (ArityT > ArityG->
             % make PG's arity ArityT, and replace all PG with PR
             RepPlan = merge(PT, PG, ArgsG, dec);
@@ -64,6 +64,8 @@ mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls
             % increase PG's arity by adding ArgDiff and then replace all PG with PR
             RepPlan = merge(PT, PG, ArgDiff, inc)),
         findall(Cl, (member(Cl, TheoryIn), (member(+[PT|_], Cl);member(-[PT|_], Cl))), TargCls);
+    
+    
     % When PG is under protected, only refom the literal not all accurance of PG,
     % if that Literal is not the only occurance of PG.
     intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, Int), Int =[_|_]->
@@ -161,41 +163,52 @@ reformUnblock([H|T], Evi, ClUsed, SuffGoals, TheoryState, [HOut| RestOut]):-
         refUnblock(H, Evi, ClUsed, SuffGoals, TheoryState, HOut),
         reformUnblock(T, Evi, ClUsed, SuffGoals, TheoryState, RestOut).
 
-refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls]):-
-    TheoryState = [[_, RsBanned],EC, _, TheoryIn, _, _],
+refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls]):- %TODO add positive literal
+    TheoryState = [[_, RsBanned],_, _, TheoryIn, _, _],
     % Get the original negative literal and its clause where -GTarg comes from.
     traceBackPos([PG| ArgsG], Evi,TheoryIn, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
-    spec(protList(ProtectedList)), %TODO check above
+    spec(protList(ProtectedList)),
     writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
-
-    setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, Proof),
+    
+    %Choosing a clause to change here
+    setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos),
             (member(Axiom, TheoryIn),
              \+member(Axiom, ClUsed),    % the clause that has been used in the proof should not be a candidate to change for resolving the remaining sub-goal, otherwise, the evidence will be broken.
              %occur(-_, Rule), % it is possible to merge an assertion's predicate with the goal's predicate
-             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
-             slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]),
+            %  retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+            %  slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]),
+            member(+[PT|ArgsT],Axiom), %Can this work? Simply  choose one
+
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.
-             (PT = PG->    argsMis(ArgsG, ArgsT, Mismatches, MisPairPos),
+             (PT = PG->    argsMis(ArgsG, ArgsT, Mismatches, MisPairPos), % Find all mismatches and store in the variable. TODO: check 
                          length(Mismatches, MisNum);
-             PT \= PG-> diff(ArgsG, ArgsT, ArgDiff),     % TODO:consider variables in ArgsG
+             PT \= PG-> diff(ArgsG, ArgsT, ArgDiff),     
                         Mismatches = (predicate, ArgDiff),
                         length(ArgDiff, MisNum),
                         MisPairPos = [])),
             Cand),
+            print('********************'),nl,
+            print(Cand),nl,
+            print('*****************'),nl,sleep(10),
     writeLog([nl,write_term_c('--------Reformation Candidates------'),nl, write_term_c(Cand), finishLog]),
-    member((Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos, ProofRest), Cand),
+    member((Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos), Cand),
     writeLog([nl,write_term_c('---------------Axiom is 1  '),write_term_c(Axiom), finishLog]),
     writeLog([nl,write_term_c('---------------Mismatches is 1  '),write_term_c(Mismatches), finishLog]),
 
     spec(heuris(Heuristics)),
     (% if the irresolvable sub-goal is not from the preferred structure, reform the sub-goal
         % Or if the Axiom is not under protected, reform it
+
+        %Reform the axiom (not the goal)
         (notin(noRename, Heuristics), notin(Axiom, ProtectedList),
-            Axiom = [+Head|_],
-            (mergePlan(Mismatches, [PG| ArgsG], +Head, Axiom, TheoryIn, RepPlan, TargCls);
-            renamePred(Mismatches, [PG| ArgsG], +Head, Axiom, RepPlan, TargCls);
-            renameArgs(Mismatches, 1, ProofRest, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls)));
+            % Axiom = [+Head|_],    %Change +Head to +[PT|ArgsT] to make sure the correct term is changed.
+            (mergePlan(Mismatches, [PG| ArgsG], +[PT|ArgsT], Axiom, TheoryIn, RepPlan, TargCls); %SR1: merge both pred and args
+            renamePred(Mismatches, [PG| ArgsG], +[PT|ArgsT], Axiom, RepPlan, TargCls); %OR
+            renameArgs(Mismatches, 1, _, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls))); %PRoofrest is deleted
+
+            %mergePlan successfully understood. Start from renamePred tmr.
+
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
                 (% generate repair plan of merge(PP, PT, ArgDiff, inc) or rename(PP, PT, ArityT, TargetLit, TargCl, dec/inc).
                 notin(noRename, Heuristics),

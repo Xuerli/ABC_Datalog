@@ -268,7 +268,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
         delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
 
-    notin(noReform, Heuristics),    % by reformation. (SR1,SR2)
+    notin(noReform, Heuristics),    % by reformation. (SR1)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed), %TODO up till here
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
