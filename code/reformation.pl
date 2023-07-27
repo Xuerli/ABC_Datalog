@@ -178,7 +178,6 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             %  retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
             %  slRL(Axiom, TheoryIn, EC, Proof, [], [+[PT|ArgsT]]),
             member(+[PT|ArgsT],Axiom), %Can this work? Simply  choose one
-
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.
              (PT = PG->    argsMis(ArgsG, ArgsT, Mismatches, MisPairPos), % Find all mismatches and store in the variable. TODO: check 
