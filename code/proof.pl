@@ -665,17 +665,21 @@ traceBackPos(Anything,[],_,Anything,[],[]).
 % Find the input clause which introduces the targeted proposition.
 traceBackC(C, [([+[P|Args]], [],[],[+[P|Args]],[0,0])], [+[P|Args]]):-
     member(C, Args), !.
+
+traceBackC(C, [([-[P|Args]], [],[],[-[P|Args]],[0,0])], [-[P|Args]]):-
+    member(C, Args), !.
+
 traceBackC(C, Deriv, Clause):-
     Deriv = [(Goals,InputCl,_,_,_)| _],
     % Try if c comes from the goal clause over the head of the input clause.
-    findall(Prop, (member(-Prop, Goals), occur(C, Prop)), Props),
+    findall(Prop, (member(Prop, Goals),prop(Prop,Propn), occur(C, Propn)), Props),
     (Props \= [], Clause = Goals, !;
      Props = []->
          (% try if c comes from the body of the input clause.
-         findall(Prop2, (member(-Prop2, InputCl), occur(C, Prop2)), Props2),
+         findall(Prop2, (member(Prop2, InputCl),prop(Prop2,Prop2n), occur(C, Prop2n)), Props2),
          Props2 \= [], Clause = InputCl, !;
         last(Deriv, GoalLast),
-        findall(PropL, (member(-PropL, GoalLast), occur(C, PropL)), Propsl),
+        findall(PropL, (member(PropL, GoalLast),prop(PropL,PropLn), occur(C, PropLn)), Propsl),
         (Propsl \= [], Flag = true;
          Props = []-> Flag = false),
         traceBackCTail(C, Deriv, Flag, Clause))).    % get the original negative literal.
@@ -684,7 +688,7 @@ traceBackCTail(_, [], []):- fail, !.
 
 traceBackCTail(C, Deriv, Flag, Output):-
     last(Deriv, (Goals,InputClause,_,_,_)),
-    findall(Prop, (member(-Prop, Goals),occur(C, Prop)), Props),
+    findall(Prop, (member(Prop, Goals),prop(Prop,Propn),occur(C, Propn)), Props),
     (Props = [], ( Flag == true ->  InputClause = Output, !; % find the last goal which does not contain the target, so the input clause in this step introduces the target.
                   Flag == false ->
                       dropTail(Deriv, Ances), !,    % try the ancestors.
@@ -752,8 +756,10 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
             (% Get an assertion, +[P| Arugs], from the input theory.
                  member([+[P| Args]], Theory),
                  member(Constant, Args),
-                 linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
-                 member(Theorem, Theorems)),
+                %  linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
+                %  member(Theorem, Theorems)
+                Theorem = +[P| Args]
+                 ),
             TheoTem1),
     % find all therems that can be derived starting with the = or \= of the targeted costant.
     findall(Theorem,
@@ -777,16 +783,74 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
     findall(Theorem,
             (% Get a rule from the input theory.
                 member(Clause, Theory),
-                member(+[_| Arg], Clause),
-                member(Constant, Arg),
+                member(+[P| Arg], Clause),
+                member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
-                slRL(Clause, Theory, EC, _, [], Theorem),
+                % slRL(Clause, Theory, EC, _, [], Theorem), %TODO problematic
                 % Check that the targeted constant occur in the arguments of the theorems.
-                Theorem = [+[_| Cons]],
-                occur(Constant, Cons)),
+                % Theorem = [+[_| Cons]],
+                % occur(Constant, Cons)
+                Theorem = [+[P| Arg]],
+                occur(Constant, Arg)
+                ),
             TheoTem3),
     append(TheoTem1, TheoTem2, TheoTem),
     append(TheoTem, TheoTem3, TheoremsRaw),
+    % remove duplicates
+    sort(TheoremsRaw, Theorems).
+
+
+allConstraintsC([], _, _, []):- !.
+allConstraintsC(Theory, EC, Constant, Theorems):-
+    spec(signature(Sig, _)),
+    findall(C2s, (member((_,_,ArgsDomains), Sig),
+                member(ArgD1, ArgsDomains),
+                delete(ArgD1, Constant, C2s),
+                C2s \= ArgD1),
+            C2S),
+    flatten(C2S, IneqCands),
+    % find all therems that can be derived starting with an axiom of the targeted costant.
+    findall(Theorem,
+            (% Get an assertion, +[P| Arugs], from the input theory.
+                 member([-[P| Args]], Theory),
+                 member(Constant, Args),
+                 Theorem = -[P| Args]
+            ),
+                %  linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
+                %  member(Theorem, Theorems)),
+            TheoTem1),
+    % find all therems that can be derived starting with the = or \= of the targeted costant.
+    % findall(Theorem,
+    %         (    % Get the inequalities of Cconstant
+    %              findall([+[\=, [C2], Constant]],
+    %                     (member(C2, IneqCands),
+    %                     equalSub([\=, Constant, vble(x)], EC, [[C2]/vble(x)])),
+    %                     Ineqs),
+    %             % Get the equalities of Cconstant
+    %              findall([+[=, [C2], Constant]],
+    %                      (equalSub([=, Constant, vble(x)], EC, [[C2]/vble(x)]),
+    %                       [C2] \= Constant),
+    %                      Eqs),
+    %              append(Ineqs, Eqs, EAll),
+    %              member(Ineq, EAll),
+    %              linkTheorems(Ineq, Constant, Theory, EC, Theorems),
+    %              member(Theorem, [Ineq| Theorems])),
+    %         TheoTem2),
+
+    % get all theorems that can be derived by a rule whose head has the targeted constant.
+    findall(Theorem,
+            (% Get a rule from the input theory.
+                member(Clause, Theory),
+                member(-[P| Arg], Clause),
+                member(Constant, Arg),
+                % Get all theorems that can be derived from this rule.
+                % slRL(Clause, Theory, EC, _, [], Theorem),
+                % Check that the targeted constant occur in the arguments of the theorems.
+                Theorem = [-[P| Arg]],
+                occur(Constant, Arg)),
+            TheoTem3),
+    % append(TheoTem1, TheoTem2, TheoTem),
+    append(TheoTem1, TheoTem3, TheoremsRaw),
     % remove duplicates
     sort(TheoremsRaw, Theorems).
 
@@ -807,7 +871,7 @@ linkTheorems([+[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
     unification([P| Args], [P| Arg2], [],[],_, Substitution, []),        % If successful resolution
     delete(Clause, -[P| Arg2], ClauseRest),                             % Get the resulting clause C with newly introduced literals Body in front.
     subst(Substitution, ClauseRest, ClauseRest2),
-    slRL(ClauseRest2, Theory, EC, _, [], Theorem),
+    slRL(ClauseRest2, Theory, EC, _, [], [Theorem]),
 
     % Check that the targeted constant occur in the arguments of the theorems.
     Theorem = [+[_| Cons]],

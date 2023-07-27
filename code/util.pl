@@ -1192,3 +1192,6 @@ findAncestor(Deriv,IC,Deriv):-
 findAncestor(Deriv,IC,NewDeriv):-
     dropTail(Deriv,Ances),
     findAncestor(Ances,IC,NewDeriv).
+
+addOpSign(+_,Y,-Y):- !.
+addOpSign(-_,Y,+Y):- !.

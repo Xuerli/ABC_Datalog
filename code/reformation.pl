@@ -52,7 +52,7 @@ mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls
     % Get the predicate in the targeted literal
     prop(TargetLit, [PT| ArgsT]),
     length(ArgsT, ArityT),
-    length(ArgsG, ArityG), %TODO up till here
+    length(ArgsG, ArityG), 
     (intersection([PT, +[PT|_], -[PT|_]], ProtectedListF, [])-> %If it is not protecterd
         (ArityT > ArityG->
             % make PG's arity ArityT, and replace all PG with PR
@@ -103,7 +103,7 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
                 delete([C1, C2], COrig, [CTarget]),    % rename Corig by CTarget.
                 COrig = [CC],
                 notin(CC, ProtectedList),
-                traceBackC(COrig, Evi, C1Cl),
+                traceBackC(COrig, Evi, C1Cl),%TODO add further traceback probably
                 % occur(+_, C1Cl),
                 member(C1Cl, TheoryIn),    % it is an axiom from the theory not the preferred structure.
                 notin(C1Cl, ProtectedList),
@@ -126,7 +126,7 @@ extCons2Vble(Mismatches, Nth, Evi, _, MisNum, TheoryIn, RepPlan, TargCls):-
                 nth0(Nth, [C1, C2], COrig),    % Get the target constant.
                 notin(COrig, ProtectedList),
                 traceBackC(COrig, Evi, C1Cl),
-                member(-_, C1Cl),        % it is a rule
+                % member(-_, C1Cl),        % it is a rule
                 member(C1Cl, TheoryIn),    % it is an axiom from the theory not the preferred structure.
                 notin(C1Cl, ProtectedList),
                     % get the list of variables in the input clause.
@@ -206,15 +206,13 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             renamePred(Mismatches, [PG| ArgsG], +[PT|ArgsT], Axiom, RepPlan, TargCls); %OR
             renameArgs(Mismatches, 1, _, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls))); %PRoofrest is deleted
 
-            %mergePlan successfully understood. Start from renamePred tmr.
-
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
                 (% generate repair plan of merge(PP, PT, ArgDiff, inc) or rename(PP, PT, ArityT, TargetLit, TargCl, dec/inc).
                 notin(noRename, Heuristics),
                 (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
                 renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
                 renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
-                extCons2Vble(Mismatches, 0, Evi, _, MisNum, TheoryIn, RepPlan, TargCls)));
+                extCons2Vble(Mismatches, 0, Evi, _, MisNum, TheoryIn, RepPlan, TargCls))); % SR2~
 
         % if both irresolvable sub-goal and Axiom are not under protected, try to generate repair plan of decrease the arity of PG.
         (   notin(noArityChange, Heuristics),

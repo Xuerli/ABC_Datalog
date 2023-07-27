@@ -268,7 +268,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
         delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
 
-    notin(noReform, Heuristics),    % by reformation. (SR1)
+    notin(noReform, Heuristics),    % by reformation. (SR1, SR2)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed), %TODO up till here
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
@@ -277,10 +277,14 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
                     member(Cl, List)),
               TargCls);
 
+    
     intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal. (SR3, SR4)
-        setof([expand([+Prop]),    [+Prop]],
-                    (member(-PropG, Unresolvables),
-                    replace(vble(_), [dummy_vble_1], PropG, Prop)),
+        setof([expand([SProp]),    [SProp]],
+                    (member(PropG, Unresolvables),
+                    prop(PropG,PPropG),
+                    replace(vble(_), [dummy_vble_1], PPropG, Prop),
+                    addOpSign(PropG,Prop,SProp)
+                    ),
                 RepPairs),
         transposeF(RepPairs, [RepPlans, TargCls])),
 
@@ -307,7 +311,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allTheoremsC(TheoryIn, EC, C, Theorems), %
+                 allConstraintsC(TheoryIn, EC, C, Theorems), %
                  member(Theorem, Theorems),
                  Theorem = [+[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -389,6 +393,104 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
             ClS),
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
+
+%% Repair the insufficiency by adding a rule whose head is the goal. REVERSE + and -. == SR4
+buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
+    %% Repair the insufficiency by abduction.
+    spec(heuris(Heuris)),
+    notin(noAxiomAdd, Heuris),
+    notin(noRuleChange, Heuris),
+    writeLog([nl,write_term_c('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
+    TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
+    Goal = [+PropG|_],
+
+    % get all relevant theorems to the goal
+    findall((L, Theorem),
+                (PropG = [_ |Args],
+                 member(C, Args),
+                 allConstraintsC(TheoryIn, EC, C, Theorems), %
+                 member(Theorem, Theorems),
+                 Theorem = [-[_|Arg2]],
+                 deleteAll(Args, Arg2, DistArg),
+                 length(DistArg, L)),    % L is the number of arguments in Goal but not in the theorem.
+                RelTheorems),
+    mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
+    deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
+
+    % Heuristic7: When there is other theorems of C, do not consider the inequalities of C.
+    (member([-[P|_]], Cands2), P \= (\=)-> delete(Cands2, [-[\=|_]],Cands3);
+     Cands3 = Cands2),
+
+    % get all restrict theorems which are under protected.
+    findall(Constrain,(member(Constrain, TheoryIn),
+                     notin(-_, Constrain),
+                     spec(protList(ProtectedList)),
+                     member(Constrain, ProtectedList)),
+            ResCons),
+    % find all violations of the candidate rule CandRule w.r.t. protected constains in the thoery.
+    findall([-Prop],
+                (member([-Prop], Cands3),
+                 member(Constrain, ResCons),    % check based on a protected constrain axiom.
+                 % there is a proof of the violation of the constrain.
+                 retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+                 slRL(Constrain, [[-Prop], [-PropG]], EC, [_|_], [], []),
+                 writeLog([nl,write_term_c('**** Constrains check failed: '),nl,
+                     write_term_c([-PropG, +Prop]),
+                    write_term_c(' vs '),write_term_c(Constrain),nl])),    % proof exists
+            VioCand),
+    deleteAll(Cands3, VioCand, RuleCands),
+
+    % Heuristic8:    When searching for a precondition, either add all theorems as preconditions or add one of them.
+    (member([-Prop], RuleCands), generalise([-PropG, +Prop], RuleTem);    % formalise the rule which derive the goal.
+    setof(+Prop, member([-Prop], RuleCands), AllPred),
+    generalise([-PropG| AllPred], RuleTem)),
+
+    % check incompatibilities.
+    findall(Proof,
+             (member([-[Pre| Args]], FalseSetE),
+              % skip equalities/inequalities which have been tackled.
+              notin(Pre, [\=, =]),
+              NVioSent = [+[Pre| Args]],
+              % get all of a proof of Goal
+              retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+              slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
+              Proof \= []),                                       % Detect incompatibility based on refutation.
+         Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
+  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)];
+  Incompat = [_|_]->
+      % check if there is an incompatibility caused by RuleR6
+      findall(Subs,
+              (member(IncompProof, Incompat),
+               member((_,RuleTem,Subs,_,_), IncompProof)),
+              IncomSubsRaw),
+
+      sort(IncomSubsRaw, IncomSubs),
+      % if the new rule is not involved in any inconsistencies, then no adjustment precondition is needed.
+      (IncomSubs = []->BigPlan = [([expand(RuleTem)], RuleTem)];
+      IncomSubs = [_|_]->
+            retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+              findall(Proof,
+                          (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
+                          Proof \=[]),
+                      Proofs),
+
+              getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll),
+              (findall(([expand(RuleTem2)], RuleTem2),
+                      (member(add_pre(Precondition, _), CandAll),
+                       sort([Precondition| RuleTem], RuleTem2)),
+                       BigPlan);
+              CandAll = []-> BigPlan = [([expand(RuleTem)], RuleTem)]))),
+
+    member((RepPlans, RuleNew), BigPlan),
+    % get all of the clauses which constitute the target proof to unblock
+    retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+    findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
+                member((_,Cl,_,_,_), ProofUnblocked),
+                is_list(Cl)),     % do not record keyword 'unae'
+            ClS),
+   writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
+
+
 %% Repair the insufficiency by analogising an existing rule and give them different preconditions. SR4 again?
 buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
@@ -417,7 +519,7 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
                 retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                 findall(SubG,
                             (member(SubG, Subgoals),
-                            slRL([SubG], TheoryIn, EC, Proof,_,_),
+                            slRL([SubG], TheoryIn, EC, Proof,_,[]),
                             Proof = [_|_]),        % found a non-empty proof
                         ResovlableGs),    % get all resolvable sub-goals
                 subtract(Subgoals, ResovlableGs, GoalRem),
@@ -429,8 +531,9 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
     setof(Relevancy,
             (member(RuleC, RulesUseful),        % get a rule candidate
              member(TargetG, SingleGoalList),    % get a target goal candidate
-             relevancy(RuleC, TargetG, TheoryIn, EC, Relevancy)),
-         Relevancies),
+             relevancy(RuleC, TargetG, TheoryIn, EC, Relevancy)), %Later: may change relevancy
+         Relevancies), %TODO up till here
+
     % get the most relevant rule w.r.t. the goal.
     last(Relevancies, (S1, S2, RuleSR, TGoal, PreCondRel, PPs)),
        findall(-P, (member(-P, RuleSR), notin(-P, PreCondRel)), PSIrrela),
