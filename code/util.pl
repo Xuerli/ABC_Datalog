@@ -1196,6 +1196,9 @@ findAncestor(Deriv,IC,NewDeriv):-
 addOpSign(+_,Y,-Y):- !.
 addOpSign(-_,Y,+Y):- !.
 
+isOpSign(+_,-_).
+isOpSign(-_,+_).
+
 
 % TraceBackClause: Find back the original clause that introduced IC (in the case where IC is the ancestor.)
 traceBackClause(IC,[],_,IC):- !.
