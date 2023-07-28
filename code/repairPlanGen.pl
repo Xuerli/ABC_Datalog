@@ -83,7 +83,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
             TargetCls:    the clauses on which the RepPlan will apply.
             ClP: a collection of the clauses which constitute the proof.
 ************************************************************************************************************************/
-%% Block the unwanted proof by adding a unprovable precondition.
+%% Block the unwanted proof by adding a unprovable precondition. CR6
 blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     spec(heuris(Heuristics)),
     % not all three heuristics are employed.
@@ -99,6 +99,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
                     is_list(Cl)),
             CandRules),
     transposeF(CandRules, [ClS, _]),
+    %TODO add traceback here
     member([Axiom, IncomSubs], CandRules),    % target at one clause,
     writeLog([nl, write_term_c('Original Axiom is: '), write_term_c(Axiom),nl, finishLog]),
 
@@ -111,19 +112,23 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
         getAdjCond(Axiom, IncomSubs, SuffGoals, TheoryIn, EC, TrueSetE, FalseSetE, RepCands),
         % get single repair plan, RepPlan is an atom not a list.
         member(RepPlan, RepCands);
+
+
     Axiom=[+[Pred|_]], intersection([noRuleChange, noAss2Rule], Heuristics, []), notin(asst(Pred), ProtectedList),
         % Turn the assertion to a rule to make it unprovable.
         % Appliable when it is not essential for any sufficiency)
         % RepPlan = [(ass2rule(Axiom, NewRule), Axiom),...]
         asser2rule(Axiom, EC, SuffGoals, TheoryIn, TrueSetE, FalseSetE, RepCands),
         member(RepPlan, RepCands);
+
+    % CR5: delete the axiom.
     notin(noAxiomDele, Heuristics),  notEss2suff(SuffGoals, Axiom), notin(Axiom, ProtectedList),
         (occur(-_, Axiom); Axiom=[+[Pred|_]], notin(asst(Pred), ProtectedList)),
         % if the axiom is not essential to an sufficiency, it can be deleted.
         RepPlan = delete(Axiom)),
     ClT = [Axiom].
 
-
+%TODO add similar thing here which for CR8 which introduces the positive literal that is unprovable. 
 
 %% Block the unwanted proof by reformation
 blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
@@ -153,9 +158,9 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     (notin(-_, InpCl1)-> deleteAll([asst(P), InpCl2], ProtectedList, [_|_]);
      member(-_, InpCl1)-> deleteAll([InpCl1, InpCl2], ProtectedList, [_|_])),
 
-    %print(' InpCl1 and InpCl2 are ' ), nl,print(InpCl1),nl,print(InpCl2),nl,
-    %(InpCl1 = [+[bird,vble(y)], -[penguin,vble(y)]] -> pause;true),
+   
     % get all candidates of unifiable pairs to block.
+    %TODO: add new pairs that consider variable and functions, functions and constants, functions and functions etc. 
     findall([CC, VCG, VCIn, VV],
                 (    nth0(X, ArgsCl1, C1),
                     nth0(X, ArgsG, C2),
@@ -491,7 +496,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 
-%% Repair the insufficiency by analogising an existing rule and give them different preconditions. SR4 again?
+%% Repair the insufficiency by analogising an existing rule and give them different preconditions. SR4 again
 buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
     notin(noRuleChange, Heuristics),
