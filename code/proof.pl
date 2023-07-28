@@ -241,9 +241,9 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     % subst(SubsCl,InputClause,SubInputClause),
     % fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
     evaluation(GoalsNew,[],GoalsEval),
-    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEval, [RemCondNum, 0]),
-    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     sortGoals(GoalsEval,GoalsEvalSorted),
+    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEvalSorted, [RemCondNum, 0]),
+    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsEvalSorted, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
 %% slRLMain4: Use an input rule to resolve Goal which does not have == as its predicate.
@@ -279,9 +279,9 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     % subst(SubsCl,InputClause,SubInputClause),
     % fullResolution(GoalsNew,[],SubInputClause,SG,SI,GoalsResolved,SGResolved,SIResolved),
     evaluation(GoalsNew,[],GoalsEval),
-    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEval, [RemCondNum, 0]),
-    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     sortGoals(GoalsEval,GoalsEvalSorted),
+    CurDerStep = ((Goals, SG), (InputClause, SubsCl), GoalsEvalSorted, [RemCondNum, 0]),
+    updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsEvalSorted, DerivNew, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
 %Resolve simple Equality (1)
@@ -712,9 +712,9 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
     % find all proofs of an equality, where Proof is the list of all proofs.
     findall(([+[P| ArgsS]], Proof),
             (% get an axiom whose head predicate is P
-             member([+[P| Args]|Body], TheoryIn),
-             Axiom = [+[P| Args]|Body],
-             delete(Axiom, +[P| Args], Body),
+             member(Axiom,TheoryIn)
+             member(+[P|Args], Axiom),
+             delete(Axiom, +[P|Args],Body),
              (% if it has no body, which means that it is an axiom of P.
               Body = [] -> % if it is equality, sort the arguments and ignore X=X.
                     (P = (=)-> sort(Args, ArgsS), length(ArgsS, L), L>1; ArgsS = Args),
@@ -722,7 +722,8 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
               % if it has a body, which means that it is a rule.
               Body \= [] ->
                   % get the equality theorems which can be derived from that rule.
-                  slRL(Axiom, TheoryIn, EC, Proof, [], Theorem),
+                  slRL(Axiom, TheoryIn, EC, Proof, Evi, []),
+                  last(Evi,(_,_,_,Theorem,_)),
                   % remove the dupliate, and then ignore X=X by checking the number of arguments.
                   Theorem = [+[P| ArgsT]],
                   (P = (=)->sort(ArgsT, ArgsS), length(ArgsS, L), L>1;
@@ -744,6 +745,7 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
 **********************************************************************************************************************************/
 allTheoremsC([], _, _, []):- !.
 allTheoremsC(Theory, EC, Constant, Theorems):-
+    is_cons(Constant),
     spec(signature(Sig, _)),
     findall(C2s, (member((_,_,ArgsDomains), Sig),
                 member(ArgD1, ArgsDomains),
@@ -784,14 +786,15 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
             (% Get a rule from the input theory.
                 member(Clause, Theory),
                 member(+[P| Arg], Clause),
-                member(Constant, Arg), % Do not allow proving multiple for now
+                % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
-                % slRL(Clause, Theory, EC, _, [], Theorem), %TODO problematic
+                slRL(Clause, Theory, EC, _, Evi, []), %TODO problematic
+                last(Evi,(_,_,_,Theorem,_)),
                 % Check that the targeted constant occur in the arguments of the theorems.
-                % Theorem = [+[_| Cons]],
-                % occur(Constant, Cons)
-                Theorem = [+[P| Arg]],
-                occur(Constant, Arg)
+                Theorem = [+[_| Cons]],
+                occur(Constant, Cons)
+                % Theorem = [+[P| Arg]],
+                % occur(Constant, Arg)
                 ),
             TheoTem3),
     append(TheoTem1, TheoTem2, TheoTem),
@@ -799,6 +802,8 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
     % remove duplicates
     sort(TheoremsRaw, Theorems).
 
+allTheoremsC(_, _, Constant, []):-
+    is_func(Constant),!. %TODO implement
 
 allConstraintsC([], _, _, []):- !.
 allConstraintsC(Theory, EC, Constant, Theorems):-

@@ -86,7 +86,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
 %% Block the unwanted proof by adding a unprovable precondition. CR6
 blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     spec(heuris(Heuristics)),
-    % not all three heuristics are employed.
+    % not all four heuristics are employed.
     deleteAll([noRuleChange, noPrecAdd, noAss2Rule, noAxiomDele], Heuristics, [_|_]),
     writeLog([nl, write_term_c('-------- Start blockProof1: -------- '),
             nl, write_term_All(Proof), finishLog]),
@@ -99,13 +99,14 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
                     is_list(Cl)),
             CandRules),
     transposeF(CandRules, [ClS, _]),
-    %TODO add traceback here
-    member([Axiom, IncomSubs], CandRules),    % target at one clause,
+    member([AxiomOrg, IncomSubs], CandRules),    % target at one clause,
+    traceBackClause(AxiomOrg,Proof,TheoryIn,Axiom),
     writeLog([nl, write_term_c('Original Axiom is: '), write_term_c(Axiom),nl, finishLog]),
 
     spec(protList(ProtectedList)),
     notin(Axiom, ProtectedList),
 
+    % CR6
     (occur(-_, Axiom), intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
         % Add a irresolvable precondition to the rule to make it unprovable.
         % Appliable when the new rule still works for the sufficiency of which the old rule is essential)
@@ -113,7 +114,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
         % get single repair plan, RepPlan is an atom not a list.
         member(RepPlan, RepCands);
 
-
+    
     Axiom=[+[Pred|_]], intersection([noRuleChange, noAss2Rule], Heuristics, []), notin(asst(Pred), ProtectedList),
         % Turn the assertion to a rule to make it unprovable.
         % Appliable when it is not essential for any sufficiency)

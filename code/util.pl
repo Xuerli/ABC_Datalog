@@ -1195,3 +1195,19 @@ findAncestor(Deriv,IC,NewDeriv):-
 
 addOpSign(+_,Y,-Y):- !.
 addOpSign(-_,Y,+Y):- !.
+
+
+% TraceBackClause: Find back the original clause that introduced IC (in the case where IC is the ancestor.)
+traceBackClause(IC,[],_,IC):- !.
+
+traceBackClause(IC,_,TheoryIn,IC):-
+    member(IC,TheoryIn),
+    !.
+
+traceBackClause(IC,Deriv,_,OrgClause):-
+    last(Deriv, (_,OrgClause,_,IC,_)),
+    !.
+
+traceBackClause(IC,[H|R],TheoryIn,OrgClause):-
+    traceBackClause(IC,R,TheoryIn,OrgClause).
+
