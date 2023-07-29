@@ -37,6 +37,9 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
+    nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
+    nl,nl,nl,write_term_All(RepPlansOut),nl,
+    fail,
     writeLog([nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
             nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
@@ -69,6 +72,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
+    nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl,fail,
     writeLog([nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
 
@@ -217,14 +221,13 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
             notin([arity(P)], ProtectedList), %notEss2suff(SuffGoals, TargCl),
              RepPlan = arityInc(P, TargLit, TargCl,OrgLit, RInpCl2);
 
-            %TODO up till here
             % CR3: weaken variable to a constant/ CR1 and CR2 too??
              findall(C, member((_, C), VCPG), CS),    % if the variable is from the goal literal and the constant is from InpCl1
              append(CS, CCP, ConsIn),    % get all the constants contained by InpCl1 which contribute to the unification.
              weakenVble(TargLit, TargCl, SuffGoals, ConsIn, VCPIn, TheoryIn, RepPlan)));
 
     % Repair strategies that target InpCl2
-        (notin(InpCl2, ProtectedList), InpCl2 \= [],    % InpCl2 is neither an input clause under protected, nor from the preferred structure.
+        (notin(RInpCl2, ProtectedList), RInpCl2 \= [],    % InpCl2 is neither an input clause under protected, nor from the preferred structure.
              TargLit = OrgLit,
             TargCl = RInpCl2,
 
@@ -236,14 +239,14 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
 
             % CR4: arityInc
              % if 1. there are at least one more occurrence of the predicate in an assertion, which avoid mirror repaired theories.
-             findall([+[P|ArgsTem]],
+             findall([+[P|ArgsTem]], %Heuristic 1, P.74
                   (member([+[P|ArgsTem]], TheoryIn),
-                   notin([+[P|ArgsTem]], [InpCl1, InpCl2])),
+                   notin([+[P|ArgsTem]], [RInpCl1, RInpCl2])),
                       [_|_]),
              % and if 2.P is not under protected,
              notin([arity(P)], ProtectedList),
              % then the goal literal could be the unique one.
-             RepPlan = arityInc(P, TargLit, TargCl, +[P| ArgsCl1], InpCl1))) %;
+             RepPlan = arityInc(P, TargLit, TargCl, InpClLit, RInpCl1))) %;
 
         % WHAT's THE POINT OF THIS?????????????????
         % (member(InpCl1, ProtectedList), notin(InpCl2, ProtectedList),

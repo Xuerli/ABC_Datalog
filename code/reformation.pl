@@ -10,7 +10,7 @@ weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
     notEss2suff(Suffs, TargCl), !,    % TODO: or being sufficient by having the variable being bound with one constant
     (notin(noRename, Heuristics),
     member(C, CCP),
-    RepPlan = rename(C, TargLit, TargCl);
+    RepPlan = rename(C, TargLit, TargCl); %CR2 renaming a constant
     notin(noVabWeaken, Heuristics),
     member((V1, OrigCons), VCP),
     % Heuristic1: check that there must be more than one argument in the target rule. Otherwise, the rule would contain no variables after weaken one to a constant.
@@ -20,7 +20,7 @@ weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
             [_|[_|_]]),
     % generate the constant
     dummyTerm(OrigCons, TheoryIn, NewCons),
-    RepPlan = weaken(V1, NewCons, TargCl)).
+    RepPlan = weaken(V1, NewCons, TargCl)). %CR3 wekaen variable to copnstnat.
 
 % the input clause is essential, then get all the essential substitutions of its
 weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
@@ -31,7 +31,8 @@ weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
     % if the variable is bound to one constant in the proofs of the sufficiency where the input clause is essential.
     setof(C,    (member(Subst, SubstList),
                 subst(Subst, V1, C)),
-        [CSuff]),
+        [CSuff]), %Bound to only 1 particular constant
+        
     % then the variable can be weaken to that constant so it won't introduce insufficiency.
     RepPlan = weaken(V1, CSuff, TargCl).
 

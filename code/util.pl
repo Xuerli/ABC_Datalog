@@ -386,17 +386,18 @@ essSubs([], _, []).
 
 % if there is one proof which does not contain Rule, then Rule is not essential for this sufficiency.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-setof(Proof, (member(Proof, Proofs),
-               notin((_,Rule,_,_,_), Proof)),
-         [_|_]), !,
-essSubs(Rest, Rule, SubsOut).        % continue checking the next.
+    setof(Proof, (member(Proof, Proofs),
+                notin((_,Rule,_,_,_), Proof)),
+            [_|_]), !,
+    essSubs(Rest, Rule, SubsOut).        % continue checking the next.
+
 % Otherwise, record the substitutions of Rule in these proofs where it is essential.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-findall(Subs, (    member(Proof, Proofs),
-                 member((_,Rule,Subs,_,_), Proof)),
-         AllSubs),
-essSubs(Rest, Rule, SubsRest),        % continue checking the next.
-append(AllSubs, SubsRest, SubsOut).
+    findall(Subs, (    member(Proof, Proofs),
+                    member((_,Rule,Subs,_,_), Proof)),
+            AllSubs),
+    essSubs(Rest, Rule, SubsRest),        % continue checking the next.
+    append(AllSubs, SubsRest, SubsOut).
 
 notEss2suff([], _).
 notEss2suff([(_,Proofs)|Rest], Axiom):-
