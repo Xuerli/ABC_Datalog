@@ -1212,6 +1212,6 @@ traceBackClause(IC,Deriv,_,OrgClause):-
     last(Deriv, (_,OrgClause,_,IC,_)),
     !.
 
-traceBackClause(IC,[H|R],TheoryIn,OrgClause):-
+traceBackClause(IC,[_|R],TheoryIn,OrgClause):-
     traceBackClause(IC,R,TheoryIn,OrgClause).
 

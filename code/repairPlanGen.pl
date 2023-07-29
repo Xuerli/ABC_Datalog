@@ -37,7 +37,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
-    nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
+    nl,write_term_c(N), nl, write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
     nl,nl,nl,write_term_All(RepPlansOut),nl,
     fail,
     writeLog([nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),

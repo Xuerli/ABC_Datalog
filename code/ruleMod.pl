@@ -63,7 +63,7 @@ asser2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
                      NewRule = [+[PA| ArgANew], -Pre],
                      % check that the original axiom is not derivable any more.
                      append(TrueSetE, Theory2, TheoryRich),
-                     findall(Theorem, slRL(NewRule, TheoryRich, EC, _,_,[]),NewT),
+                     findall(Theorem, (slRL(NewRule, TheoryRich, EC, _,Evi,[]),last(Evi,(_,_,_,Theorem,_))),NewT),
                      notin(Axiom, NewT)),
             RepCands).
 

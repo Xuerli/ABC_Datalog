@@ -712,7 +712,7 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
     % find all proofs of an equality, where Proof is the list of all proofs.
     findall(([+[P| ArgsS]], Proof),
             (% get an axiom whose head predicate is P
-             member(Axiom,TheoryIn)
+             member(Axiom,TheoryIn),
              member(+[P|Args], Axiom),
              delete(Axiom, +[P|Args],Body),
              (% if it has no body, which means that it is an axiom of P.
@@ -785,7 +785,7 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
     findall(Theorem,
             (% Get a rule from the input theory.
                 member(Clause, Theory),
-                member(+[P| Arg], Clause),
+                member(+[P| _], Clause),
                 % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
                 slRL(Clause, Theory, EC, _, Evi, []), %TODO problematic
@@ -806,14 +806,15 @@ allTheoremsC(_, _, Constant, []):-
     is_func(Constant),!. %TODO implement
 
 allConstraintsC([], _, _, []):- !.
-allConstraintsC(Theory, EC, Constant, Theorems):-
-    spec(signature(Sig, _)),
-    findall(C2s, (member((_,_,ArgsDomains), Sig),
-                member(ArgD1, ArgsDomains),
-                delete(ArgD1, Constant, C2s),
-                C2s \= ArgD1),
-            C2S),
-    flatten(C2S, IneqCands),
+allConstraintsC(Theory, _, Constant, Theorems):-
+    % spec(signature(Sig, _)),
+    % findall(C2s, (member((_,_,ArgsDomains), Sig),
+    %             member(ArgD1, ArgsDomains),
+    %             delete(ArgD1, Constant, C2s),
+    %             C2s \= ArgD1),
+    %         C2S),
+    % flatten(C2S, IneqCands),
+    
     % find all therems that can be derived starting with an axiom of the targeted costant.
     findall(Theorem,
             (% Get an assertion, +[P| Arugs], from the input theory.
