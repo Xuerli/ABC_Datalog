@@ -1208,10 +1208,22 @@ traceBackClause(IC,_,TheoryIn,IC):-
     member(IC,TheoryIn),
     !.
 
-traceBackClause(IC,Deriv,_,OrgClause):-
+traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
     last(Deriv, (_,OrgClause,_,IC,_)),
+    member(OrgClause,TheoryIn),
     !.
 
-traceBackClause(IC,[_|R],TheoryIn,OrgClause):-
-    traceBackClause(IC,R,TheoryIn,OrgClause).
+traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
+    removeLast(Deriv,DerivNew),
+    traceBackClause(IC,DerivNew,TheoryIn,OrgClause).
+
+removeLast([_],[]).
+removeLast([L|R],[L|Removed]):-
+    removeLast(R,Removed).
+
+takeout(X,[X|R],R).  
+takeout(X,[F |R],[F|S]) :- takeout(X,R,S).
+
+perm([X|Y],Z) :- perm(Y,W), takeout(X,Z,W).  
+perm([],[]).
 

@@ -722,7 +722,8 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
               % if it has a body, which means that it is a rule.
               Body \= [] ->
                   % get the equality theorems which can be derived from that rule.
-                  slRL(Axiom, TheoryIn, EC, Proof, Evi, []),
+                  perm(Axiom,AxiomSort), %Consider different beginning positions since we are finding theorems.
+                  slRL(AxiomSort, TheoryIn, EC, Proof, Evi, []),
                   last(Evi,(_,_,_,Theorem,_)),
                   % remove the dupliate, and then ignore X=X by checking the number of arguments.
                   Theorem = [+[P| ArgsT]],
@@ -788,7 +789,7 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
                 member(+[P| _], Clause),
                 % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
-                slRL(Clause, Theory, EC, _, Evi, []), %TODO problematic
+                slRL(Clause, Theory, EC, _, Evi, []),
                 last(Evi,(_,_,_,Theorem,_)),
                 % Check that the targeted constant occur in the arguments of the theorems.
                 Theorem = [+[_| Cons]],

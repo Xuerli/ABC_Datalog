@@ -39,7 +39,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     length(RepPlansOut, N),
     nl,write_term_c(N), nl, write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
     nl,nl,nl,write_term_All(RepPlansOut),nl,
-    fail,
+    halt,
     writeLog([nl,write_term_c(N), write_term_c('repair plans  for buildP:'),write_term_c([Goal, Evidences]),
             nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
@@ -72,7 +72,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     nl(RunTimeFile),
 
     length(RepPlansOut, N),
-    nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl,fail,
+    nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl,halt,
     writeLog([nl,write_term_c(N),write_term_c(' repair plans for blockP:'),write_term_c(ProofInp), nl,nl,nl,write_term_All(RepPlansOut),nl, finishLog]).
 
 
@@ -106,12 +106,11 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     member([AxiomOrg, IncomSubs], CandRules),    % target at one clause,
     traceBackClause(AxiomOrg,Proof,TheoryIn,Axiom),
     writeLog([nl, write_term_c('Original Axiom is: '), write_term_c(Axiom),nl, finishLog]),
-
     spec(protList(ProtectedList)),
     notin(Axiom, ProtectedList),
 
     % CR6
-    (occur(-_, Axiom), intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
+    (Axiom\=[+[_|_]], intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
         % Add a irresolvable precondition to the rule to make it unprovable.
         % Appliable when the new rule still works for the sufficiency of which the old rule is essential)
         getAdjCond(Axiom, IncomSubs, SuffGoals, TheoryIn, EC, TrueSetE, FalseSetE, RepCands),
@@ -128,14 +127,14 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
 
     % CR5: delete the axiom.
     notin(noAxiomDele, Heuristics),  notEss2suff(SuffGoals, Axiom), notin(Axiom, ProtectedList),
-        (occur(-_, Axiom); Axiom=[+[Pred|_]], notin(asst(Pred), ProtectedList)),
+        (Axiom\=[+[_|_]]; Axiom=[+[Pred|_]], notin(asst(Pred), ProtectedList)),
         % if the axiom is not essential to an sufficiency, it can be deleted.
         RepPlan = delete(Axiom)),
     ClT = [Axiom].
 
 %TODO add similar thing here which for CR8 which introduces the positive literal that is unprovable. 
 
-%% Block the unwanted proof by reformation (CR1,CR2,CR3,CR4)
+%% Block the unwanted proof by reformation (CR1,CR2,CR3,CR4) %TODO: consider functions and functions + CR7
 blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     spec(heuris(Heuristics)),
     notin(noReform, Heuristics),
@@ -171,11 +170,11 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
 
     %Check correct unification (to make sure this is the resolved clause)
     unification([P|ArgsG],[P|ArgsCl1],[],[],_,_,[]),
-
    
     % get all candidates of unifiable pairs to block.
     %TODO: add new pairs that consider variable and functions, functions and constants, functions and functions etc. 
     %Unification is successful, remember!
+    
     findall([CC, VCG, VCIn, VV,VFunc],
                 (   nth0(X, ArgsCl1, C1),
                     nth0(X, ArgsG, C2),
@@ -197,13 +196,12 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
                      % if C1 and C2 are two vables
                      C1 = vble(_),
                      C2 = vble(_),
-                     VV = [C1,C2], CC=[], VCG=[], VCIn= [], VV= [], VFunc = [];
+                     VV = [C1,C2], CC=[], VCG=[], VCIn= [], VFunc = [];
 
                      % both C1 and C2 are functions
                     is_func(C1), is_func(C2),
                     unification(C1,C2,[],[],_,_,[]),
                     VFunc = [C1, C2], CC=[], VCG=[], VCIn= [], VV= []
-                     
                      )),
             UPairs),
     sort(UPairs, SortedPairs),    % the pairs are not empty
@@ -211,56 +209,68 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
 
     transposeF(SortedPairs, [CCP, VCPG, VCPIn, VV,VFunc]),
     %print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn]),nl,
-
     %Repair strategies that target InpCl1 (which is the right side of unification, the input clause)
     (    (notin(RInpCl1, ProtectedList),
             TargLit = InpClLit,
             TargCl = RInpCl1,
+            
             (
             % CR4: increase arguemnt
             notin([arity(P)], ProtectedList), %notEss2suff(SuffGoals, TargCl),
-             RepPlan = arityInc(P, TargLit, TargCl,OrgLit, RInpCl2);
+             RepPlan = arityInc(P, TargLit, TargCl,OrgLit, RInpCl2); %
 
-            % CR3: weaken variable to a constant/ CR1 and CR2 too??
-             findall(C, member((_, C), VCPG), CS),    % if the variable is from the goal literal and the constant is from InpCl1
-             append(CS, CCP, ConsIn),    % get all the constants contained by InpCl1 which contribute to the unification.
-             weakenVble(TargLit, TargCl, SuffGoals, ConsIn, VCPIn, TheoryIn, RepPlan)));
+            % CR1: rename predicate
+            notin(noRename,Heuristics),
+            notin(P,ProtectedList),
+            notEss2suff(SuffGoals,TargCl),
+            dummyTerm(P,TheoryIn,NewP),
+            RepPlan = renamePred(P,NewP,TargLit,TargCl);
+
+            % CR2: renaming a constant
+            notin(noRename, Heuristics),
+            notEss2suff(SuffGoals, TargCl), 
+            findall(C, member((_, C), VCPG), CS),    % if the variable is from the goal literal and the constant is from InpCl1
+            append(CS, CCP, ConsIn),    % get all the constants contained by InpCl1 which contribute to the unification.
+            member(C, ConsIn),
+            RepPlan = rename(C, TargLit, TargCl); 
+
+            % CR3: weaken variable to a constant
+            weakenVble(TargCl, SuffGoals, VCPIn, TheoryIn, RepPlan)));
 
     % Repair strategies that target InpCl2
         (notin(RInpCl2, ProtectedList), RInpCl2 \= [],    % InpCl2 is neither an input clause under protected, nor from the preferred structure.
              TargLit = OrgLit,
             TargCl = RInpCl2,
+            
+            (
+            % CR1: rename predicate
+            notin(noRename,Heuristics),
+            notin(P,ProtectedList),
+            notEss2suff(SuffGoals,TargCl),
+            dummyTerm(P,TheoryIn,NewP),
+            RepPlan = renamePred(P,NewP,TargLit,TargCl);
 
-            %CR3: weaken variable to a constant
-             (findall(C, member((_, C), VCPIn), CS),    % if the variable is from the goal literal and the constant is from InpCl1
-             append(CS, CCP, ConsG),
-              weakenVble(TargLit, TargCl, SuffGoals, ConsG, VCPG, TheoryIn, RepPlan);
+            % CR2: renaming a constant
+            notin(noRename, Heuristics),
+            notEss2suff(SuffGoals, TargCl), 
+            findall(C, member((_, C), VCPIn), CS),    % if the variable is from the goal literal and the constant is from InpCl1
+            append(CS, CCP, ConsIn),    % get all the constants contained by InpCl1 which contribute to the unification.
+            member(C, ConsIn),
+            RepPlan = rename(C, TargLit, TargCl); 
 
+            %CR3: weaken variable to a constant    
+            weakenVble(TargCl, SuffGoals, VCPG, TheoryIn, RepPlan);
 
             % CR4: arityInc
              % if 1. there are at least one more occurrence of the predicate in an assertion, which avoid mirror repaired theories.
-             findall([+[P|ArgsTem]], %Heuristic 1, P.74
+            findall([+[P|ArgsTem]], %Heuristic 1, P.74
                   (member([+[P|ArgsTem]], TheoryIn),
                    notin([+[P|ArgsTem]], [RInpCl1, RInpCl2])),
                       [_|_]),
              % and if 2.P is not under protected,
              notin([arity(P)], ProtectedList),
              % then the goal literal could be the unique one.
-             RepPlan = arityInc(P, TargLit, TargCl, InpClLit, RInpCl1))) %;
-
-        % WHAT's THE POINT OF THIS?????????????????
-        % (member(InpCl1, ProtectedList), notin(InpCl2, ProtectedList),
-        %     TargLit = -[P| ArgsG],
-        %     TargCl = InpCl2,
-        %     findall(C, member((_, C), VCPIn), CS),    % if the variable is from the goal literal and the constant is from InpCl1
-        %      append(CS, CCP, ConsG),
-
-        %     % CR1-3
-        %     (weakenVble(TargLit, TargCl, SuffGoals, ConsG, VCPG, TheoryIn, RepPlan);
-
-        %      notin([arity(P)], ProtectedList),
-        %      RepPlan = arityInc(P, TargLit, TargCl, +[P| ArgsCl1], InpCl1)))
-             
+             RepPlan = arityInc(P, TargLit, TargCl, InpClLit, RInpCl1))) 
              ),
 
 
@@ -329,7 +339,6 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
                     member(Cl, List)),
               TargCls);
 
-    
     intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal. (SR3, SR4)
         setof([expand([SProp]),    [SProp]],
                     (member(PropG, Unresolvables),

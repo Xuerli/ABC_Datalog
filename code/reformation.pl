@@ -5,12 +5,11 @@
 **********************************************************************************************************************************/
 
 % reformation repair plans generated based on a pair of unified arguments
-weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
+weakenVble(TargCl, Suffs,  VCP, TheoryIn, RepPlan):-
     spec(heuris(Heuristics)),
     notEss2suff(Suffs, TargCl), !,    % TODO: or being sufficient by having the variable being bound with one constant
-    (notin(noRename, Heuristics),
-    member(C, CCP),
-    RepPlan = rename(C, TargLit, TargCl); %CR2 renaming a constant
+    (
+    %CR3 wekaen variable to constant.
     notin(noVabWeaken, Heuristics),
     member((V1, OrigCons), VCP),
     % Heuristic1: check that there must be more than one argument in the target rule. Otherwise, the rule would contain no variables after weaken one to a constant.
@@ -20,10 +19,10 @@ weakenVble(TargLit, TargCl, Suffs, CCP, VCP, TheoryIn, RepPlan):-
             [_|[_|_]]),
     % generate the constant
     dummyTerm(OrigCons, TheoryIn, NewCons),
-    RepPlan = weaken(V1, NewCons, TargCl)). %CR3 wekaen variable to copnstnat.
+    RepPlan = weaken(V1, NewCons, TargCl)). 
 
-% the input clause is essential, then get all the essential substitutions of its
-weakenVble(_, TargCl, Suffs, _, VCP, _, RepPlan):-
+% the input clause is essential, then can apply if there is a unique essential const.
+weakenVble(TargCl, Suffs, VCP, _, RepPlan):-
     spec(heuris(Heuristics)),
     notin(noVabWeaken, Heuristics),
     essSubs(Suffs, TargCl, SubstList),
