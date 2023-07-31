@@ -10,7 +10,11 @@ repairPlan(Goal, TheoryState, _, TheoryState):-
 repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     write_term_c('------repair plan 1 for insuff--------'),nl,write_term_All(Goal),nl,write_term_All(Suffs),nl,
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
-
+    print('---------'),nl,
+    print('start repair insuff'),nl,
+    print(Goal),nl,
+    print(Evidences),nl,
+    print('----------'),nl,
     spec(heuris(Heuristics)),
     ( delete(Heuristics, noOpt, [])->    % No heuristics
         spec(repTimeNH(RunTimeFile)), !;
@@ -359,15 +363,16 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
 
 
 %% Repair the insufficiency by adding a rule whose head is the goal. == SR4
-buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
+buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     %% Repair the insufficiency by abduction.
     spec(heuris(Heuris)),
     notin(noAxiomAdd, Heuris),
     notin(noRuleChange, Heuris),
     writeLog([nl,write_term_c('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
     TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
-    Goal = [-PropG|_],
-    print("---check---"),nl,print(Goal),nl,print(PropG),nl,
+    member(Deriv,AllDeriv),
+    (member((Goal,_,_,_,_),Deriv); member((_,_,_,Goal,_),Deriv)),
+    member(-PropG,Goal),
 
     % get all relevant theorems to the goal
     findall((L, Theorem),
@@ -381,7 +386,6 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 RelTheorems),
     mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
     deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
-    print(Cands2),nl,print('----'),nl,
 
     % Heuristic7: When there is other theorems of C, do not consider the inequalities of C.
     (member([+[P|_]], Cands2), P \= (\=)-> delete(Cands2, [+[\=|_]],Cands3);
@@ -407,9 +411,10 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     deleteAll(Cands3, VioCand, RuleCands),
 
     % Heuristic8:    When searching for a precondition, either add all theorems as preconditions or add one of them.
-    (member([+Prop], RuleCands), generalise([+PropG, -Prop], RuleTem);    % formalise the rule which derive the goal.
+    (member([+Prop], RuleCands), generalise([+PropG, -Prop], RuleTemu);    % formalise the rule which derive the goal.
     setof(-Prop, member([+Prop], RuleCands), AllPred),
-    generalise([+PropG| AllPred], RuleTem)),
+    generalise([+PropG| AllPred], RuleTemu)),
+    sort(RuleTemu,RuleTem),
 
     % check incompatibilities.
     findall(Proof,
@@ -457,20 +462,23 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
 
 
 %% Repair the insufficiency by adding a rule whose head is the goal. REVERSE + and -. == SR4
-buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
+buildP((_,AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     %% Repair the insufficiency by abduction.
     spec(heuris(Heuris)),
     notin(noAxiomAdd, Heuris),
     notin(noRuleChange, Heuris),
     writeLog([nl,write_term_c('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
-    TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
-    Goal = [+PropG|_],
+    TheoryState = [_,EC, _, TheoryIn, _, FalseSetE],
+    member(Deriv,AllDeriv),
+    (member((Goal,_,_,_,_),Deriv); member((_,_,_,Goal,_),Deriv)),
+    member(+PropG,Goal),
+
 
     % get all relevant theorems to the goal
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allConstraintsC(TheoryIn, EC, C, Theorems), %
+                 allConstraintsC(TheoryIn, EC, C, Theorems), 
                  member(Theorem, Theorems),
                  Theorem = [-[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -483,7 +491,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     (member([-[P|_]], Cands2), P \= (\=)-> delete(Cands2, [-[\=|_]],Cands3);
      Cands3 = Cands2),
 
-    % get all restrict theorems which are under protected.
+    % get all restrict constrains which are under protected.
     findall(Constrain,(member(Constrain, TheoryIn),
                      notin(-_, Constrain),
                      spec(protList(ProtectedList)),
@@ -503,22 +511,23 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     deleteAll(Cands3, VioCand, RuleCands),
 
     % Heuristic8:    When searching for a precondition, either add all theorems as preconditions or add one of them.
-    (member([-Prop], RuleCands), generalise([-PropG, +Prop], RuleTem);    % formalise the rule which derive the goal.
+    (member([-Prop], RuleCands), generalise([+Prop, -PropG], RuleTemu);    % formalise the rule which derive the goal.
     setof(+Prop, member([-Prop], RuleCands), AllPred),
-    generalise([-PropG| AllPred], RuleTem)),
+    generalise([-PropG| AllPred], RuleTemu)),
+    sort(RuleTemu,RuleTem),
 
     % check incompatibilities.
     findall(Proof,
-             (member([-[Pre| Args]], FalseSetE),
+             (member([+[Pre| Args]], FalseSetE),
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
-              NVioSent = [+[Pre| Args]],
+              NVioSent = [-[Pre| Args]],
               % get all of a proof of Goal
               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
               Proof \= []),                                       % Detect incompatibility based on refutation.
          Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
-  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)];
+  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)]; %No imcompatabilities, great!
   Incompat = [_|_]->
       % check if there is an incompatibility caused by RuleR6
       findall(Subs,
@@ -530,18 +539,19 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
       % if the new rule is not involved in any inconsistencies, then no adjustment precondition is needed.
       (IncomSubs = []->BigPlan = [([expand(RuleTem)], RuleTem)];
       IncomSubs = [_|_]->
-            retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
-              findall(Proof,
-                          (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
-                          Proof \=[]),
-                      Proofs),
-
-              getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll),
-              (findall(([expand(RuleTem2)], RuleTem2),
-                      (member(add_pre(Precondition, _), CandAll),
-                       sort([Precondition| RuleTem], RuleTem2)),
-                       BigPlan);
-              CandAll = []-> BigPlan = [([expand(RuleTem)], RuleTem)]))),
+            % retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+            %   findall(Proof,
+            %               (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
+            %               Proof \=[]),
+            %           Proofs),
+            %   getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll), % todo fix this
+            %   (findall(([expand(RuleTem2)], RuleTem2),
+            %           (member(add_pre(Precondition, _), CandAll),
+            %            sort([Precondition| RuleTem], RuleTem2)),
+            %            BigPlan);
+            %   CandAll = []-> BigPlan = [([expand(RuleTem)], RuleTem)])
+              fail
+              )),
 
     member((RepPlans, RuleNew), BigPlan),
     % get all of the clauses which constitute the target proof to unblock
@@ -551,6 +561,8 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 is_list(Cl)),     % do not record keyword 'unae'
             ClS),
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
+
+
 
 
 %Deal to the time limit this is currently ignored in the extension. Should still work for normal Datalog entries.

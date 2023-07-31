@@ -7,7 +7,7 @@ theoryName(sr2).
 axiom([+female(\x),+mum(\x,william)]).
 axiom([-mum(diana,william)]).
 axiom([-mum(kate,george)]).
-axiom([+female(georgesquare)]).
+% axiom([+female(georgesquare)]).
 
 trueSet([female(kate)]).
 falseSet([]).

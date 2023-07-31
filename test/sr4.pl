@@ -3,8 +3,8 @@
 
 theoryName(sr4).
 
-axiom([-mum(\x,\y), +mum3(\x,\y)]).
-% axiom([-mum2(diana,\x), +female(\x)]).
+axiom([+crazy(\x), +female(\x)]).
+axiom([-honest(kate)]).
 axiom([+mum(diana,william)]).
 axiom([+mum(kate,george)]).
 

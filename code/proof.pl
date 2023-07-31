@@ -809,7 +809,8 @@ allTheoremsC(_, _, Constant, []):-
     is_func(Constant),!. %TODO implement
 
 allConstraintsC([], _, _, []):- !.
-allConstraintsC(Theory, _, Constant, Theorems):-
+allConstraintsC(Theory, EC, Constant, Theorems):-
+    is_cons(Constant),
     % spec(signature(Sig, _)),
     % findall(C2s, (member((_,_,ArgsDomains), Sig),
     %             member(ArgD1, ArgsDomains),
@@ -817,16 +818,16 @@ allConstraintsC(Theory, _, Constant, Theorems):-
     %             C2s \= ArgD1),
     %         C2S),
     % flatten(C2S, IneqCands),
-    
     % find all therems that can be derived starting with an axiom of the targeted costant.
     findall(Theorem,
             (% Get an assertion, +[P| Arugs], from the input theory.
                  member([-[P| Args]], Theory),
                  member(Constant, Args),
-                 Theorem = -[P| Args]
-            ),
-                %  linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
-                %  member(Theorem, Theorems)),
+                 linkConstraints([-[P| Args]], Constant, Theory, EC, Theorems),
+                %  print(Theorems),nl,print([+[P| Args]]),nl,sleep(10),
+                 (member(Theorem, Theorems); Theorem = -[P| Args])
+                % Theorem = +[P| Args]
+                 ),
             TheoTem1),
     % find all therems that can be derived starting with the = or \= of the targeted costant.
     % findall(Theorem,
@@ -850,18 +851,24 @@ allConstraintsC(Theory, _, Constant, Theorems):-
     findall(Theorem,
             (% Get a rule from the input theory.
                 member(Clause, Theory),
-                member(-[P| Arg], Clause),
-                member(Constant, Arg),
+                member(-[_| _], Clause),
+                % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
-                % slRL(Clause, Theory, EC, _, [], Theorem),
+                slRL(Clause, Theory, EC, _, Evi, []),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
                 % Check that the targeted constant occur in the arguments of the theorems.
-                Theorem = [-[P| Arg]],
-                occur(Constant, Arg)),
+                Theorem = [-[_| Cons]],
+                occur(Constant, Cons)
+                % Theorem = [+[P| Arg]],
+                % occur(Constant, Arg)
+                ),
             TheoTem3),
-    % append(TheoTem1, TheoTem2, TheoTem),
     append(TheoTem1, TheoTem3, TheoremsRaw),
     % remove duplicates
     sort(TheoremsRaw, Theorems).
+
+allConstraintsC(_, _, Constant, []):-
+    is_func(Constant),!. %TODO implement
 
 /*********************************************************************************************************************************
     linkTheorems(TheoremIn, Constant, Theory, EC,TheoremsOut): get all theorems derived from TheoremIn.
@@ -889,6 +896,25 @@ linkTheorems([+[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
     linkTheorems(Theorem, Constant, Theory, EC, Theorems).
 
 linkTheorems(_, _, _, _, []).
+
+linkConstraints([-[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
+    member(Constant, Args),
+    % Get a rule from the input theory.
+    member(Clause, Theory),
+    member(+[P| Arg2], Clause),
+    % The assertion can potentially resolve a precondition of that rule.
+    unification([P| Args], [P| Arg2], [],[],_, Substitution, []),        % If successful resolution
+    delete(Clause, +[P| Arg2], ClauseRest),                             % Get the resulting clause C with newly introduced literals Body in front.
+    subst(Substitution, ClauseRest, ClauseRest2),
+    slRL(ClauseRest2, Theory, EC, _, Evi, []),
+    (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
+
+    % Check that the targeted constant occur in the arguments of the theorems.
+    Theorem = [-[_| Cons]],
+    member(Constant, Cons), !,
+    linkConstraints(Theorem, Constant, Theory, EC, Theorems).
+
+linkConstraints(_, _, _, _, []).
 
 /**********************************************************************************************************************
     subDiv(SubsList, Clause, SG):
