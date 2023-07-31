@@ -1,7 +1,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-theoryName(sr1).
+theoryName(sr2).
 
 
 axiom([+female(\x),+mum(\x,william)]).

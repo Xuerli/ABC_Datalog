@@ -749,46 +749,47 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
 allTheoremsC([], _, _, []):- !.
 allTheoremsC(Theory, EC, Constant, Theorems):-
     is_cons(Constant),
-    spec(signature(Sig, _)),
-    findall(C2s, (member((_,_,ArgsDomains), Sig),
-                member(ArgD1, ArgsDomains),
-                delete(ArgD1, Constant, C2s),
-                C2s \= ArgD1),
-            C2S),
-    flatten(C2S, IneqCands),
+    % spec(signature(Sig, _)),
+    % findall(C2s, (member((_,_,ArgsDomains), Sig),
+    %             member(ArgD1, ArgsDomains),
+    %             delete(ArgD1, Constant, C2s),
+    %             C2s \= ArgD1),
+    %         C2S),
+    % flatten(C2S, IneqCands),
     % find all therems that can be derived starting with an axiom of the targeted costant.
     findall(Theorem,
             (% Get an assertion, +[P| Arugs], from the input theory.
                  member([+[P| Args]], Theory),
                  member(Constant, Args),
-                %  linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
-                %  member(Theorem, Theorems)
-                Theorem = +[P| Args]
+                 linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
+                %  print(Theorems),nl,print([+[P| Args]]),nl,sleep(10),
+                 (member(Theorem, Theorems); Theorem = +[P| Args])
+                % Theorem = +[P| Args]
                  ),
             TheoTem1),
     % find all therems that can be derived starting with the = or \= of the targeted costant.
-    findall(Theorem,
-            (    % Get the inequalities of Cconstant
-                 findall([+[\=, [C2], Constant]],
-                        (member(C2, IneqCands),
-                        equalSub([\=, Constant, vble(x)], EC, [[C2]/vble(x)])),
-                        Ineqs),
-                % Get the equalities of Cconstant
-                 findall([+[=, [C2], Constant]],
-                         (equalSub([=, Constant, vble(x)], EC, [[C2]/vble(x)]),
-                          [C2] \= Constant),
-                         Eqs),
-                 append(Ineqs, Eqs, EAll),
-                 member(Ineq, EAll),
-                 linkTheorems(Ineq, Constant, Theory, EC, Theorems),
-                 member(Theorem, [Ineq| Theorems])),
-            TheoTem2),
+    % findall(Theorem,
+    %         (    % Get the inequalities of Cconstant
+    %              findall([+[\=, [C2], Constant]],
+    %                     (member(C2, IneqCands),
+    %                     equalSub([\=, Constant, vble(x)], EC, [[C2]/vble(x)])),
+    %                     Ineqs),
+    %             % Get the equalities of Cconstant
+    %              findall([+[=, [C2], Constant]],
+    %                      (equalSub([=, Constant, vble(x)], EC, [[C2]/vble(x)]),
+    %                       [C2] \= Constant),
+    %                      Eqs),
+    %              append(Ineqs, Eqs, EAll),
+    %              member(Ineq, EAll),
+    %              linkTheorems(Ineq, Constant, Theory, EC, Theorems),
+    %              member(Theorem, [Ineq| Theorems])),
+    %         TheoTem2),
 
     % get all theorems that can be derived by a rule whose head has the targeted constant.
     findall(Theorem,
             (% Get a rule from the input theory.
                 member(Clause, Theory),
-                member(+[P| _], Clause),
+                member(+[_| _], Clause),
                 % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
                 slRL(Clause, Theory, EC, _, Evi, []),
@@ -800,8 +801,7 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
                 % occur(Constant, Arg)
                 ),
             TheoTem3),
-    append(TheoTem1, TheoTem2, TheoTem),
-    append(TheoTem, TheoTem3, TheoremsRaw),
+    append(TheoTem1, TheoTem3, TheoremsRaw),
     % remove duplicates
     sort(TheoremsRaw, Theorems).
 
@@ -880,7 +880,8 @@ linkTheorems([+[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
     unification([P| Args], [P| Arg2], [],[],_, Substitution, []),        % If successful resolution
     delete(Clause, -[P| Arg2], ClauseRest),                             % Get the resulting clause C with newly introduced literals Body in front.
     subst(Substitution, ClauseRest, ClauseRest2),
-    slRL(ClauseRest2, Theory, EC, _, [], [Theorem]),
+    slRL(ClauseRest2, Theory, EC, _, Evi, []),
+    (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
 
     % Check that the targeted constant occur in the arguments of the theorems.
     Theorem = [+[_| Cons]],

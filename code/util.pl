@@ -430,6 +430,14 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
             member(Constant, ArgB1),
             member(Constant, ArgB2)),
            Cons2),
+    % get the list of constants which occur at least twice in the head.
+   findall(Constant,
+           (member(+[P1| ArgB1], ClauseIn),
+            member(+[P2| ArgB2], ClauseIn),
+            [P1| ArgB1] \= [P2| ArgB2],
+            member(Constant, ArgB1),
+            member(Constant, ArgB2)),
+           Cons3),
    % get the list of variables in the input clause.
    findall(X,
            ( (member(+[P1| Arg], ClauseIn);
@@ -437,7 +445,8 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
              member(vble(X), Arg)),
            AvoidList),
    % combine all constant candidates and remove the duplicates by sort them.
-   append(Cons1, Cons2, Cons),
+   append(Cons1, Cons2, ConsT),
+   append(ConsT,Cons3,Cons),
    sort(Cons, ConsList),
    getNewVble(ConsList, AvoidList, Cons2Vbles, ReSubs),
    appEach(ClauseIn, [appLiteral, [replaceS, 1, Cons2Vbles]],  ClauseOut).

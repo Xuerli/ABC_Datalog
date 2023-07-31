@@ -330,7 +330,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
         delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
 
-    notin(noReform, Heuristics),    % by reformation. (SR1, SR2)
+    notin(noReform, Heuristics),    % by reformation. (SR1, SR2) (Done and verified)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed), %TODO up till here
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
@@ -339,12 +339,12 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
                     member(Cl, List)),
               TargCls);
 
-    intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal as an axiom or a rule which derives the goal. (SR3, SR4)
+    intersection([noAxiomAdd, noAssAdd], Heuristics, []),    % by adding the goal (or intermediates) as an assertion or constraint (SR3)
         setof([expand([SProp]),    [SProp]],
                     (member(PropG, Unresolvables),
                     prop(PropG,PPropG),
-                    replace(vble(_), [dummy_vble_1], PPropG, Prop),
-                    addOpSign(PropG,Prop,SProp)
+                    % replace(vble(_), [dummy_vble_1], PPropG, Prop),
+                    addOpSign(PropG,PPropG,SProp)
                     ),
                 RepPairs),
         transposeF(RepPairs, [RepPlans, TargCls])),
@@ -367,12 +367,13 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     writeLog([nl,write_term_c('--------Start unblocking 2 by adding a rule ------'),nl,finishLog]),
     TheoryState = [_,EC, _, TheoryIn, TrueSetE, FalseSetE],
     Goal = [-PropG|_],
+    print("---check---"),nl,print(Goal),nl,print(PropG),nl,
 
     % get all relevant theorems to the goal
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allConstraintsC(TheoryIn, EC, C, Theorems), %
+                 allTheoremsC(TheoryIn, EC, C, Theorems), 
                  member(Theorem, Theorems),
                  Theorem = [+[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -380,6 +381,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 RelTheorems),
     mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
     deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
+    print(Cands2),nl,print('----'),nl,
 
     % Heuristic7: When there is other theorems of C, do not consider the inequalities of C.
     (member([+[P|_]], Cands2), P \= (\=)-> delete(Cands2, [+[\=|_]],Cands3);
@@ -420,7 +422,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
               slRL(NVioSent, [RuleTem| TheoryIn], EC, Proof, [], []),
               Proof \= []),                                       % Detect incompatibility based on refutation.
          Incompat),                                      % Find all incompatibilities. FaultsProofs is the proofs that the objective theory proves one or more violative sentences.
-  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)];
+  (Incompat = []-> BigPlan = [([expand(RuleTem)], RuleTem)]; %No imcompatabilities, great!
   Incompat = [_|_]->
       % check if there is an incompatibility caused by RuleR6
       findall(Subs,
@@ -437,7 +439,6 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                           (slRL(Goal, [RuleTem| TheoryIn], EC, Proof, [], []),
                           Proof \=[]),
                       Proofs),
-
               getAdjCond(RuleTem, IncomSubs, [(Goal, Proofs)], [RuleTem| TheoryIn], EC, TrueSetE, FalseSetE, CandAll),
               (findall(([expand(RuleTem2)], RuleTem2),
                       (member(add_pre(Precondition, _), CandAll),
@@ -552,6 +553,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 
+%Deal to the time limit this is currently ignored in the extension. Should still work for normal Datalog entries.
 %% Repair the insufficiency by analogising an existing rule and give them different preconditions. SR4 again
 buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
