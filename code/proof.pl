@@ -114,10 +114,6 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % write_term_c("Evidence is uninitialized"), nl,
     % write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
     sortGoals(GoalNew,GoalNewSorted),
-    print('0000000000000000000000000000'),nl,
-    print(GoalNewSorted),nl,
-    print(TheoryIn),nl,
-    print('11111111111111111111111111'),nl,
     slRLMain(GoalNewSorted, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
     % write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
@@ -930,12 +926,22 @@ pairSub([SubG1| RestG], SubG, [(SubG1, SG1)| PRest]):-
     Output: ProofClean: a list of resolution steps where mid substitutions are deleted.
 ************************************************************************************************************************/
 cleanSubMid([], []):-!.
+cleanSubMid([RS| Rest], [RS| RestC]):-
+    RS = (_,_,[],_,_),!,
+    cleanSubMid(Rest,RestC).
+
+% cleanSubMid([RS| Rest], [RSC| RestC]):-
+%     RS = (_,_,Sub,_,_),
+%     is_list(Sub),length(Sub,0),
+%     print('hihi345345'),nl,
+%     cleanSubMid(Rest,RestC).
+
 cleanSubMid([RS| Rest], [RSC| RestC]):-
     RS = (G, InpClause, Sub, GN, Num),
-    (Sub = []-> RSC = RS;
-     Sub = [_|_]->
+    Sub \= [],
     findall(vble(X),
-            (member(-[_|Args], InpClause),    % omit the head as all variables in the head also occur in the boody in Datalog.
+            (member(Lit, InpClause),   
+             prop(Lit,[_|Args]),
              member(vble(X), Args)),
             Vbles),
     findall((A/B),
@@ -943,7 +949,7 @@ cleanSubMid([RS| Rest], [RSC| RestC]):-
              member(B, Vbles)),
             NewSubRaw),
     sort(NewSubRaw, NewSub),
-    RSC    = (G, InpClause, NewSub, GN, Num)),
+    RSC    = (G, InpClause, NewSub, GN, Num),
     cleanSubMid(Rest, RestC).
 
 

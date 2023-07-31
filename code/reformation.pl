@@ -96,7 +96,7 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
     spec(protList(ProtectedList)),
     writeLog([nl,write_term_c('--renameArgs: Mismatches:'),nl,write_term_c(Mismatches),nl,
       write_term_c(ProtectedList),nl,finishLog]),
-      print('@@@@@@'),nl,print(Mismatches),nl,print(ProtectedList),nl,print('@@@@@@@'),nl,
+    %   print('@@@@@@'),nl,print(Mismatches),nl,print(ProtectedList),nl,print('@@@@@@@'),nl,
 
      setof([(COrig, CTarget, C1Cl), C1Cl],
                 (member((C1, C2),Mismatches),
@@ -104,9 +104,9 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
                 delete([C1, C2], COrig, [CTarget]),    % Get the other constant as CTarget.
                 COrig = [CC],
                 notin(CC, ProtectedList),
-                nl,print('*************'),nl,
-                print(COrig),nl,print(Evi),nl,
-                nl,print('*************'),nl,
+                % nl,print('*************'),nl,
+                % print(COrig),nl,print(Evi),nl,
+                % nl,print('*************'),nl,
                 traceBackC(COrig, Evi, C1Cl),
                 % occur(+_, C1Cl),
                 member(C1Cl, TheoryIn),    % it is an axiom from the theory not the preferred structure.
@@ -175,13 +175,14 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
     print('***'),nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]),nl,
     %Choosing a clause to change here
+
     setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos),
             (member(Axiom, TheoryIn),
              \+member(Axiom, ClUsed),    % the clause that has been used in the proof should not be a candidate to change for resolving the remaining sub-goal, otherwise, the evidence will be broken.
              %occur(-_, Rule), % it is possible to merge an assertion's predicate with the goal's predicate
             %  retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
-            slRL(Axiom, TheoryIn, EC, _, Evi, []), %TODO bug here
-             last(Evi,(_,_,_,Theorem,_)),
+            slRL(Axiom, TheoryIn, EC, _, EviTemp, []), %TODO bug here
+             last(EviTemp,(_,_,_,Theorem,_)),
              Theorem = [+[PT| ArgsT]],
             % member(+[PT|ArgsT],Axiom), %Can this work? Simply  choose one
              % heuristics:  the rule whose head predicate is same with the goal predicate;
