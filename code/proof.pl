@@ -114,6 +114,10 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % write_term_c("Evidence is uninitialized"), nl,
     % write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
     sortGoals(GoalNew,GoalNewSorted),
+    print('0000000000000000000000000000'),nl,
+    print(GoalNewSorted),nl,
+    print(TheoryIn),nl,
+    print('11111111111111111111111111'),nl,
     slRLMain(GoalNewSorted, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
     % write_term_c("-----end slRL---------"),nl,
     cleanSubMid(ProofTem, Proof),
@@ -678,7 +682,9 @@ traceBackC(C, Deriv, Clause):-
          (% try if c comes from the body of the input clause.
          findall(Prop2, (member(Prop2, InputCl),prop(Prop2,Prop2n), occur(C, Prop2n)), Props2),
          Props2 \= [], Clause = InputCl, !;
-        last(Deriv, GoalLast),
+        % last(Deriv, (GoalLast,_,_,_,_)),
+        last(Deriv, GoalLast), %REally??
+        % nl,print(Deriv),nl,print(GoalLast),nl,sleep(20),
         findall(PropL, (member(PropL, GoalLast),prop(PropL,PropLn), occur(C, PropLn)), Propsl),
         (Propsl \= [], Flag = true;
          Props = []-> Flag = false),

@@ -325,7 +325,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     write_term_c(ProofCur),nl,
     write_term_c('---end unresolvables----'),nl, 
 
-    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5
+    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5 (done and verified.)
         writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];

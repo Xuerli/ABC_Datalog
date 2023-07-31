@@ -126,7 +126,7 @@ detInsInc(TheoryState,FaultState):-
               % Get all proofs and failed proofs of the goal.
               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall( [Proof, Evidence],
-                     ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
+                     (slRL(Goal, Theory, EC, Proof, Evidence, [])),
                      Proofs1),
               % Proofs1= [[P1, []],[P2, []],[[],E1]...]; Proofs2 = [[P1,P2,[]],[[],[],E]]
               transposeF(Proofs1, [Proofs, Evis]),
