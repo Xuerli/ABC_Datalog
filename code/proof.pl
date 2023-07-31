@@ -726,7 +726,7 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
                   % get the equality theorems which can be derived from that rule.
                   perm(Axiom,AxiomSort), %Consider different beginning positions since we are finding theorems.
                   slRL(AxiomSort, TheoryIn, EC, Proof, Evi, []),
-                  last(Evi,(_,_,_,Theorem,_)),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
                   % remove the dupliate, and then ignore X=X by checking the number of arguments.
                   Theorem = [+[P| ArgsT]],
                   (P = (=)->sort(ArgsT, ArgsS), length(ArgsS, L), L>1;
@@ -792,7 +792,7 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
                 % member(Constant, Arg), % Do not allow proving multiple for now
                 % Get all theorems that can be derived from this rule.
                 slRL(Clause, Theory, EC, _, Evi, []),
-                last(Evi,(_,_,_,Theorem,_)),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
                 % Check that the targeted constant occur in the arguments of the theorems.
                 Theorem = [+[_| Cons]],
                 occur(Constant, Cons)

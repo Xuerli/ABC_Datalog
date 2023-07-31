@@ -4,8 +4,8 @@
 theoryName(sr1).
 
 
-axiom([+mum(diana,william,bye)]).
-axiom([+mum(camilla,william,bye)]).
+axiom([+mum2(diana,william,birth)]).
+axiom([+mum(camilla,william,birth)]).
 
 trueSet([mum(diana,william,birth)]).
 falseSet([]).
