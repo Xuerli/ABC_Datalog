@@ -178,9 +178,6 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     % get all candidates of unifiable pairs to block.
     %TODO: add new pairs that consider variable and functions, functions and constants, functions and functions etc. 
     %Unification is successful, remember!
-    print('-----check reformation------'),nl,
-    print(RInpCl1),nl,
-    print(RInpCl2),nl,
 
     
     findall([CC, VCG, VCIn, VV,VFG,VFIn,FF],
@@ -224,7 +221,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     SortedPairs = [_|_],
 
     transposeF(SortedPairs, [CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),
-    print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),nl,print('-----------'),nl,
+    % print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),nl,print('-----------'),nl,
 
     %Repair strategies that target InpCl1 (which is the right side of unification, the input clause)
     (    (notin(RInpCl1, ProtectedList),
@@ -785,7 +782,7 @@ blockPFunc(PredTarg,PredOrg,TargCl,InpCl,TheoryState,SuffGoals,RepPlan):-
     SortedPairs = [_|_],
 
     transposeF(SortedPairs, [CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),
-    print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),nl,print('-----------'),nl,
+    % print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),nl,print('-----------'),nl,
 
     %Repair strategies that target InpCl1 (which is the right side of unification, the input clause)       
         (
