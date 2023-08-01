@@ -3,12 +3,12 @@
 
 theoryName(sr4).
 
-axiom([+crazy(\x), +female(\x)]).
-axiom([-honest(kate)]).
+axiom([+crazy(x(\x)), +female(x(\x))]).
+axiom([-honest(x(\y))]).
 axiom([+mum(diana,william)]).
 axiom([+mum(kate,george)]).
 
-trueSet([female(kate)]).
+trueSet([female(x(kate))]).
 falseSet([]).
 protect([]).
 heuristics([]).

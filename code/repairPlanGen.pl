@@ -10,11 +10,11 @@ repairPlan(Goal, TheoryState, _, TheoryState):-
 repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     write_term_c('------repair plan 1 for insuff--------'),nl,write_term_All(Goal),nl,write_term_All(Suffs),nl,
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
-    print('---------'),nl,
-    print('start repair insuff'),nl,
-    print(Goal),nl,
-    print(Evidences),nl,
-    print('----------'),nl,
+    % print('---------'),nl,
+    % print('start repair insuff'),nl,
+    % print(Goal),nl,
+    % print(Evidences),nl,
+    % print('----------'),nl,
     spec(heuris(Heuristics)),
     ( delete(Heuristics, noOpt, [])->    % No heuristics
         spec(repTimeNH(RunTimeFile)), !;
@@ -357,17 +357,17 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
     writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
-    write_term_c('---Unresolvables and proofcur----'),nl,
-    write_term_c(Unresolvables),nl,
-    write_term_c(ProofCur),nl,
-    write_term_c('---end unresolvables----'),nl, 
+    % write_term_c('---Unresolvables and proofcur----'),nl,
+    % write_term_c(Unresolvables),nl,
+    % write_term_c(ProofCur),nl,
+    % write_term_c('---end unresolvables----'),nl, 
 
-    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5 (done and verified.)
+    (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5 
         writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         delPreCond(Unresolvables, Evi,TheoryIn, RepPlans1, TargCls),
         RepPlans = [RepPlans1];
 
-    notin(noReform, Heuristics),    % by reformation. (SR1, SR2) (Done and verified)
+    notin(noReform, Heuristics),    % by reformation. (SR1, SR2)
         writeLog([nl,write_term_c('--Reformation: Unresolvables:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
         findall(Cl, member((_,Cl,_,_,_), Evi), ClUsed), %TODO up till here
         reformUnblock(Unresolvables, Evi, ClUsed, SuffGoals, TheoryState,  RepInfo),
@@ -411,7 +411,7 @@ buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allTheoremsC(TheoryIn, EC, C, Theorems), 
+                 (allTheoremsC(TheoryIn, EC, C, Theorems); allTheoremsV(TheoryIn,C,Theorems)),  %V: theorems with only free vars, replace one with desired constant.
                  member(Theorem, Theorems),
                  Theorem = [+[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -506,12 +506,11 @@ buildP((_,AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     (member((Goal,_,_,_,_),Deriv); member((_,_,_,Goal,_),Deriv)),
     member(+PropG,Goal),
 
-
     % get all relevant theorems to the goal
     findall((L, Theorem),
                 (PropG = [_ |Args],
                  member(C, Args),
-                 allConstraintsC(TheoryIn, EC, C, Theorems), 
+                 (allConstraintsC(TheoryIn, EC, C, Theorems);allConstraintsV(TheoryIn,C,Theorems)), 
                  member(Theorem, Theorems),
                  Theorem = [-[_|Arg2]],
                  deleteAll(Args, Arg2, DistArg),
@@ -519,6 +518,8 @@ buildP((_,AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 RelTheorems),
     mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
     deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
+
+    
 
     % Heuristic7: When there is other theorems of C, do not consider the inequalities of C.
     (member([-[P|_]], Cands2), P \= (\=)-> delete(Cands2, [-[\=|_]],Cands3);

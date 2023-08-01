@@ -123,20 +123,21 @@ renameArgs(Mismatches, Nth, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls):
 % generate reformation repair plan of extend a constant to a variable when the predicate is matched but arguments.
 extCons2Vble(Mismatches, Nth, Evi, MisNum, OrgCl, TheoryIn, RepPlan, TargCls):-
     Mismatches = [_|_],
+    print(Mismatches),nl,print(OrgCl),nl,print('*********'),nl,
     spec(protList(ProtectedList)),
     %((Mismatches =  [([load3], [load1])]; Mismatches =  [([load1], [load3])])->pause;true),
     findall([(COrig, NewVble, C1Cl), C1Cl],
-                (member((C1, C2),Mismatches),
+                (memberNested((C1, C2),Mismatches),
                 nth0(Nth, [C1, C2], COrig),    % Get the target constant.
                 notin(COrig, ProtectedList),
-                (traceBackC(COrig, Evi, C1Cl);C1Cl = OrgCl),
+                (traceBackC(COrig, Evi, C1Cl);containsC(COrig,OrgCl),C1Cl = OrgCl),
                 member(C1Cl, TheoryIn),    % it is an axiom from the theory not the preferred structure.
                 notin(C1Cl, ProtectedList),
                     % get the list of variables in the input clause.
                 findall(X,
                         ( (member(+[_| Arg], C1Cl);
                            member(-[_| Arg], C1Cl)),
-                          member(vble(X), Arg)),
+                          memberNested(vble(X), Arg)),
                         AvoidList),
                 getNewVble([COrig], AvoidList, [(COrig, NewVble)], _)),
                 RS),
@@ -173,7 +174,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     traceBackPos(-[PG| ArgsG], Evi,TheoryIn, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
     spec(protList(ProtectedList)),
     writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
-    % print('***'),nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]),nl,
+    print('***'),nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]),nl,
     %Choosing a clause to change here
 
     setof( (Axiom, [+[PT|ArgsT]], Mismatches, MisNum, MisPairPos,EviTemp),
@@ -184,12 +185,14 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             slRL(Axiom, TheoryIn, EC, _, EviTemp, []), %TODO bug here
              (member((_,_,_,Theorem,_),EviTemp);member((Theorem,_,_,_,_),EviTemp)),
              Theorem = [+[PT| ArgsT]],
+             print(Theorem),nl,print('==ks=='),nl,
             % member(+[PT|ArgsT],Axiom), %Can this work? Simply  choose one
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.
              (PT = PG->    argsMis(ArgsG, ArgsT, Mismatches, MisPairPos), % Find all mismatches and store in the variable. TODO: check 
                          length(Mismatches, MisNum);
-             PT \= PG-> diff(ArgsG, ArgsT, ArgDiff),     
+
+             PT \= PG-> diff(ArgsG, ArgsT, ArgDiff),   %Succeed only if they can be unified by ignoring longer argslist.  
                         Mismatches = (predicate, ArgDiff),
                         length(ArgDiff, MisNum),
                         MisPairPos = [])),
@@ -201,6 +204,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     % nl,nl,nl,print('***'),nl,print(Axiom),nl,print(PT),nl,print(Mismatches),nl,print(MisNum),nl,print(MisPairPos),nl,print('***'),nl,
     % print('---'),nl,print(PG),nl,print(ArgsG),nl,print(InpCl2),nl,print('---'),nl,
     spec(heuris(Heuristics)),
+    print('---check Mismatches ---'),nl,print([PG|ArgsG]),nl,print([PT|ArgsT]),nl,print(Mismatches),nl,print(MisPairPos),nl,print('-----------'),nl,
     (% if the irresolvable sub-goal is not from the preferred structure, reform the sub-goal
         % Or if the Axiom is not under protected, reform it
 
@@ -233,6 +237,7 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             forall(member(Axiom, ProtectedList), (notin(+[PG|_], Axiom), notin(-[PG|_], Axiom))),
             % check that the arity of PG is larger than 1
             findall(Pos, nth1(Pos, MisPairPos, [_|_]), PosMis),
+   
             % check if the argument is under protected
             forall(member(ArgDele, PosMis), notin(deleArg(PG, ArgDele), RsBanned)),
             findall(Cl, (member(Cl, TheoryIn),
@@ -249,7 +254,7 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     traceBackPos(+[PG| ArgsG], Evi,TheoryIn, InpLi, InpCl2, _),    % InpCl2 = [] if it comes from the preferred structure.
     spec(protList(ProtectedList)),
     writeLog([nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]), finishLog]),
-    % print('***'),nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]),nl,
+    print('***'),nl,write_term_c('Reformation: targeted evidence'),nl,write_term_c([PG| ArgsG]),nl,
     %Choosing a clause to change here
 
     setof( (Axiom, [-[PT|ArgsT]], Mismatches, MisNum, MisPairPos,EviTemp),
@@ -260,6 +265,7 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             slRL(Axiom, TheoryIn, EC, _, EviTemp, []), %TODO bug here
              (member((_,_,_,Theorem,_),EviTemp);member((Theorem,_,_,_,_),EviTemp)),
              Theorem = [-[PT| ArgsT]],
+             print(Theorem),nl,print('==ks=='),nl,
             % member(+[PT|ArgsT],Axiom), %Can this work? Simply  choose one
              % heuristics:  the rule whose head predicate is same with the goal predicate;
              % or only choose the rule whose arguments overlaps goal's arguments.
@@ -275,6 +281,8 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
     writeLog([nl,write_term_c('---------------Axiom is 1  '),write_term_c(Axiom), finishLog]),
     writeLog([nl,write_term_c('---------------Mismatches is 1  '),write_term_c(Mismatches), finishLog]),
     spec(heuris(Heuristics)),
+    print('---check Mismatches ---'),nl,print([PG|ArgsG]),nl,print([PT|ArgsT]),nl,print(Mismatches),nl,print(MisPairPos),nl,print('-----------'),nl,
+
     (% if the irresolvable sub-goal is not from the preferred structure, reform the sub-goal
         % Or if the Axiom is not under protected, reform it
 
@@ -307,6 +315,7 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             forall(member(Axiom, ProtectedList), (notin(+[PG|_], Axiom), notin(-[PG|_], Axiom))),
             % check that the arity of PG is larger than 1
             findall(Pos, nth1(Pos, MisPairPos, [_|_]), PosMis),
+
             % check if the argument is under protected
             forall(member(ArgDele, PosMis), notin(deleArg(PG, ArgDele), RsBanned)),
             findall(Cl, (member(Cl, TheoryIn),

@@ -132,10 +132,11 @@ appProp(Prop, Predicate, PropNew):- !,
 argsMis([], [], [], []):- !.
 argsMis([A1| Args1], [A2| Args2], MisPairs, [MisPair1| MisPos2]):-
     argPairMis(A1, A2, Sigma, MisPair1),
+    extractNestedPairs(MisPair1,MisPair1Ex),
     subst(Sigma, Args1, ArgsSb1),
     subst(Sigma, Args2, ArgsSb2),
     argsMis(ArgsSb1, ArgsSb2, MisPairs2, MisPos2),
-    append(MisPair1, MisPairs2, MisPairs).
+    append(MisPair1Ex, MisPairs2, MisPairs).
 
 argPairMis(C, C, [],[]):- !.
 argPairMis(Y, vble(X), Y/vble(X), []):- (is_cons(Y);is_func(Y)), !.
@@ -146,16 +147,21 @@ argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
 argPairMis([Func1|F1Arg],[Func2|F2Arg],[],[([Func1|F1Arg], [Func2|F2Arg])]):- 
     Func1 \= Func2.
 argPairMis([Func1|F1Arg],[Func1|F2Arg],Sigma, MisPair):- 
-    argsMisFunc(F1Arg,F2Arg,Sigma,MisPair).
+    argsMisFunc([Func1|F1Arg],[Func1|F2Arg],Sigma,MisPair).
 
 argsMisFunc([],[],[],[]):- !.
-argsMisFunc([A1|Args1],[A2|Args2],Sigma,MisPairs):-
+argsMisFunc([A1|Args1],[A2|Args2],Sigma,[MisPair1| MisPos2]):-
     argPairMis(A1,A2,Sigma2,MisPair1),
     subst(Sigma2, Args1, ArgsSb1),
     subst(Sigma2, Args2, ArgsSb2),
-    argsMisFunc(ArgsSb1,ArgsSb2,SigmaR,MisPairsR),
-    compose1(Sigma2,SigmaR,Sigma),
-    append(MisPair1,MisPairsR,MisPairs).
+    argsMisFunc(ArgsSb1,ArgsSb2,SigmaR,MisPos2),
+    compose1(Sigma2,SigmaR,Sigma).
+    % append(MisPair1,MisPairsR,MisPairs).
+
+extractNestedPairs(L,Lout):-
+    findall((A,B),
+        memberNested((A,B),L),
+        Lout).
 
 % In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).
@@ -272,20 +278,21 @@ deleteAll(ListsInput, [H|T], ListOut):-
     deleteAll(ListRest, T, ListOut).
 
 % succeed if ArgsG and ArgsT can be unified by ignoring the tail of the longer argument list.
+
 diff(ArgsG, ArgsT, ArgsTail):-
     length(ArgsG, LG),
     length(ArgsT, LT),
     (LG = LT-> ArgsTail = [], !,
         unification(ArgsG, ArgsT,_,[],_,_,[]);
-    LG > LT-> split_at(LT, ArgsG, GFront, ArgsTail), !,
+    LG > LT-> choose(LT,ArgsG,GFront),deleteAll(ArgsG,GFront,ArgsTail),%split_at(LT, ArgsG, GFront, ArgsTail), !,
         unification(GFront, ArgsT,_,[],_,_,[]);
-    LT > LG-> split_at(LG, ArgsT, TFront, ArgsTail),
+    LT > LG-> choose(LG,ArgsT,TFront),deleteAll(ArgsT,TFront,ArgsTail),%split_at(LG, ArgsT, TFront, ArgsTail),
         unification(ArgsG, TFront,_,[],_,_,[])).
 
 % drop the last element from the input list
 dropTail(ListIn, ListOut):-
-length(ListIn, L), M is L-1,
-split_at(M, ListIn, ListOut, _).
+    length(ListIn, L), M is L-1,
+    split_at(M, ListIn, ListOut, _).
 
 /**********************************************************************************************************************
 costRepairs (R, C): calculate the cost C by split R into members one by one.
@@ -1236,3 +1243,11 @@ takeout(X,[F |R],[F|S]) :- takeout(X,R,S).
 perm([X|Y],Z) :- perm(Y,W), takeout(X,Z,W).  
 perm([],[]).
 
+choose(1, [H|_], [H]).
+choose(N, [H|TL], [H|ST]) :- Less1 is N - 1, choose(Less1, TL, ST).
+choose(N, [_|T], L) :- choose(N, T, L).
+
+containsC(Const,Props):-
+    member(Prop,Props),
+    prop(Prop,UProp),
+    memberNested(Const,UProp).

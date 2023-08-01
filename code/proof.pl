@@ -29,6 +29,11 @@ unification([[F1|Args1]=[F2|Args2]|Old], SigmaIn, UnisIn, UnisOut, SigmaOut, Uni
     append(New, Old, Rest),                   % Add them to the Old problems
     unification(Rest, SigmaIn, [([F1|Args1]=[F2|Args2])|UnisIn], UnisOut, SigmaOut, UniResult).        % Repair either from recursive part
 
+unification([LA = LB|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :- 
+    LA = [A], LB = [B],!,
+    unification([A = B|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult).
+
+
 %Unification of two variables of the SAME name.
 unification([vble(X)=vble(X)|Rest], SigmaIn, UnisIn, UnisOut, SigmaOut, UniResult) :-   % If two vars and same then
     !, unification(Rest, SigmaIn, [(vble(X)=vble(X))|UnisIn], UnisOut, SigmaOut, UniResult).                   % ignore them and carry on with the rest
@@ -158,18 +163,13 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
     addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
-    (nestedNotin(vble(_), Arg)-> %The case where no variable is considered.
-                member([+[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
-                InputClause = [+[P| Arg]],
-                GoalsNew = GoalsRest,
-                SG =[];
-    memberNested(vble(_), Arg)->
-                 member([+[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
-                 InputClause = [+[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
-                 rewriteVble(Goals, InputClause, RewClause, SubsVG),
-                RewClause = [+[P|ArgRew]],
-                 unification([P| Arg], [P| ArgRew], [],[],_, SG, []), %attempt unification of variables
-                 subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
+    (
+        member([+[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
+        InputClause = [+[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
+        rewriteVble(Goals, InputClause, RewClause, SubsVG),
+        RewClause = [+[P|ArgRew]],
+        unification([P| Arg], [P| ArgRew], [],[],_, SG, []), %attempt unification of variables
+        subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
     subDiv(SG, Goals, SG1),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SG, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
@@ -185,18 +185,13 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [+[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
     addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
-    (nestedNotin(vble(_), Arg)-> %The case where no variable is considered.
-                member([-[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
-                InputClause = [-[P| Arg]],
-                GoalsNew = GoalsRest,
-                SG =[];
-     memberNested(vble(_), Arg)->
-                 member([-[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
-                 InputClause = [-[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
-                 rewriteVble(Goals, InputClause, RewClause, SubsVG),
-                RewClause = [-[P|ArgRew]],
-                 unification([P| Arg], [P| ArgRew], [],[],_, SG, []), %attempt unification of variables
-                 subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
+    (
+        member([-[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
+        InputClause = [-[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
+        rewriteVble(Goals, InputClause, RewClause, SubsVG),
+        RewClause = [-[P|ArgRew]],
+        unification([P| Arg], [P| ArgRew], [],[],_, SG, []), %attempt unification of variables
+        subst(SG, GoalsRest, GoalsNew)), %Apply all substitutions from SG to GoalsRest.
     subDiv(SG, Goals, SG1),    % divide the substitutions to the ones applied to goal SG and the ones to the input clause SC.
     subDiv(SG, InputClause, SI),
     compose1(SubsVG, SI, SubsCl),
@@ -664,24 +659,24 @@ traceBackPos(Anything,[],_,Anything,[],[]).
 ****************************************************************************************************************/
 % Find the input clause which introduces the targeted proposition.
 traceBackC(C, [([+[P|Args]], [],[],[+[P|Args]],[0,0])], [+[P|Args]]):-
-    member(C, Args), !.
+    memberNested(C, Args), !.
 
 traceBackC(C, [([-[P|Args]], [],[],[-[P|Args]],[0,0])], [-[P|Args]]):-
-    member(C, Args), !.
+    memberNested(C, Args), !.
 
 traceBackC(C, Deriv, Clause):-
     Deriv = [(Goals,InputCl,_,_,_)| _],
     % Try if c comes from the goal clause over the head of the input clause.
-    findall(Prop, (member(Prop, Goals),prop(Prop,Propn), occur(C, Propn)), Props),
+    findall(Prop, (member(Prop, Goals),prop(Prop,Propn), memberNested(C, Propn)), Props),
     (Props \= [], Clause = Goals, !;
      Props = []->
          (% try if c comes from the body of the input clause.
-         findall(Prop2, (member(Prop2, InputCl),prop(Prop2,Prop2n), occur(C, Prop2n)), Props2),
+         findall(Prop2, (member(Prop2, InputCl),prop(Prop2,Prop2n), memberNested(C, Prop2n)), Props2),
          Props2 \= [], Clause = InputCl, !;
         % last(Deriv, (GoalLast,_,_,_,_)),
         last(Deriv, GoalLast), %REally??
         % nl,print(Deriv),nl,print(GoalLast),nl,sleep(20),
-        findall(PropL, (member(PropL, GoalLast),prop(PropL,PropLn), occur(C, PropLn)), Propsl),
+        findall(PropL, (member(PropL, GoalLast),prop(PropL,PropLn), memberNested(C, PropLn)), Propsl),
         (Propsl \= [], Flag = true;
          Props = []-> Flag = false),
         traceBackCTail(C, Deriv, Flag, Clause))).    % get the original negative literal.
@@ -690,7 +685,7 @@ traceBackCTail(_, [], []):- fail, !.
 
 traceBackCTail(C, Deriv, Flag, Output):-
     last(Deriv, (Goals,InputClause,_,_,_)),
-    findall(Prop, (member(Prop, Goals),prop(Prop,Propn),occur(C, Propn)), Props),
+    findall(Prop, (member(Prop, Goals),prop(Prop,Propn),memberNested(C, Propn)), Props),
     (Props = [], ( Flag == true ->  InputClause = Output, !; % find the last goal which does not contain the target, so the input clause in this step introduces the target.
                   Flag == false ->
                       dropTail(Deriv, Ances), !,    % try the ancestors.
@@ -805,8 +800,38 @@ allTheoremsC(Theory, EC, Constant, Theorems):-
     % remove duplicates
     sort(TheoremsRaw, Theorems).
 
-allTheoremsC(_, _, Constant, []):-
-    is_func(Constant),!. %TODO implement
+allTheoremsC(Theory, EC, Func, Theorems):-
+    is_func(Func),!, %TODO implement
+    Func = [Constant | _],
+    findall(Theorem,
+        (% Get an assertion, +[P| Arugs], from the input theory.
+                member([+[P| Args]], Theory),
+                memberNested(Constant, Args),
+                linkTheorems([+[P| Args]], Constant, Theory, EC, Theorems),
+            %  print(Theorems),nl,print([+[P| Args]]),nl,sleep(10),
+                (member(Theorem, Theorems); Theorem = +[P| Args])
+            % Theorem = +[P| Args]
+                ),
+        TheoTem1),
+    % get all theorems that can be derived by a rule whose head has the targeted constant.
+    findall(Theorem,
+            (% Get a rule from the input theory.
+                member(Clause, Theory),
+                member(+[_| _], Clause),
+                % member(Constant, Arg), % Do not allow proving multiple for now
+                % Get all theorems that can be derived from this rule.
+                slRL(Clause, Theory, EC, _, Evi, []),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
+                % Check that the targeted constant occur in the arguments of the theorems.
+                Theorem = [+[_| Cons]],
+                memberNested(Constant, Cons)
+                % Theorem = [+[P| Arg]],
+                % occur(Constant, Arg)
+                ),
+            TheoTem3),
+    append(TheoTem1, TheoTem3, TheoremsRaw),
+    % remove duplicates
+    sort(TheoremsRaw, Theorems).
 
 allConstraintsC([], _, _, []):- !.
 allConstraintsC(Theory, EC, Constant, Theorems):-
@@ -867,9 +892,68 @@ allConstraintsC(Theory, EC, Constant, Theorems):-
     % remove duplicates
     sort(TheoremsRaw, Theorems).
 
-allConstraintsC(_, _, Constant, []):-
-    is_func(Constant),!. %TODO implement
+allConstraintsC(Theory, EC, Func, Theorems):-
+    is_func(Func),!, 
+    Func = [Constant | _],
+    findall(Theorem,
+        (% Get an assertion, +[P| Arugs], from the input theory.
+                member([-[P| Args]], Theory),
+                memberNested(Constant, Args),
+                linkConstraints([-[P| Args]], Constant, Theory, EC, Theorems),
+            %  print(Theorems),nl,print([+[P| Args]]),nl,sleep(10),
+                (member(Theorem, Theorems); Theorem = +[P| Args])
+            % Theorem = +[P| Args]
+                ),
+        TheoTem1),
+    % get all theorems that can be derived by a rule whose head has the targeted constant.
+    findall(Theorem,
+            (% Get a rule from the input theory.
+                member(Clause, Theory),
+                member(-[_| _], Clause),
+                % member(Constant, Arg), % Do not allow proving multiple for now
+                % Get all theorems that can be derived from this rule.
+                slRL(Clause, Theory, EC, _, Evi, []),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
+                % Check that the targeted constant occur in the arguments of the theorems.
+                Theorem = [-[_| Cons]],
+                memberNested(Constant, Cons)
+                % Theorem = [+[P| Arg]],
+                % occur(Constant, Arg)
+                ),
+            TheoTem3),
+    append(TheoTem1, TheoTem3, TheoremsRaw),
+    % remove duplicates
+    sort(TheoremsRaw, Theorems).
 
+allTheoremsV(TheoryIn,C,Theorems):-
+    findall(Theorem,
+        (member(TheoremTemp,TheoryIn),
+        TheoremTemp = [+[P|Args]],
+        allVar(Args),
+        replaceOne(Args,C,ArgsRep),
+        Theorem=[+[P|ArgsRep]]
+        ),
+        Theorems).
+
+allConstraintsV(TheoryIn,C,Theorems):-
+    findall(Theorem,
+        (member(TheoremTemp,TheoryIn),
+        TheoremTemp = [-[P|Args]],
+        allVar(Args),
+        replaceOne(Args,C,ArgsRep),
+        Theorem=[-[P|ArgsRep]]
+        ),
+        Theorems).
+
+allVar([]).
+allVar([H|R]):-
+    H = vble(_),
+    allVar(R).
+
+replaceOne([_],C,[C]):-!.
+replaceOne([H|R],C,[H|Rest]):-
+    replaceOne(R,C,Rest).
+replaceOne([_|R],C,[C|R]).
 /*********************************************************************************************************************************
     linkTheorems(TheoremIn, Constant, Theory, EC,TheoremsOut): get all theorems derived from TheoremIn.
     Input:  TheoremIn: a theorem whose argument contains the constant.
@@ -879,7 +963,7 @@ allConstraintsC(_, _, Constant, []):-
     Output: TheoremsOut is a list of theorems whose argument contains the constant.
 **********************************************************************************************************************************/
 linkTheorems([+[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
-    member(Constant, Args),
+    memberNested(Constant, Args),
     % Get a rule from the input theory.
     member(Clause, Theory),
     member(-[P| Arg2], Clause),
@@ -892,13 +976,13 @@ linkTheorems([+[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
 
     % Check that the targeted constant occur in the arguments of the theorems.
     Theorem = [+[_| Cons]],
-    member(Constant, Cons), !,
+    memberNested(Constant, Cons), !,
     linkTheorems(Theorem, Constant, Theory, EC, Theorems).
 
 linkTheorems(_, _, _, _, []).
 
 linkConstraints([-[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
-    member(Constant, Args),
+    memberNested(Constant, Args),
     % Get a rule from the input theory.
     member(Clause, Theory),
     member(+[P| Arg2], Clause),
@@ -911,7 +995,7 @@ linkConstraints([-[P| Args]], Constant, Theory, EC, [Theorem| Theorems]):-
 
     % Check that the targeted constant occur in the arguments of the theorems.
     Theorem = [-[_| Cons]],
-    member(Constant, Cons), !,
+    memberNested(Constant, Cons), !,
     linkConstraints(Theorem, Constant, Theory, EC, Theorems).
 
 linkConstraints(_, _, _, _, []).
