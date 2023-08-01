@@ -35,13 +35,14 @@ startdo:-
 
 
 memberNested(Elem,List):-
-    member(Elem,List),!.
+    member(Elem,List).
 
 memberNested(Elem,[H|_]):-
     is_list(H),
     memberNested(Elem,H).
 
 memberNested(Elem,[_|R]):-
+    member([_|_],R),
     memberNested(Elem,R).
 
 memberNested(_,[]):- fail.

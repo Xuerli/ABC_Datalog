@@ -158,12 +158,12 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
     addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
-    (notin(vble(_), Arg)-> %The case where no variable is considered.
+    (nestedNotin(vble(_), Arg)-> %The case where no variable is considered.
                 member([+[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
                 InputClause = [+[P| Arg]],
                 GoalsNew = GoalsRest,
                 SG =[];
-     occur(vble(_), Arg)->
+    memberNested(vble(_), Arg)->
                  member([+[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
                  InputClause = [+[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
                  rewriteVble(Goals, InputClause, RewClause, SubsVG),
@@ -185,12 +185,12 @@ slRLMain(Goals, Deriv, TheoryIn,EQs, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [+[P| Arg]| GoalsRest],
     notin(P, [=, \=]),
     addAncestor(TheoryIn,Deriv,TheoryWithAncestor),
-    (notin(vble(_), Arg)-> %The case where no variable is considered.
+    (nestedNotin(vble(_), Arg)-> %The case where no variable is considered.
                 member([-[P| Arg]], TheoryWithAncestor), % Find an exact match with all constants?
                 InputClause = [-[P| Arg]],
                 GoalsNew = GoalsRest,
                 SG =[];
-     occur(vble(_), Arg)->
+     memberNested(vble(_), Arg)->
                  member([-[P| Arg2]], TheoryWithAncestor), % find a match where the predicate name matches with any arguments
                  InputClause = [-[P| Arg2]], % Note: we are finding one that does not introduce additional goals.
                  rewriteVble(Goals, InputClause, RewClause, SubsVG),

@@ -15,10 +15,11 @@ weakenVble(TargCl, Suffs,  VCP, TheoryIn, RepPlan):-
     % Heuristic1: check that there must be more than one argument in the target rule. Otherwise, the rule would contain no variables after weaken one to a constant.
     setof(vble(V),
                 ((member(+[_|Args], TargCl); member(-[_|Args], TargCl)),
-                member(vble(V), Args)),
+                memberNested(vble(V), Args)),
             [_|[_|_]]),
     % generate the constant
-    dummyTerm(OrigCons, TheoryIn, NewCons),
+    (is_func(OrigCons), OrigCons = [NewCon | _]; is_cons(OrigCons), NewCon = OrigCons),
+    dummyTerm(NewCon, TheoryIn, NewCons),
     RepPlan = weaken(V1, NewCons, TargCl)). 
 
 % the input clause is essential, then can apply if there is a unique essential const.

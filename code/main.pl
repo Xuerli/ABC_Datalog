@@ -136,8 +136,8 @@ detInsInc(TheoryState,FaultState):-
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-    % write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
-    %  nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
+    write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
+     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
      writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
      nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
     % write_term_c('---------Checking incompatibilities------'), nl,
@@ -147,7 +147,6 @@ detInsInc(TheoryState,FaultState):-
             % skip equalities/inequalities which have been tackled.
             notin(Pre, [\=, =]),
             Goal = [-[Pre| Args]],
-            write_term_c(Goal),nl,
             % get all of a proof of Goal
             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
             findall(Proof,
@@ -157,7 +156,7 @@ detInsInc(TheoryState,FaultState):-
            InComps),             % Find all incompatibilities.
 
     writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
-    % write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
+    write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
     % detect the inconsistencies due to the violation of constrains
     findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
@@ -169,8 +168,8 @@ detInsInc(TheoryState,FaultState):-
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
-    %   write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
-    %   write_term_c('-----end---------'),nl,nl,
+      write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
+      write_term_c('-----end---------'),nl,nl,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
