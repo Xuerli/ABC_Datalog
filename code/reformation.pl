@@ -396,14 +396,14 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             )); %PRoofrest is deleted
 
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
-                (% generate repair plan of merge(PP, PT, ArgDiff, inc) or rename(PP, PT, ArityT, TargetLit, TargCl, dec/inc).
-                notin(noRename, Heuristics),
-                (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
-                renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
-                renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
-                extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls);
-                repairOccursCheck(Mismatches,MisPairPos,[PT|ArgsT],[PG| ArgsG],InpCl2,TheoryIn, RepPlan,TargCls)
-                )); % SR2~
+            (% generate repair plan of merge(PP, PT, ArgDiff, inc) or rename(PP, PT, ArityT, TargetLit, TargCl, dec/inc).
+            notin(noRename, Heuristics),
+            (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
+            renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
+            renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
+            extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls);
+            repairOccursCheck(Mismatches,MisPairPos,[PT|ArgsT],[PG| ArgsG],InpCl2,TheoryIn, RepPlan,TargCls)
+            )); 
 
         % if both irresolvable sub-goal and Axiom are not under protected, try to generate repair plan of decrease the arity of PG.
         (   notin(noArityChange, Heuristics),
