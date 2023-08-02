@@ -4,7 +4,7 @@
 theoryName(sr4).
 
 axiom([+crazy(x(\x)), +female(x(\x))]).
-axiom([-honest(x(\y))]).
+axiom([-honest(\y)]).
 axiom([+mum(diana,william)]).
 axiom([+mum(kate,george)]).
 

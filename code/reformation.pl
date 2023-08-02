@@ -11,7 +11,7 @@ weakenVble(TargCl, Suffs,  VCP, TheoryIn, RepPlan):-
     (
     %CR3 wekaen variable to constant.
     notin(noVabWeaken, Heuristics),
-    member((V1, OrigCons), VCP),
+    member((_,V1, OrigCons), VCP),
     % Heuristic1: check that there must be more than one argument in the target rule. Otherwise, the rule would contain no variables after weaken one to a constant.
     setof(vble(V),
                 ((member(+[_|Args], TargCl); member(-[_|Args], TargCl)),
@@ -27,7 +27,7 @@ weakenVble(TargCl, Suffs, VCP, _, RepPlan):-
     spec(heuris(Heuristics)),
     notin(noVabWeaken, Heuristics),
     essSubs(Suffs, TargCl, SubstList),
-    member((V1, _), VCP),
+    member((_,V1, _), VCP),
     % if the variable is bound to one constant in the proofs of the sufficiency where the input clause is essential.
     setof(C,    (member(Subst, SubstList),
                 subst(Subst, V1, C)),
@@ -35,6 +35,58 @@ weakenVble(TargCl, Suffs, VCP, _, RepPlan):-
         
     % then the variable can be weaken to that constant so it won't introduce insufficiency.
     RepPlan = weaken(V1, CSuff, TargCl).
+
+%makeOccurFail: introduce variable that causes occur check to fail.
+makeOccurFail(TargCl, TargLit,  VV,VCons, TheoryIn, RepPlan):-
+    member((vble(Org),vble(Trg)),VV), %Pick the variable pair to create the occur check failure condition.
+    member((Pos,vble(Org),Con),VCons), %Get a relevant pair of variable unified with cons / func.
+    is_cons(Con), %Consider the case with constants first
+    dummyTerm(Con,TheoryIn,[NewCon]), %Generate dummy term
+    prop(TargLit, [P|Args]),
+    NewVar = [NewCon,vble(Trg)],
+    replacePos(Pos,Args,NewVar,NewArg),
+    addSameSign(TargLit,[P|NewArg],NewLit),
+    RepPlan = occurFailC(TargLit,NewLit,TargCl).
+
+makeOccurFail(TargCl, TargLit, VV,VCons, _, RepPlan):-
+    spec(protList(ProtectedList)),
+    member((vble(Org),vble(Trg)),VV), %Pick the variable pair to create the occur check failure condition.
+    member((Pos,vble(Org),Con),VCons), %Get a relevant pair of variable unified with cons / func.
+    is_func(Con), 
+    Con = [FuncN | _],
+    prop(TargLit, [P|Args]),
+    notin([arity(P)], ProtectedList),
+    append(Con, [vble(Trg)],NewVar),
+    replacePos(Pos,Args,NewVar,NewArg),
+    addSameSign(TargLit,[P|NewArg],NewLit),
+    RepPlan = occurFailF(FuncN,TargLit,NewLit,TargCl).
+
+%For functions
+makeOccurFail(TargCl, TargLit, VV,VCons, TheoryIn, RepPlan):-
+    member((vble(Org),vble(Trg)),VV), %Pick the variable pair to create the occur check failure condition.
+    member((Pos,vble(Org),Con),VCons), %Get a relevant pair of variable unified with cons / func.
+    is_cons(Con), %Consider the case with constants first
+    dummyTerm(Con,TheoryIn,[NewCon]), %Generate dummy term
+    TargLit = [P|Args],
+    NewVar = [NewCon,vble(Trg)],
+    replacePos(Pos,Args,NewVar,NewArg),
+    NewLit = [P | NewArg],
+    RepPlan = occurFailC(TargLit,NewLit,TargCl).
+
+%For functions
+makeOccurFail(TargCl, TargLit, VV,VCons, _, RepPlan):- 
+    spec(protList(ProtectedList)),
+    member((vble(Org),vble(Trg)),VV), %Pick the variable pair to create the occur check failure condition.
+    member((Pos,vble(Org),Con),VCons), %Get a relevant pair of variable unified with cons / func.
+    is_func(Con), 
+    Con = [FuncN | _],
+    TargLit = [P|Args],
+    notin([arity(P)], ProtectedList),
+    append(Con, [vble(Trg)],NewVar),
+    replacePos(Pos,Args,NewVar,NewArg),
+    NewLit = [P|NewArg],
+    RepPlan = occurFailF(FuncN,TargLit,NewLit,TargCl).
+
 
 /**********************************************************************************************************************
    mergePlan(Mismatches, [PG| ArgsG], TargetLit, TargCl, TheoryIn, RepPlan, TargCls)
@@ -146,6 +198,53 @@ extCons2Vble(Mismatches, Nth, Evi, MisNum, OrgCl, TheoryIn, RepPlan, TargCls):-
     RepPlan = extC2V(MisPairs),
     writeLog([nl,write_term_c('--extC2V: RepPlanS:'),nl,write_term_c(RepPlan),nl,
         nl,write_term_c('--extC2V: TargCls:'),nl,write_term_c(TargCls),nl, finishLog]).
+    
+repairOccursCheck(Mismatches, MisPairPos,[_| ArgsG], [PT|ArgsT], TargCl, TheoryIn, RepPlan, TargCls):-
+    % Precondition: occurs check is only problem.
+    Mismatches = [],
+    memberNested(occurs, MisPairPos),
+    % Find arguments
+    findall([VV, VF],
+        (
+            nth0(X,ArgsG,C1),
+            nth0(X,ArgsT,C2),
+
+            (C1 = vble(_), C2 = vble(_), VV = (C1,C2), VF = [];
+            C1 = vble(_), is_func(C2), VF = (X,C1,C2), VV = [])
+        ),
+    UPairs),
+    sort(UPairs,SortedPairs),
+    SortedPairs = [_|_],
+    transposeF(SortedPairs, [VV,VF]),
+    %Find needed repairs
+    findall((Pos,Vtarg,Ftarg),
+        (
+            member((VOrg,Vtarg),VV), % Get a variable 
+            member((Pos,VOrg,Ftarg),VF),
+            memberNested(Vtarg,Ftarg)
+        )
+    ,Cands),
+    % Choose 1 as only 1 will be repaired in each round
+    member((Pos,Vt,Ft),Cands),
+    Ft = [Fname|_],
+    % Check Protected List
+    spec(protList(ProtectedList)),
+    notin(arity(Fname),ProtectedList),
+    % Perform Variable deletion (Heuristics: delete the outer most only)
+    nestedDelete(Ft,Vt,OutFt,DelPos),
+    replacePos(Pos,ArgsT,OutFt,OutArgs),
+    % Repair Plan
+    RepPlan = repairOccurs([PT|ArgsT],[PT|OutArgs],Fname,DelPos,TargCl),
+    % Find all affected clauses
+    findall(Clause,
+        (
+            member(Clause,TheoryIn),
+            member(Literal,Clause),
+            prop(Literal,LiteralP),
+            memberNested(Fname,LiteralP) %All clauses containing Fname is affected.
+        )
+    ,TargCls).
+
 
 
 /*********************************************************************************************************************************
@@ -212,7 +311,8 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             (mergePlan(Mismatches, [PG| ArgsG], +[PT|ArgsT], Axiom, TheoryIn, RepPlan, TargCls); %SR1: merge both pred and args
             renamePred(Mismatches, [PG| ArgsG], +[PT|ArgsT], Axiom, RepPlan, TargCls); %OR
             renameArgs(Mismatches, 1, ProofRest, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls);
-            extCons2Vble(Mismatches, 1, Evi,MisNum,Axiom, TheoryIn, RepPlan, TargCls) %Just added... any problems?
+            extCons2Vble(Mismatches, 1, Evi,MisNum,Axiom, TheoryIn, RepPlan, TargCls); %Just added... any problems?
+            repairOccursCheck(Mismatches,MisPairPos,[PG| ArgsG],[PT|ArgsT],Axiom,TheoryIn, RepPlan,TargCls)
             )); %PRoofrest is deleted
 
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
@@ -221,7 +321,9 @@ refUnblock(-[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
                 (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
                 renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
                 renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
-                extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls))); % SR2~
+                extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls);
+                repairOccursCheck(Mismatches,MisPairPos,[PT|ArgsT],[PG| ArgsG],InpCl2,TheoryIn, RepPlan,TargCls)
+                )); 
 
         % if both irresolvable sub-goal and Axiom are not under protected, try to generate repair plan of decrease the arity of PG.
         (   notin(noArityChange, Heuristics),
@@ -289,7 +391,8 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
             (mergePlan(Mismatches, [PG| ArgsG], -[PT|ArgsT], Axiom, TheoryIn, RepPlan, TargCls); %SR1: merge both pred and args
             renamePred(Mismatches, [PG| ArgsG], -[PT|ArgsT], Axiom, RepPlan, TargCls); %OR
             renameArgs(Mismatches, 1, ProofRest, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls);
-            extCons2Vble(Mismatches, 1, Evi,MisNum,Axiom, TheoryIn, RepPlan, TargCls) %Just added... any problems?
+            extCons2Vble(Mismatches, 1, Evi,MisNum,Axiom, TheoryIn, RepPlan, TargCls); %Just added... any problems?
+            repairOccursCheck(Mismatches,MisPairPos,[PG| ArgsG],[PT|ArgsT],Axiom,TheoryIn, RepPlan,TargCls)
             )); %PRoofrest is deleted
 
         (InpCl2 \= [], notin(InpCl2, ProtectedList),
@@ -298,7 +401,9 @@ refUnblock(+[PG| ArgsG],  Evi, ClUsed, SuffGoals, TheoryState, [RepPlan, TargCls
                 (mergePlan(Mismatches, [PT|ArgsT], InpLi, InpCl2, TheoryIn, RepPlan, TargCls);
                 renamePred(Mismatches, [PT|ArgsT], InpLi, InpCl2, RepPlan, TargCls);
                 renameArgs(Mismatches, 0, Evi, SuffGoals, MisNum, TheoryIn, RepPlan, TargCls));
-                extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls))); % SR2~
+                extCons2Vble(Mismatches, 0, Evi,MisNum,InpCl2, TheoryIn, RepPlan, TargCls);
+                repairOccursCheck(Mismatches,MisPairPos,[PT|ArgsT],[PG| ArgsG],InpCl2,TheoryIn, RepPlan,TargCls)
+                )); % SR2~
 
         % if both irresolvable sub-goal and Axiom are not under protected, try to generate repair plan of decrease the arity of PG.
         (   notin(noArityChange, Heuristics),

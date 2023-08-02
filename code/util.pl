@@ -139,6 +139,14 @@ argsMis([A1| Args1], [A2| Args2], MisPairs, [MisPair1| MisPos2]):-
     append(MisPair1Ex, MisPairs2, MisPairs).
 
 argPairMis(C, C, [],[]):- !.
+argPairMis(Y, vble(X), [], [occurs]):- 
+    is_func(Y),
+    memberNested(vble(X),Y),
+    !.
+argPairMis(vble(X), Y, [], [occurs]):- 
+    is_func(Y),
+    memberNested(vble(X),Y),
+    !.
 argPairMis(Y, vble(X), Y/vble(X), []):- (is_cons(Y);is_func(Y)), !.
 argPairMis(vble(X), Y, Y/vble(X), []):- (is_cons(Y);is_func(Y)),!.
 argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
@@ -1210,6 +1218,9 @@ findAncestor(Deriv,IC,NewDeriv):-
     dropTail(Deriv,Ances),
     findAncestor(Ances,IC,NewDeriv).
 
+addSameSign(+_,Y,+Y):- !.
+addSameSign(-_,Y,-Y):- !.
+
 addOpSign(+_,Y,-Y):- !.
 addOpSign(-_,Y,+Y):- !.
 
@@ -1251,3 +1262,20 @@ containsC(Const,Props):-
     member(Prop,Props),
     prop(Prop,UProp),
     memberNested(Const,UProp).
+
+nestedDelete(List,Item,OutList,DelPos):-
+    nestedDeleteHelper(0,List,Item,[],OutList,[],DelPos).
+
+nestedDeleteHelper(_,[],_,OutList,OutList,DelPos,DelPos):- !.
+nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
+    memberNested(Item,[H]), %The item to be deleted is included, do not append
+    !,
+    append(CurDelPos,[Pos],CurDelPosNew),
+    PosNew is Pos + 1,
+    nestedDeleteHelper(PosNew,R,Item,CurList,OutList,CurDelPosNew,DelPos).
+nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
+    \+memberNested(Item,[H]), %The item to be deleted is not included
+    !,
+    append(CurList,[H],CurListNew),
+    PosNew is Pos + 1,
+    nestedDeleteHelper(PosNew,R,Item,CurListNew,OutList,CurDelPos,DelPos).
