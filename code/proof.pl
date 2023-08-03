@@ -733,6 +733,36 @@ allTheoremsP(TheoryIn, P, EC, AllTheorems):-
     writeLog([write_term_c('-- The theorems of Predicate -'), write_term_c(P),
             write_term_c('-- are:'),nl, write_term_c(AllTheorems), finishLog]).
 
+allConstraintsP([], _, _,[]):- !.
+allConstraintsP(TheoryIn, P, EC, AllTheorems):-
+    notin(P, [=, \=]),
+    % find all proofs of an equality, where Proof is the list of all proofs.
+    findall(([-[P| ArgsS]], Proof),
+            (% get an axiom whose head predicate is P
+             member(Axiom,TheoryIn),
+             member(-[P|Args], Axiom),
+             delete(Axiom, -[P|Args],Body),
+             (% if it has no body, which means that it is an axiom of P.
+              Body = [] -> % if it is equality, sort the arguments and ignore X=X.
+                    (P = (=)-> sort(Args, ArgsS), length(ArgsS, L), L>1; ArgsS = Args),
+                  Proof = [([+[P| ArgsS]], [-[P| ArgsS]], [], [], [0, 0])];
+              % if it has a body, which means that it is a rule.
+              Body \= [] ->
+                  % get the equality theorems which can be derived from that rule.
+                  perm(Axiom,AxiomSort), %Consider different beginning positions since we are finding theorems.
+                  slRL(AxiomSort, TheoryIn, EC, Proof, Evi, []),
+                (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi)),
+                  % remove the dupliate, and then ignore X=X by checking the number of arguments.
+                  Theorem = [-[P| ArgsT]],
+                  (P = (=)->sort(ArgsT, ArgsS), length(ArgsS, L), L>1;
+                              ArgsS = ArgsT))),
+            AllT),
+
+    % remove duplicates.
+    mergeTailSort(AllT, AllTheorems),
+    writeLog([write_term_c('-- The constraints of Predicate -'), write_term_c(P),
+            write_term_c('-- are:'),nl, write_term_c(AllTheorems), finishLog]).
+
 /*********************************************************************************************************************************
     allTheoremsC(Theory, EC, Constant, Theorems): get all theorems whose arguments include the targeted constant.
     * Inequality only between constants at the same position in arguments of predicates.

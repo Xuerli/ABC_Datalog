@@ -10,11 +10,6 @@ repairPlan(Goal, TheoryState, _, TheoryState):-
 repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     write_term_c('------repair plan 1 for insuff--------'),nl,write_term_All(Goal),nl,write_term_All(Suffs),nl,
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
-    % print('---------'),nl,
-    % print('start repair insuff'),nl,
-    % print(Goal),nl,
-    % print(Evidences),nl,
-    % print('----------'),nl,
     spec(heuris(Heuristics)),
     ( delete(Heuristics, noOpt, [])->    % No heuristics
         spec(repTimeNH(RunTimeFile)), !;
@@ -113,11 +108,20 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     spec(protList(ProtectedList)),
     notin(Axiom, ProtectedList),
 
-    % CR6
-    (Axiom\=[+[_|_]], intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
+    
+    (   % CR6
+        Axiom\=[+[_|_]],Axiom\=[-[_|_]],intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
         % Add a irresolvable precondition to the rule to make it unprovable.
         % Appliable when the new rule still works for the sufficiency of which the old rule is essential)
         getAdjCond(Axiom, IncomSubs, SuffGoals, TheoryIn, EC, TrueSetE, FalseSetE, RepCands),
+        % get single repair plan, RepPlan is an atom not a list.
+        member(RepPlan, RepCands);
+
+        %CR7
+        Axiom\=[+[_|_]],Axiom\=[-[_|_]],intersection([noRuleChange, noPrecAdd], Heuristics, []),    % if it is a rule
+        % Add a irresolvable precondition to the rule to make it unprovable.
+        % Appliable when the new rule still works for the sufficiency of which the old rule is essential)
+        getAdjCondP(Axiom, IncomSubs, SuffGoals, TheoryIn, EC, TrueSetE, FalseSetE, RepCands),
         % get single repair plan, RepPlan is an atom not a list.
         member(RepPlan, RepCands);
 
@@ -127,6 +131,13 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
         % Appliable when it is not essential for any sufficiency)
         % RepPlan = [(ass2rule(Axiom, NewRule), Axiom),...]
         asser2rule(Axiom, EC, SuffGoals, TheoryIn, TrueSetE, FalseSetE, RepCands),
+        member(RepPlan, RepCands);
+
+    Axiom=[-[Pred|_]], intersection([noRuleChange, noCon2Rule], Heuristics, []), notin(Pred, ProtectedList),
+        % Turn the assertion to a rule to make it unprovable.
+        % Appliable when it is not essential for any sufficiency)
+        % RepPlan = [(ass2rule(Axiom, NewRule), Axiom),...]
+        cons2rule(Axiom, EC, SuffGoals, TheoryIn, TrueSetE, FalseSetE, RepCands),
         member(RepPlan, RepCands);
 
     % CR5: delete the axiom.

@@ -42,8 +42,9 @@ asser2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
     findall(-[PP|Arg2New],
                 (% target at another individual which is also an instance of PA.
                  member(([+[_|Args]],_), TCands),
-                 member(C2, Args),
-                 notin(C2,ArgA),        % find the candidates of unprovable conditions based on C2
+                 member(C2T, Args),
+                 (is_cons(C2T),C2 = C2T; is_func(C2T), C2T = [C2 |_]),
+                 nestedNotin(C2,ArgA),        % find the candidates of unprovable conditions based on C2
                  % findall all theorems of that individual
                  allTheoremsC(Theory2, EC, C2, TS2),
                  deleteAll(TS2, FalseSetE, TS3),    % do not use anything from the false set.
@@ -64,7 +65,66 @@ asser2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
                      NewRule = [+[PA| ArgANew], -Pre],
                      % check that the original axiom is not derivable any more.
                      append(TrueSetE, Theory2, TheoryRich),
-                     findall(Theorem, (slRL(NewRule, TheoryRich, EC, _,Evi,[]),last(Evi,(_,_,_,Theorem,_))),NewT),
+                     findall(Theorem, 
+                     (slRL(NewRule, TheoryRich, EC, _,Evi,[]),
+                     (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi))
+                     ),NewT),
+                     notin(Axiom, NewT)),
+            RepCands).
+
+cons2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
+    writeLog([nl, write_term_c('-------- start cons2rule to find unprovable precondition'), nl,
+            nl, write_term_c('-- SuffGoals='), write_term_c(SuffGoals),nl,
+            nl, write_term_c('-- Theory='), write_term_c(Theory),nl,
+            nl,nl, write_term_All(Theory),nl, finishLog]),
+    Axiom = [-[PA|ArgA]], !,
+
+    % check if the axiom is essential to an sufficiency, do not make it unprovable.
+    notEss2suff(SuffGoals, Axiom),
+
+    % Heuristic: only get one layer of theorem
+    delete(Theory, Axiom, Theory2),
+    allConstraintsP(Theory2, PA, EC, TS),    % get all theorems of the target predicate.
+    delete(TS, Axiom, TCan),
+    findall([-[PA|ArgTrue]], member([+[PA|ArgTrue]], FalseSetE), Tures),
+    append(TCan, Tures, TCands),
+
+    findall(AvoidPreds, (member(Constrain, Theory2),
+                        notin(-_, Constrain),
+                        occur(+[PA|_], Constrain),
+                        member(+[AvoidPreds|_],Constrain)),
+            AvoidPList),
+
+    findall(+[PP|Arg2New],
+                (% target at another individual which is also an instance of PA.
+                 member(([-[_|Args]],_), TCands),
+                 member(C2T, Args),
+                 (is_cons(C2T),C2 = C2T; is_func(C2T), C2T = [C2 |_]),
+                 nestedNotin(C2,ArgA),        % find the candidates of unprovable conditions based on C2
+                 % findall all theorems of that individual
+                 allConstraintsC(Theory2, EC, C2, TS2),
+                %  deleteAll(TS2, TrueSetE, TS3),    % do not use anything from the false set.
+                 append(TS2, FalseSetE, TAll),    % combine the true set.
+                 member(Clause, TAll),
+                 prop(Clause,[PP|Arg2]),
+                 notin(PP, [PA|AvoidPList]),    % the predicate is not in the avoid list
+                 notin(PP,[\=,=]), %Avoid equalities and inequalities for now
+                 nth0(Pos, Arg2, C2),
+                 replacePos(Pos, Arg2, vble(x), Arg2New)),    % prune the ones does not contain C2.
+        Preconditions),
+
+    length(ArgA, ArityA), PosAMax is ArityA-1,
+    findall(cons2rule(Axiom, NewRule),
+                    (member(+Pre, Preconditions),
+                     between(0, PosAMax, PosA),
+                     replacePos(PosA, ArgA, vble(x), ArgANew),
+                     NewRule = [-[PA| ArgANew], +Pre],
+                     % check that the original axiom is not derivable any more.
+                     append(TrueSetE, Theory2, TheoryRich),
+                     findall(Theorem, 
+                     (slRL(NewRule, TheoryRich, EC, _,Evi,[]),
+                     (member((_,_,_,Theorem,_),Evi);member((Theorem,_,_,_,_),Evi))
+                     ),NewT),
                      notin(Axiom, NewT)),
             RepCands).
 
@@ -114,7 +174,7 @@ getAdjCond(Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlanS)
                 (
                 % Situation 1: add by considering other sufficiency proofs, make sure not blocked, and allow diff
                 member(Pred, PreCands),
-                adjCond(Pred, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan); %TODO check this
+                adjCond(Pred, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan); 
                 % Situation 2: add directly
                 setof(vble(X), member(vble(X),ArgR), HeadVbles),
                 RepPlan = add_pre(-[dummyPred|HeadVbles], Rule),
@@ -133,7 +193,6 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
     writeLog([nl, write_term_c('-------- start to find unprovable precondition candidates based on: '),
                 write_term_c(P),nl, finishLog]),
     IncomSub \= [], % if there is no incompatibilities, no adjustment precondition is needed.
-    % print('***'),nl,print(P),nl,
 
     %Get all  substitution of a goal rule of a sufficiency.
     findall([(vble(X), [C]), GoalRule],
@@ -144,13 +203,11 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
              member((_, Rule, Subs, _, _), Proof),
              member([C]/vble(X), Subs)),
             RuleSuff),
-    % print('***'),nl,print(RuleSuff),nl,
-
+    print('hihi2'),nl,
     % get substitution pairs and the goals that Rule is essential.
     transposeF(RuleSuff, [VbCons, GoalRs]),
     mergeTailSort(VbCons, VbConsSC), %Output: [(vble(X), [possible subs]),...]
     %writeLog([nl, write_term_c('VbCons: '), nl, write_term_c(VbCons),nl, finishLog]),
-    % print('***'),nl,print(VbConsSC),nl,
 
     % get all constant arguments of the rule in the unwanted proof.
     subst(IncomSub, Rule, InstRule),
@@ -160,35 +217,14 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
             ArgsAllRaw),
     % ArgsAll are the instantiated arguments of the rule in the unwanted proof.
     sort(ArgsAllRaw, ArgsAll),
-    % print('***'),nl,print(ArgsAll),nl,print(InstRule),nl,print(Rule),nl,
     % writeLog([nl, write_term_c('ArgsAll: '), nl, write_term_c(ArgsAll),nl]),
     % get all of the theorems of the predicate P which can be derived without Rule and the ones from the true set.
     delete(Theory, Rule, Theory2),
-    spec(signature(Sig, _)),
+    % spec(signature(Sig, _)),
 
-    (
     % Get all theorems of P.
     allTheoremsP(Theory2, P, EC, TP),
-    findall(T,member((T,_),TP), TS);
-    % print('***'),nl,print(TS),enl,sleep(3);    
-    
-    % Ignored
-     P = (\=)->    % Get the inequalities of Cconstant
-        findall(ArgD, (member((_,_,ArgsDomains), Sig), member(ArgD, ArgsDomains)),
-            Categories),
-        findall([+[\=, C2, C1]],
-                (member(Cat, Categories),
-                member(C1, Cat),
-                member(C2, Cat),
-                equalSub([\=, C1, C2], EC, [])),
-                TS);
-     P = (=)->
-         findall([+[=, C1, C2]],
-            (mmeber(Euqalities, EC),
-            member(C1, Euqalities),
-            member(C2, Euqalities),
-            C1 \= C2),
-            TS)),
+    findall(T,member((T,_),TP), TS), 
 
     % consider the Extras propositions in the true set that does not need rule to prove & the ones occur in preconditions of rules
     findall([+[P|Args]],
@@ -197,14 +233,14 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
                 Extras),
     append(TS, Extras, TSAll),
     writeLog([nl, write_term_c('Found TSAll for: '),    write_term_c(P),nl, write_term_c(TSAll),nl, finishLog]),
-
     % get the domains of each argument of P baed on these theorems.
     findall(ArgsP, member([+[P|ArgsP]], TSAll), ArgThs),
     % get the category for each argument where contains both variables and constants.
     transposeF(ArgThs, ArgCat),
     % get the argument domains which contains only constants.
     appEach(ArgCat, [delete,vble(_)], ArgDomains),
-
+    %This ArgDomain considers the domains of all possible theorems.
+    % Whereas, VbConsSC　concerns the arguments of sufficiencies.
 
     %writeLog([nl, write_term_c('ArgDomains: '), nl, write_term_c(ArgDomains),nl, finishLog]),
     % collect the diffrences of these theorems w.r.t. ArgsAll
@@ -236,6 +272,137 @@ adjCond(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):
     sort(Cands, [HP|_]),
     RepPlan = add_pre(-HP, Rule).
 
+getAdjCondP(_, [], _, _, _, _, _, []).
+getAdjCondP(Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlanS):-
+    spec(protList(ProtectedList)),
+    notin(Rule, ProtectedList),
+    writeLog([nl, write_term_c('-------- getAdjCond for  Rule: '), write_term_c(Rule),nl, finishLog]),
+    member(-[PR| ArgR], Rule),
+
+    % get the list of predicates which cannot be the predicate of the target precondition
+    findall(AvoidPred,
+                (AvoidPred = PR;
+                member(-[AvoidPred|_], Rule);    % predicates already in Rule
+                member(+[AvoidPred|_], Rule);    % predicates already in Rule
+                member(Constrain, Theory),
+                notin(-_, Constrain),
+                occur(+[PR|_], Constrain),        % Predicates occurs together with PR in a constrain axiom
+                member(+[AvoidPred|_],Constrain)),
+        AvoidPListuns),
+    sort(AvoidPListuns,AvoidPList),
+    % print('***'),nl,print(AvoidPList),nl,sleep(1),
+    % Get all predicate candidates
+    findall(Predicate,
+                (member(Clause, Theory),
+                Clause\= Rule,
+                (member(-[Predicate| _], Clause);member(+[Predicate| _], Clause)),
+                notin(Predicate, AvoidPList)),
+        PreCandsRaw),
+    sort(PreCandsRaw, PreCands),    % remove dupliates
+    % print('***'),nl,print(PreCands),nl,sleep(1),
+
+    writeLog([nl, write_term_c(' PreCands are: '), write_term_c(PreCands),nl, finishLog]),
+    findall(RepPlan,
+                (
+                % Situation 1: add by considering other sufficiency proofs, make sure not blocked, and allow diff
+                member(Pred, PreCands),
+                adjCondP(Pred, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan); 
+                % Situation 2: add directly
+                setof(vble(X), member(vble(X),ArgR), HeadVbles),
+                RepPlan = add_preP(+[dummyPred|HeadVbles], Rule),
+                writeLog([nl, write_term_c(' Found unprovable precondition : '), write_term_c(RepPlan),nl, finishLog])),
+            RepPlanSTem),
+    sort(RepPlanSTem, RepPlanS),    % remove duplicates
+    (RepPlanS = []-> fail,
+          writeLog([nl, write_term_c(' ERROR: Failed in finding unprovable preconditions.'), nl, finishLog]);
+     RepPlanS = [_|_]->
+    writeLog([nl, write_term_c(' All found unprovable preconditions: '), write_term_c(RepPlanS),nl, finishLog])).
+
+adjCondP(P, Rule, IncomSub, SuffGoals, Theory, EC, TrueSetE, FalseSetE, RepPlan):-
+    writeLog([nl, write_term_c('-------- start to find unprovable precondition candidates based on: '),
+                write_term_c(P),nl, finishLog]),
+    IncomSub \= [], % if there is no incompatibilities, no adjustment precondition is needed.
+
+    %Get all  substitution of a goal rule of a sufficiency.
+    findall([(vble(X), [C]), GoalRule],
+            (member((GoalRule, SuffProofs), SuffGoals),    % heuristic: only consider the goal whose proofs all contain the rule.
+             forall(member(Proof, SuffProofs),
+                     member((_, Rule, _, _, _), Proof)),
+             member(Proof, SuffProofs),
+             member((_, Rule, Subs, _, _), Proof),
+             member([C]/vble(X), Subs)),
+            RuleSuff),
+
+    % get substitution pairs and the goals that Rule is essential.
+    transposeF(RuleSuff, [VbCons, GoalRs]),
+    mergeTailSort(VbCons, VbConsSC), %Output: [(vble(X), [possible subs]),...]
+    %writeLog([nl, write_term_c('VbCons: '), nl, write_term_c(VbCons),nl, finishLog]),
+
+    % get all constant arguments of the rule in the unwanted proof.
+    subst(IncomSub, Rule, InstRule),
+    findall(Arg,
+            ((member(+[_|Args], InstRule);member(-[_|Args], InstRule)),
+             member(Arg, Args)),
+            ArgsAllRaw),
+    % ArgsAll are the instantiated arguments of the rule in the unwanted proof.
+    sort(ArgsAllRaw, ArgsAll),
+    % writeLog([nl, write_term_c('ArgsAll: '), nl, write_term_c(ArgsAll),nl]),
+    % get all of the theorems of the predicate P which can be derived without Rule and the ones from the true set.
+    delete(Theory, Rule, Theory2),
+    % spec(signature(Sig, _)),
+
+    % Get all theorems of P.
+    allConstraintsP(Theory2, P, EC, TP),
+    findall(T,member((T,_),TP), TS), 
+    
+
+
+    % consider the Extras propositions in the true set that does not need rule to prove & the ones occur in preconditions of rules
+    findall([-[P|Args]],
+                ( member([+[P|Args]], FalseSetE), notin([-[P|Args]], GoalRs);
+                  member(Cl, Theory), member(+[P|Args], Cl)),
+                Extras),
+    append(TS, Extras, TSAll),
+    writeLog([nl, write_term_c('Found TSAll for: '),    write_term_c(P),nl, write_term_c(TSAll),nl, finishLog]),
+
+    % get the domains of each argument of P baed on these theorems.
+    findall(ArgsP, member([-[P|ArgsP]], TSAll), ArgThs),
+    % get the category for each argument where contains both variables and constants.
+    transposeF(ArgThs, ArgCat),
+    % get the argument domains which contains only constants.
+    appEach(ArgCat, [delete,vble(_)], ArgDomains),
+    %This ArgDomain considers the domains of all possible theorems.
+    % Whereas, VbConsSC　concerns the arguments of sufficiencies.
+
+    %writeLog([nl, write_term_c('ArgDomains: '), nl, write_term_c(ArgDomains),nl, finishLog]),
+    % collect the diffrences of these theorems w.r.t. ArgsAll
+    % Thomas: This computes the precondition such that it can fit all true and false sets. TODO: underatand this.
+    findall((Dif, [P| ArgsV]),            % collect a theorem's difference score together with the proposition of that theorem.
+            (setArgs(ArgDomains, VbConsSC, ArgsAll, IncomSub, ArgsV),    % get candidates of the arguments of the precondition
+             writeLog([nl, write_term_c(' upArg ArgsV is '),nl,write_term_c(ArgsV),nl, finishLog]),
+             member(vble(X), ArgsV),    % there is at least one variable in the argument candidate.
+             Precondition = [+[P| ArgsV]],
+             subst(IncomSub, Precondition, PT),
+                 % PT is not a theorem or proposition in the true set of the preferred structure.
+                (notin(PT, TS), notin(PT, TrueSetE);
+                % or PT is a proposition in the false set.
+                member(PT, FalseSetE)),
+             PT = [+[P| ArgsC]],
+             deleteAll(ArgsAll, ArgsC, ArgRest),
+             length(ArgRest, Dif)),        % the difference score of the theorem w.r.t. ArgsAll
+             Diff),
+
+
+    (Diff = []->
+        writeLog([nl, write_term_c('******** Warning: No adjustment precondition candidates found'),nl, finishLog]),
+        fail;
+     Diff = [_|_]->    writeLog([nl, write_term_c('-------- The adjustment precondition candidates:'),
+                     nl, write_term_All(Diff), finishLog])),
+    mergeTailSort(Diff, [(_,Cands)|_]),    % get one of the most relevant proposition.
+
+    % the precondition with the most variables will be the head.
+    sort(Cands, [HP|_]),
+    RepPlan = add_preP(+HP, Rule).
 
 /**********************************************************************************************************************
     delPreCond(Unresolvables, Evi, RepPlan, TargCls):
@@ -374,8 +541,10 @@ setArgs(ArgDom, VbConsSC, ArgsAllF, IncomSubs, ArgsOut):-
                  member(CategoryC, Arguments),
                  member(C, CategoryC)),
             Cat),
+    print('***8'),nl,print(Cat),nl,print(Sig),nl,
 
-    upArgs(ArgDom, VbConsSC, ArgsAllF, IncomSubs, Cat, [], ArgsOut).
+    upArgs(ArgDom, VbConsSC, ArgsAllF, IncomSubs, Cat, [], ArgsOut),
+    print('***9'),nl,print(ArgsOut),nl.
     /* TODO:    % Heuristic5: replace duplicate variables
     findall((I,vble(X)), nth0(I,ArgsTem, vble(X)), VblePos),
     findall( (member((Num, Vble), VblePos)))*/

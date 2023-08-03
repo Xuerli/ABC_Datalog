@@ -20,13 +20,21 @@ adverseEnum(N,List) :-
     Output: Theorems is a list of theorem whose argument contains the constant.
 **********************************************************************************************************************************/
 allTheoremsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
-  findall([+[P| Args]], (member([+[P| Args]], Abox), member(C, Args)),
+  findall([+[P| Args]], (member([+[P| Args]], Abox), memberNested(C, Args)),
         Theorems).
+
+% allConstraintsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
+%   findall([-[P| Args]], (member([-[P| Args]], Abox), memberNested(C, Args)),
+%         Theorems).
 
 % get all theorems that contain predicate P.
 allTheoremsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
   findall([+[P| Args]], member([+[P| Args]], Abox),
         Theorems).
+
+% allConstraintsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
+%   findall([-[P| Args]], member([-[P| Args]], Abox),
+%         Theorems).
 /**********************************************************************************************
     appAll(Predicate, List, ArgumentList, nth, Output):
         apply the predicate to one element in the List.

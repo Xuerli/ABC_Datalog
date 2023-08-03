@@ -9,8 +9,10 @@ axiom([+european(\x),-german(\x)]).
 axiom([+swan(lily)]).
 axiom([+swan(lucy)]).
 axiom([+swan(bruce)]).
+axiom([-german2(lily)]).
 axiom([+german(lily)]).
 axiom([+european(lucy)]).
+axiom([-european2(bruce)]).
 axiom([+australian(bruce)]).
 
 
