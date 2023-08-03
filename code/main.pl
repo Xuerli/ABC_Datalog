@@ -73,7 +73,7 @@ detRep(Theory,AllRepSolutions):-
              % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
               InsufIncomp \= (_,[],[])->
                       repInsInc(TheoryState, 0, InsufIncomp, TheoryRep))),
-            AllRepTheos1),fail, % TODO delete this
+            AllRepTheos1),
     % Only select the minimal repairs w.r.t. the number of repair plans.
     spec(heuris(Heuristics)),
     (notin(minicost, Heuristics)->AllRepTheos1 = AllRepSolutions;
@@ -227,11 +227,11 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
     nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
-    fail, %TODO delete this
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
     % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
+    nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
     repCombine(RepPlans, TheoryIn, RepSolutions),
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
