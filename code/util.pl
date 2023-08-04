@@ -112,6 +112,7 @@ appProp(Prop, [Predicate| [N| ExtraArgs]]):-
     split_at(N, ExtraArgs,  ArgsFront, ArgsBack),
     append([Predicate| ArgsFront], [Prop| ArgsBack], EList),
     Expression =..EList,
+    print(Expression),nl,
     call(Expression).
 
 appProp(Prop, [Predicate| [N| ExtraArgs]], PropNew):-
@@ -120,6 +121,7 @@ appProp(Prop, [Predicate| [N| ExtraArgs]], PropNew):-
     append([Predicate| ArgsFront], [Prop| ArgsBack], E1),
     append(E1, [PropNew], EList),
     Expression =..EList,
+    print(Expression),nl,
     call(Expression).
 
 appProp(Prop, Predicate, PropNew):- !,

@@ -55,13 +55,12 @@ appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     replaceS(Rule, RuleNew, TheoryIn, TheoryOut),!.
 
 appRepair(add_preP(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified.
-    sort([NewPrec| Rule], RuleNew),    % sort the clause where the head will be placed as the first literal.
-    replaceS(Rule, RuleNew, TheoryIn, TheoryOut),!.
+    appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan),!. %THey are the same
 
 
 %% Apply weaken a variable to a constant, unless it results in a rule with no variables.
 appRepair(weaken(vble(X), TargCons, TargCl), TheoryIn, RsBan, TheoryOut, RsBan):-
-    appEach(TargCl, [appLiteral, [replace, 2, vble(X), TargCons]], ClNew),
+    appEach(TargCl, [appLiteral, [replace, 2, vble(X), TargCons]], ClNew),halt,
     findall(vble(X), ((member(+Prop, ClNew); member(-Prop, ClNew)), memberNested(vble(X), Prop)), RemainingVbles),
     (RemainingVbles = []-> TheoryOut = TheoryIn,
      writeLog([nl, write_term_c('********  Warning : a rule without variables is resulted, so refuse the repair: '), nl,write_term_c(weaken(vble(X), TargCons, TargCl)),nl,finishLog]);
