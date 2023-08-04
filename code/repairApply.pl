@@ -15,6 +15,7 @@
 ***********************************************************************************************************************/
 appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
     writeLog([nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,finishLog]),
+    nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,
     TheoryStateIn = [[RsIn, RsBanIn],EC, Eproof, TheoryIn, TrueSet, FalseSet],
     appRepair(RepPlans, [], TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied),
     append(RsIn, RsApplied, RsOut),
@@ -22,14 +23,15 @@ appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
 
 appRepair([], RsApplied, Theory, RsBan, Theory, RsBan, RsApplied):-!,
     writeLog([nl, write_term_c('-------- Finish applying repair plans.'), nl, finishLog]).
+
 appRepair([Rs1|Rest], RsAppliedIn, TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied):-
     appRepair(Rs1, TheoryIn, RsBanIn, TheoryTem, RsBanTem),
-    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),
+    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),  %TODO check this
     sort(TheoryTem2, TheoryTem3),
     appRepair(Rest, RsAppliedInNew, TheoryTem3, RsBanTem2, TheoryOut, RsBanOut, RsApplied).
 
 %% Belief revision: delete unwanted clauses from the original Theory.
-appRepair(delete(Clause), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(delete(Clause), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     delete(TheoryIn, Clause, TheoryOut), !.
 
 appRepair(dele_pre(RulePairs), TheoryIn, RsBan, TheoryOut, RsBan):-
@@ -48,7 +50,11 @@ appRepair(ass2rule(Axiom, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):-
     sort([NewRule|TheoryTem], TheoryOut), !.
 
 %% add a new precondition to a rule
-appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified.
+    sort([NewPrec| Rule], RuleNew),    % sort the clause where the head will be placed as the first literal.
+    replaceS(Rule, RuleNew, TheoryIn, TheoryOut),!.
+
+appRepair(add_preP(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified.
     sort([NewPrec| Rule], RuleNew),    % sort the clause where the head will be placed as the first literal.
     replaceS(Rule, RuleNew, TheoryIn, TheoryOut),!.
 
@@ -56,7 +62,7 @@ appRepair(add_pre(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):-
 %% Apply weaken a variable to a constant, unless it results in a rule with no variables.
 appRepair(weaken(vble(X), TargCons, TargCl), TheoryIn, RsBan, TheoryOut, RsBan):-
     appEach(TargCl, [appLiteral, [replace, 2, vble(X), TargCons]], ClNew),
-    findall(vble(X), ((member(+Prop, ClNew); member(-Prop, ClNew)), member(vble(X), Prop)), RemainingVbles),
+    findall(vble(X), ((member(+Prop, ClNew); member(-Prop, ClNew)), memberNested(vble(X), Prop)), RemainingVbles),
     (RemainingVbles = []-> TheoryOut = TheoryIn,
      writeLog([nl, write_term_c('********  Warning : a rule without variables is resulted, so refuse the repair: '), nl,write_term_c(weaken(vble(X), TargCons, TargCl)),nl,finishLog]);
     RemainingVbles \= [], replaceS(TargCl, ClNew, TheoryIn, TheoryOut), !).
@@ -188,15 +194,16 @@ appRename((COld, CNew, ClOld), TheoryIn, TheoryOut):-
     Output: RsBanOut: the revised banned list of repair plans.
 ***********************************************************************************************************************/
 verifyRep(Theory, RsAppliedIn, Theory, RepPlan, RsBanIn, [RepPlan|RsBanIn], Theory, RsAppliedIn):- !.    % the repair plan makes no difference
+
 % no orphan variable allowed
-verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
-    %  orphan Vb
-    appEach(TheoryNew, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
-    sort(Ophans, OpOrdered), % remove duplicates.
-    % check that there should not be any axiom with orphan variable.
-    flatten(OpOrdered, [_|_]), !,
-    writeLog([nl, write_term_c('******** Warning: verifyRep found orphans:'), write_term_c(RepPlan),nl,
-            nl, write_term_All(TheoryNew),nl, finishLog]).
+% verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+%     %  orphan Vb
+%     appEach(TheoryNew, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
+%     sort(Ophans, OpOrdered), % remove duplicates.
+%     % check that there should not be any axiom with orphan variable.
+%     flatten(OpOrdered, [_|_]), !,
+%     writeLog([nl, write_term_c('******** Warning: verifyRep found orphans:'), write_term_c(RepPlan),nl,
+%             nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % no protected axioms should gone.
 verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
@@ -218,6 +225,7 @@ verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn]
     setof([+Y,-X], (member([+X,-Y], TheoryNew), member([+Y,-X], TheoryNew)), LoopRule),
     % at least one mirror rule is found.
     writeLog([nl, write_term_c('******** Warning: verifyRep found a loop rule:'), write_term_c(LoopRule), nl, finishLog]).
+
 % Finish the verification.
 verifyRep(_, RsAppliedIn, TheoryNew, RepPlan, RsBan, RsBan, TheoryNew, [RepPlan|RsAppliedIn]).
 
@@ -253,8 +261,8 @@ repCombine(RepPlans, Theory, RepSolsOut):-
 repCombine([], _, Solutions, Solutions).
 repCombine([Reps1| Rest], Theory, Groups, Solutions):-
     % Reps1 is a list of repair plans for one fault.
-    member(Rep1, Reps1),
-    appEach(Groups, [updGroup, Rep1, Theory], GroupsTem),
+    member(Rep1, Reps1), %Rep1 is one possible repair plan.
+    appEach(Groups, [updGroup, Rep1, Theory], GroupsTem), 
     appAll(append, GroupsTem, [[]], GroupsNew, 1),
     repCombine(Rest, Theory, GroupsNew, Solutions).
 

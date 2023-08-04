@@ -226,13 +226,14 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
-    nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
+    % nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
     % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
-    nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
+    nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_All(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
     repCombine(RepPlans, TheoryIn, RepSolutions),
+    nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
     %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,

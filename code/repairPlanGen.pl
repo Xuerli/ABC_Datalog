@@ -146,8 +146,6 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
         RepPlan = delete(Axiom)),
     ClT = [Axiom].
 
-%TODO add similar thing here which for CR8 which introduces the positive literal that is unprovable. 
-
 %% Block the unwanted proof by reformation (CR1,CR2,CR3,CR4) %TODO: consider functions and functions + CR7
 blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     spec(heuris(Heuristics)),
@@ -377,10 +375,10 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     SortedRems = [(MiniRemG, _,_)|_],        % get the number of the least unresolvable subgoals
     member((MiniRemG, Unresolvables, ProofCur), SortedRems),    % get one minimal group of the unresovable sub-goals.
     writeLog([nl,write_term_c('-- Unresolvables and ProofCur is :'),nl,write_term_c(Unresolvables),nl,write_term_c(ProofCur),nl,  finishLog]),
-    write_term_c('---Unresolvables and proofcur----'),nl,
-    write_term_c(Unresolvables),nl,
-    write_term_c(ProofCur),nl,
-    write_term_c('---end unresolvables----'),nl, 
+    % write_term_c('---Unresolvables and proofcur----'),nl,
+    % write_term_c(Unresolvables),nl,
+    % write_term_c(ProofCur),nl,
+    % write_term_c('---end unresolvables----'),nl, 
 
     (notin(noPrecDele, Heuristics),    % unblocking by deleting unprovable preconditions: SR5 
         writeLog([nl,write_term_c('--Deleting unprovable preconditions:'),nl,write_term_c(Unresolvables),nl,  finishLog]),
