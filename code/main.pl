@@ -233,7 +233,9 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
     nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_All(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
     repCombine(RepPlans, TheoryIn, RepSolutions),
-    nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,
+    % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,
+    % getAllReps(RepPlans,RepSolutions),
+    % nl,print('repair solutions2:'),nl,write_term_All(RepOut),nl,nl,halt,
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
     %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,

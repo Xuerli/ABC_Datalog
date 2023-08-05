@@ -229,6 +229,7 @@ appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):- %V
 appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):- %Verified.
     writeLog([nl, write_term_c('-------- Start apply arityInc-------- '),nl,
         write_term_c(arityInc(P, TargetL, TargetCl)), finishLog]),
+        print(arityInc(P, TargetL, TargetCl,PairCl)),nl,
 
     % collect the existing dummy terms in the input theory.
     findall(Num, (member(Clause, TheoryIn),
@@ -237,10 +238,8 @@ appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut,
                 string_concat('dummy_Normal', Num, C)),
             OldSer),
     sort(OldSer,  Sorted),
-
     % get dummy terms
     dummyTermArityInc(Sorted, DefCons, UniqCons),
-
     % Add unique constant/default constant to the targeted propositions and update them in the theory.
     % Heuristic6: When there are multiple occurrences of predicate, allocate them with same new argument while applying arity increment.
     findall((TLit, TLNew),
@@ -248,7 +247,6 @@ appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut,
                 (TLit = +[P|_]; TLit = -[P|_]),
                 appLiteral(TLit, [append, 0, [[UniqCons]]], TLNew)),
             TPairLis),
-
     replaceS(TPairLis, TargetCl, ClNew),
     % Get the desired arity of P, to avoid repeated arity increment in the following process.
     appLiteral(TargetL, [length, 0, PosNewArg]),
@@ -261,12 +259,11 @@ appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut,
                 appLiteral(Lit, [append, 0, [[DefCons]]], LNew)),
             PairLis),
     replaceS(PairLis, PairCl, PairClNew),
-
     replaceS([(TargetCl, ClNew), (PairCl, PairClNew)], TheoryIn, TheoryTem),
-
     % Add the default constant/independent variables to all occurrences of P,
     % and get the list of targeting propagated predicates, which occur in a rule together with P.
-    propArityInc([(P,1,PosNewArg)], TheoryTem, TheoryOut, [[DefCons]]).
+    % PosNewArgNew is PosNewArg + 1,
+    addArityP(TheoryTem,P,PosNewArg,[DefCons],TheoryOut).
 
 %For functions
 appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):- %Verified.

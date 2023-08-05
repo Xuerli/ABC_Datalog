@@ -1506,6 +1506,22 @@ addArityP([H|R],P,N,NewCon,[H2|R2]):-
     addArityP(R,P,N,NewCon,R2).
 
 addArityClauseP([],_,_,_,[]).
+
+addArityClauseP([+Lit|R],P,N,NewCon,[+Lit2|R2]):-
+    Lit = [P| Arg],\+length(Arg,N),!,
+    append(Lit,[NewCon],Lit2),
+    addArityClauseP(R,P,N,NewCon,R2).
+addArityClauseP([-Lit|R],P,N,NewCon,[-Lit2|R2]):-
+    Lit = [P| Arg],\+length(Arg,N),!,
+    append(Lit,[NewCon],Lit2),
+    addArityClauseP(R,P,N,NewCon,R2). 
+addArityClauseP([+Lit|R],P,N,NewCon,[+Lit|R2]):-
+    Lit = [P| Arg],length(Arg,N),!,
+    addArityClauseP(R,P,N,NewCon,R2).
+addArityClauseP([-Lit|R],P,N,NewCon,[-Lit|R2]):-
+    Lit = [P| Arg],length(Arg,N),!,
+    addArityClauseP(R,P,N,NewCon,R2). 
+
 addArityClauseP([+Lit|R],P,N,NewCon,[+Lit2|R2]):-
     Lit = [Pred| Arg],
     addArityArgP(Arg,P,N,NewCon,Arg2),
@@ -1516,6 +1532,8 @@ addArityClauseP([-Lit|R],P,N,NewCon,[-Lit2|R2]):-
     addArityArgP(Arg,P,N,NewCon,Arg2),
     Lit2 = [Pred|Arg2],
     addArityClauseP(R,P,N,NewCon,R2). 
+
+
 
 addArityArgP([],_,_,_,[]).
 addArityArgP([C|R],P,N,NewCon,[C|R2]):- %Constants and variables can be ignored.
@@ -1543,3 +1561,10 @@ addArityArgP([F|R],P,N,NewCon,[F2T|R2]):- %FUnction P that already has the corre
     F2T = [P|Args2],
     length(Args2,N),!,
     addArityArgP(R,P,N,NewCon,R2).
+
+getAllReps(RepPlans,RepOut):-
+    findall([RepPlan],
+        (memberNested([_,(RepPlan,_),_],RepPlans)),
+        RepOutTemp
+    ),
+    sort(RepOutTemp,RepOut).
