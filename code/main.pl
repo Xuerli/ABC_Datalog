@@ -103,30 +103,30 @@ detRep(Theory,AllRepSolutions):-
                         InSuffs: the unprovable goals from pf(T).
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
-detInsInc(TheoryState,FaultState):- %TODO up till here
-    write_term_c("---------hello--------"),nl,
+detInsInc(TheoryState,FaultState):- 
+    % write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     spec(equalities(EQs)),
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
     nl,write_term_c(Theory),nl,write_term_All(Theory),nl,nl, write_term_c('---------Equivalent classes are:------'),nl, write_term_All(EQs),finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
 
-    write_term_c('---------Start detInsInc, Input theory is:------'), nl,
-    write_term_All(Theory),nl,
-    write_term_c('----------This is the True set:-------------'),nl,
-    write_term_All(TrueSetE),nl,
-    write_term_c("---------Checking true set insuff and suffs--------"),nl,
+    % write_term_c('---------Start detInsInc, Input theory is:------'), nl,
+    % write_term_All(Theory),nl,
+    % write_term_c('----------This is the True set:-------------'),nl,
+    % write_term_All(TrueSetE),nl,
+    % write_term_c("---------Checking true set insuff and suffs--------"),nl,
     findall( [Suff, InSuff],
             ( % Each preferred sentence is negated, and then added into Theory.
               member([+[Pre| Args]], TrueSetE), % This is not changed for now until have better representation scheme.
               % skip equalities/inequalities which have been tackled.
               notin(Pre, [\=, =]),
               Goal = [-[Pre| Args]], 
-            write_term_c(Goal),nl,
+            % write_term_c(Goal),nl,
               % Get all proofs and failed proofs of the goal.
               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall( [Proof, Evidence],
-                     ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
+                     (slRL(Goal, Theory, EC, Proof, Evidence, [])),
                      Proofs1),
               % Proofs1= [[P1, []],[P2, []],[[],E1]...]; Proofs2 = [[P1,P2,[]],[[],[],E]]
               transposeF(Proofs1, [Proofs, Evis]),
@@ -136,18 +136,17 @@ detInsInc(TheoryState,FaultState):- %TODO up till here
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-    write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
-     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
-    write_term_c('---------Checking incompatibilities------'), nl,
+    % write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
+    %  nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
+    %  writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
+    %  nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
+    % write_term_c('---------Checking incompatibilities------'), nl,
     % detect the incompatibilities
       findall((Goal, UnwProofs),
            (member([+[Pre| Args]], FalseSetE),
             % skip equalities/inequalities which have been tackled.
             notin(Pre, [\=, =]),
             Goal = [-[Pre| Args]],
-            write_term_c(Goal),nl,
             % get all of a proof of Goal
             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
             findall(Proof,
@@ -157,7 +156,7 @@ detInsInc(TheoryState,FaultState):- %TODO up till here
            InComps),             % Find all incompatibilities.
 
     writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
-    write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
+    % write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
     % detect the inconsistencies due to the violation of constrains
     findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
@@ -169,8 +168,8 @@ detInsInc(TheoryState,FaultState):- %TODO up till here
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
-      write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
-      write_term_c('-----end---------'),nl,nl,
+    %   write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
+    %   write_term_c('-----end---------'),nl,nl,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
@@ -216,19 +215,25 @@ repInsInc(TheoryState, Layer, (_, Insuf, Incomp), [fault, (Layer/N), TheoryState
 % repair theory
 repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     spec(roundNum(R)),
+    nl, write_term_c('--Start repInsInc round: '), write_term_c(R),nl,
     writeLog([nl, write_term_c('--------- Start repInsInc round: '), write_term_c(R),nl, finishLog]),
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
     findall(Proof, (member((_, UnwProofs), IncompsIn), member(Proof, UnwProofs)),  IncompsProofs),
+    nl,write_term_c('----Insufficiencies:-------'),nl,write_term_All(InsuffsIn),nl,
+    nl,write_term_c('----Incompatabilities:-------'),nl,write_term_All(IncompsProofs),nl,
     %appEach is kind of like a foreach loop
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
+    % nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
     % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
+    nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_All(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
     repCombine(RepPlans, TheoryIn, RepSolutions),
+    nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
     %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,
@@ -250,8 +255,8 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     length(AllRepStates, Length),
     writeLog([nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,
                 write_term_All(AllRepStates), finishLog]),
-
-     % pruning the sub-optimal.
+    % nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,write_term_All(AllRepStates),nl,halt,
+    % pruning the sub-optimal.
     pareOpt(AllRepStates, Optimals1),
     length(Optimals1, LO1),
     writeLog([nl, write_term_c('--The number of Optimals: '), write_term_c(LO1), nl, write_term_All(Optimals1), finishLog]),

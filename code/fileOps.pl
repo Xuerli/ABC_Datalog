@@ -82,7 +82,9 @@ output(AllRepStates, ExecutionTime):-
     setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
     length(OrigTheory, AxiomNum),
     assert(spec(axiomNu(AxiomNum))),
-    fileName('faultFree', Fname1),
+    theoryName(Name),
+    string_concat(Name,'faultFree',NR),
+    fileName(NR, Fname1),
     open(Fname1, write, Stream1),
 
     % output the execution time.

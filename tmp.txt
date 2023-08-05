@@ -1,0 +1,1 @@
+arityInc(penguin,+[penguin,[lucy]],[+[penguin,[lucy]]],-[penguin,vble(x)],[+[bird,vble(y)],-[penguin,vble(x)]])

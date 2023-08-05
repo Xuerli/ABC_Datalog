@@ -20,13 +20,21 @@ adverseEnum(N,List) :-
     Output: Theorems is a list of theorem whose argument contains the constant.
 **********************************************************************************************************************************/
 allTheoremsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
-  findall([+[P| Args]], (member([+[P| Args]], Abox), member(C, Args)),
+  findall([+[P| Args]], (member([+[P| Args]], Abox), memberNested(C, Args)),
         Theorems).
+
+% allConstraintsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
+%   findall([-[P| Args]], (member([-[P| Args]], Abox), memberNested(C, Args)),
+%         Theorems).
 
 % get all theorems that contain predicate P.
 allTheoremsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
   findall([+[P| Args]], member([+[P| Args]], Abox),
         Theorems).
+
+% allConstraintsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
+%   findall([-[P| Args]], member([-[P| Args]], Abox),
+%         Theorems).
 /**********************************************************************************************
     appAll(Predicate, List, ArgumentList, nth, Output):
         apply the predicate to one element in the List.
@@ -132,17 +140,44 @@ appProp(Prop, Predicate, PropNew):- !,
 argsMis([], [], [], []):- !.
 argsMis([A1| Args1], [A2| Args2], MisPairs, [MisPair1| MisPos2]):-
     argPairMis(A1, A2, Sigma, MisPair1),
+    extractNestedPairs(MisPair1,MisPair1Ex),
     subst(Sigma, Args1, ArgsSb1),
     subst(Sigma, Args2, ArgsSb2),
     argsMis(ArgsSb1, ArgsSb2, MisPairs2, MisPos2),
-    append(MisPair1, MisPairs2, MisPairs).
+    append(MisPair1Ex, MisPairs2, MisPairs).
 
 argPairMis(C, C, [],[]):- !.
-argPairMis([Cons], vble(X), [Cons]/vble(X), []):- !.
-argPairMis(vble(X), [Cons], [Cons]/vble(X), []):- !.
+argPairMis(Y, vble(X), [], [occurs]):- 
+    is_func(Y),
+    memberNested(vble(X),Y),
+    !.
+argPairMis(vble(X), Y, [], [occurs]):- 
+    is_func(Y),
+    memberNested(vble(X),Y),
+    !.
+argPairMis(Y, vble(X), Y/vble(X), []):- (is_cons(Y);is_func(Y)), !.
+argPairMis(vble(X), Y, Y/vble(X), []):- (is_cons(Y);is_func(Y)),!.
 argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
 argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
     Cons1 \= Cons2.
+argPairMis([Func1|F1Arg],[Func2|F2Arg],[],[([Func1|F1Arg], [Func2|F2Arg])]):- 
+    Func1 \= Func2.
+argPairMis([Func1|F1Arg],[Func1|F2Arg],Sigma, MisPair):- 
+    argsMisFunc([Func1|F1Arg],[Func1|F2Arg],Sigma,MisPair).
+
+argsMisFunc([],[],[],[]):- !.
+argsMisFunc([A1|Args1],[A2|Args2],Sigma,[MisPair1| MisPos2]):-
+    argPairMis(A1,A2,Sigma2,MisPair1),
+    subst(Sigma2, Args1, ArgsSb1),
+    subst(Sigma2, Args2, ArgsSb2),
+    argsMisFunc(ArgsSb1,ArgsSb2,SigmaR,MisPos2),
+    compose1(Sigma2,SigmaR,Sigma).
+    % append(MisPair1,MisPairsR,MisPairs).
+
+extractNestedPairs(L,Lout):-
+    findall((A,B),
+        memberNested((A,B),L),
+        Lout).
 
 % In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
 is_cons(X):- X = [Y], atomic(Y).
@@ -259,20 +294,21 @@ deleteAll(ListsInput, [H|T], ListOut):-
     deleteAll(ListRest, T, ListOut).
 
 % succeed if ArgsG and ArgsT can be unified by ignoring the tail of the longer argument list.
+
 diff(ArgsG, ArgsT, ArgsTail):-
     length(ArgsG, LG),
     length(ArgsT, LT),
     (LG = LT-> ArgsTail = [], !,
         unification(ArgsG, ArgsT,_,[],_,_,[]);
-    LG > LT-> split_at(LT, ArgsG, GFront, ArgsTail), !,
+    LG > LT-> choose(LT,ArgsG,GFront),deleteAll(ArgsG,GFront,ArgsTail),%split_at(LT, ArgsG, GFront, ArgsTail), !,
         unification(GFront, ArgsT,_,[],_,_,[]);
-    LT > LG-> split_at(LG, ArgsT, TFront, ArgsTail),
+    LT > LG-> choose(LG,ArgsT,TFront),deleteAll(ArgsT,TFront,ArgsTail),%split_at(LG, ArgsT, TFront, ArgsTail),
         unification(ArgsG, TFront,_,[],_,_,[])).
 
 % drop the last element from the input list
 dropTail(ListIn, ListOut):-
-length(ListIn, L), M is L-1,
-split_at(M, ListIn, ListOut, _).
+    length(ListIn, L), M is L-1,
+    split_at(M, ListIn, ListOut, _).
 
 /**********************************************************************************************************************
 costRepairs (R, C): calculate the cost C by split R into members one by one.
@@ -373,17 +409,18 @@ essSubs([], _, []).
 
 % if there is one proof which does not contain Rule, then Rule is not essential for this sufficiency.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-setof(Proof, (member(Proof, Proofs),
-               notin((_,Rule,_,_,_), Proof)),
-         [_|_]), !,
-essSubs(Rest, Rule, SubsOut).        % continue checking the next.
+    setof(Proof, (member(Proof, Proofs),
+                notin((_,Rule,_,_,_), Proof)),
+            [_|_]), !,
+    essSubs(Rest, Rule, SubsOut).        % continue checking the next.
+
 % Otherwise, record the substitutions of Rule in these proofs where it is essential.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-findall(Subs, (    member(Proof, Proofs),
-                 member((_,Rule,Subs,_,_), Proof)),
-         AllSubs),
-essSubs(Rest, Rule, SubsRest),        % continue checking the next.
-append(AllSubs, SubsRest, SubsOut).
+    findall(Subs, (    member(Proof, Proofs),
+                    member((_,Rule,Subs,_,_), Proof)),
+            AllSubs),
+    essSubs(Rest, Rule, SubsRest),        % continue checking the next.
+    append(AllSubs, SubsRest, SubsOut).
 
 notEss2suff([], _).
 notEss2suff([(_,Proofs)|Rest], Axiom):-
@@ -416,6 +453,14 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
             member(Constant, ArgB1),
             member(Constant, ArgB2)),
            Cons2),
+    % get the list of constants which occur at least twice in the head.
+   findall(Constant,
+           (member(+[P1| ArgB1], ClauseIn),
+            member(+[P2| ArgB2], ClauseIn),
+            [P1| ArgB1] \= [P2| ArgB2],
+            member(Constant, ArgB1),
+            member(Constant, ArgB2)),
+           Cons3),
    % get the list of variables in the input clause.
    findall(X,
            ( (member(+[P1| Arg], ClauseIn);
@@ -423,7 +468,8 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
              member(vble(X), Arg)),
            AvoidList),
    % combine all constant candidates and remove the duplicates by sort them.
-   append(Cons1, Cons2, Cons),
+   append(Cons1, Cons2, ConsT),
+   append(ConsT,Cons3,Cons),
    sort(Cons, ConsList),
    getNewVble(ConsList, AvoidList, Cons2Vbles, ReSubs),
    appEach(ClauseIn, [appLiteral, [replaceS, 1, Cons2Vbles]],  ClauseOut).
@@ -788,6 +834,21 @@ replaceS(E, ListIn, ListOut):-
 replaceS(E, SubE, ListIn, ListOut):-
   replace(E, SubE, ListIn,ListOut).
 
+replaceNested(_,_,[],[]):- !.
+replaceNested(E,SubE,[+H|T],[+H2|T2]):-
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E,SubE,[-H|T],[-H2|T2]):-
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E,SubE,[H|T],[SubE|T2]):- H = E, replaceNested(E, SubE, T, T2), !.
+replaceNested(E,SubE,[H|T],[H2|T2]):-
+    H \= E,
+    is_func(H),!,
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E, SubE, [H|T], [H|T2]) :- H \= E, replaceNested(E, SubE, T, T2).
+
 /**********************************************************************************************
     repList(ListToRep, Rep, ListIn,ListOut): for each element in ListToRep,
     replace it with Rep in ListIn and get ListOut.
@@ -1084,17 +1145,17 @@ reorderClause(Target,[H|R],Out):-
 
 
 memberNested(Elem,List):-
-    member(Elem,List),!.
+    member(Elem,List).
 
 memberNested(Elem,[H|_]):-
     is_list(H),
     memberNested(Elem,H).
 
 memberNested(Elem,[_|R]):-
+    member([_|_],R),
     memberNested(Elem,R).
 
 memberNested(_,[]):- fail.
-
 
 occursCheck(X,Funclist):-
     \+memberNested(vble(X), Funclist),!.
@@ -1170,3 +1231,315 @@ removeDuplicates([H|T],Current,[H|T2]):-
 removeDuplicates([H|T],Current,T2):-
     member(H,Current),!,
     removeDuplicates(T,Current,T2).
+
+% Finding ancestor from deriv list
+findAncestor(Deriv,IC,Deriv):-
+    last(Deriv, CurDerStep),
+    CurDerStep = (_,_,_,IC,_),!.
+
+findAncestor(Deriv,IC,NewDeriv):-
+    dropTail(Deriv,Ances),
+    findAncestor(Ances,IC,NewDeriv).
+
+addSameSign(+_,Y,+Y):- !.
+addSameSign(-_,Y,-Y):- !.
+
+addOpSign(+_,Y,-Y):- !.
+addOpSign(-_,Y,+Y):- !.
+
+isOpSign(+_,-_).
+isOpSign(-_,+_).
+
+
+% TraceBackClause: Find back the original clause that introduced IC (in the case where IC is the ancestor.)
+traceBackClause(IC,[],_,IC):- !.
+
+traceBackClause(IC,_,TheoryIn,IC):-
+    member(IC,TheoryIn),
+    !.
+
+traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
+    last(Deriv, (_,OrgClause,_,IC,_)),
+    member(OrgClause,TheoryIn),
+    !.
+
+traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
+    removeLast(Deriv,DerivNew),
+    traceBackClause(IC,DerivNew,TheoryIn,OrgClause).
+
+removeLast([_],[]).
+removeLast([L|R],[L|Removed]):-
+    removeLast(R,Removed).
+
+takeout(X,[X|R],R).  
+takeout(X,[F |R],[F|S]) :- takeout(X,R,S).
+
+perm([X|Y],Z) :- perm(Y,W), takeout(X,Z,W).  
+perm([],[]).
+
+choose(1, [H|_], [H]).
+choose(N, [H|TL], [H|ST]) :- Less1 is N - 1, choose(Less1, TL, ST).
+choose(N, [_|T], L) :- choose(N, T, L).
+
+containsC(Const,Props):-
+    member(Prop,Props),
+    prop(Prop,UProp),
+    memberNested(Const,UProp).
+
+nestedDelete(List,Item,OutList,DelPos):-
+    nestedDeleteHelper(0,List,Item,[],OutList,[],DelPos).
+
+nestedDeleteHelper(_,[],_,OutList,OutList,DelPos,DelPos):- !.
+nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
+    memberNested(Item,[H]), %The item to be deleted is included, do not append
+    !,
+    append(CurDelPos,[Pos],CurDelPosNew),
+    PosNew is Pos + 1,
+    nestedDeleteHelper(PosNew,R,Item,CurList,OutList,CurDelPosNew,DelPos).
+nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
+    \+memberNested(Item,[H]), %The item to be deleted is not included
+    !,
+    append(CurList,[H],CurListNew),
+    PosNew is Pos + 1,
+    nestedDeleteHelper(PosNew,R,Item,CurListNew,OutList,CurDelPos,DelPos).
+
+
+addVar([],_,[]).
+addVar([(COrig, Cl)|T],AvoidList,[(COrig,vble(Y),Cl)|TOut]):-
+    findall(X,
+        ( (member(+[_| Arg], Cl);
+            member(-[_| Arg], Cl)),
+            memberNested(vble(X), Arg)),
+        AvoidListTmp),
+    append(AvoidList,AvoidListTmp,AvoidListNew),
+    getNewVble([COrig],AvoidList,[(COrig, vble(Y))], _),
+    append(AvoidListNew,[Y],AvoidListNew2),
+    addVar(T,AvoidListNew2,TOut).
+
+maxlist([],0).
+
+maxlist([Head|Tail],Max) :-
+    maxlist(Tail,TailMax),
+    Head > TailMax,
+    Max is Head.
+
+maxlist([Head|Tail],Max) :-
+    maxlist(Tail,TailMax),
+    Head =< TailMax,
+    Max is TailMax.
+
+newArity(NewLit,FuncN,N):-
+    prop(NewLit,UNewLit),
+    findall(Y,
+        (memberNested(Funclist,UNewLit),
+        member(FuncN,Funclist),
+        length(Funclist,Y)
+        ),
+    Ys),!,
+    maxlist(Ys,Nt),
+    N is Nt - 1.
+
+newArity(NewLit,FuncN,N):-
+    \+prop(NewLit,_),
+    findall(Y,
+        (memberNested(Funclist,NewLit),
+        member(FuncN,Funclist),
+        length(Funclist,Y)
+        ),
+    Ys),!,
+    maxlist(Ys,Nt),
+    N is Nt - 1.
+
+newArity(_,_,0). %For safety
+
+addArityP(Theory,_,0,Theory):- !. % FOr safety: if arity 0, do not change.
+addArityP([],_,_,[]).
+addArityP([H|R],P,N,[H2|R2]):-
+    addArityClauseP(H,P,N,H2),
+    addArityP(R,P,N,R2).
+
+addArityClauseP([],_,_,[]).
+addArityClauseP([+Lit|R],P,N,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,R2).
+addArityClauseP([-Lit|R],P,N,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,R2). 
+
+addArityArgP([],_,_,[]).
+addArityArgP([C|R],P,N,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addArityArgP(Args,P,N,Args2),
+    F2 = [Pname|Args2],
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    findall(X,memberNested(vble(X), F2T),AvoidList),
+    getNewVble([dummy], AvoidList, [(dummy, NewVble)], _),
+    append(F2T,[NewVble],F2),
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2T|R2]):- %FUnction P that already has the correct arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    addArityArgP(R,P,N,R2).
+
+
+deleteArityP([],_,_,_,[]).
+deleteArityP([H|R],P,DelPos,N,[H2|R2]):-
+    deleteArityClauseP(H,P,DelPos,N,H2),
+    deleteArityP(R,P,DelPos,N,R2).
+
+deleteArityClauseP([],_,_,_,[]).
+deleteArityClauseP([+Lit|R],P,DelPos,N,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    deleteArityArgP(Arg,P,DelPos,N,Arg2),
+    Lit2 = [Pred|Arg2],
+        print(Lit2),nl,
+    deleteArityClauseP(R,P,DelPos,N,R2).
+deleteArityClauseP([-Lit|R],P,DelPos,N,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    deleteArityArgP(Arg,P,DelPos,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    deleteArityClauseP(R,P,DelPos,N,R2). 
+
+deleteArityArgP([],_,_,_,[]).
+deleteArityArgP([C|R],P,DelPos,N,[C|R2]):-
+    (is_cons(C);C = vble(_)),
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2|R2]):-
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2 = [Pname|Args2],
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2|R2]):- 
+    is_func(F),
+    F = [P|Args],
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    deletePos(F2T,DelPos,F2),
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2T|R2]):-
+    is_func(F),
+    F = [P|Args],
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    deleteArityArgP(R,P,DelPos,N,R2).
+
+deletePos(L,DelPos,Out):-
+    sort(0,  @>, DelPos,  Sorted), %Sort delete pos in descending order
+    deletePosHelper(L,Sorted,Out).
+
+deletePosHelper(L,[],L).
+deletePosHelper(L,[H|R],Out):-
+    deletePosN(L,H,L2),
+    deletePosHelper(L2,R,Out).
+
+deletePosN(L,H,L2):-
+    atomic(H),
+    nth0(H,L,_,L2).
+
+involvedClause(_,_,[],_,[]).
+involvedClause(Goal,TheoryIn,[H|R],EC,[H|R2]):-
+    slRL(Goal,TheoryIn,EC,Proof,[],[]),
+    member((_,H,_,_,_), Proof),
+    is_list(H),!,
+    involvedClause(Goal,TheoryIn,R,EC,R2).
+involvedClause(Goal,TheoryIn,[_|R],EC,R2):-
+    involvedClause(Goal,TheoryIn,R,EC,R2).
+
+allFunc(L,FP):-
+    findall(FuncN,
+        (
+            member(Cl,L),
+            (member(+Prop,Cl);member(-Prop,Cl)),
+            memberNested(C,Prop),
+            is_func(C),
+            C = [FuncN|_]
+        ),
+    FPT),
+    sort(FPT,FP).
+
+addConstoFunc([],_,_,[]).
+addConstoFunc([C|R],P,N,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addConstoFunc(R,P,N,R2).
+addConstoFunc([F|R],P,N,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addConstoFunc(Args,P,N,Args2),
+    F2 = [Pname|Args2],
+    addConstoFunc(R,P,N,R2).
+addConstoFunc([F|R],P,N,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addConstoFunc(Args,P,N,Args2),
+    F2T = [P|Args2],
+    append(F2T,[N],F2),
+    addConstoFunc(R,P,N,R2).
+
+
+addArityP(Theory,_,0,_,Theory):- !. % FOr safety: if arity 0, do not change.
+addArityP([],_,_,_,[]).
+addArityP([H|R],P,N,NewCon,[H2|R2]):-
+    addArityClauseP(H,P,N,NewCon,H2),
+    addArityP(R,P,N,NewCon,R2).
+
+addArityClauseP([],_,_,_,[]).
+addArityClauseP([+Lit|R],P,N,NewCon,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,NewCon,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,NewCon,R2).
+addArityClauseP([-Lit|R],P,N,NewCon,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,NewCon,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,NewCon,R2). 
+
+addArityArgP([],_,_,_,[]).
+addArityArgP([C|R],P,N,NewCon,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2 = [Pname|Args2],
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    append(F2T,[NewCon],F2),
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2T|R2]):- %FUnction P that already has the correct arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    addArityArgP(R,P,N,NewCon,R2).
