@@ -1,6 +1,8 @@
 :- working_directory(_, '../code').
 :-[main].
 
+theoryName(afterstudent1).
+
 axiom([+adult(\x),-undergraduateStudent(\x)]).
 axiom([+notworking(\x,partTime),-student(\x)]).
 axiom([+student(\x),-undergraduateStudent(\x)]).

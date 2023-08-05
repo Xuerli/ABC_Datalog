@@ -13,6 +13,9 @@ fileName(FileCore, Name):-
    appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
    appAll(string_concat, ['.txt',Time1, Date1,'_' , FileCore , '_', 'log/'],[''], Name, 1).
 
+fileName(FileCore,Folder,SolNo, Name):-
+   appAll(string_concat, ['.txt',SolNo,'_' , FileCore , '/_', Folder,'log/'],[''], Name, 1).
+
 /**********************************************************************************************
   fileName: generate file name.
 ***********************************************************************************************/
@@ -86,6 +89,8 @@ output(AllRepStates, ExecutionTime):-
     string_concat(Name,'faultFree',NR),
     fileName(NR, Fname1),
     open(Fname1, write, Stream1),
+    string_concat('log/',Name,NameFolder),
+    (\+exists_directory(NameFolder)-> make_directory(NameFolder);nl),
 
     % output the execution time.
     (exists_file('aacur.txt')->
@@ -239,6 +244,10 @@ writeFile(Type, Stream, Theories, AllStates):-
     forall(member(RepTheory, Theories),
             (    nth0(NO, Theories, RepTheory),    % RepTheory is the (NO+1)th solution
                 Rank is NO+1,
+                theoryName(Name),
+                string_concat(Name,'faultFree',NR),
+                fileName(NR, Name,Rank,NameNew),
+                open(NameNew,write,StreamNew),
                 % ** unify every sigle repair in the list of repairs (SetOfRepairs) to RepairSorrted
                    findall((Round, Repairs),
                                (member([Type, Round,[[Reps,_],_,_,RepTheory,_,_]], AllStates),
@@ -264,7 +273,9 @@ writeFile(Type, Stream, Theories, AllStates):-
                                     writeAll(Stream, Rep),nl(Stream))),
                 nl(Stream),
                 write(Stream, 'Repaired Theory: '), nl(Stream),
-                writeAll(Stream, Axioms), nl(Stream))).
+                writeAll(Stream, Axioms), nl(Stream),
+                writeAll(StreamNew,Axioms),nl(StreamNew),close(StreamNew)
+                )).
 
 % write a list line by line
 writeAll(_, []):- !.
