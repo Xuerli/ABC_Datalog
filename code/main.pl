@@ -136,10 +136,10 @@ detInsInc(TheoryState,FaultState):-
            AllP),
      % Split into a list of sufficiencies (Suffs), and a list of insufficiencies (InSuffs).
      transposeF(AllP, [Suffs, InSuffs]),
-    write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
-     writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
-     nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
+    % write_term_c('---------SufGoals is------'), nl,print(Suffs),nl,
+    %  nl, write_term_c('---------InsufGoals is------'), nl,write_term_c(InSuffs),nl,
+    %  writeLog([nl, write_term_c('---------SufGoals is------'), nl,write_term_All(Suffs),
+    %  nl, write_term_c('---------InsufGoals is------'), nl,write_term_All(InSuffs), finishLog]),
     % write_term_c('---------Checking incompatibilities------'), nl,
     % detect the incompatibilities
       findall((Goal, UnwProofs),
@@ -156,7 +156,7 @@ detInsInc(TheoryState,FaultState):-
            InComps),             % Find all incompatibilities.
 
     writeLog([nl, write_term_c('---------InComps are------'),nl, write_term_All(InComps), finishLog]),
-    write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
+    % write_term_c('---------InComps are------'),nl, write_term_All(InComps),nl, 
     % detect the inconsistencies due to the violation of constrains
     findall((Constrain, UnwProofs),
               (member(Constrain, Theory),        % get a constrain axiom from the theory.
@@ -168,8 +168,8 @@ detInsInc(TheoryState,FaultState):-
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
-      write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
-      write_term_c('-----end---------'),nl,nl,
+    %   write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
+    %   write_term_c('-----end---------'),nl,nl,
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
@@ -255,8 +255,8 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     length(AllRepStates, Length),
     writeLog([nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,
                 write_term_All(AllRepStates), finishLog]),
-
-     % pruning the sub-optimal.
+    % nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,write_term_All(AllRepStates),nl,halt,
+    % pruning the sub-optimal.
     pareOpt(AllRepStates, Optimals1),
     length(Optimals1, LO1),
     writeLog([nl, write_term_c('--The number of Optimals: '), write_term_c(LO1), nl, write_term_All(Optimals1), finishLog]),

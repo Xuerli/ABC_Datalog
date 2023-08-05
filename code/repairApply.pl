@@ -15,7 +15,6 @@
 ***********************************************************************************************************************/
 appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
     writeLog([nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,finishLog]),
-    nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,
     TheoryStateIn = [[RsIn, RsBanIn],EC, Eproof, TheoryIn, TrueSet, FalseSet],
     appRepair(RepPlans, [], TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied),
     append(RsIn, RsApplied, RsOut),
@@ -34,14 +33,14 @@ appRepair([Rs1|Rest], RsAppliedIn, TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApp
 appRepair(delete(Clause), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     delete(TheoryIn, Clause, TheoryOut), !.
 
-appRepair(dele_pre(RulePairs), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(dele_pre(RulePairs), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified.
     replaceS(RulePairs, TheoryIn, TheoryOut),!.
 
 %% add a new axiom
-appRepair(expand(Clause), TheoryIn, RsBan, TheoryOut, RsBan):- !,
+appRepair(expand(Clause), TheoryIn, RsBan, TheoryOut, RsBan):- !, %Verified.
     sort([Clause| TheoryIn], TheoryOut).
 
-appRepair(analogy(_, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):- !,
+appRepair(analogy(_, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):- !, %Verified.
     sort([NewRule| TheoryIn], TheoryOut).
 
 %% turn an old assertion to a new rule
@@ -85,6 +84,14 @@ appRepair(renamePred(P,NewP,TargP,TargCl),TheoryIn, RsBan,TheoryOut,RsBan):- %Ve
     replaceS(TargP,NewPred,TargCl,NewCl),
     replaceS(TargCl,NewCl,TheoryIn,TheoryOut),!.
 
+%For functions
+appRepair(renamePred(P,NewP,TargP,TargCl),TheoryIn, RsBan,TheoryOut,RsBan):- %Verified.
+    \+prop(TargP,_),
+    TargP = [P|OrgArgs],
+    NewPred = [NewP|OrgArgs],
+    replaceNested(TargP,NewPred,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryOut),!.
+
 
 %% Apply rename an item F which is either a predicate or a constant.
 %% Rename includes blocks the unification of a proposition from PS and a input proposition.
@@ -111,23 +118,48 @@ appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):
                  write_term_c(rename(F)),nl, write_term_c(' more.'), nl, finishLog]),!;     % do not rename F further
      RsBanOut = RsBanIn, writeLog([nl, write_term_c('******** Finish renaming.'),nl, finishLog]),!).
 
+%For functions
+appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):- %Verified.
+    \+prop(TargetL,_),
+    dummyTerm(F, TheoryIn, FNew),
+    spec(protList(ProtectedList)),
+
+    % appLiteral(TargetL, [nth0, 1, Ith, F]),    % Get the position of the original argument vble(X).
+    % appLiteral(TargetL, [replacePos, 1, Ith, FNew], LitNew),
+    nth0(Ith,TargetL,F),
+    replacePos(Ith,TargetL,FNew,LitNew),
+    replaceNested(TargetL, LitNew, TargetCl, ClNew),
+    orderAxiom(ClNew, ClNewSorted),
+    replaceS(TargetCl, ClNewSorted, TheoryIn, TheoryOut),
+    termOcc(F, TheoryOut, OccF),    % calculate the number occurances of F in the new theory.
+    (OccF == 0, occur(F, ProtectedList)->
+                writeLog([nl, write_term_c('******** Warning1: Cannot apply repair plan:'),
+                write_term_c(rename(F)),nl,
+                write_term_c('--Otherwise the predicate is gone:'), nl, finishLog]),
+                fail;    % F is gone, which is not allowed. Go to the last branch of appRepair
+     OccF < 2, occur(F,ProtectedList)->
+                 RsBanOut = [rename(F)| RsBanIn], writeLog([nl, write_term_c('******** Warning2 do not apply:'),
+                 write_term_c(rename(F)),nl, write_term_c(' more.'), nl, finishLog]),!;     % do not rename F further
+     RsBanOut = RsBanIn, writeLog([nl, write_term_c('******** Finish renaming.'),nl, finishLog]),!).
+
+
 % Renaming a predicate to BUILD a proof.
 appRepair(rename(_, _, InpClOld, ClNew), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     replaceS(InpClOld, ClNew, TheoryIn, TheoryOut).
 
 %Reform one to the other completely (to BUILD a proof)
-appRepair(rename(POld, PNew, Arity, LitOld, InpClOld, Opt), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(rename(POld, PNew, Arity, LitOld, InpClOld, Opt), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     appLiteral(LitOld, [mergeProp, 0, POld, PNew, Arity, Opt], LitNew),
     replaceS(LitOld, LitNew, InpClOld, InpClNew),
     replaceS(InpClOld, InpClNew, TheoryIn, TheoryOut).
 
 
 % rename the constant Cold with CNew in clause ClOld.
-appRepair(rename(RenameList), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(rename(RenameList), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified (changed to not use)
     appAll(appRename, RenameList, [TheoryIn], TheoryOut, 1).
 
 % merge by make all F1's arity to be Arity, and then replacing all F1 with F2.
-appRepair(merge(POld, PNew, ArgDiff, Op), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(merge(POld, PNew, ArgDiff, Op), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     % replace all F1 with F2 at each proposition
     appEach(TheoryIn, [appEach, [appLiteral, [mergeProp, 0, POld, PNew, ArgDiff, Op]]], TheoryTem),
     appEach(TheoryTem, [sort], TheoryTem2),    % remove duplicate literals at each axiom.
@@ -135,11 +167,26 @@ appRepair(merge(POld, PNew, ArgDiff, Op), TheoryIn, RsBan, TheoryOut, RsBan):-
 
 %Fail the occurs check
 appRepair(occurFailC(TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    prop(TargLit,_),
     replaceS(TargLit,NewLit,TargCl,NewCl),
     replaceS(TargCl,NewCl,TheoryIn,TheoryOut).
 
-appRepair(occurFailF(FuncN,TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- 
+%For functions
+appRepair(occurFailC(TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    \+prop(TargLit,_),
+    replaceNested(TargLit,NewLit,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryOut).
+
+appRepair(occurFailF(FuncN,TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    prop(TargLit,_),
     replaceS(TargLit,NewLit,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryTmp),
+    newArity(NewLit,FuncN,N),
+    addArityP(TheoryTmp,FuncN,N,TheoryOut).
+
+appRepair(occurFailF(FuncN,TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    \+prop(TargLit,_),
+    replaceNested(TargLit,NewLit,TargCl,NewCl),
     replaceS(TargCl,NewCl,TheoryIn,TheoryTmp),
     newArity(NewLit,FuncN,N),
     addArityP(TheoryTmp,FuncN,N,TheoryOut).
@@ -155,7 +202,7 @@ appRepair(repairOccurs(TargProp,NewProp,FuncN,DelPos,TargCl),TheoryIn,RsBan,Theo
     deleteArityP(TheoryTmp,FuncN,DelPos,N,TheoryOut).
 
 
-appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     writeLog([nl, write_term_c('-------- Start apply arityDec-------- '),nl, write_term_c(arityDec(PG, TargCls, PosMis)), finishLog]),
      % decrease the arity of PG by replacing the arguments which need to be deleted with [] and then delete [].
      findall((ClOld, ClNew),
@@ -220,6 +267,55 @@ appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut,
     % Add the default constant/independent variables to all occurrences of P,
     % and get the list of targeting propagated predicates, which occur in a rule together with P.
     propArityInc([(P,1,PosNewArg)], TheoryTem, TheoryOut, [[DefCons]]).
+
+%For functions
+appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):- %Verified.
+    writeLog([nl, write_term_c('-------- Start apply arityInc-------- '),nl,
+        write_term_c(arityInc(P, TargetL, TargetCl)), finishLog]),
+    \+prop(TargetL,_),
+    % collect the existing dummy terms in the input theory.
+    findall(Num, (member(Clause, TheoryIn),
+                (member(+[P| Args], Clause);member(-[P| Args], Clause)),
+                memberNested([C], Args),
+                string_concat('dummy_Normal', Num, C)),
+            OldSer),
+    sort(OldSer,  Sorted),
+    
+    % get dummy terms
+    dummyTermArityInc(Sorted, DefCons, UniqCons),
+    
+    % Add unique constant/default constant to the targeted propositions and update them in the theory.
+    % Heuristic6: When there are multiple occurrences of predicate, allocate them with same new argument while applying arity increment.
+    findall((TLit, TLNew),
+                (member(TLit, TargetCl),
+                (TLit = +[Pt|Arg]; TLit = -[Pt|Arg]),
+                addConstoFunc(Arg,P,[UniqCons],ArgNew),
+                addSameSign(TLit,[Pt|ArgNew],TLNew)),
+                % appLiteral(TLit, [append, 0, [[UniqCons]]], TLNew)),
+            TPairLis),
+    replaceS(TPairLis, TargetCl, ClNew),
+    % Get the desired arity of P, to avoid repeated arity increment in the following process.
+    length(TargetL,PosNewArg),
+    RsBan2 = [delete(ClNew), deleArg(P, PosNewArg)],
+    append(RsBan2, RsBan, RsBanNew),            % Heuristic: do not delete the unique instantce
+
+    findall((Lit, LNew),
+                (member(Lit, PairCl),
+                (Lit = +[Pt|Arg]; Lit = -[Pt|Arg]),
+                addConstoFunc(Arg,P,[DefCons],ArgNew),
+                addSameSign(Lit,[Pt|ArgNew],LNew)),
+            PairLis),
+    replaceS(PairLis, PairCl, PairClNew),
+
+    replaceS([(TargetCl, ClNew), (PairCl, PairClNew)], TheoryIn, TheoryTem),
+    % Add the default constant/independent variables to all occurrences of P,
+    % and get the list of targeting propagated predicates, which occur in a rule together with P.
+    addArityP(TheoryTem,P,PosNewArg,[DefCons],TheoryOut).
+
+
+%Repair targeting specific functions in a reformation block proof.
+appRepair(funcRep(_,RepPlan,_,_),TheoryIn,RsBan,TheoryOut,RsBanNew):-
+    appRepair(RepPlan,TheoryIn,RsBan,TheoryOut,RsBanNew).
 
 appRename((COld, CNew, ClOld), TheoryIn, TheoryOut):-
     appEach(ClOld, [appLiteral, [replace, 2, COld, CNew]], ClNew),

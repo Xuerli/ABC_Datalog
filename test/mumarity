@@ -1,0 +1,16 @@
+:- working_directory(_, '../code').
+:-[main].
+
+theoryName(mumarity).
+
+axiom([+mum2(\a,\b,\c),-mum(\a,\b,\c)]).
+axiom([+mum(x(d),x(b),x(c))]).
+axiom([+mum(x(a),x(b),x(g))]).
+% axiom([+female(georgesquare)]).
+
+trueSet([mum2(x(a),x(b),x(c))]).
+falseSet([]).
+protect([]).
+heuristics([]).
+
+theoryFile:- pass.

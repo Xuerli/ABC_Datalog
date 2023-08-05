@@ -1339,6 +1339,17 @@ newArity(NewLit,FuncN,N):-
     maxlist(Ys,Nt),
     N is Nt - 1.
 
+newArity(NewLit,FuncN,N):-
+    \+prop(NewLit,_),
+    findall(Y,
+        (memberNested(Funclist,NewLit),
+        member(FuncN,Funclist),
+        length(Funclist,Y)
+        ),
+    Ys),!,
+    maxlist(Ys,Nt),
+    N is Nt - 1.
+
 newArity(_,_,0). %For safety
 
 addArityP(Theory,_,0,Theory):- !. % FOr safety: if arity 0, do not change.
@@ -1447,3 +1458,88 @@ deletePosN(L,H,L2):-
     atomic(H),
     nth0(H,L,_,L2).
 
+involvedClause(_,_,[],_,[]).
+involvedClause(Goal,TheoryIn,[H|R],EC,[H|R2]):-
+    slRL(Goal,TheoryIn,EC,Proof,[],[]),
+    member((_,H,_,_,_), Proof),
+    is_list(H),!,
+    involvedClause(Goal,TheoryIn,R,EC,R2).
+involvedClause(Goal,TheoryIn,[_|R],EC,R2):-
+    involvedClause(Goal,TheoryIn,R,EC,R2).
+
+allFunc(L,FP):-
+    findall(FuncN,
+        (
+            member(Cl,L),
+            (member(+Prop,Cl);member(-Prop,Cl)),
+            memberNested(C,Prop),
+            is_func(C),
+            C = [FuncN|_]
+        ),
+    FPT),
+    sort(FPT,FP).
+
+addConstoFunc([],_,_,[]).
+addConstoFunc([C|R],P,N,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addConstoFunc(R,P,N,R2).
+addConstoFunc([F|R],P,N,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addConstoFunc(Args,P,N,Args2),
+    F2 = [Pname|Args2],
+    addConstoFunc(R,P,N,R2).
+addConstoFunc([F|R],P,N,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addConstoFunc(Args,P,N,Args2),
+    F2T = [P|Args2],
+    append(F2T,[N],F2),
+    addConstoFunc(R,P,N,R2).
+
+
+addArityP(Theory,_,0,_,Theory):- !. % FOr safety: if arity 0, do not change.
+addArityP([],_,_,_,[]).
+addArityP([H|R],P,N,NewCon,[H2|R2]):-
+    addArityClauseP(H,P,N,NewCon,H2),
+    addArityP(R,P,N,NewCon,R2).
+
+addArityClauseP([],_,_,_,[]).
+addArityClauseP([+Lit|R],P,N,NewCon,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,NewCon,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,NewCon,R2).
+addArityClauseP([-Lit|R],P,N,NewCon,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,NewCon,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,NewCon,R2). 
+
+addArityArgP([],_,_,_,[]).
+addArityArgP([C|R],P,N,NewCon,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2 = [Pname|Args2],
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    append(F2T,[NewCon],F2),
+    addArityArgP(R,P,N,NewCon,R2).
+addArityArgP([F|R],P,N,NewCon,[F2T|R2]):- %FUnction P that already has the correct arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,NewCon,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    addArityArgP(R,P,N,NewCon,R2).

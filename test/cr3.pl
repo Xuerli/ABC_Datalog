@@ -8,8 +8,9 @@ theoryName(cr3).
 % axiom([+mum(qu(lily),qu(tina),birth)]).
 % axiom([+mum(qu(lily),qu(victor),step)]).
 % axiom([+mum(qu(anna),qu(victor),step)]).
-axiom([+hi(hi32)]).
-axiom([+eq(\x,qu(\y)),-hi(hi32)]).
+axiom([+hi(f(x))]).
+axiom([+eq(\x,qu(\y)),-hi(f(x))]).
+axiom([+unrelated(f(lily))]).
 
 trueSet([]).
 falseSet([eq(qu(xx(anna)),qu(lily))]).

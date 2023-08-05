@@ -172,7 +172,6 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
     traceBackClause(InpCl1,ResStepPre,TheoryIn,RInpCl1),
     %Obtain args of the relevant goal in RInpCl1
     (member(+[P|ArgsCl1], RInpCl1), isOpSign(+[P|ArgsCl1],PropGoal),InpClLit = +[P|ArgsCl1]; member(-[P|ArgsCl1], RInpCl1), isOpSign(-[P|ArgsCl1],PropGoal),InpClLit = -[P|ArgsCl1]),
-
     traceBackPos(PropGoal, ResStepPre, TheoryIn, OrgLit, RInpCl2, _),    % Get the original negative literal and its clause where -GTarg comes from.
     prop(OrgLit, [P|ArgsG]),
 
@@ -231,7 +230,6 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
 
     transposeF(SortedPairs, [CCP, VCPG, VCPIn, VVG,VVIn,VFG,VFIn, FF]),
     print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VVG,VVIn,VFG,VFIn, FF]),nl,print('-----------'),nl,
-
     %Repair strategies that target InpCl1 (which is the right side of unification, the input clause)
     (    (notin(RInpCl1, ProtectedList),
             TargLit = InpClLit,
@@ -273,7 +271,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
             FF \= [],
             member((Pos,PredCl,PredG),FF),
             blockPFunc(PredCl,PredG,TargCl,RInpCl2,TheoryState,SuffGoals,RepPlanTemp),
-            RepPlan = funcRep(Pos,RepPlanTemp)
+            RepPlan = funcRep(Pos,RepPlanTemp,TargLit,TargCl)
 
             ));
 
@@ -314,7 +312,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
             FF \= [],
             member((Pos,PredCl,PredG),FF),
             blockPFunc(PredG,PredCl,TargCl,RInpCl1,TheoryState,SuffGoals,RepPlanTemp),
-            RepPlan = funcRep(Pos,RepPlanTemp);
+            RepPlan = funcRep(Pos,RepPlanTemp,TargLit,TargCl);
 
             % CR4: arityInc
              % if 1. there are at least one more occurrence of the predicate in an assertion, which avoid mirror repaired theories.
@@ -424,7 +422,6 @@ buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     member(Deriv,AllDeriv),
     (member((Goal,_,_,_,_),Deriv); member((_,_,_,Goal,_),Deriv)),
     member(-PropG,Goal),
-
     % get all relevant theorems to the goal
     findall((L, Theorem),
                 (PropG = [_ |Args],
@@ -437,11 +434,9 @@ buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                 RelTheorems),
     mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
     deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
-
     % Heuristic7: When there is other theorems of C, do not consider the inequalities of C.
     (member([+[P|_]], Cands2), P \= (\=)-> delete(Cands2, [+[\=|_]],Cands3);
      Cands3 = Cands2),
-
     % get all restrict constrains which are under protected.
     findall(Constrain,(member(Constrain, TheoryIn),
                      notin(+_, Constrain),
@@ -460,13 +455,11 @@ buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                     write_term_c(' vs '),write_term_c(Constrain),nl])),    % proof exists
             VioCand),
     deleteAll(Cands3, VioCand, RuleCands),
-
     % Heuristic8:    When searching for a precondition, either add all theorems as preconditions or add one of them.
     (member([+Prop], RuleCands), generalise([+PropG, -Prop], RuleTemu);    % formalise the rule which derive the goal.
     setof(-Prop, member([+Prop], RuleCands), AllPred),
     generalise([+PropG| AllPred], RuleTemu)),
     sort(RuleTemu,RuleTem),
-
     % check incompatibilities.
     findall(Proof,
              (member([+[Pre| Args]], FalseSetE),
@@ -505,10 +498,11 @@ buildP((_, AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     member((RepPlans, RuleNew), BigPlan),
     % get all of the clauses which constitute the target proof to unblock
     retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
-    findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
-                member((_,Cl,_,_,_), ProofUnblocked),
-                is_list(Cl)),     % do not record keyword 'unae'
-            ClS),
+    % findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
+    %             member((_,Cl,_,_,_), ProofUnblocked),
+    %             is_list(Cl)),     % do not record keyword 'unae'
+    %         ClS),
+    involvedClause(Goal,[RuleNew|TheoryIn],[RuleNew|TheoryIn],EC,ClS),
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 
@@ -608,10 +602,11 @@ buildP((_,AllDeriv), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
     member((RepPlans, RuleNew), BigPlan),
     % get all of the clauses which constitute the target proof to unblock
     retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
-    findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
-                member((_,Cl,_,_,_), ProofUnblocked),
-                is_list(Cl)),     % do not record keyword 'unae'
-            ClS),
+    involvedClause(Goal,[RuleNew|TheoryIn],[RuleNew|TheoryIn],EC,ClS),
+    % findall(Cl, (slRL(Goal, [RuleNew|TheoryIn], EC, ProofUnblocked, [], []),
+    %             member((_,Cl,_,_,_), ProofUnblocked),
+    %             is_list(Cl)),     % do not record keyword 'unae'
+    %         ClS),
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 
@@ -753,7 +748,11 @@ blockPFunc(PredTarg,PredOrg,TargCl,InpCl,TheoryState,SuffGoals,RepPlan):-
     spec(protList(ProtectedList0)),
     TheoryState = [_, _, _, TheoryIn, TrueSetE, FalseSetE],
     append(TrueSetE, FalseSetE, PrefStruc),
-    append(ProtectedList0, PrefStruc, ProtectedList),
+    append(ProtectedList0, PrefStruc, ProtectedList1),
+    allFunc(TrueSetE,FuncP1),
+    allFunc(FalseSetE,FuncP2),
+    append(FuncP1,FuncP2,FuncPs),
+    append(ProtectedList1,FuncPs,ProtectedList),
 
     PredTarg = [P|ArgsTarg],
     PredOrg = [P| ArgsOrg],
@@ -803,12 +802,13 @@ blockPFunc(PredTarg,PredOrg,TargCl,InpCl,TheoryState,SuffGoals,RepPlan):-
     SortedPairs = [_|_],
 
     transposeF(SortedPairs, [CCP, VCPG, VCPIn, VVG,VVIn,VFG,VFIn, FF]),
-    % print(' [CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VV,VFG,VFIn, FF]),nl,print('-----------'),nl,
+    % print(' [func][CCP, VCPG, VCPIn] is ' ), nl,print([CCP, VCPG, VCPIn, VVG,VFG,VFIn, FF]),nl,print('-----------'),nl,
 
     %Repair strategies that target InpCl1 (which is the right side of unification, the input clause)       
         (
         % CR4: increase arguemnt
         notin([arity(P)], ProtectedList), %notEss2suff(SuffGoals, TargCl),
+        notin(P,ProtectedList),
         RepPlan = arityInc(P, PredTarg, TargCl,PredOrg, InpCl); %
 
         % CR1: rename predicate
@@ -842,7 +842,7 @@ blockPFunc(PredTarg,PredOrg,TargCl,InpCl,TheoryState,SuffGoals,RepPlan):-
         FF \= [],
         member((Pos,PredCl,PredG),FF),
         blockPFunc(PredCl,PredG,TargCl,InpCl,TheoryState,SuffGoals,RepPlanTemp),
-        RepPlan = funcRep(Pos,RepPlanTemp)
+        RepPlan = funcRep(Pos,RepPlanTemp,PredTarg,TargCl)
         ),
 
 

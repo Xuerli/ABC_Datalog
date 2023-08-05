@@ -4,8 +4,9 @@
 theoryName(cr7).
 
 
-axiom([-eq(\y,c1)]).
-axiom([+eq(\x,\x),+world(unstable)]).
+axiom([-eq(f(\y),g(\y,c1(d)))]).
+axiom([+eq(f(\x),g(\z,\z)),+world(unstable)]).
+axiom([-unrelated(c1(d))]).
 
 
 
