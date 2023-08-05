@@ -177,25 +177,27 @@ extCons2Vble(Mismatches, Nth, Evi, MisNum, OrgCl, TheoryIn, RepPlan, TargCls):-
     Mismatches = [_|_],
     spec(protList(ProtectedList)),
     %((Mismatches =  [([load3], [load1])]; Mismatches =  [([load1], [load3])])->pause;true),
-    findall([(COrig, NewVble, C1Cl), C1Cl],
+    findall([(COrig, C1Cl), C1Cl],
                 (memberNested((C1, C2),Mismatches),
                 nth0(Nth, [C1, C2], COrig),    % Get the target constant.
                 notin(COrig, ProtectedList),
                 (traceBackC(COrig, Evi, C1Cl);containsC(COrig,OrgCl),C1Cl = OrgCl),
                 member(C1Cl, TheoryIn),    % it is an axiom from the theory not the preferred structure.
-                notin(C1Cl, ProtectedList),
+                notin(C1Cl, ProtectedList)
                     % get the list of variables in the input clause.
-                findall(X,
-                        ( (member(+[_| Arg], C1Cl);
-                           member(-[_| Arg], C1Cl)),
-                          memberNested(vble(X), Arg)),
-                        AvoidList),
-                getNewVble([COrig], AvoidList, [(COrig, NewVble)], _)),
+                % findall(X,
+                %         ( (member(+[_| Arg], C1Cl);
+                %            member(-[_| Arg], C1Cl)),
+                %           memberNested(vble(X), Arg)),
+                %         AvoidList),
+                % getNewVble([COrig], AvoidList, [(COrig, NewVble)], _)
+                ),
                 RS),
     sort(RS,RSS),
     length(RSS, MisNum),     % have found the clause of all mismached pairs
     transposeF(RSS, [MisPairs, TargCls]),
-    RepPlan = extC2V(MisPairs),
+    addVar(MisPairs,[],MisPairsNew),
+    RepPlan = extC2V(MisPairsNew),
     writeLog([nl,write_term_c('--extC2V: RepPlanS:'),nl,write_term_c(RepPlan),nl,
         nl,write_term_c('--extC2V: TargCls:'),nl,write_term_c(TargCls),nl, finishLog]).
     

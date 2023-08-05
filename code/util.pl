@@ -112,7 +112,6 @@ appProp(Prop, [Predicate| [N| ExtraArgs]]):-
     split_at(N, ExtraArgs,  ArgsFront, ArgsBack),
     append([Predicate| ArgsFront], [Prop| ArgsBack], EList),
     Expression =..EList,
-    print(Expression),nl,
     call(Expression).
 
 appProp(Prop, [Predicate| [N| ExtraArgs]], PropNew):-
@@ -121,7 +120,6 @@ appProp(Prop, [Predicate| [N| ExtraArgs]], PropNew):-
     append([Predicate| ArgsFront], [Prop| ArgsBack], E1),
     append(E1, [PropNew], EList),
     Expression =..EList,
-    print(Expression),nl,
     call(Expression).
 
 appProp(Prop, Predicate, PropNew):- !,
@@ -836,6 +834,21 @@ replaceS(E, ListIn, ListOut):-
 replaceS(E, SubE, ListIn, ListOut):-
   replace(E, SubE, ListIn,ListOut).
 
+replaceNested(_,_,[],[]):- !.
+replaceNested(E,SubE,[+H|T],[+H2|T2]):-
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E,SubE,[-H|T],[-H2|T2]):-
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E,SubE,[H|T],[SubE|T2]):- H = E, replaceNested(E, SubE, T, T2), !.
+replaceNested(E,SubE,[H|T],[H2|T2]):-
+    H \= E,
+    is_func(H),!,
+    replaceNested(E,SubE,H,H2),
+    replaceNested(E,SubE,T,T2).
+replaceNested(E, SubE, [H|T], [H|T2]) :- H \= E, replaceNested(E, SubE, T, T2).
+
 /**********************************************************************************************
     repList(ListToRep, Rep, ListIn,ListOut): for each element in ListToRep,
     replace it with Rep in ListIn and get ListOut.
@@ -1289,3 +1302,148 @@ nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
     append(CurList,[H],CurListNew),
     PosNew is Pos + 1,
     nestedDeleteHelper(PosNew,R,Item,CurListNew,OutList,CurDelPos,DelPos).
+
+
+addVar([],_,[]).
+addVar([(COrig, Cl)|T],AvoidList,[(COrig,vble(Y),Cl)|TOut]):-
+    findall(X,
+        ( (member(+[_| Arg], Cl);
+            member(-[_| Arg], Cl)),
+            memberNested(vble(X), Arg)),
+        AvoidListTmp),
+    append(AvoidList,AvoidListTmp,AvoidListNew),
+    getNewVble([COrig],AvoidList,[(COrig, vble(Y))], _),
+    append(AvoidListNew,[Y],AvoidListNew2),
+    addVar(T,AvoidListNew2,TOut).
+
+maxlist([],0).
+
+maxlist([Head|Tail],Max) :-
+    maxlist(Tail,TailMax),
+    Head > TailMax,
+    Max is Head.
+
+maxlist([Head|Tail],Max) :-
+    maxlist(Tail,TailMax),
+    Head =< TailMax,
+    Max is TailMax.
+
+newArity(NewLit,FuncN,N):-
+    prop(NewLit,UNewLit),
+    findall(Y,
+        (memberNested(Funclist,UNewLit),
+        member(FuncN,Funclist),
+        length(Funclist,Y)
+        ),
+    Ys),!,
+    maxlist(Ys,Nt),
+    N is Nt - 1.
+
+newArity(_,_,0). %For safety
+
+addArityP(Theory,_,0,Theory):- !. % FOr safety: if arity 0, do not change.
+addArityP([],_,_,[]).
+addArityP([H|R],P,N,[H2|R2]):-
+    addArityClauseP(H,P,N,H2),
+    addArityP(R,P,N,R2).
+
+addArityClauseP([],_,_,[]).
+addArityClauseP([+Lit|R],P,N,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,R2).
+addArityClauseP([-Lit|R],P,N,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    addArityArgP(Arg,P,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    addArityClauseP(R,P,N,R2). 
+
+addArityArgP([],_,_,[]).
+addArityArgP([C|R],P,N,[C|R2]):- %Constants and variables can be ignored.
+    (is_cons(C);C = vble(_)),
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2|R2]):- %Function but not related to P.
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,!,
+    addArityArgP(Args,P,N,Args2),
+    F2 = [Pname|Args2],
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2|R2]):-%Function that needs add arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    findall(X,memberNested(vble(X), F2T),AvoidList),
+    getNewVble([dummy], AvoidList, [(dummy, NewVble)], _),
+    append(F2T,[NewVble],F2),
+    addArityArgP(R,P,N,R2).
+addArityArgP([F|R],P,N,[F2T|R2]):- %FUnction P that already has the correct arity
+    is_func(F),
+    F = [P|Args],
+    addArityArgP(Args,P,N,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    addArityArgP(R,P,N,R2).
+
+
+deleteArityP([],_,_,_,[]).
+deleteArityP([H|R],P,DelPos,N,[H2|R2]):-
+    deleteArityClauseP(H,P,DelPos,N,H2),
+    deleteArityP(R,P,DelPos,N,R2).
+
+deleteArityClauseP([],_,_,_,[]).
+deleteArityClauseP([+Lit|R],P,DelPos,N,[+Lit2|R2]):-
+    Lit = [Pred| Arg],
+    deleteArityArgP(Arg,P,DelPos,N,Arg2),
+    Lit2 = [Pred|Arg2],
+        print(Lit2),nl,
+    deleteArityClauseP(R,P,DelPos,N,R2).
+deleteArityClauseP([-Lit|R],P,DelPos,N,[-Lit2|R2]):-
+    Lit = [Pred| Arg],
+    deleteArityArgP(Arg,P,DelPos,N,Arg2),
+    Lit2 = [Pred|Arg2],
+    deleteArityClauseP(R,P,DelPos,N,R2). 
+
+deleteArityArgP([],_,_,_,[]).
+deleteArityArgP([C|R],P,DelPos,N,[C|R2]):-
+    (is_cons(C);C = vble(_)),
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2|R2]):-
+    is_func(F),
+    F = [Pname|Args],
+    Pname \= P,
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2 = [Pname|Args2],
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2|R2]):- 
+    is_func(F),
+    F = [P|Args],
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2T = [P|Args2],
+    \+length(Args2,N),!,
+    deletePos(F2T,DelPos,F2),
+    deleteArityArgP(R,P,DelPos,N,R2).
+deleteArityArgP([F|R],P,DelPos,N,[F2T|R2]):-
+    is_func(F),
+    F = [P|Args],
+    deleteArityArgP(Args,P,DelPos,N,Args2),
+    F2T = [P|Args2],
+    length(Args2,N),!,
+    deleteArityArgP(R,P,DelPos,N,R2).
+
+deletePos(L,DelPos,Out):-
+    sort(0,  @>, DelPos,  Sorted), %Sort delete pos in descending order
+    deletePosHelper(L,Sorted,Out).
+
+deletePosHelper(L,[],L).
+deletePosHelper(L,[H|R],Out):-
+    deletePosN(L,H,L2),
+    deletePosHelper(L2,R,Out).
+
+deletePosN(L,H,L2):-
+    atomic(H),
+    nth0(H,L,_,L2).
+

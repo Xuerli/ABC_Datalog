@@ -78,23 +78,19 @@ cons2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
             nl, write_term_c('-- Theory='), write_term_c(Theory),nl,
             nl,nl, write_term_All(Theory),nl, finishLog]),
     Axiom = [-[PA|ArgA]], !,
-
     % check if the axiom is essential to an sufficiency, do not make it unprovable.
     notEss2suff(SuffGoals, Axiom),
-
     % Heuristic: only get one layer of theorem
     delete(Theory, Axiom, Theory2),
     allConstraintsP(Theory2, PA, EC, TS),    % get all theorems of the target predicate.
     delete(TS, Axiom, TCan),
     findall([-[PA|ArgTrue]], member([+[PA|ArgTrue]], FalseSetE), Tures),
     append(TCan, Tures, TCands),
-
     findall(AvoidPreds, (member(Constrain, Theory2),
                         notin(-_, Constrain),
                         occur(+[PA|_], Constrain),
                         member(+[AvoidPreds|_],Constrain)),
             AvoidPList),
-
     findall(+[PP|Arg2New],
                 (% target at another individual which is also an instance of PA.
                  member(([-[_|Args]],_), TCands),
@@ -112,13 +108,14 @@ cons2rule(Axiom, EC, SuffGoals, Theory, TrueSetE, FalseSetE, RepCands):-
                  nth0(Pos, Arg2, C2),
                  replacePos(Pos, Arg2, vble(x), Arg2New)),    % prune the ones does not contain C2.
         Preconditions),
-
     length(ArgA, ArityA), PosAMax is ArityA-1,
     findall(cons2rule(Axiom, NewRule),
                     (member(+Pre, Preconditions),
+                    print(Pre),nl,print('sdf'),nl,
                      between(0, PosAMax, PosA),
                      replacePos(PosA, ArgA, vble(x), ArgANew),
                      NewRule = [-[PA| ArgANew], +Pre],
+                     print(NewRule),nl,print('sdf2'),nl,
                      % check that the original axiom is not derivable any more.
                      append(TrueSetE, Theory2, TheoryRich),
                      findall(Theorem, 

@@ -26,7 +26,7 @@ appRepair([], RsApplied, Theory, RsBan, Theory, RsBan, RsApplied):-!,
 
 appRepair([Rs1|Rest], RsAppliedIn, TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied):-
     appRepair(Rs1, TheoryIn, RsBanIn, TheoryTem, RsBanTem),
-    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),  %TODO check this
+    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),  
     sort(TheoryTem2, TheoryTem3),
     appRepair(Rest, RsAppliedInNew, TheoryTem3, RsBanTem2, TheoryOut, RsBanOut, RsApplied).
 
@@ -45,7 +45,11 @@ appRepair(analogy(_, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):- !,
     sort([NewRule| TheoryIn], TheoryOut).
 
 %% turn an old assertion to a new rule
-appRepair(ass2rule(Axiom, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):-
+appRepair(ass2rule(Axiom, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
+    delete(TheoryIn, Axiom, TheoryTem),
+    sort([NewRule|TheoryTem], TheoryOut), !.
+
+appRepair(cons2rule(Axiom, NewRule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     delete(TheoryIn, Axiom, TheoryTem),
     sort([NewRule|TheoryTem], TheoryOut), !.
 
@@ -59,19 +63,35 @@ appRepair(add_preP(NewPrec, Rule), TheoryIn, RsBan, TheoryOut, RsBan):- %Verifie
 
 
 %% Apply weaken a variable to a constant, unless it results in a rule with no variables.
-appRepair(weaken(vble(X), TargCons, TargCl), TheoryIn, RsBan, TheoryOut, RsBan):-
-    appEach(TargCl, [appLiteral, [replace, 2, vble(X), TargCons]], ClNew),halt,
-    findall(vble(X), ((member(+Prop, ClNew); member(-Prop, ClNew)), memberNested(vble(X), Prop)), RemainingVbles),
+appRepair(weaken(vble(X), TargCons, TargCl), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
+    appEach(TargCl, [appLiteral, [replaceNested, 2, vble(X), TargCons]], ClNew),
+    findall(vble(Y), 
+        (
+            (member(+Prop, ClNew); member(-Prop, ClNew)), 
+            memberNested(vble(Y), Prop)
+        ),
+    RemainingVbles),
     (RemainingVbles = []-> TheoryOut = TheoryIn,
      writeLog([nl, write_term_c('********  Warning : a rule without variables is resulted, so refuse the repair: '), nl,write_term_c(weaken(vble(X), TargCons, TargCl)),nl,finishLog]);
     RemainingVbles \= [], replaceS(TargCl, ClNew, TheoryIn, TheoryOut), !).
 
-appRepair(extC2V(X), TheoryIn, RsBanIn, TheoryOut, RsBanOut):-
-    appRepair(rename(X), TheoryIn, RsBanIn, TheoryOut, RsBanOut).
+% extend to variable
+appRepair(extC2V(MisPairs), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified.
+    substC2V(MisPairs,TheoryIn,TheoryOut).
+
+appRepair(renamePred(P,NewP,TargP,TargCl),TheoryIn, RsBan,TheoryOut,RsBan):- %Verified.
+    prop(TargP,[P|OrgArgs]),
+    addSameSign(TargP,[NewP|OrgArgs],NewPred),
+    replaceS(TargP,NewPred,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryOut),!.
+
+
 %% Apply rename an item F which is either a predicate or a constant.
 %% Rename includes blocks the unification of a proposition from PS and a input proposition.
 %% Rename the Item in either side of the unification except the one from the preferred structure.
-appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):-
+
+%Renaming constants to BREAK a proof
+appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):- %Verified.
     dummyTerm(F, TheoryIn, FNew),
     spec(protList(ProtectedList)),
 
@@ -91,9 +111,11 @@ appRepair(rename(F, TargetL, TargetCl), TheoryIn, RsBanIn, TheoryOut, RsBanOut):
                  write_term_c(rename(F)),nl, write_term_c(' more.'), nl, finishLog]),!;     % do not rename F further
      RsBanOut = RsBanIn, writeLog([nl, write_term_c('******** Finish renaming.'),nl, finishLog]),!).
 
-appRepair(rename(_, _, InpClOld, ClNew), TheoryIn, RsBan, TheoryOut, RsBan):-
+% Renaming a predicate to BUILD a proof.
+appRepair(rename(_, _, InpClOld, ClNew), TheoryIn, RsBan, TheoryOut, RsBan):- %Verified
     replaceS(InpClOld, ClNew, TheoryIn, TheoryOut).
 
+%Reform one to the other completely (to BUILD a proof)
 appRepair(rename(POld, PNew, Arity, LitOld, InpClOld, Opt), TheoryIn, RsBan, TheoryOut, RsBan):-
     appLiteral(LitOld, [mergeProp, 0, POld, PNew, Arity, Opt], LitNew),
     replaceS(LitOld, LitNew, InpClOld, InpClNew),
@@ -110,6 +132,27 @@ appRepair(merge(POld, PNew, ArgDiff, Op), TheoryIn, RsBan, TheoryOut, RsBan):-
     appEach(TheoryIn, [appEach, [appLiteral, [mergeProp, 0, POld, PNew, ArgDiff, Op]]], TheoryTem),
     appEach(TheoryTem, [sort], TheoryTem2),    % remove duplicate literals at each axiom.
     sort(TheoryTem2, TheoryOut).
+
+%Fail the occurs check
+appRepair(occurFailC(TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    replaceS(TargLit,NewLit,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryOut).
+
+appRepair(occurFailF(FuncN,TargLit,NewLit,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- 
+    replaceS(TargLit,NewLit,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryTmp),
+    newArity(NewLit,FuncN,N),
+    addArityP(TheoryTmp,FuncN,N,TheoryOut).
+
+%Repair Occurs check
+appRepair(repairOccurs(TargProp,NewProp,FuncN,DelPos,TargCl),TheoryIn,RsBan,TheoryOut,RsBan):- %Verified
+    member(X,TargCl),
+    (X = +TargProp; X = -TargProp),
+    addSameSign(X,NewProp,SNewProp),
+    replaceS(X,SNewProp,TargCl,NewCl),
+    replaceS(TargCl,NewCl,TheoryIn,TheoryTmp),
+    newArity(SNewProp,FuncN,N),
+    deleteArityP(TheoryTmp,FuncN,DelPos,N,TheoryOut).
 
 
 appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):-
@@ -136,17 +179,17 @@ appRepair(arityDec(PG, TargCls, PosMis), TheoryIn, RsBan, TheoryOut, RsBan):-
 %% The new arguments should BLOCK the targeted unwanted unification in Proof.
 %% The input theory does not include propositions in preferred structure(PS).
 %% Therefore, arityInc which blocks the unification of a proposition from PS and a input proposition will fail.
-appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):-
+appRepair(arityInc(P, TargetL, TargetCl, _, PairCl), TheoryIn, RsBan, TheoryOut, RsBanNew):- %Verified.
     writeLog([nl, write_term_c('-------- Start apply arityInc-------- '),nl,
         write_term_c(arityInc(P, TargetL, TargetCl)), finishLog]),
 
     % collect the existing dummy terms in the input theory.
     findall(Num, (member(Clause, TheoryIn),
                 (member(+[P| Args], Clause);member(-[P| Args], Clause)),
-                member([C], Args),
+                memberNested([C], Args),
                 string_concat('dummy_Normal', Num, C)),
             OldSer),
-       sort(OldSer,  Sorted),
+    sort(OldSer,  Sorted),
 
     % get dummy terms
     dummyTermArityInc(Sorted, DefCons, UniqCons),
@@ -345,3 +388,16 @@ repConflict(incomp, insuff, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
             Int = [_|_]),    % there is an axiom which constitutes the proof of repairing the insufficiency whose predicate is under the scope of P's influence
         Conflicts),
     writeLog([nl,write_term_c('--Conflicts of incomp vs insuff:'),write_term_c(Conflicts),nl, finishLog]).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+substC2V([],Theory,Theory):- !. %Nothing then no need change.
+substC2V([(COrig,Var,OrgCl)|R],TheoryIn,TheoryOut):-
+    replaceNested(COrig,Var,OrgCl,NewCl),
+    replaceS(OrgCl,NewCl,TheoryIn,TheoryTmp),
+    replaceCls(R,OrgCl,NewCl,R2),
+    substC2V(R2,TheoryTmp,TheoryOut).
+
+replaceCls([],_,_,[]).
+replaceCls([(COrig,Var,OrgCl)|R],OrgCl,NewCl,[(COrig,Var,NewCl)|R2]):-
+    replaceCls(R,OrgCl,NewCl,R2).
