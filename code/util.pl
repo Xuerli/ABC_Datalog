@@ -1562,9 +1562,17 @@ addArityArgP([F|R],P,N,NewCon,[F2T|R2]):- %FUnction P that already has the corre
     length(Args2,N),!,
     addArityArgP(R,P,N,NewCon,R2).
 
-getAllReps(RepPlans,RepOut):-
-    findall([RepPlan],
-        (memberNested([_,(RepPlan,_),_],RepPlans)),
-        RepOutTemp
-    ),
-    sort(RepOutTemp,RepOut).
+
+getAllReps([],[]).
+getAllReps([H|R],[H2|R2]):-
+    H = [[_,(_,_),_]|_],!,
+    getAllRepsFault(H,H2),
+    % print(H2),nl,print('hi'),nl,halt,
+    getAllReps(R,R2).
+getAllReps([H|R],[H2|R2]):-
+    getAllReps(H,H2),
+    getAllReps(R,R2).
+
+getAllRepsFault([],[]).
+getAllRepsFault([[_,(RepPlan,_),_]|R],[RepPlan|R2]):-
+    getAllRepsFault(R,R2).

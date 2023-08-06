@@ -127,7 +127,8 @@ detInsInc(TheoryState,FaultState):-
               retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
               findall( [Proof, Evidence],
                      (slRL(Goal, Theory, EC, Proof, Evidence, [])),
-                     Proofs1),
+                     Proofs1T),
+              sort(Proofs1T,Proofs1),
               % Proofs1= [[P1, []],[P2, []],[[],E1]...]; Proofs2 = [[P1,P2,[]],[[],[],E]]
               transposeF(Proofs1, [Proofs, Evis]),
               % only collect none empty proofs/evidences
@@ -151,7 +152,8 @@ detInsInc(TheoryState,FaultState):-
             retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
             findall(Proof,
                     slRL(Goal, Theory, EC, Proof, [], []),
-                    UnwProofs),
+                    UnwProofsT),
+            sort(UnwProofsT,UnwProofs),
             UnwProofs \= []),    % Detected incompatibility based on refutation.
            InComps),             % Find all incompatibilities.
 
@@ -164,7 +166,8 @@ detInsInc(TheoryState,FaultState):-
                retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
                findall(Proof,
                         slRL(Constrain, Theory,  EC, Proof, [], []),
-                        UnwProofs),
+                        UnwProofsT),
+                sort(UnwProofsT,UnwProofs),
                 UnwProofs \= []),
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
@@ -229,20 +232,27 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     % nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
+    % print(RepPlans),nl,print(RepPlansLen),nl,
     writeLog([nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_c(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, finishLog]),
     % combine different repair plans together (which are independent): len(RepPlans) >= len(RepSolutions)
-    nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_All(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
-    repCombine(RepPlans, TheoryIn, RepSolutions),
-    % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,
-    % getAllReps(RepPlans,RepSolutions),
+    % nl, write_term_c(RepPlansLen),write_term_c(' fault\'s new repair plans found: '), write_term_All(RepPlans), nl,nl,nl,write_term_c(TheoryIn),nl, %todo FROM HER
+    
+    % repCombine(RepPlans, TheoryIn, RepSolutions),
+    % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,halt,
+    getAllReps(RepPlans,RepSolutionsT),
+    flatten(RepSolutionsT,RepSolutionsT2),
+    sort(RepSolutionsT2,RepSolutions),
     % nl,print('repair solutions2:'),nl,write_term_All(RepOut),nl,nl,halt,
+    % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,halt,
 
     appEach(RepSolutions, [appRepair, TheoryStateIn], RepStatesTem),
-    %print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,
+    % print('000000'),print(RepStatesTem),nl,nl,print('RepStatesTem'),nl,nl,halt,
     sort(RepStatesTem, RepStatesAll),
     length(RepStatesAll, LengthO),
     writeLog([nl, write_term_c('-- There are '), write_term_c(LengthO),
                   write_term_c(' repaired states: '),nl,write_term_All(RepStatesAll), nl, finishLog]),
+    % nl, write_term_c('-- There are '), write_term_c(LengthO),
+    %               write_term_c(' repaired states: '),nl,write_term_All(RepStatesAll), nl,halt,
     % prune the redundancy.
     mergeRs(RepStatesAll, RepStatesFine),
     writeLog([nl, write_term_c('-- RepStatesFine '), write_term_c(RepStatesFine),nl, finishLog]),
