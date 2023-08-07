@@ -1576,3 +1576,7 @@ getAllReps([H|R],[H2|R2]):-
 getAllRepsFault([],[]).
 getAllRepsFault([[_,(RepPlan,_),_]|R],[RepPlan|R2]):-
     getAllRepsFault(R,R2).
+
+addListtoList([],[]).
+addListtoList([H|R],[[H]|R2]):-
+    addListtoList(R,R2).

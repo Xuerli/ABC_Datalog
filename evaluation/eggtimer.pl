@@ -12,7 +12,6 @@ axiom([-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preferred Structure:
-
 trueSet([]).
 falseSet([polygon(eggtimer,set_of(v1,v2,v3,v4),set_of(l1,l2,l3,l4))]).
 protect([]).

@@ -15,6 +15,7 @@
 ***********************************************************************************************************************/
 appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
     writeLog([nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,finishLog]),
+    % nl, write_term_c('-------- Start to apply repair plans:'), nl, write_term_All(RepPlans),nl,halt,
     TheoryStateIn = [[RsIn, RsBanIn],EC, Eproof, TheoryIn, TrueSet, FalseSet],
     appRepair(RepPlans, [], TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied),
     append(RsIn, RsApplied, RsOut),

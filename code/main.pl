@@ -229,7 +229,7 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),
-    % nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl,
+    % nl,write_term_c('--repair plans-----'),nl,write_term_All(RepPlans),nl, halt,
     % RepPlans = [RepPlan1|RepPlans2],
     length(RepPlans, RepPlansLen),
     % print(RepPlans),nl,print(RepPlansLen),nl,
@@ -241,7 +241,8 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,halt,
     getAllReps(RepPlans,RepSolutionsT),
     flatten(RepSolutionsT,RepSolutionsT2),
-    sort(RepSolutionsT2,RepSolutions),
+    sort(RepSolutionsT2,RepSolutionsT3),
+    addListtoList(RepSolutionsT3,RepSolutions),
     % nl,print('repair solutions2:'),nl,write_term_All(RepOut),nl,nl,halt,
     % nl,print('repair solutions:'),nl,write_term_All(RepSolutions),nl,halt,
 
