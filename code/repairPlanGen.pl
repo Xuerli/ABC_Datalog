@@ -54,6 +54,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     statistics(walltime, [S1,_]),
     findall(RepairInfo,
                 (blockP(ProofInp, TheoryState, Suffs, RepairInfo),
+                print(RepairInfo),nl,
                 RepairInfo = [incomp, (RepPlans, _), _],
                 RepPlans \= [],
                 % check if the repair plan conflicts previous ones or it has been suggested

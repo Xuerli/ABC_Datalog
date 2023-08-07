@@ -16,6 +16,6 @@ axiom([-eats(\y,\z),+killed(\y),+food(\z)]).
 trueSet([]).
 falseSet([likes(john,peanuts)]). %John does not like peanuts because it killed his friend mary.
 protect([]).
-heuristics([noPrecAdd]).
+heuristics([noRuleChange]).
 
 theoryFile:- pass.
