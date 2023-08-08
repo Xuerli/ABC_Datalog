@@ -15,7 +15,6 @@ axiom([+european(lucy)]).
 axiom([-european2(bruce)]).
 axiom([+australian(bruce)]).
 
-
 trueSet([white(lily)]).
 falseSet([white(bruce)]).
 protect([]).

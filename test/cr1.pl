@@ -5,12 +5,12 @@ theoryName(cr1).
 
 
 axiom([-mum(\x,\y),-mum(\z,\y),+eq(\x,\z)]).
-axiom([+mum(qu(lily),qu(tina))]).
-axiom([+mum(qu(lily),qu(victor))]).
-axiom([+mum(qu(anna),qu(victor))]).
+axiom([+mum(f(lily),f(tina))]).
+axiom([+mum(f(lily),f(victor))]).
+axiom([+mum(f(anna),f(victor))]).
 
 trueSet([]).
-falseSet([eq(qu(lily),qu(anna))]).
+falseSet([eq(f(lily),f(anna))]).
 protect([eq]).
 heuristics([]).
 

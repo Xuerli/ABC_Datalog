@@ -8,8 +8,6 @@ axiom([+loves(\y,loveof(\z,\y))]).
 axiom([-loves(\x,\x),+world(stable)]).
 axiom([+unrelated(loveof(df,x))]).
 
-
-
 trueSet([world(stable)]).
 falseSet([]).
 protect([]).
