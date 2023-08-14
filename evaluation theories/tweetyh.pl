@@ -9,6 +9,7 @@ axiom([-bird(\x), +fly(\x)]).
 axiom([-penguin(\y), +bird(\y)]).
 axiom([-bird(\y), +feather(\y)]).
 
+%Preferred Structure
 trueSet([feather(tweety),feather(polly), fly(polly)]).
 falseSet([fly(tweety)]).
 

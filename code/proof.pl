@@ -644,7 +644,7 @@ traceBackPos(TargProp, Deriv, TheoryIn,NegLit, InputClause, Subs):-
     dropTail(Deriv, Ances),    % try the ancestors.
     traceBackPos(TargProp, Ances,TheoryIn, NegLit, InputClause, Subs).
 
-%Safety fallback for positive literals
+%Safety fallback 
 traceBackPos(Anything,[],_,Anything,[],[]).
 
 

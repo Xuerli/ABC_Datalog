@@ -4,9 +4,9 @@
 theoryName(sr6).
 
 
-axiom([+loves(\y,loveof(\z,\y))]).
+axiom([+loves(\y,loveof(\y))]).
 axiom([-loves(\x,\x),+world(stable)]).
-axiom([+unrelated(loveof(df,x))]).
+% axiom([+unrelated(loveof(df,x))]).
 
 trueSet([world(stable)]).
 falseSet([]).
