@@ -44,6 +44,10 @@ initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
   open('repTimenNoH.txt', write, StreamRepTimeNH)),
   assert(spec(repTimeNH(StreamRepTimeNH))),
 
+    theoryName(Name),
+    string_concat('log/',Name,NameFolder),
+    (\+exists_directory(NameFolder)-> make_directory(NameFolder);nl),
+
   maplist(assert, [spec(debugMode(1)), spec(logStream(StreamRec))]).
   %(OverloadedPred \= [] -> concepChange(OverloadedPred,  AllSents, RepSents, CCRepairs, Signature, RSignature);        %Detect if there is conceptual changes: a predicate has multiple arities.
   %RepSents = AllSents, CCRepairs = []),
@@ -89,8 +93,8 @@ output(AllRepStates, ExecutionTime):-
     string_concat(Name,'faultFree',NR),
     fileName(NR, Fname1),
     open(Fname1, write, Stream1),
-    string_concat('log/',Name,NameFolder),
-    (\+exists_directory(NameFolder)-> make_directory(NameFolder);nl),
+    % string_concat('log/',Name,NameFolder),
+    % (\+exists_directory(NameFolder)-> make_directory(NameFolder);nl),
 
     % output the execution time.
     (exists_file('aacur.txt')->

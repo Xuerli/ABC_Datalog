@@ -71,7 +71,7 @@ initTheoryNew(Theory,EQs):-
 
 specification:- retractall(spec(_)),
                 maplist(assert, [spec(screenOutput(false)), % do not output solutions to screen.
-                                spec(costLimit(10)),
+                                spec(costLimit(15)),
                                 spec(roundLimit(3)),
                                 spec(proofStatus(0)),
                                 spec(threshold(1)),

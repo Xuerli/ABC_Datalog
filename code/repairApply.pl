@@ -357,10 +357,10 @@ verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn]
                 write_term_c(' failed.'),nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % Heuristic4: no mirror rule is allowed
-verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
-    setof([+Y,-X], (member([+X,-Y], TheoryNew), member([+Y,-X], TheoryNew)), LoopRule),
-    % at least one mirror rule is found.
-    writeLog([nl, write_term_c('******** Warning: verifyRep found a loop rule:'), write_term_c(LoopRule), nl, finishLog]).
+% verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+%     setof([+Y,-X], (member([+X,-Y], TheoryNew), member([+Y,-X], TheoryNew)), LoopRule),
+%     % at least one mirror rule is found.
+%     writeLog([nl, write_term_c('******** Warning: verifyRep found a loop rule:'), write_term_c(LoopRule), nl, finishLog]).
 
 % Finish the verification.
 verifyRep(_, RsAppliedIn, TheoryNew, RepPlan, RsBan, RsBan, TheoryNew, [RepPlan|RsAppliedIn]).
