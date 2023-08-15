@@ -4,9 +4,14 @@ The ABC system is a domain-independent system for repairing faulty Datalog-like 
 # Changes with the Datalog version 
 The FOL version supports full first order logic (without the standard equality). You can add non-Horn clauses, functions and equality axioms (for evaluating functions). The repair can generate solution with added functions, constraint axioms, theorems and potentially with orphan variables.
 
+# Work done in the MSc project
+Changes are made to multiple files in the  `code` directory, notably:
+- `proof.pl` for the fault detection module
+- `repairPlanGen.pl`, `repairApply.pl` , `ruleMod.pl`, `reformation.pl` for the repair generation module
+- `util.pl` for auxiliary functions
+
 # evaluation theories
 This folder contains the faulty theories tested in the evaluation in our project. The ones with name *h.pl is a theory with heuristics, while ones with name *nh.pl is the corresponding theory without heuristics.
-
 
 # code
 This folder contains the code of the ABC repair system, which is written in Prolog. The predicate abc/0 in file main.pl is the main entrance. An example of running the code is given below, where PATH is the directory to your code. Ideally, three commands below should be done one by one to make sure none is failed.
@@ -15,13 +20,10 @@ This folder contains the code of the ABC repair system, which is written in Prol
 :- [main, theories/swan].
 :- abc.
 
-The output file will be under the folder named 'log'. Files with abc_*_*_faultFree.txt gives the repaire solutions of produced fault-free theories; 'abc_*_*_record.txt' gives the details of ABC's process.
-
-# sampleOutput.txt
-It is a sample output file, whose original name is of format _abc_..._faultFree.txt_.
+The output file will be under the folder named 'log'. Files with abc_*_*_faultFree.txt gives the repair solutions of produced fault-free theories; 'abc_*_*_record.txt' gives the details of ABC's process.
 
 # How to run the code
-Step1. Prepare the theory input file e.g., any file in folder 'evaluation theories'. It has to include a Datalog theory given by _axiom([...])_, and the preferred structure given by _trueSet([...])_ and _falseSet([...])_. Then one can put the items to protect from being changed in _protect([...])_, and heuristics to apply in _heuristics([...])._ Add the following lines at the top of the theory input file:  
+Step1. Prepare the theory input file in another folder placed in the project root directory e.g., any file in folder 'evaluation theories'. It has to include a Datalog theory given by _axiom([...])_, and the preferred structure given by _trueSet([...])_ and _falseSet([...])_. Then one can put the items to protect from being changed in _protect([...])_, and heuristics to apply in _heuristics([...])._ Add the following lines at the top of the theory input file:  
 
 ```
 :- working_directory(_, '../code').

@@ -3,7 +3,7 @@
 % 'Humans are mammals.', 
 % 'Mammals are animals.', 
 % 'Symptons of Monkeypox include fever, headache, muscle pains, feeling tired, and so on.', 
-% 'People feel tired when they get a glu.']	
+% 'People feel tired when they get a flu.']	
 
 % ['∃x (OccurMonkeypoxVirus(x) ∧ GetMonkeypox(x))', 
 % '∃x (Animal(x) ∧ OccurMonkeypoxVirus(x))', 
@@ -22,8 +22,7 @@
 :- working_directory(_, '../code').
 :-[main].
 
-theoryName(animals).
-
+theoryName(monkeypox).
 
 axiom([+occurMonkeyPox(c1)]).
 axiom([+getMonkeyPox(c1)]).
