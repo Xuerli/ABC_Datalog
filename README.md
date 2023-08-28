@@ -1,6 +1,8 @@
 # ABC_FOL
 The ABC system is a domain-independent system for repairing faulty Datalog-like theories by combining three existing techniques: abduction, belief revision and conceptual change. Accordingly, it is named the ABC repair system (ABC). Given an observed assertion and a current theory, abduction adds axioms, or deletes preconditions, which explain that observation by making the corresponding assertion derivable from the expanded theory. Belief revision incorporates a new piece of information which conflicts with the input theory by deleting old axioms. Conceptual change uses the reformation algorithm for blocking unwanted proofs or unblocking wanted proofs. The former two techniques change an axiom as a whole, while reformation changes the language in which the theory is written. These three techniques are complementary. But they have not previously been combined into one system. We align these three techniques in ABC, which is capable of repairing logical theories with better result than each individual technique alone. Datalog is used as the underlying logic of theories in this thesis, but the proposed system has the potential to be adapted to theories in other logics.
 
+# Desciptions of ABC System
+Please refer to `FOL_ABC_thesis.pdf` for details such as the repair plans.
 # Changes with the Datalog version 
 The FOL version supports full first order logic (without the standard equality). You can add non-Horn clauses, functions and equality axioms (for evaluating functions). The repair can generate solution with added functions, constraint axioms, theorems and potentially with orphan variables.
 
