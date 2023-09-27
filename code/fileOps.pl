@@ -1,20 +1,7 @@
+:- [utilRevise].
 
 /**********************************************************************************************
-   fileName: generate file name.
-***********************************************************************************************/
-fileName(FileCore, Name):-
-   date(date(_,X,Y)),
-   get_time(Stamp),
-   stamp_date_time(Stamp, DateTime, local),
-   date_time_value(time, DateTime, time(H,M,_)),
-   appEach([X,Y,H,M], [term_string], [X1,Y1,H1,M1]),
-   string_concat(Y1,X1,Date),
-   string_concat(H1,M1,Time),
-   appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
-   appAll(string_concat, ['.txt',Time1, Date1,'_' , FileCore , '_', 'log/'],[''], Name, 1).
 
-/**********************************************************************************************
-  fileName: generate file name.
 ***********************************************************************************************/
 initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
   (\+exists_directory('log')-> make_directory('log'); nl),
@@ -43,13 +30,66 @@ initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
 
 
 
+fileName(FileCore, Name):-
+    date(date(_,X,Y)),
+    get_time(Stamp),
+    stamp_date_time(Stamp, DateTime, local),
+    date_time_value(time, DateTime, time(H,M,_)),
+    appEach([X,Y,H,M], [term_string], [X1,Y1,H1,M1]),
+    string_concat(Y1,X1,Date),
+    string_concat(H1,M1,Time),
+    appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
+    appAll(string_concat, ['.txt', FileCore, Time1, Date1, 'log/abc_'],[''], Name, 1).
+
+fileName(FileCore, Name, NO):-
+    fileName(FileCore, NameTem),
+    split_string(NameTem, ".","",[NameMain|_]),
+    string_concat(NameMain, NO, Name1),
+    string_concat(Name1, '.txt', Name).
+
 /**********************************************************************************************
    output: write_term_c screen and write record file abc_record.txt.
 ***********************************************************************************************/
-% If no repairs found, output the current result of semi-repairs.
+
 output(AllRepStates, ExecutionTime):-
+    forall(member([fault-free, X,[_,_,_,_,_,_]], AllRepStates), X ==0),
+    findall(ClS, (axiom(Cl), sort(Cl, ClS)), Facts),
+    sort(Facts, OrigTheory),
+    fileName('faultFree', Fname1),
+    open(Fname1, write, Stream1),
+    writeLog([nl, write_term('------------- AllRepStates -------------'), nl,
+                  write_termAll(AllRepStates),nl,nl,nl, finishLog]),
+
+    % output the execution time.
+    (exists_file('aacur.txt')->
+        open('aacur.txt', append, StreamC), nl(StreamC),
+        write(StreamC, ExecutionTime),
+        close(StreamC);
+    \+exists_file('aacur.txt')->
+        open('aacur.txt', write, StreamC), nl(StreamC),
+        write(StreamC, ExecutionTime),
+        close(StreamC)),
+
+    trueSet(TrueSet),
+    falseSet(FalseSet),
+    write_term('Execution took ',[quoted(false)]),
+    write_term(ExecutionTime,[quoted(false)]),
+    write_term(' ms.',[quoted(false)]), nl,
+    write(Stream1, 'The original theory is fault-free.'), nl(Stream1),!,
+    write(Stream1, 'The fault-free theory : '), nl(Stream1),
+    writeAll(Stream1, OrigTheory), nl(Stream1),
+    write(Stream1, 'The true set:'), nl(Stream1),
+    (TrueSet \= [] ->  writeAll(Stream1, TrueSet), !;
+             write(Stream1, '[]')), nl(Stream1),
+    write(Stream1, 'The false set: '), nl(Stream1),
+    (FalseSet \= [] -> writeAll(Stream1, FalseSet), !;
+             write(Stream1, '[]')), nl(Stream1),close(Stream1).
+
+
+% If no repairs found, output the current result of semi-repairs.
+output(AllRepStates, ExecutionTime, FileNo):-
     notin([fault-free|_], AllRepStates),!,
-    fileName('faulty', Fname2),
+    fileName('faulty', Fname2,FileNo ),
     open(Fname2, write, Stream2),
     write_term_c('******************************************'),
     write_term_c('Execution took '),
@@ -74,11 +114,11 @@ output(AllRepStates, ExecutionTime):-
     nl, write_term_c('In total, there are ',[]), write_term_c(SemiNum,[]), write_term_c(' semi-repaired theories.'), nl.
 
 
-output(AllRepStates, ExecutionTime):-
+output(AllRepStates, ExecutionTime, NO):-
     setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
     length(OrigTheory, AxiomNum),
     assert(spec(axiomNu(AxiomNum))),
-    fileName('faultFree', Fname1),
+    fileName('faultFree', Fname1, NO),
     open(Fname1, write, Stream1),
 
     % output the execution time.
@@ -137,11 +177,15 @@ output(AllRepStates, ExecutionTime):-
     write_Spec(Stream1, ExecutionTime, FullyNum, SemiNum),
     write(Stream1, 'The original theory : '), nl(Stream1),
     writeAll(Stream1, OrigTheory), nl(Stream1),
-    write(Stream1, 'The true set:'), nl(Stream1),
+    write(Stream1, 'The original true set:'), nl(Stream1),
     (TrueSet \= [] ->  writeAll(Stream1, TrueSet), !;
              write(Stream1, '[]')), nl(Stream1),
-    write(Stream1, 'The false set: '), nl(Stream1),
+    write(Stream1, 'The original false set: '), nl(Stream1),
     (FalseSet \= [] -> writeAll(Stream1, FalseSet), !;
+             write(Stream1, '[]')), nl(Stream1),
+    spec(pft(TrueSetNew)),
+    write(Stream1, '*** The revised true set:'), nl(Stream1),
+    (TrueSetNew \= [] ->  writeAll(Stream1, TrueSetNew), !;
              write(Stream1, '[]')), nl(Stream1),
 
     write(Stream1, 'All of '),  write(Stream1, FullyNum),
