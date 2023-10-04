@@ -204,7 +204,7 @@ output(AllRepStates, ExecutionTime, NO):-
     findall(R, spec(round(R)), RoundsA),
     sort(RoundsA, RoundsAs), write_term_c(RoundsAs),
 
-    write(Stream1, 'Solutions are found at rounds:'),write(Stream1,RoundsAs),nl(Stream1),nl,
+    nl(Stream1), nl(Stream1), write(Stream1, 'Solutions are found at rounds:'),write(Stream1,RoundsAs),nl(Stream1),nl,
     nl, write_term_c('In total, there are '), write_term_c(FullyNum), write_term_c(' solutions with '),
     close(Stream1),
     write_term_c(SemiNum), write_term_c(' semi-solutions remaining.'),nl.
