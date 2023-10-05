@@ -21,12 +21,18 @@ appRepair(RepPlans, TheoryStateIn, TheoryStateOut):-
     TheoryStateOut = [[RsOut, RsBanOut],EC, Eproof, TheoryOut, TrueSet, FalseSet].
 
 appRepair([], RsApplied, Theory, RsBan, Theory, RsBan, RsApplied):-!,
-    writeLog([nl, write_term_c('-------- Finish applying repair plans.'), nl, finishLog]).
+    writeLog([nl, write_term_c('-------- Finish repairs application procedure.'), nl, finishLog]).
 appRepair([Rs1|Rest], RsAppliedIn, TheoryIn, RsBanIn, TheoryOut, RsBanOut, RsApplied):-
     appRepair(Rs1, TheoryIn, RsBanIn, TheoryTem, RsBanTem),
-    verifyRep(TheoryIn, RsAppliedIn, TheoryTem, Rs1, RsBanTem, RsBanTem2, TheoryTem2, RsAppliedInNew),
-    sort(TheoryTem2, TheoryTem3),
-    appRepair(Rest, RsAppliedInNew, TheoryTem3, RsBanTem2, TheoryOut, RsBanOut, RsApplied).
+    verifyRep(TheoryIn, RsAppliedIn, TheoryIn, Rs1, RsBanTem, RsBanTem2, TheoryTem, RsAppliedInNew),
+        (% if the repair cannot be applied, RsBanTem2 = [Rs1| RsBanTem] and the input theory should be passed to the rest of repairs.
+        RsBanTem2 = [Rs1| RsBanTem], !,
+        writeLog([nl, write_term_c('--------failed in apply the repair due to the verification failure.'), nl, finishLog]),
+        appRepair(Rest, RsAppliedInNew, TheoryIn, RsBanTem2, TheoryOut, RsBanOut, RsApplied);
+        % if the repair can be applied, RsBanTem2 = RsBanTem and the new theory should be passed to the rest of repairs.
+        RsBanTem2 = RsBanTem,
+        sort(TheoryTem, TheoryTem1),
+        appRepair(Rest, RsAppliedInNew, TheoryTem1, RsBanTem2, TheoryOut, RsBanOut, RsApplied)).
 
 %% Belief revision: delete unwanted clauses from the original Theory.
 appRepair(delete(Clause), TheoryIn, RsBan, TheoryOut, RsBan):-
@@ -187,9 +193,11 @@ appRename((COld, CNew, ClOld), TheoryIn, TheoryOut):-
             RsBanIn: the banned list of repair plans.
     Output: RsBanOut: the revised banned list of repair plans.
 ***********************************************************************************************************************/
-verifyRep(Theory, RsAppliedIn, Theory, RepPlan, RsBanIn, [RepPlan|RsBanIn], Theory, RsAppliedIn):- !.    % the repair plan makes no difference
+% the repair plan makes no difference
+verifyRep(Theory, RsAppliedIn, Theory, RepPlan, RsBanIn, [RepPlan|RsBanIn], Theory, RsAppliedIn):- !.
+
 % no orphan variable allowed
-verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryOld, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryNew, RsAppliedIn):-
     %  orphan Vb
     appEach(TheoryNew, [orphanVb], Ophans),  % X = [[],[],(AxiomOphan, Ophans),[]...]
     sort(Ophans, OpOrdered), % remove duplicates.
@@ -199,7 +207,7 @@ verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn]
             nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % no protected axioms should gone.
-verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryOld, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryNew, RsAppliedIn):-
     writeLog([nl, write_term_c('******** RepPlan: '), write_term_c(RepPlan),nl]),
     RepPlan \= arityInc(_,_,_,_,_),
     spec(protList(ProtectedList)),
@@ -214,12 +222,12 @@ verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn]
                 write_term_c(' failed.'),nl, write_term_All(TheoryNew),nl, finishLog]).
 
 % Heuristic4: no mirror rule is allowed
-verifyRep(TheoryOld, RsAppliedIn, TheoryNew, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryOld, RsAppliedIn):-
+verifyRep(TheoryOld, RsAppliedIn, TheoryOld, RepPlan, RsBanIn, [RepPlan|RsBanIn], TheoryNew, RsAppliedIn):-
     setof([+Y,-X], (member([+X,-Y], TheoryNew), member([+Y,-X], TheoryNew)), LoopRule),
     % at least one mirror rule is found.
     writeLog([nl, write_term_c('******** Warning: verifyRep found a loop rule:'), write_term_c(LoopRule), nl, finishLog]).
 % Finish the verification.
-verifyRep(_, RsAppliedIn, TheoryNew, RepPlan, RsBan, RsBan, TheoryNew, [RepPlan|RsAppliedIn]).
+verifyRep(_, RsAppliedIn, _, RepPlan, RsBan, RsBan, _, [RepPlan|RsAppliedIn]).
 
 /**********************************************************************************************************************
     repCombine(RepPlans, Theory, RepSolsOut):-

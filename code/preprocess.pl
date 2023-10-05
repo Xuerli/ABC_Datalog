@@ -246,7 +246,7 @@ minimal(TheoryIn, EC, RsIn, Minimal, RsOut):-
     deleteAll(TheoryIn, Assertions, Rules),
     append(Assertions, Rules, TheorySorted),
     smaller(TheorySorted,  EC, RsIn, [], MinimalTem, RsOut),
-    resetIndepVble(TheoryIn, Minimal).
+    resetIndepVble(MinimalTem, Minimal).
 
 smaller(TheorySorted,  _, RsIn, [], TheorySorted, RsIn).
 /**********************************************************************************************************************

@@ -7,7 +7,8 @@ repairPlan(Goal, TheoryState, _, TheoryState):-
 % TODO: MERGE insufficiencies goals with same predicate and then add the rule which proves all of them
 repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     TheoryState = [[RsList, RsBanned], _, _, _, _, _], !,
-
+    writeLog([nl, write_term_c('-------- Start repair the insufficiency: -------- '),
+            nl, write_term_All(Goal), finishLog]),
     spec(heuris(Heuristics)),
     ( delete(Heuristics, noOpt, [])->    % No heuristics
         spec(repTimeNH(RunTimeFile)), !;
@@ -45,7 +46,8 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
         spec(repTimeNH(RunTimeFile)), !;
     delete(Heuristics, noOpt, [_|_])->    % Has heuristics
         spec(repTimeH(RunTimeFile))),
-
+    writeLog([nl, write_term_c('-------- Start repair incompatibility: -------- '),
+            nl, write_term_All(ProofInp), finishLog]),
     statistics(walltime, [S1,_]),
     findall(RepairInfo,
                 (blockP(ProofInp, TheoryState, Suffs, RepairInfo),
@@ -302,6 +304,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                  deleteAll(Args, Arg2, DistArg),
                  length(DistArg, L)),    % L is the number of arguments in Goal but not in the theorem.
                 RelTheorems),
+    writeLog([nl, write_term_c('******** all relevant theorems are:'), write_term_c(RelTheorems), nl, finishLog]),
     mergeTailSort(RelTheorems, [(_, Cands)|_]), % get all candidates which is the most relevant theorems to Goal.
     deleteAll(Cands, FalseSetE, Cands2),    % the precondition does not correspond to the false set.
 
@@ -326,11 +329,15 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
                     write_term_c(' vs '),write_term_c(Constrain),nl])),    % proof exists
             VioCand),
     deleteAll(Cands3, VioCand, RuleCands),
+    writeLog([nl, write_term_c('******** all RuleCands are:'), write_term_c(RuleCands), nl, finishLog]),
 
     % Heuristic8:    When searching for a precondition, either add all theorems as preconditions or add one of them.
     (member([+Prop], RuleCands), generalise([+PropG, -Prop], RuleTem);    % formalise the rule which derive the goal.
-    setof(-Prop, member([+Prop], RuleCands), AllPred),
+    setof(-Prop, member([+Prop], RuleCands), AllPred), pause,
     generalise([+PropG| AllPred], RuleTem)),
+
+    writeLog([nl, write_term_c('******** RuleTem are:'), write_term_c(RuleTem), nl, finishLog]),
+
 
     % check incompatibilities.
     findall(Proof,
@@ -392,11 +399,22 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
              notin(Rule, ProtectedList),
              length(Rule, L),
              L>1),
-            RulesUseful),
-     (RulesUseful = []->
+            RulesUseful0),
+     (RulesUseful0 = []->
          writeLog([nl, write_term_c('******** No rules are useful, Analogy fails.'),nl, finishLog]);
-         RulesUseful = [_|_]),
-
+         RulesUseful0 = [_|_]),
+     % Huristic: when there is an existing rule whose head has the same predicate with the targeted goal, only consider this anologisig rule. This means the existing rule does not work for the goal so we adapt it into an aidditional rule for the goal.
+     Goal = [-[GPredicate|_]],
+     % findall useful rule that has the goal predicate in heads.
+     findall(X,
+                (setof(GoalRule,
+                        (member(GoalRule, RulesUseful0),
+                         member(+[GPredicate|_], GoalRule)),
+                         Y),
+                 member(X, Y)),
+             GoalRules),
+     (GoalRules = [] -> RulesUseful = RulesUseful0; GoalRules = [_|_],  RulesUseful = GoalRules),
+     writeLog([nl, write_term_c('******** Useful rules are:'), write_term_c(RulesUseful), nl, finishLog]),
      findall(GoalRem,
                (member(Evi, Evidences),
                 (member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
@@ -411,11 +429,12 @@ buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS])
     sort([Goal| SingleGs], SingleGoalList),        % get the list of the single unresolvable subgoal.
     writeLog([nl,write_term_c('-- The single unresolvable subgoal. is :'),nl,write_term_c(SingleGoalList),nl,  finishLog]),
 
-    setof(Relevancy,
+    findall(Relevancy,
             (member(RuleC, RulesUseful),        % get a rule candidate
              member(TargetG, SingleGoalList),    % get a target goal candidate
              relevancy(RuleC, TargetG, TheoryIn, EC, Relevancy)),
-         Relevancies),
+         Relevancies0),
+    sort(Relevancies0, Relevancies),
     % get the most relevant rule w.r.t. the goal.
     last(Relevancies, (S1, S2, RuleSR, TGoal, PreCondRel, PPs)),
        findall(-P, (member(-P, RuleSR), notin(-P, PreCondRel)), PSIrrela),

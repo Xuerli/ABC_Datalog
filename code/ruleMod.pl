@@ -238,13 +238,14 @@ delPreCond(Unresolvables, Evi, RepPlan, ClsOld):-
 
 
 /**********************************************************************************************************************
-    relevancy(Rule, Goal, TheoryIn, EC, (S1, S2, Rule, Ps, PPs)):-
+    relevancy(Rule, Goal, TheoryIn, EC, (S1, S2, Rule, Goal， Ps, PPs)):-
     Input: Goal: a goal clause:  [-[Precondition, Arg1, Arg2,...]]
            Rule: is a rule clause:[+[HP, A1,..], -[BP, A2...], -[BP2, A3...]]
            TheoryIn the input theory.
     Output: S1, 1 if the head predicate of Rule is same with Goal's predicate, otherwise 0.
             S2, the number of relevant preconditions in Rule w.r.t Goal.
             Rule, attached the input rule in the output.
+            Goal,
             Ps: the relevant preconditions in Rule.
             PPs: the partner theorem of each relevant precondition.
 ************************************************************************************************************************/

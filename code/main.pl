@@ -4,7 +4,7 @@ Macintosh HD⁩/⁨Users⁩/lixue⁩/GoogleDrive⁩/01PHD⁩/01program⁩/eclips
 */
 
 :- use_module(library(lists)).
-:-[preprocess, equalities, repairPlanGen, repairApply, vitality].
+:-[preprocess, equalities, repairPlanGen, repairApply, vitality, fileOps].
     % clear all assertions. So main has to be compiling before the input theory file.
 :-    maplist(retractall, [trueSet(_), falseSet(_), heuristics(_), protect(_), spec(_)]).
 
@@ -28,12 +28,61 @@ proofStatus:  0 -- default value.
 pause.
 
 abc:-
-    % Initialisation
-    supplyInput,
-    % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
-    initTheory(Theory),    % clear previous data and initialise new ones.
-    precheckPS,
+        current_predicate(exists_true, 1),
+        exists_true(ET),
+        ET \= [],
+        ET = [Prop], !,
+        convertClause([+Prop], [+Clause]),
+        assert(outputFile_No_Last(0)),
+        % Initialisation
+        supplyInput,
+        % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
+        initTheory(Theory),    % clear previous data and initialise new ones.
+        precheckPS,
+
+        spec(signature(_, Constants)), % Constants = [[camilla], [diana], [william]]
+        findall( Clause_New,
+                (
+                 % replace the variable with a constant
+                 member(vble(X), Clause),
+                 member(C, Constants),
+                 replace(vble(X), C, Clause, Clause_New),
+                 outputFile_No_Last(Last),
+                 OutputFile_No is Last + 1,
+
+                 % clear previous data and initialise new ones.
+                 retractall(spec(_)),
+                 initTheory(Theory),
+
+                 % it should not in the false set.
+                 spec(pff(FalseSet)),
+                 notin([+Clause_New], FalseSet),
+
+                 spec(pft(TrueSet)),
+                 append(TrueSet, [+Clause_New], TrueSetNew),
+                 print('\nthe current TrueSetNew is '),
+                 print(TrueSetNew),
+
+                 retractall(spec(pft(_))),
+                 retractall(outputFile_No_Last(_)),
+                 assert(spec(pft(TrueSetNew))),
+                 assert(outputFile_No_Last(OutputFile_No)),
+
+                 abc_core(Theory, OutputFile_No)),
+        _).
+
+
+abc:-
+         % Initialisation
+        supplyInput,
+        % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
+        initTheory(Theory),    % clear previous data and initialise new ones.
+        precheckPS,
+        abc_core(Theory,"1").
+
+abc_core(Theory, OutputFile_No):-
     % setup log
+    print('ok'),
     initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
     %statistics(walltime, [_ | [ExecutionTime1]]),
     statistics(walltime, [S,_]),
@@ -49,7 +98,7 @@ abc:-
     writeLog([nl,write_term_c('--------------executation time 2---'),
                 nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime),nl]),
     %ExecutionTime is ExecutionTime1 + ExecutionTime2,
-    output(AllRepStates, ExecutionTime),
+    output(AllRepStates, ExecutionTime, OutputFile_No),
     maplist(close, [StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH]),
     nl, print('-------------- Finish. --------------'), nl.
 
@@ -224,8 +273,10 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     writeLog([nl, write_term_c('-- There are '), write_term_c(LengthO),
                   write_term_c(' repaired states: '),nl,write_term_All(RepStatesAll), nl, finishLog]),
     % prune the redundancy.
-    mergeRs(RepStatesAll, RepStatesFine),
-    writeLog([nl, write_term_c('-- RepStatesFine '), write_term_c(RepStatesFine),nl, finishLog]),
+    mergeRs(RepStatesAll, RepStatesFine, TheoryIn),
+    length(RepStatesFine, LengthFine),
+    writeLog([nl, write_term_c('-- There are '), write_term_c(LengthFine),nl,
+    write_term_c('RepStatesFine: '),nl,write_term_All(RepStatesFine), finishLog]),
     %print('111111 RepStatesFine'),print(RepStatesFine),nl,nl,
     findall((FNum1, FNum2, RepState, FaultStateNew),
                     (member(RepState, RepStatesFine),
@@ -331,31 +382,42 @@ vitalityOpt(StatesFaultsAll, VitOptStates):-
             VitOptStates).
 
 /**********************************************************************************************************************
-    mergeRs(RepStates, RepStatesNew):- if the theory of two states are same, then merge these two states.
+    mergeRs(RepStates, RepStatesNew, TheoryIn):- if the theory of two states are same, then merge these two states.
+        Only the states where the theory is different with the original theory will be taken into account.
     Input:  RepStates is a list of theory state: [[Repairs, EC, EProof, TheoryNew, TrueSetE, FalseSetE],...]
+            TheoryIn is the theory that has not been repaired in this round.
     Output: RepStatesNew is also a list of [[Repairs, EC, EProof, TheoryNew, TrueSetE, FalseSetE]...]
 ************************************************************************************************************************/
-mergeRs(RepStates, RepStatesNew):-
-    mR(RepStates, [], RepStatesNew).
+mergeRs(RepStates, RepStatesNew, TheoryIn):-
+    mR(RepStates, [], RepStatesNew, TheoryIn).
 
-mR([], SIn, SOut):-
+mR([], SIn, SOut, TheoryIn):-
     findall(StateNew,
-            (member([[Rs, BanRs], EC, EProof, TheoryIn, TrueSetE, FalseSetE],SIn),
-             minimal(TheoryIn, EC, Rs, MiniT, RsOut), % only take the minimal set of the theory into account.
+            (member([[Rs, BanRs], EC, EProof, TheoryRep, TrueSetE, FalseSetE],SIn),
+             TheoryRep \= TheoryIn,
+             minimal(TheoryRep, EC, Rs, MiniT, RsOut), % only take the minimal set of the theory into account.
              StateNew = [[RsOut, BanRs], EC, EProof, MiniT, TrueSetE, FalseSetE]),
         SOut).
 
 % The theory state is already in SIn.
-mR([H|Rest], SIn, Sout):-
+mR([H|Rest], SIn, Sout, TheoryIn):-
     H = [[Rs, _]|StateT],
     % the main body of the state occur in the later states, then it is a redundancy. maintain the one cost least w.r.t. the length of repairs.
     member([[Rs2,RsBan2]|StateT], SIn), !,
     length(Rs, L1),
     length(Rs2, L2),
     (L1< L2-> replace([[Rs2,RsBan2]|StateT], H, SIn, SNew),
-        mR(Rest, SNew, Sout), !;
-     L1 >= L2-> mR(Rest, SIn, Sout)).
+        mR(Rest, SNew, Sout, TheoryIn), !;
+     L1 >= L2-> mR(Rest, SIn, Sout, TheoryIn)).
 
-% H is not in SIn yet
-mR([H|Rest], SIn, Sout):-
-    mR(Rest, [H| SIn], Sout).
+% H is not in SIn yet, but the theory is not been repiared so ignore it and continue.
+mR([H|Rest], SIn, Sout, TheoryIn):-
+    H = [_, _, _, TheoryRep, _, _],
+    TheoryRep = TheoryIn,
+    mR(Rest, SIn, Sout, TheoryIn).
+
+% H is not in SIn yet and the theory is repaired so add it as a novel state and continue.
+mR([H|Rest], SIn, Sout, TheoryIn):-
+    H = [_, _, _, TheoryRep, _, _],
+    TheoryRep \= TheoryIn,
+    mR(Rest, [H| SIn], Sout, TheoryIn).

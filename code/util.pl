@@ -1,4 +1,4 @@
-:-[fileOps].
+
 /*
   This file contains the basic functions/predicates that assist other ABC system's functions.
   Update Date: 13.08.2022
@@ -79,7 +79,7 @@ appEach([H| T], [Predicate| Args], Output):- !,
     Expression =..EList,
     (call(Expression)-> Output = [HOut| TOut], !;
     \+call(Expression)-> Output = TOut,
-    writeLog([nl,write_term_c('--Failed to apply '),nl,write_term_c(Expression),nl,  finishLog])),
+    writeLog([nl,write_term_c('--Failed to excute the following expression'),nl,write_term_c(Expression),nl,  finishLog])),
     appEach(T, [Predicate| Args], TOut).
 
 /**********************************************************************************************
@@ -579,8 +579,10 @@ orphanVb(Axiom,  OpVbles):-
             (member(vble(X), ArgsHead),
              notin(vble(X), BodyVbles)),    % vble(X) is not a member of BodyVbles
             OpVbles), !,
-    nl, nl,nl,write_term_c('---------- Error: orphan variable is found in: ----------'), nl,
-    write_term_c(Axiom), nl, write_term_c(OpVbles).
+    writeLog([nl, write_term_c('-------- Error: orphan variable is found in: -------- '),
+            nl, write_term_All(Axiom), finishLog]).
+    %nl, nl,nl,write_term_c('---------- Error: orphan variable is found in: ----------'), nl,
+    %write_term_c(Axiom), nl, write_term_c(OpVbles).
 
 orphanVb(_, []).
 
@@ -759,6 +761,7 @@ removeQuote(FileList):-
 /**********************************************************************************************
   replace(E, SubE, ListIn,ListOut): replace element E in ListIn with SubE to get ListOut.
   If E does not occur in the list, ListOut = ListIn.
+  replace(vble(_), [ccc], [[legal_liable, vble(p), [x1]]], X)
 ***********************************************************************************************/
 replace([], List, List):-!.
 replace((_, _), [], []):-!.
