@@ -1,8 +1,0 @@
-[+created(c1,thelegendofzelda)].
-[+created(nintendo,\z),-sellmorethan(\z,onemillioncopies)].
-[+game(thelegendofzelda)].
-[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
-[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
-[+sellmorethan(thelegendofzelda,onemillioncopies)].
-[+videoGameCompany(c1)].
-

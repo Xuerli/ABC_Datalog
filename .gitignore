@@ -1,4 +1,3 @@
-code/log/*.txt
-code/*.txt
+src/log/*.txt
+src/*.txt
 test
-evaluation

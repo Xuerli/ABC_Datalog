@@ -1,8 +1,0 @@
-[+eastern(tom)].
-[+wildTurkey(tom)].
-[-eastern(tom),-wildTurkey(tom)].
-[-goulds(tom),-wildTurkey(tom)].
-[-merriams(tom),-wildTurkey(tom)].
-[-osceola(tom),-wildTurkey(tom)].
-[-riogrande(tom),-wildTurkey(tom)].
-
