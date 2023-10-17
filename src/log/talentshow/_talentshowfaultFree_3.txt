@@ -1,0 +1,9 @@
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+

@@ -1,0 +1,66 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[mum,[diana],[william],[birth]],+[mum2,[camilla],[william],[birth]]],[-[mum,[camilla],[william],[birth]]]]
+[+[mum,[diana],[william],[birth]],+[mum2,[camilla],[william],[birth]]]
+[-[mum,[camilla],[william],[birth]]]
+
+
+---------Equivalent classes are:------
+
+---------SufGoals is------
+
+---------InsufGoals is------
+[-[mum,[diana],[william],[birth]]],[[([-[mum,[diana],[william],[birth]]],[+[mum,[diana],[william],[birth]],+[mum2,[camilla],[william],[birth]]],[],[+[mum2,[camilla],[william],[birth]]],[1,0])]]
+
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[+[mum2,[camilla],[william],[birth]]]
+[([-[mum,[diana],[william],[birth]]],[+[mum,[diana],[william],[birth]],+[mum2,[camilla],[william],[birth]]],[],[+[mum2,[camilla],[william],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[mum2,[camilla],[william],[birth]]]
+
+--Reformation: Unresolvables:
+[+[mum2,[camilla],[william],[birth]]]
+
+--Unblocking 1: RepPlanS:
+[expand([-[mum2,[camilla],[william],[birth]]])]
+[-[mum2,[camilla],[william],[birth]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[mum,[diana],[william],[birth]]]
+[([-[mum,[diana],[william],[birth]]],[+[mum,[diana],[william],[birth]],+[mum2,[camilla],[william],[birth]]],[],[+[mum2,[camilla],[william],[birth]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[mum,[diana],[william],[birth]]]
+
+--Reformation: Unresolvables:
+[-[mum,[diana],[william],[birth]]]
+
+Reformation: targeted evidence
+[mum,[diana],[william],[birth]]
+--Unblocking 1: RepPlanS:
+[expand([+[mum,[diana],[william],[birth]]])]
+[+[mum,[diana],[william],[birth]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[mum,[diana],[william],[birth]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[+[mum2,[camilla],[william],[birth]]],[-[mum,[diana],[william],[birth]]]]

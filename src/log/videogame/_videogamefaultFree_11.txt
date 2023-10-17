@@ -1,0 +1,7 @@
+[+created(nintendo,thelegendofzelda)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(\z)].
+

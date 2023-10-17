@@ -3,19 +3,21 @@
 
 theoryName(afterTweety).
 
-
 axiom([+bird(\y,flightless),-penguin(\y)]).
 axiom([+bird(polly,canFly)]).
 axiom([+feather(\y),-bird(\y,\iv1)]).
 axiom([+fly(\x),-bird(\x,canFly)]).
-axiom([+kiwi(winky)]).
 axiom([+penguin(tweety)]).
+axiom([+penguin(pingu)]).
+axiom([+useTool(tweety, spoon)]).
+axiom([+useTool(pingu, wing)]).
+axiom([+fly(\x),-useTool(\x,\y)]).
 
-trueSet([feather(tweety),feather(polly), fly(polly), bird(winky,flightless)]).
-falseSet([fly(tweety), fly(winky)]).
+trueSet([feather(tweety),feather(polly), fly(polly), fly(pingu)]).
+falseSet([fly(tweety)]).
 
 
-protect([]).
+protect([feather,arity(feather),penguin, bird, arity(bird), arity(penguin), polly, pingu]).
 heuristics([]).
 
 theoryFile:- pass.

@@ -1,0 +1,8 @@
+[+eastern(\x),+goulds(\x),+merriams(\x),+riogrande(\x),+osceola(\x),+riogrande(\x),-wildTurkey(\x)].
+[+wildTurkey(tom)].
+[-eastern(tom),-wildTurkey(tom)].
+[-goulds(tom),-wildTurkey(tom)].
+[-merriams(tom),-wildTurkey(tom)].
+[-osceola(tom),-wildTurkey(tom)].
+[-riogrande(tom),-wildTurkey(tom)].
+

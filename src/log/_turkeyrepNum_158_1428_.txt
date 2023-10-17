@@ -1,0 +1,2 @@
+1, [[[rename(+wildTurkey,eastern,[+[wildTurkey,[tom]]],[+[eastern,[tom]]])],[]],[[[tom]]],[],[[+[eastern,vble(x)],+[goulds,vble(x)],+[merriams,vble(x)],+[ocellated,vble(x)],+[osceola,vble(x)],+[riogrande,vble(x)],-[wildTurkey,vble(x)]],[+[eastern,[tom]]],[-[eastern,[tom]],-[wildTurkey,[tom]]],[-[goulds,[tom]],-[wildTurkey,[tom]]],[-[merriams,[tom]],-[wildTurkey,[tom]]],[-[osceola,[tom]],-[wildTurkey,[tom]]],[-[riogrande,[tom]],-[wildTurkey,[tom]]]],[[+[eastern,[tom]]]],[[+[goulds,[tom]]],[+[ocellated,[tom]]]]]
+

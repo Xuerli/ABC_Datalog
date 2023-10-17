@@ -1,0 +1,1169 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[bornIn,[dani],[boston]]]
+[([-[bornIn,[dani],[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[-[bornIn,[dani],[f,[dani]]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[bornIn,[dani],[boston]]]
+
+--Reformation: Unresolvables:
+[-[bornIn,[dani],[boston]]]
+
+Reformation: targeted evidence
+[bornIn,[dani],[boston]]
+--------Reformation Candidates------
+[([+[isAmerican,[boston]]],[+[isAmerican,[boston]]],(predicate,[[dani]]),1,[],[([+[isAmerican,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isAmerican,[f,[dani]]]],[0,0]),([+[isAmerican,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[isCity,[f,[dani]]],-[bornIn,[dani],[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isAmerican,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isAmerican,[dani]]],[+[isAmerican,[dani]]],(predicate,[[boston]]),1,[],[([+[isAmerican,[dani]]],[],[],[+[isAmerican,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isAmerican,[dani]]]
+---------------Mismatches is 1  predicate,[[boston]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[boston]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isCity,[boston]]],[+[isCity,[boston]]],(predicate,[[dani]]),1,[],[([+[isCity,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isCity,[f,[dani]]]],[0,0]),([+[isCity,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[bornIn,[dani],[f,[dani]]],-[isAmerican,[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isCity,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isCity,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isCity,[boston]]]
+
+
+--------Reformation Candidates------
+[([+[isWriter,[dani]]],[+[isWriter,[dani]]],(predicate,[[boston]]),1,[],[([+[isWriter,[dani]]],[],[],[+[isWriter,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isWriter,[dani]]]
+---------------Mismatches is 1  predicate,[[boston]]
+--Unblocking 1: RepPlanS:
+[merge(isWriter,bornIn,[[boston]],inc)]
+[+[isWriter,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isAmerican,[dani]]],[+[isAmerican,[dani]]],(predicate,[[boston]]),1,[],[([+[isAmerican,[dani]]],[],[],[+[isAmerican,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isAmerican,[dani]]]
+---------------Mismatches is 1  predicate,[[boston]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[boston]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isWriter,[dani]]],[+[isWriter,[dani]]],(predicate,[[boston]]),1,[],[([+[isWriter,[dani]]],[],[],[+[isWriter,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isWriter,[dani]]]
+---------------Mismatches is 1  predicate,[[boston]]
+--Unblocking 1: RepPlanS:
+[merge(isWriter,bornIn,[[boston]],inc)]
+[+[isWriter,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isNovel,[familyHistory]]],[+[writesNovel,[dani]]],(predicate,[[boston]]),1,[],[([+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[[dani]/vble(b),[familyHistory]/vble(a)],[-[writtenBy,[familyHistory],vble(b)],+[writesNovel,vble(b)]],[1,0]),([-[writtenBy,[familyHistory],vble(b)],+[writesNovel,vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[],[+[writesNovel,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isNovel,[familyHistory]]]
+---------------Mismatches is 1  predicate,[[boston]]
+--Unblocking 1: RepPlanS:
+[merge(writesNovel,bornIn,[[boston]],inc)]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[bornIn,[dani],[boston]]])]
+[+[bornIn,[dani],[boston]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[bornIn,[dani],[f,[dani]]]]
+[([-[bornIn,[dani],[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[-[bornIn,[dani],[f,[dani]]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[bornIn,[dani],[f,[dani]]]]
+
+--Reformation: Unresolvables:
+[-[bornIn,[dani],[f,[dani]]]]
+
+Reformation: targeted evidence
+[bornIn,[dani],[f,[dani]]]
+--------Reformation Candidates------
+[([+[isAmerican,[dani]]],[+[isAmerican,[dani]]],(predicate,[[f,[dani]]]),1,[],[([+[isAmerican,[dani]]],[],[],[+[isAmerican,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isAmerican,[dani]]]
+---------------Mismatches is 1  predicate,[[f,[dani]]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[f,[dani]]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isAmerican,[boston]]],[+[isAmerican,[f,[dani]]]],(predicate,[[dani]]),1,[],[([+[isAmerican,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isAmerican,[f,[dani]]]],[0,0]),([+[isAmerican,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[isCity,[f,[dani]]],-[bornIn,[dani],[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isAmerican,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isCity,[boston]]],[+[isCity,[f,[dani]]]],(predicate,[[dani]]),1,[],[([+[isCity,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isCity,[f,[dani]]]],[0,0]),([+[isCity,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[bornIn,[dani],[f,[dani]]],-[isAmerican,[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isCity,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isCity,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isCity,[boston]]]
+
+
+--------Reformation Candidates------
+[([+[isWriter,[dani]]],[+[isWriter,[dani]]],(predicate,[[f,[dani]]]),1,[],[([+[isWriter,[dani]]],[],[],[+[isWriter,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isWriter,[dani]]]
+---------------Mismatches is 1  predicate,[[f,[dani]]]
+--Unblocking 1: RepPlanS:
+[merge(isWriter,bornIn,[[f,[dani]]],inc)]
+[+[isWriter,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isAmerican,[boston]]],[+[isAmerican,[f,[dani]]]],(predicate,[[dani]]),1,[],[([+[isAmerican,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isAmerican,[f,[dani]]]],[0,0]),([+[isAmerican,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[isCity,[f,[dani]]],-[bornIn,[dani],[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isAmerican,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isAmerican,[dani]]],[+[isAmerican,[dani]]],(predicate,[[f,[dani]]]),1,[],[([+[isAmerican,[dani]]],[],[],[+[isAmerican,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isAmerican,[dani]]]
+---------------Mismatches is 1  predicate,[[f,[dani]]]
+--Unblocking 1: RepPlanS:
+[merge(isAmerican,bornIn,[[f,[dani]]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isCity,[boston]]],[+[isCity,[f,[dani]]]],(predicate,[[dani]]),1,[],[([+[isCity,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[+[isCity,[f,[dani]]]],[0,0]),([+[isCity,[f,[dani]]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[[dani]/vble(y)],[+[isAmerican,[dani]],-[bornIn,[dani],[f,[dani]]],-[isAmerican,[f,[dani]]]],[3,0])])]
+---------------Axiom is 1  [+[isCity,[boston]]]
+---------------Mismatches is 1  predicate,[[dani]]
+--Unblocking 1: RepPlanS:
+[merge(isCity,bornIn,[[dani]],inc)]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isCity,[boston]]]
+
+
+--------Reformation Candidates------
+[([+[isWriter,[dani]]],[+[isWriter,[dani]]],(predicate,[[f,[dani]]]),1,[],[([+[isWriter,[dani]]],[],[],[+[isWriter,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isWriter,[dani]]]
+---------------Mismatches is 1  predicate,[[f,[dani]]]
+--Unblocking 1: RepPlanS:
+[merge(isWriter,bornIn,[[f,[dani]]],inc)]
+[+[isWriter,[dani]]]
+
+
+--------Reformation Candidates------
+[([+[isNovel,[familyHistory]]],[+[writesNovel,[dani]]],(predicate,[[f,[dani]]]),1,[],[([+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[[dani]/vble(b),[familyHistory]/vble(a)],[-[writtenBy,[familyHistory],vble(b)],+[writesNovel,vble(b)]],[1,0]),([-[writtenBy,[familyHistory],vble(b)],+[writesNovel,vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[],[+[writesNovel,[dani]]],[0,0])])]
+---------------Axiom is 1  [+[isNovel,[familyHistory]]]
+---------------Mismatches is 1  predicate,[[f,[dani]]]
+--Unblocking 1: RepPlanS:
+[merge(writesNovel,bornIn,[[f,[dani]]],inc)]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[bornIn,[dani],[f,[dani]]]])]
+[+[bornIn,[dani],[f,[dani]]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])]
+[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])]
+[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]]
+[+[isAmerican,[boston]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])]
+[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]]
+[+[isAmerican,[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])]
+[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]]
+[+[isCity,[boston]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])]
+[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]]
+[+[isWriter,[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])]
+[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]]
+[+[isNovel,[familyHistory]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])]
+[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])]
+[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])]
+[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])]
+[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]]
+[+[isAmerican,[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])]
+[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]]
+[+[isAmerican,[boston]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])]
+[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]]
+[+[isCity,[boston]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])]
+[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]]
+[+[isWriter,[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])]
+[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]]
+[+[isNovel,[familyHistory]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])]
+[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])]
+[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[bornIn,[dani],[boston]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[-[bornIn,[dani],[boston]]],[-[bornIn,[dani],[f,[dani]]]]]
+
+24repair plans  for buildP:[[-[bornIn,[dani],[boston]]],[[([-[bornIn,[dani],[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]],[],[-[bornIn,[dani],[f,[dani]]]],[1,0])]]]
+
+
+[insuff,([expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])],[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]]),[[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])],[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]]),[[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])],[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]],[+[isAmerican,[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])],[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]],[+[isWriter,[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])],[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]],[+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]],[+[isAmerican,[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]],[+[isWriter,[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]],[+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]],[+[writtenBy,[familyHistory],[dani]]]]]
+[insuff,([expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])],[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]]),[[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]],[+[isAmerican,[boston]]]]]
+[insuff,([expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])],[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]]),[[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]],[+[isCity,[boston]]]]]
+[insuff,([expand([+[bornIn,[dani],[boston]]])],[[+[bornIn,[dani],[boston]]]]),[[+[bornIn,[dani],[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([expand([+[bornIn,[dani],[f,[dani]]]])],[[+[bornIn,[dani],[f,[dani]]]]]),[[+[bornIn,[dani],[f,[dani]]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isAmerican,bornIn,[[boston]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isAmerican,bornIn,[[dani]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isAmerican,bornIn,[[f,[dani]]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isCity,bornIn,[[dani]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isCity,[boston]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isCity,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isWriter,bornIn,[[boston]],inc)],[[+[isWriter,[dani]]]]),[[+[isWriter,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(isWriter,bornIn,[[f,[dani]]],inc)],[[+[isWriter,[dani]]]]),[[+[isWriter,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(writesNovel,bornIn,[[boston]],inc)],[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]]),[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+[insuff,([merge(writesNovel,bornIn,[[f,[dani]]],inc)],[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]]),[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])],[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]]),[[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])],[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]]),[[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])],[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]],[+[isAmerican,[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])],[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]],[+[isWriter,[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])],[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]]),[[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]],[+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]],[+[isAmerican,[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]],[+[isWriter,[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]],[+[isNovel,[familyHistory]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])],[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]]),[[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]],[+[writtenBy,[familyHistory],[dani]]]]],[insuff,([expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])],[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]]),[[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]],[+[isAmerican,[boston]]]]],[insuff,([expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])],[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]]),[[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]],[+[isCity,[boston]]]]],[insuff,([expand([+[bornIn,[dani],[boston]]])],[[+[bornIn,[dani],[boston]]]]),[[+[bornIn,[dani],[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([expand([+[bornIn,[dani],[f,[dani]]]])],[[+[bornIn,[dani],[f,[dani]]]]]),[[+[bornIn,[dani],[f,[dani]]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isAmerican,bornIn,[[boston]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isAmerican,bornIn,[[dani]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isAmerican,bornIn,[[f,[dani]]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isCity,bornIn,[[dani]],inc)],[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isCity,[boston]]]]),[[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isCity,[boston]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isWriter,bornIn,[[boston]],inc)],[[+[isWriter,[dani]]]]),[[+[isWriter,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(isWriter,bornIn,[[f,[dani]]],inc)],[[+[isWriter,[dani]]]]),[[+[isWriter,[dani]]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(writesNovel,bornIn,[[boston]],inc)],[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]]),[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]],[insuff,([merge(writesNovel,bornIn,[[f,[dani]]],inc)],[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]]),[[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[eqAxiom,[f,[dani]]/[boston],[boston],[f,[dani]]]]]]]
+
+
+[[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])
+
+
+******** RepPlan: expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,[dani],[boston]]])
+
+
+******** RepPlan: expand([+[bornIn,[dani],[boston]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[bornIn,[dani],[f,[dani]]]])
+
+
+******** RepPlan: expand([+[bornIn,[dani],[f,[dani]]]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isAmerican,bornIn,[[boston]],inc)
+
+
+******** RepPlan: merge(isAmerican,bornIn,[[boston]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isAmerican,bornIn,[[dani]],inc)
+
+
+******** RepPlan: merge(isAmerican,bornIn,[[dani]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isAmerican,bornIn,[[f,[dani]]],inc)
+
+
+******** RepPlan: merge(isAmerican,bornIn,[[f,[dani]]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isCity,bornIn,[[dani]],inc)
+
+
+******** RepPlan: merge(isCity,bornIn,[[dani]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isWriter,bornIn,[[boston]],inc)
+
+
+******** RepPlan: merge(isWriter,bornIn,[[boston]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(isWriter,bornIn,[[f,[dani]]],inc)
+
+
+******** RepPlan: merge(isWriter,bornIn,[[f,[dani]]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(writesNovel,bornIn,[[boston]],inc)
+
+
+******** RepPlan: merge(writesNovel,bornIn,[[boston]],inc)
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+merge(writesNovel,bornIn,[[f,[dani]]],inc)
+
+
+******** RepPlan: merge(writesNovel,bornIn,[[f,[dani]]],inc)
+
+-------- Finish applying repair plans.
+
+-- There are 24 repaired states: 
+[[[expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,[dani],[boston]]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[expand([+[bornIn,[dani],[f,[dani]]]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isAmerican,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[boston]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[boston]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[boston]]],[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isAmerican,bornIn,[[dani]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[dani]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[dani]]],[+[bornIn,[dani],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isAmerican,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[f,[dani]]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[f,[dani]]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[f,[dani]]]],[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isCity,bornIn,[[dani]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[boston],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isAmerican,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isWriter,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(isWriter,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(writesNovel,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(b),[boston]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+[[[merge(writesNovel,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(b),[f,[dani]]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]
+
+
+-- RepStatesFine [[[[merge(writesNovel,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(b),[f,[dani]]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(writesNovel,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(b),[boston]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isWriter,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isWriter,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isCity,bornIn,[[dani]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[boston],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isAmerican,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isAmerican,bornIn,[[f,[dani]]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[f,[dani]]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[f,[dani]]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[f,[dani]]]],[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isAmerican,bornIn,[[dani]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[dani]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[dani]]],[+[bornIn,[dani],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[merge(isAmerican,bornIn,[[boston]],inc)],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),[boston]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[boston]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[boston]]],[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,[dani],[f,[dani]]]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,[dani],[boston]]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,[dani],vble(z)],-[isCity,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]],[[[expand([+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]])],[]],[[[boston]],[[dani]],[[f,vble(y)]],[[familyHistory]],[[familySecrets]],[[y2003]]],[],[[+[bornIn,vble(y),vble(z)],-[createdBy,[familySecrets],vble(y)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(z)],-[isWriter,vble(y)],-[writesNovel,vble(y)],-[writtenBy,[familyHistory],vble(y)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]],[[+[bornIn,[dani],[boston]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(b),[f,[dani]]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(b),[f,[dani]]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(b),[boston]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(b),[boston]],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],[f,[dani]]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],[boston]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[boston],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isAmerican,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[boston],[dani]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isAmerican,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(y),[f,[dani]]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[f,[dani]]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[f,[dani]]]],[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(y),[f,[dani]]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[f,[dani]]],-[isCity,[f,vble(y)]]]
+[+[bornIn,[boston],[f,[dani]]]]
+[+[bornIn,[dani],[f,[dani]]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(y),[dani]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[dani]]],[+[bornIn,[dani],[dani]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(y),[dani]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[dani]],-[isCity,[f,vble(y)]]]
+[+[bornIn,[boston],[dani]]]
+[+[bornIn,[dani],[dani]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(y),[boston]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[boston]],-[isCity,[f,vble(y)]]],[+[bornIn,[boston],[boston]]],[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(y),[boston]],-[bornIn,vble(y),[f,vble(y)]],-[bornIn,[f,vble(y)],[boston]],-[isCity,[f,vble(y)]]]
+[+[bornIn,[boston],[boston]]]
+[+[bornIn,[dani],[boston]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],[f,[dani]]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],[f,[dani]]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],[boston]]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],[boston]]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],vble(z)],-[isCity,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,[dani],vble(z)],-[isAmerican,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[f,[dani]]],-[writtenBy,[familyHistory],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[f,[dani]]],-[writesNovel,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[f,[dani]]],-[isWriter,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[f,[dani]]],-[isAmerican,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[f,[dani]]],-[createdBy,[familySecrets],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[boston]],-[writtenBy,[familyHistory],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[boston]],-[writesNovel,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[boston]],-[isWriter,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[boston]],-[isAmerican,vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),[boston]],-[createdBy,[familySecrets],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]
+
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]],[+[createdBy,[familySecrets],[dani]]],[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]],[+[isAmerican,[boston]]],[+[isAmerican,[dani]]],[+[isCity,[boston]]],[+[isNovel,[familyHistory]]],[+[isPodCast,[familySecrets]]],[+[isWriter,[dani]]],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]],[+[writtenBy,[familyHistory],[dani]]],[+[writtenIn,[familyHistory],[y2003]]],[-[isNovel,vble(x)],-[isPodCast,vble(x)]]]
+[+[bornIn,vble(z),vble(y)],-[createdBy,[familySecrets],vble(z)],-[isAmerican,vble(y)],-[isAmerican,vble(z)],-[isCity,vble(y)],-[isWriter,vble(z)],-[writesNovel,vble(z)],-[writtenBy,[familyHistory],vble(z)]]
+[+[createdBy,[familySecrets],[dani]]]
+[+[isAmerican,vble(y)],-[bornIn,vble(y),[f,vble(y)]],-[isAmerican,[f,vble(y)]],-[isCity,[f,vble(y)]]]
+[+[isAmerican,[boston]]]
+[+[isAmerican,[dani]]]
+[+[isCity,[boston]]]
+[+[isNovel,[familyHistory]]]
+[+[isPodCast,[familySecrets]]]
+[+[isWriter,[dani]]]
+[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]
+[+[writtenBy,[familyHistory],[dani]]]
+[+[writtenIn,[familyHistory],[y2003]]]
+[-[isNovel,vble(x)],-[isPodCast,vble(x)]]
+
+
+---------Equivalent classes are:------
+[[boston],[f,[dani]]]

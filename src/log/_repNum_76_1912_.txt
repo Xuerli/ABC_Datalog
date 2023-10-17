@@ -1,0 +1,2 @@
+1, [[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]
+

@@ -1,0 +1,726 @@
+date(2023,8,15)
+----------------------------------------------------------------------------------
+Theory size: 12
+Faults Number: 1,1
+Cost Limit is: 15
+RoundLimit is: 3
+Running time: 63876 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(bornIn)],[arity(writesNovel)],[bornIn],[writesNovel]]
+Total Solution number is: 36
+Remaining semi-repaired theories: 37
+----------------------------------------------------------------------------------
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/36 :
+expand([+bornIn(\y,\z),-createdBy(familySecrets,\y),-isAmerican(\y),-isAmerican(\z),-isCity(\z),-isWriter(\y),-writtenBy(familyHistory,\y)]).
+
+
+Repaired Theory: 
+[+bornIn(\y,\z),-createdBy(familySecrets,\y),-isAmerican(\y),-isAmerican(\z),-isCity(\z),-isWriter(\y),-writtenBy(familyHistory,\y)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/11 :
+merge(isAmerican,bornIn,[[boston]],inc).
+
+
+Repaired Theory: 
+[+bornIn(\y,boston),-bornIn(\y,f(\y)),-bornIn(f(\y),boston),-isCity(f(\y))].
+[+bornIn(boston,boston)].
+[+bornIn(dani,boston)].
+[+createdBy(familySecrets,dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/10 :
+merge(isAmerican,bornIn,[[f,[dani]]],inc).
+
+
+Repaired Theory: 
+[+bornIn(\y,f(dani)),-bornIn(\y,f(\y)),-bornIn(f(\y),f(dani)),-isCity(f(\y))].
+[+bornIn(boston,f(dani))].
+[+bornIn(dani,f(dani))].
+[+createdBy(familySecrets,dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/35 :
+expand([+bornIn(\z,\y),-createdBy(familySecrets,\z),-isAmerican(\y),-isAmerican(\z),-isCity(\y),-isWriter(\z),-writtenBy(familyHistory,\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,\y),-createdBy(familySecrets,\z),-isAmerican(\y),-isAmerican(\z),-isCity(\y),-isWriter(\z),-writtenBy(familyHistory,\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/34 :
+expand([+bornIn(\z,boston),-createdBy(familySecrets,\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,boston),-createdBy(familySecrets,\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/33 :
+expand([+bornIn(\z,boston),-isAmerican(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,boston),-isAmerican(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 7 as below------------------
+Repair plans found at Round 1/32 :
+expand([+bornIn(\z,boston),-isWriter(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,boston),-isWriter(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 8 as below------------------
+Repair plans found at Round 1/31 :
+expand([+bornIn(\z,boston),-writtenBy(familyHistory,\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,boston),-writtenBy(familyHistory,\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 9 as below------------------
+Repair plans found at Round 1/30 :
+expand([+bornIn(\z,f(dani)),-createdBy(familySecrets,\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,f(dani)),-createdBy(familySecrets,\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 10 as below------------------
+Repair plans found at Round 1/29 :
+expand([+bornIn(\z,f(dani)),-isAmerican(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,f(dani)),-isAmerican(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 11 as below------------------
+Repair plans found at Round 1/28 :
+expand([+bornIn(\z,f(dani)),-isWriter(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,f(dani)),-isWriter(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 12 as below------------------
+Repair plans found at Round 1/27 :
+expand([+bornIn(\z,f(dani)),-writtenBy(familyHistory,\z)]).
+
+
+Repaired Theory: 
+[+bornIn(\z,f(dani)),-writtenBy(familyHistory,\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 13 as below------------------
+Repair plans found at Round 1/26 :
+expand([+bornIn(dani,\z),-isAmerican(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(dani,\z),-isAmerican(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 14 as below------------------
+Repair plans found at Round 1/25 :
+expand([+bornIn(dani,\z),-isCity(\z)]).
+
+
+Repaired Theory: 
+[+bornIn(dani,\z),-isCity(\z)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 15 as below------------------
+Repair plans found at Round 1/24 :
+expand([+bornIn(dani,boston)]).
+
+
+Repaired Theory: 
+[+bornIn(dani,boston)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 16 as below------------------
+Repair plans found at Round 1/9 :
+merge(isWriter,bornIn,[[boston]],inc).
+
+
+Repaired Theory: 
+[+bornIn(dani,boston)].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 17 as below------------------
+Repair plans found at Round 1/23 :
+expand([+bornIn(dani,f(dani))]).
+
+
+Repaired Theory: 
+[+bornIn(dani,f(dani))].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 18 as below------------------
+Repair plans found at Round 1/8 :
+merge(isWriter,bornIn,[[f,[dani]]],inc).
+
+
+Repaired Theory: 
+[+bornIn(dani,f(dani))].
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 19 as below------------------
+Repair plans found at Round 1/19 :
+add_preP(+[dummyPred,vble(a)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+dummyPred(\a),+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 20 as below------------------
+Repair plans found at Round 1/18 :
+add_preP(+[dummyPred,vble(a),vble(b)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+dummyPred(\a,\b),+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 21 as below------------------
+Repair plans found at Round 1/7 :
+renamePred(isNovel,dummy_isNovel_1,+[isNovel,[familyHistory]],[+[isNovel,[familyHistory]]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+dummy_isNovel_1(familyHistory)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 22 as below------------------
+Repair plans found at Round 1/5 :
+renamePred(writesNovel,dummy_writesNovel_1,+[writesNovel,vble(b)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+dummy_writesNovel_1(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 23 as below------------------
+Repair plans found at Round 1/4 :
+renamePred(writtenBy,dummy_writtenBy_1,+[writtenBy,[familyHistory],[dani]],[+[writtenBy,[familyHistory],[dani]]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+dummy_writtenBy_1(familyHistory,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 24 as below------------------
+Repair plans found at Round 1/17 :
+add_preP(+[isCity,vble(b)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(\b),+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 25 as below------------------
+Repair plans found at Round 1/15 :
+rename([familyHistory],+[isNovel,[familyHistory]],[+[isNovel,[familyHistory]]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(dummy_familyHistory_1)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 26 as below------------------
+Repair plans found at Round 1/22 :
+add_pre(-bornIn(dani,\b),[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-bornIn(dani,\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 27 as below------------------
+Repair plans found at Round 1/21 :
+add_pre(-dummyPred(\b),[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-dummyPred(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 28 as below------------------
+Repair plans found at Round 1/6 :
+renamePred(isNovel,dummy_isNovel_1,-[isNovel,vble(a)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-dummy_isNovel_1(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 29 as below------------------
+Repair plans found at Round 1/20 :
+add_pre(-isCity(\b),[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isCity(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 30 as below------------------
+Repair plans found at Round 1/3 :
+renamePred(writtenBy,dummy_writtenBy_1,-[writtenBy,vble(a),vble(b)],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-dummy_writtenBy_1(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 31 as below------------------
+Repair plans found at Round 1/14 :
+rename([familyHistory],+[writtenBy,[familyHistory],[dani]],[+[writtenBy,[familyHistory],[dani]]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(dummy_familyHistory_1,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 32 as below------------------
+Repair plans found at Round 1/16 :
+rename([dani],+[writtenBy,[familyHistory],[dani]],[+[writtenBy,[familyHistory],[dani]]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dummy_dani_1)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 33 as below------------------
+Repair plans found at Round 1/37 :
+delete([+writtenBy(familyHistory,dani)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 34 as below------------------
+Repair plans found at Round 1/13 :
+weaken(vble(a),[dummy_familyHistory_1],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(dummy_familyHistory_1),-writtenBy(dummy_familyHistory_1,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 35 as below------------------
+Repair plans found at Round 1/12 :
+weaken(vble(b),[dummy_dani_1],[+[writesNovel,vble(b)],-[isNovel,vble(a)],-[writtenBy,vble(a),vble(b)]]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(dummy_dani_1),-isNovel(\a),-writtenBy(\a,dummy_dani_1)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 36 as below------------------
+Repair plans found at Round 1/38 :
+delete([+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+
+------------------ Solution No. 37 as below------------------
+Repair plans found at Round 1/39 :
+delete([+isNovel(familyHistory)]).
+
+
+Repaired Theory: 
+[+createdBy(familySecrets,dani)].
+[+isAmerican(\y),-bornIn(\y,f(\y)),-isAmerican(f(\y)),-isCity(f(\y))].
+[+isAmerican(boston)].
+[+isAmerican(dani)].
+[+isCity(boston)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+

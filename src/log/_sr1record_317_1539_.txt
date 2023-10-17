@@ -1,0 +1,158 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[female,vble(x)],+[mum,vble(x),[william]]],[+[female,[georgesquare]]],[-[mum,[diana],[william]]],[-[mum,[kate],[george]]]]
+[+[female,vble(x)],+[mum,vble(x),[william]]]
+[+[female,[georgesquare]]]
+[-[mum,[diana],[william]]]
+[-[mum,[kate],[george]]]
+
+
+---------Equivalent classes are:------
+
+---------SufGoals is------
+
+---------InsufGoals is------
+[-[female,[kate]]],[[([-[female,[kate]]],[+[female,vble(x)],+[mum,vble(x),[william]]],[],[+[mum,[kate],[william]]],[1,0])]]
+
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[+[mum,[kate],[william]]]
+[([-[female,[kate]]],[+[female,vble(x)],+[mum,vble(x),[william]]],[],[+[mum,[kate],[william]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[mum,[kate],[william]]]
+
+--Reformation: Unresolvables:
+[+[mum,[kate],[william]]]
+
+--Unblocking 1: RepPlanS:
+[expand([-[mum,[kate],[william]]])]
+[-[mum,[kate],[william]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[female,[kate]]]
+[([-[female,[kate]]],[+[female,vble(x)],+[mum,vble(x),[william]]],[],[+[mum,[kate],[william]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[female,[kate]]]
+
+--Reformation: Unresolvables:
+[-[female,[kate]]]
+
+Reformation: targeted evidence
+[female,[kate]]
+--------Reformation Candidates------
+[([+[female,[georgesquare]]],[+[female,[georgesquare]]],[([kate],[georgesquare])],1,[[([kate],[georgesquare])]],[([+[female,[georgesquare]]],[],[],[+[female,[georgesquare]]],[0,0])])]
+---------------Axiom is 1  [+[female,[georgesquare]]]
+---------------Mismatches is 1  [([kate],[georgesquare])]
+--renameArgs: Mismatches:
+[([kate],[georgesquare])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([georgesquare],[kate],[+[female,[georgesquare]]])])
+
+--renameArgs: TargCls:
+[[+[female,[georgesquare]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([georgesquare],[kate],[+[female,[georgesquare]]])])]
+[+[female,[georgesquare]]]
+
+
+--extC2V: RepPlanS:
+extC2V([([georgesquare],vble(z),[+[female,[georgesquare]]])])
+
+--extC2V: TargCls:
+[[+[female,[georgesquare]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([georgesquare],vble(z),[+[female,[georgesquare]]])])]
+[+[female,[georgesquare]]]
+
+
+--------Reformation Candidates------
+[([+[female,[georgesquare]]],[+[female,[georgesquare]]],[([kate],[georgesquare])],1,[[([kate],[georgesquare])]],[([+[female,[georgesquare]]],[],[],[+[female,[georgesquare]]],[0,0])])]
+---------------Axiom is 1  [+[female,[georgesquare]]]
+---------------Mismatches is 1  [([kate],[georgesquare])]
+--renameArgs: Mismatches:
+[([kate],[georgesquare])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([georgesquare],[kate],[+[female,[georgesquare]]])])
+
+--renameArgs: TargCls:
+[[+[female,[georgesquare]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([georgesquare],[kate],[+[female,[georgesquare]]])])]
+[+[female,[georgesquare]]]
+
+
+--extC2V: RepPlanS:
+extC2V([([georgesquare],vble(z),[+[female,[georgesquare]]])])
+
+--extC2V: TargCls:
+[[+[female,[georgesquare]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([georgesquare],vble(z),[+[female,[georgesquare]]])])]
+[+[female,[georgesquare]]]
+
+
+--------Reformation Candidates------
+[([-[mum,[diana],[william]]],[+[female,[diana]]],[([kate],[diana])],1,[[([kate],[diana])]],[([-[mum,[diana],[william]]],[+[female,vble(x)],+[mum,vble(x),[william]]],[],[+[female,[diana]]],[1,0])])]
+---------------Axiom is 1  [-[mum,[diana],[william]]]
+---------------Mismatches is 1  [([kate],[diana])]
+--renameArgs: Mismatches:
+[([kate],[diana])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([diana],[kate],[-[mum,[diana],[william]]])])
+
+--renameArgs: TargCls:
+[[-[mum,[diana],[william]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([diana],[kate],[-[mum,[diana],[william]]])])]
+[-[mum,[diana],[william]]]
+
+
+--extC2V: RepPlanS:
+extC2V([([diana],vble(z),[-[mum,[diana],[william]]])])
+
+--extC2V: TargCls:
+[[-[mum,[diana],[william]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([diana],vble(z),[-[mum,[diana],[william]]])])]
+[-[mum,[diana],[william]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[female,[kate]]])]
+[+[female,[kate]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[female,[kate]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[+[mum,[kate],[william]]],[-[female,[kate]]]]

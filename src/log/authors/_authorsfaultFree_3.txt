@@ -1,0 +1,13 @@
+[+bornIn(\y,f(dani)),-bornIn(\y,f(\y)),-bornIn(f(\y),f(dani)),-isCity(f(\y))].
+[+bornIn(boston,f(dani))].
+[+bornIn(dani,f(dani))].
+[+createdBy(familySecrets,dani)].
+[+isCity(boston)].
+[+isNovel(familyHistory)].
+[+isPodCast(familySecrets)].
+[+isWriter(dani)].
+[+writesNovel(\b),-isNovel(\a),-writtenBy(\a,\b)].
+[+writtenBy(familyHistory,dani)].
+[+writtenIn(familyHistory,y2003)].
+[-isNovel(\x),-isPodCast(\x)].
+

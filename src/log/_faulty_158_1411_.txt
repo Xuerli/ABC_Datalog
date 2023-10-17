@@ -1,0 +1,122 @@
+date(2023,8,15)
+----------------------------------------------------------------------------------
+Theory size: 6
+Faults Number: 2,0
+Cost Limit is: 100
+RoundLimit is: 3
+Running time: 3850 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(created)],[arity(intop10)],[arity(japanese)],[created],[intop10],[japanese]]
+Total Solution number is: 14
+Remaining semi-repaired theories: 8
+----------------------------------------------------------------------------------
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/9 :
+expand([+created(nintendo,\z),-created(c1,\z)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,\z),-created(c1,\z)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/8 :
+expand([+created(nintendo,\z),-created(c1,\z),-game(\z),-intop10(\z),-sellmorethan(\z,onemillioncopies)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,\z),-created(c1,\z),-game(\z),-intop10(\z),-sellmorethan(\z,onemillioncopies)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/7 :
+expand([+created(nintendo,\z),-game(\z)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,\z),-game(\z)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/6 :
+expand([+created(nintendo,\z),-intop10(\z)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,\z),-intop10(\z)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/5 :
+expand([+created(nintendo,\z),-sellmorethan(\z,onemillioncopies)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,\z),-sellmorethan(\z,onemillioncopies)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/4 :
+expand([+created(nintendo,thelegendofzelda)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+created(nintendo,thelegendofzelda)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 7 as below------------------
+Repair plans found at Round 1/3 :
+expand([+japanese(nintendo)]).
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+japanese(nintendo)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+
+------------------ Solution No. 8 as below------------------
+Repair plans found at Round 1/10 :
+
+
+Repaired Theory: 
+[+created(c1,thelegendofzelda)].
+[+game(thelegendofzelda)].
+[+intop10(\z),-game(\z),-sellmorethan(\z,onemillioncopies)].
+[+japanese(\y),-created(\y,\x),-game(\x),-intop10(\x),-videoGameCompany(\y)].
+[+sellmorethan(thelegendofzelda,onemillioncopies)].
+[+videoGameCompany(c1)].
+

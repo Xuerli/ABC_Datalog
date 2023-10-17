@@ -1,0 +1,199 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bird,vble(y)],-[penguin,vble(y)]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety]]]]
+[+[bird,vble(y)],-[penguin,vble(y)]]
+[+[bird,[polly]]]
+[+[feather,vble(y)],-[bird,vble(y)]]
+[+[fly,vble(x)],-[bird,vble(x)]]
+[+[penguin,[tweety]]]
+
+
+---------SufGoals is------
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y)]],[[tweety]/vble(y)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[[polly]/vble(y)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x)]],[[polly]/vble(x)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+[-[fly,[tweety]]],[[([-[fly,[tweety]]],[+[fly,vble(x)],-[bird,vble(x)]],[[tweety]/vble(x)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+-------- Start blockProof2: reformation -------- 
+-------- Proof is:
+[([-[fly,[tweety]]],[+[fly,vble(x)],-[bird,vble(x)]],[[tweety]/vble(x)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]
+
+
+-------- SuffGoals is:
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y)]],[[tweety]/vble(y)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[[polly]/vble(y)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x)]],[[polly]/vble(x)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]])]
+
+
+--Blocking Repair Plan11 InpClause:
+[+[bird,vble(y)],-[penguin,vble(y)]]
+
+arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])
+
+--Blocking Repair Plan11 InpClause:
+[+[fly,vble(x)],-[bird,vble(x)]]
+
+arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+--Blocking Repair Plan11 InpClause:
+[+[penguin,[tweety]]]
+
+arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+3 repair plans for blockP:[([-[fly,[tweety]]],[+[fly,vble(x)],-[bird,vble(x)]],[[tweety]/vble(x)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]
+
+
+[incomp,([arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[[+[bird,vble(y)],-[penguin,vble(y)]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]]
+[incomp,([arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[[+[fly,vble(x)],-[bird,vble(x)]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]]
+[incomp,([arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[[+[penguin,[tweety]]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]]
+
+
+1 fault's new repair plans found: [[[incomp,([arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[[+[bird,vble(y)],-[penguin,vble(y)]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]],[incomp,([arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[[+[fly,vble(x)],-[bird,vble(x)]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]],[incomp,([arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[[+[penguin,[tweety]]]]),[[+[fly,vble(x)],-[bird,vble(x)]],[+[bird,vble(y)],-[penguin,vble(y)]],[+[penguin,[tweety]]]]]]]
+
+
+[[+[bird,vble(y)],-[penguin,vble(y)]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety]]]]
+
+All collections of repair plans are: 
+[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])]
+[arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])]
+[arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])]
+
+
+-------- Start to apply repair plans:
+arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])
+
+
+-------- Start apply arityInc-------- 
+arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+******** RepPlan: arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+
+-------- Start apply arityInc-------- 
+arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])
+******** RepPlan: arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+
+-------- Start apply arityInc-------- 
+arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]])
+******** RepPlan: arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])
+
+-------- Finish applying repair plans.
+
+-- There are 3 repaired states: 
+[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]
+[[[arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv2)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]
+[[[arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[penguin,[tweety],[dummy_Abnormal1]]]),deleArg(penguin,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety],[dummy_Abnormal1]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]
+
+
+-- RepStatesFine [[[[arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[penguin,[tweety],[dummy_Abnormal1]]]),deleArg(penguin,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety],[dummy_Abnormal1]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[[[arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety],[dummy_Abnormal1]]]]
+[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]]
+[+[bird,[polly]]]
+[+[feather,vble(y)],-[bird,vble(y)]]
+[+[fly,vble(x)],-[bird,vble(x)]]
+[+[penguin,[tweety],[dummy_Abnormal1]]]
+
+
+---------SufGoals is------
+[([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[[polly]/vble(y)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x)]],[[polly]/vble(x)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y)]],[[tweety]/vble(y)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[[tweety]/vble(y)],[-[penguin,[tweety],[dummy_Normal1]]],[1,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[+[penguin,[tweety]]]]
+[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]]
+[+[bird,[polly],[dummy_Normal1]]]
+[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]]
+[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]]
+[+[penguin,[tweety]]]
+
+
+---------SufGoals is------
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Abnormal1]]],[1,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]]
+[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]
+[+[bird,[polly],[dummy_Normal1]]]
+[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]]
+[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]]
+[+[penguin,[tweety]]]
+
+
+---------SufGoals is------
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Abnormal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Normal1]]],[0,0]),([-[bird,[polly],[dummy_Normal1]]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 3
+1,0,[[[arityInc(penguin,+[penguin,[tweety]],[+[penguin,[tweety]]],-[penguin,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[penguin,[tweety],[dummy_Abnormal1]]]),deleArg(penguin,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety],[dummy_Abnormal1]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[[polly]/vble(y)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x)]],[[polly]/vble(x)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]])],[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y)]],[[tweety]/vble(y)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y),[dummy_Normal1]]],[[tweety]/vble(y)],[-[penguin,[tweety],[dummy_Normal1]]],[1,0])]])],[]
+1,0,[[[arityInc(bird,-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]],+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]])],[delete([+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Normal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])],[([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Abnormal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Abnormal1]]],[1,0])]])],[]
+0,0,[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Abnormal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Normal1]]],[0,0]),([-[bird,[polly],[dummy_Normal1]]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])],[],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Abnormal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Normal1]]],[0,0]),([-[bird,[polly],[dummy_Normal1]]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])],[],[]
+[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]
+--The number of Optimals: 1
+[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]],[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Abnormal1]/vble(iv1),[tweety]/vble(y)],[-[bird,[tweety],vble(iv1)]],[0,0]),([-[bird,[tweety],vble(iv1)]],[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[[dummy_Normal1]/vble(iv1),[polly]/vble(y)],[-[bird,[polly],vble(iv1)]],[0,0]),([-[bird,[polly],vble(iv1)]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[[polly]/vble(x)],[-[bird,[polly],[dummy_Normal1]]],[0,0]),([-[bird,[polly],[dummy_Normal1]]],[+[bird,[polly],[dummy_Normal1]]],[],[],[0,0])]])],[],[]
+
+******** A solution is reached. *******
+
+--------------AllRepStates: [fault-free,1/1,[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]]
+
+
+--------------executation time 2---
+time takes
+7
+
+------------- AllRepStates -------------
+[fault-free,1/1,[[[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])],[delete([+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]]),deleArg(bird,2)]],[[[polly]],[[tweety]]],[],[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]],[[+[feather,[tweety]]],[+[feather,[polly]]],[+[fly,[polly]]]],[[+[fly,[tweety]]]]]]
+
+
+
+
+------------- TASS -------------
+FullyNumRaw is: 1
+FullyNum is: 1
+
+
+[[+[bird,vble(y),[dummy_Abnormal1]],-[penguin,vble(y)]],[+[bird,[polly],[dummy_Normal1]]],[+[feather,vble(y)],-[bird,vble(y),vble(iv1)]],[+[fly,vble(x)],-[bird,vble(x),[dummy_Normal1]]],[+[penguin,[tweety]]]]
+
+
+
+------------- TBSS -------------
+SemiNumRaw is: 0
+SemiNum is: 0
+
+
+
+
+

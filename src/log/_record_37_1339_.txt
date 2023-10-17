@@ -1,0 +1,20 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[p2,vble(x),[func,vble(x)]]]]
+[+[p2,vble(x),[func,vble(x)]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[([-[p2,vble(x),vble(x)]],[[([-[p2,vble(x),vble(x)]],[],[],[-[p2,vble(x),vble(x)]],[0,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+--------------AllRepStates: 
+
+--------------executation time 2---
+time takes
+9

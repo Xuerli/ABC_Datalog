@@ -1,0 +1,125 @@
+date(2023,8,15)
+----------------------------------------------------------------------------------
+Theory size: 7
+Faults Number: 1,0
+Cost Limit is: 100
+RoundLimit is: 3
+Running time: 412 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(engaged)],[engaged]]
+Total Solution number is: 6
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(bonnie),-students(bonnie)].
+[+engaged(\x),-talentShows(\x)].
+[+inactive(\y),+talentShows(\y)].
+[+students(bonnie),-engaged(bonnie)].
+[+students(\b),-academicCareer(\b)].
+[-chaperone(\z),-students(\z)].
+
+The true set:
+engaged(bonnie).
+
+The false set: 
+[]
+All of 6 sorted repair plans are from: 
+[expand([+[academicCareer,[bonnie]]])].
+[expand([+[engaged,[bonnie]]])].
+[expand([+[students,[bonnie]]])].
+[expand([+[talentShows,[bonnie]]])].
+[expand([-[chaperone,[bonnie]]])].
+[expand([-[inactive,[bonnie]]])].
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/1 :
+expand([+academicCareer(bonnie)]).
+
+
+Repaired Theory: 
+[+academicCareer(bonnie)].
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/1 :
+expand([+engaged(bonnie)]).
+
+
+Repaired Theory: 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/1 :
+expand([+students(bonnie)]).
+
+
+Repaired Theory: 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/1 :
+expand([+talentShows(bonnie)]).
+
+
+Repaired Theory: 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie),-engaged(bonnie)].
+[+talentShows(bonnie)].
+[-chaperone(\z),-students(\z)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/1 :
+expand([-chaperone(bonnie)]).
+
+
+Repaired Theory: 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+[-chaperone(bonnie)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/1 :
+expand([-inactive(bonnie)]).
+
+
+Repaired Theory: 
+[+chaperone(\a),-inactive(\a)].
+[+engaged(\x),-talentShows(\x)].
+[+engaged(bonnie),-students(bonnie)].
+[+inactive(\y),+talentShows(\y)].
+[+students(\b),-academicCareer(\b)].
+[+students(bonnie),-engaged(bonnie)].
+[-chaperone(\z),-students(\z)].
+[-inactive(bonnie)].
+
+Solutions are found at rounds:[1/1]

@@ -1,0 +1,23 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[eq,vble(x),vble(y)],-[mum,vble(x),vble(z)],-[mum,vble(y),vble(z)]],[+[mum,[camilla],[william]]],[+[mum,[diana],[william]]]]
+[+[eq,vble(x),vble(y)],-[mum,vble(x),vble(z)],-[mum,vble(y),vble(z)]]
+[+[mum,[camilla],[william]]]
+[+[mum,[diana],[william]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[]
+---------InComps are------
+[-[eq,[diana],[camilla]]],[[([-[eq,[diana],[camilla]]],[+[eq,vble(x),vble(y)],-[mum,vble(x),vble(z)],-[mum,vble(y),vble(z)]],[[camilla]/vble(y),[diana]/vble(x),[william]/vble(z)],[-[mum,[diana],vble(z)],-[mum,[camilla],vble(z)]],[0,0]),([-[mum,[diana],vble(z)],-[mum,[camilla],vble(z)]],[+[mum,[diana],[william]]],[],[-[mum,[camilla],[william]]],[0,0]),([-[mum,[camilla],[william]]],[+[mum,[camilla],[william]]],[],[],[0,0])]]
+
+---------Violations are------
+
+--------------AllRepStates: 
+
+--------------executation time 2---
+time takes
+19

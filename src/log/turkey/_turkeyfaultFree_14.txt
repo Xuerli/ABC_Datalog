@@ -1,0 +1,8 @@
+[+eastern(\x),+goulds(\x),+merriams(\x),+ocellated(\x),+osceola(\x),+riogrande(\x),-eastern(\x)].
+[+eastern(tom)].
+[-eastern(tom)].
+[-eastern(tom),-goulds(tom)].
+[-eastern(tom),-merriams(tom)].
+[-eastern(tom),-osceola(tom)].
+[-eastern(tom),-riogrande(tom)].
+

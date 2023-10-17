@@ -1,0 +1,43 @@
+date(2023,6,7)
+----------------------------------------------------------------------------------
+Theory size: 5
+Faults Number: 0,1
+Cost Limit is: 50
+RoundLimit is: 0
+Running time: 11 ms.
+Heuristics applied:[noPrecAdd,noPrecDele,noAss2Rule,noAnalogy,noRuleChange,noAnalogy,noPrecAdd,noAss2Rule,noAxiomDele,noVabWeaken,noPrecDele]
+The protected item(s):[feather,arity(feather),penguin,mammal,arity(mammal),arity(penguin),polly,lucy,[arity(feather)],[arity(fly)],[arity(fly)],[feather],[fly],[fly]]
+Total Solution number is: 1
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+bird(polly)].
+[+bird(\y),-penguin(\y)].
+[+feather(\y),-bird(\y)].
+[+fly(\x),-bird(\x)].
+[+penguin(tweety)].
+
+The true set:
+feather(tweety).
+feather(polly).
+fly(polly).
+
+The false set: 
+fly(tweety).
+
+All of 1 sorted repair plans are from: 
+[arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]])].
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(bird,+[bird,vble(y)],[+[bird,vble(y)],-[penguin,vble(y)]],-[bird,vble(x)],[+[fly,vble(x)],-[bird,vble(x)]]).
+
+
+Repaired Theory: 
+[+bird(\y,dummy_Abnormal1),-penguin(\y)].
+[+bird(polly,dummy_Normal1)].
+[+feather(\y),-bird(\y,\iv1)].
+[+fly(\x),-bird(\x,dummy_Normal1)].
+[+penguin(tweety)].
+
+Solutions are found at rounds:[1/1]

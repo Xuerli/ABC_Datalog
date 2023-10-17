@@ -1,0 +1,7 @@
+[+eastern(tom)].
+[-eastern(tom)].
+[-eastern(tom),-goulds(tom)].
+[-eastern(tom),-merriams(tom)].
+[-eastern(tom),-osceola(tom)].
+[-eastern(tom),-riogrande(tom)].
+

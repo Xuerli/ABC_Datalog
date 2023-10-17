@@ -1,0 +1,25 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[bird,vble(y)],-[penguin,vble(y)]],[+[bird,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[+[fly,vble(x)],-[bird,vble(x)]],[+[penguin,[tweety]]]]
+[+[bird,vble(y)],-[penguin,vble(y)]]
+[+[bird,[polly]]]
+[+[feather,vble(y)],-[bird,vble(y)]]
+[+[fly,vble(x)],-[bird,vble(x)]]
+[+[penguin,[tweety]]]
+
+
+---------SufGoals is------
+[([-[feather,[tweety]]],[[([-[feather,[tweety]]],[+[feather,vble(y)],-[bird,vble(y)]],[[tweety]/vble(y)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]),([-[feather,[polly]]],[[([-[feather,[polly]]],[+[feather,vble(y)],-[bird,vble(y)]],[[polly]/vble(y)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]]),([-[fly,[polly]]],[[([-[fly,[polly]]],[+[fly,vble(x)],-[bird,vble(x)]],[[polly]/vble(x)],[-[bird,[polly]]],[0,0]),([-[bird,[polly]]],[+[bird,[polly]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+[-[fly,[tweety]]],[[([-[fly,[tweety]]],[+[fly,vble(x)],-[bird,vble(x)]],[[tweety]/vble(x)],[-[bird,[tweety]]],[0,0]),([-[bird,[tweety]]],[+[bird,vble(y)],-[penguin,vble(y)]],[[tweety]/vble(y)],[-[penguin,[tweety]]],[0,0]),([-[penguin,[tweety]]],[+[penguin,[tweety]]],[],[],[0,0])]]
+
+---------Violations are------
+
+--------------AllRepStates: 
+
+--------------executation time 2---
+time takes
+1

@@ -1,0 +1,12 @@
+1, [[[expand([-[inactive,[bonnie]]])],[]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[-[inactive,[bonnie]]]],[[+[engaged,[bonnie]]]],[]]
+
+1, [[[expand([-[chaperone,[bonnie]]])],[]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[-[chaperone,[bonnie]]]],[[+[engaged,[bonnie]]]],[]]
+
+1, [[[expand([+[talentShows,[bonnie]]])],[]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[talentShows,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+1, [[[expand([+[students,[bonnie]]])],[]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+1, [[[expand([+[engaged,[bonnie]]])],[]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+1, [[[expand([+[academicCareer,[bonnie]]])],[]],[[[bonnie]]],[],[[+[academicCareer,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+

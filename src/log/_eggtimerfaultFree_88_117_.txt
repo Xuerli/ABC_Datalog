@@ -1,0 +1,820 @@
+date(2023,8,8)
+----------------------------------------------------------------------------------
+Theory size: 6
+Faults Number: 0,1
+Cost Limit is: 10
+RoundLimit is: 3
+Running time: 4106 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(polygon)],[polygon]]
+Total Solution number is: 57
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+The true set:
+[]
+The false set: 
+polygon(eggtimer,set_of(v1,v2,v3,v4),set_of(l1,l2,l3,l4)).
+
+All of 57 sorted repair plans are from: 
+[delete([+[meet,[v1],[l1],[l2]]])].
+[delete([+[meet,[v2],[l2],[l3]]])].
+[delete([+[meet,[v3],[l3],[l4]]])].
+[delete([+[meet,[v4],[l4],[l1]]])].
+[delete([+[meet,[x],[l1],[l3]]])].
+[delete([+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[add_preP(+[dummyPred,vble(l1),vble(l2),vble(v1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[add_preP(+[dummyPred,vble(l1),vble(l3),vble(x)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[add_preP(+[dummyPred,vble(l1),vble(l4),vble(v4)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[add_preP(+[dummyPred,vble(l2),vble(l3),vble(v2)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[add_preP(+[dummyPred,vble(l3),vble(l4),vble(v3)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[rename([eggtimer],+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[rename([l1],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]])].
+[rename([l1],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]])].
+[rename([l1],+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]])].
+[rename([l2],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]])].
+[rename([l2],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]])].
+[rename([l3],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]])].
+[rename([l3],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]])].
+[rename([l3],+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]])].
+[rename([l4],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]])].
+[rename([l4],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]])].
+[rename([v1],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]])].
+[rename([v2],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]])].
+[rename([v3],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]])].
+[rename([v4],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]])].
+[weaken(vble(l1),[dummy_l1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l1),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l1),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l1),[dummy_l4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l4),[dummy_l1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l4),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l4),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(l4),[dummy_l4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(v4),[dummy_v1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(v4),[dummy_v2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(v4),[dummy_v3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(v4),[dummy_v4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[weaken(vble(v4),[dummy_x_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[funcRep(1,weaken(vble(v1),[dummy_v1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[funcRep(1,weaken(vble(v2),[dummy_v2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[funcRep(1,weaken(vble(v3),[dummy_v3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[funcRep(2,weaken(vble(l2),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[funcRep(2,weaken(vble(l3),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[renamePred(meet,dummy_meet_1,+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]])].
+[renamePred(meet,dummy_meet_1,+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]])].
+[renamePred(meet,dummy_meet_1,+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]])].
+[renamePred(meet,dummy_meet_1,+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]])].
+[renamePred(meet,dummy_meet_1,+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]])].
+[renamePred(meet,dummy_meet_1,-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[renamePred(polygon,dummy_polygon_1,+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]])].
+[arityInc(meet,-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]])].
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/1 :
+add_preP(+[dummyPred,vble(l1),vble(l2),vble(v1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummyPred(\l1,\l2,\v1),+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/1 :
+add_preP(+[dummyPred,vble(l1),vble(l3),vble(x)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummyPred(\l1,\l3,\x),+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/1 :
+add_preP(+[dummyPred,vble(l1),vble(l4),vble(v4)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummyPred(\l1,\l4,\v4),+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/1 :
+add_preP(+[dummyPred,vble(l2),vble(l3),vble(v2)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummyPred(\l2,\l3,\v2),+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/1 :
+add_preP(+[dummyPred,vble(l3),vble(l4),vble(v3)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummyPred(\l3,\l4,\v3),+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]]).
+
+
+Repaired Theory: 
+[+dummy_meet_1(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 7 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]]).
+
+
+Repaired Theory: 
+[+dummy_meet_1(v2,l2,l3)].
+[+meet(v1,l1,l2)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 8 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]]).
+
+
+Repaired Theory: 
+[+dummy_meet_1(v3,l3,l4)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 9 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]]).
+
+
+Repaired Theory: 
+[+dummy_meet_1(v4,l4,l1)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 10 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]]).
+
+
+Repaired Theory: 
+[+dummy_meet_1(x,l1,l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 11 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(polygon,dummy_polygon_1,+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+dummy_polygon_1(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 12 as below------------------
+Repair plans found at Round 1/1 :
+rename([v1],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]]).
+
+
+Repaired Theory: 
+[+meet(dummy_v1_1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 13 as below------------------
+Repair plans found at Round 1/1 :
+rename([v2],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]]).
+
+
+Repaired Theory: 
+[+meet(dummy_v2_1,l2,l3)].
+[+meet(v1,l1,l2)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 14 as below------------------
+Repair plans found at Round 1/1 :
+rename([v3],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]]).
+
+
+Repaired Theory: 
+[+meet(dummy_v3_1,l3,l4)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 15 as below------------------
+Repair plans found at Round 1/1 :
+rename([v4],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]]).
+
+
+Repaired Theory: 
+[+meet(dummy_v4_1,l4,l1)].
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 16 as below------------------
+Repair plans found at Round 1/1 :
+rename([l1],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]]).
+
+
+Repaired Theory: 
+[+meet(v1,dummy_l1_1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 17 as below------------------
+Repair plans found at Round 1/1 :
+rename([l2],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,dummy_l2_1)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 18 as below------------------
+Repair plans found at Round 1/1 :
+rename([l2],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,dummy_l2_1,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 19 as below------------------
+Repair plans found at Round 1/1 :
+rename([l3],+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,dummy_l3_1)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 20 as below------------------
+Repair plans found at Round 1/1 :
+rename([l3],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,dummy_l3_1,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 21 as below------------------
+Repair plans found at Round 1/1 :
+rename([l4],+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,dummy_l4_1)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 22 as below------------------
+Repair plans found at Round 1/1 :
+rename([l4],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,dummy_l4_1,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 23 as below------------------
+Repair plans found at Round 1/1 :
+rename([l1],+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,dummy_l1_1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 24 as below------------------
+Repair plans found at Round 1/1 :
+rename([l1],+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,dummy_l1_1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 25 as below------------------
+Repair plans found at Round 1/1 :
+rename([l3],+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,dummy_l3_1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 26 as below------------------
+Repair plans found at Round 1/1 :
+delete([+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+
+------------------ Solution No. 27 as below------------------
+Repair plans found at Round 1/1 :
+rename([eggtimer],+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(dummy_eggtimer_1,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 28 as below------------------
+Repair plans found at Round 1/1 :
+renamePred(meet,dummy_meet_1,-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-dummy_meet_1(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 29 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l4),[dummy_l1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,dummy_l1_1)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,dummy_l1_1),-meet(\v4,dummy_l1_1,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 30 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l4),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,dummy_l2_1)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,dummy_l2_1),-meet(\v4,dummy_l2_1,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 31 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l4),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,dummy_l3_1)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,dummy_l3_1),-meet(\v4,dummy_l3_1,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 32 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l4),[dummy_l4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,dummy_l4_1)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,dummy_l4_1),-meet(\v4,dummy_l4_1,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 33 as below------------------
+Repair plans found at Round 1/1 :
+funcRep(2,weaken(vble(l3),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,dummy_l3_1,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,dummy_l3_1),-meet(\v3,dummy_l3_1,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,dummy_l3_1)].
+
+------------------ Solution No. 34 as below------------------
+Repair plans found at Round 1/1 :
+funcRep(2,weaken(vble(l2),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,dummy_l2_1,\l3,\l4)),-meet(\v1,\l1,dummy_l2_1),-meet(\v2,dummy_l2_1,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 35 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l1),[dummy_l1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(dummy_l1_1,\l2,\l3,\l4)),-meet(\v1,dummy_l1_1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,dummy_l1_1),-meet(\x,dummy_l1_1,\l3)].
+
+------------------ Solution No. 36 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l1),[dummy_l2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(dummy_l2_1,\l2,\l3,\l4)),-meet(\v1,dummy_l2_1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,dummy_l2_1),-meet(\x,dummy_l2_1,\l3)].
+
+------------------ Solution No. 37 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l1),[dummy_l3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(dummy_l3_1,\l2,\l3,\l4)),-meet(\v1,dummy_l3_1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,dummy_l3_1),-meet(\x,dummy_l3_1,\l3)].
+
+------------------ Solution No. 38 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(l1),[dummy_l4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(dummy_l4_1,\l2,\l3,\l4)),-meet(\v1,dummy_l4_1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,dummy_l4_1),-meet(\x,dummy_l4_1,\l3)].
+
+------------------ Solution No. 39 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(v4),[dummy_v1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,dummy_v1_1),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(dummy_v1_1,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 40 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(v4),[dummy_v2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,dummy_v2_1),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(dummy_v2_1,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 41 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(v4),[dummy_v3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,dummy_v3_1),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(dummy_v3_1,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 42 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(v4),[dummy_v4_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,dummy_v4_1),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(dummy_v4_1,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 43 as below------------------
+Repair plans found at Round 1/1 :
+weaken(vble(v4),[dummy_x_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,dummy_x_1),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(dummy_x_1,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 44 as below------------------
+Repair plans found at Round 1/1 :
+funcRep(1,weaken(vble(v3),[dummy_v3_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,dummy_v3_1,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(dummy_v3_1,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 45 as below------------------
+Repair plans found at Round 1/1 :
+funcRep(1,weaken(vble(v2),[dummy_v2_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,dummy_v2_1,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(dummy_v2_1,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 46 as below------------------
+Repair plans found at Round 1/1 :
+funcRep(1,weaken(vble(v1),[dummy_v1_1],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]),+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(dummy_v1_1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(dummy_v1_1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 47 as below------------------
+Repair plans found at Round 1/1 :
+delete([+meet(x,l1,l3)]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 48 as below------------------
+Repair plans found at Round 1/1 :
+delete([+meet(v4,l4,l1)]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 49 as below------------------
+Repair plans found at Round 1/1 :
+delete([+meet(v3,l3,l4)]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v2,l2,l3)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 50 as below------------------
+Repair plans found at Round 1/1 :
+delete([+meet(v2,l2,l3)]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+------------------ Solution No. 51 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Abnormal1)].
+[+meet(v2,l2,l3,dummy_Normal1)].
+[+meet(v3,l3,l4,dummy_Normal1)].
+[+meet(v4,l4,l1,dummy_Normal1)].
+[+meet(x,l1,l3,dummy_Normal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Normal1),-meet(\v2,\l2,\l3,dummy_Normal1),-meet(\v3,\l3,\l4,dummy_Normal1),-meet(\v4,\l4,\l1,dummy_Normal1),-meet(\x,\l1,\l3,dummy_Normal1)].
+
+------------------ Solution No. 52 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,+[meet,[v2],[l2],[l3]],[+[meet,[v2],[l2],[l3]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Normal1)].
+[+meet(v2,l2,l3,dummy_Abnormal1)].
+[+meet(v3,l3,l4,dummy_Normal1)].
+[+meet(v4,l4,l1,dummy_Normal1)].
+[+meet(x,l1,l3,dummy_Normal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Normal1),-meet(\v2,\l2,\l3,dummy_Normal1),-meet(\v3,\l3,\l4,dummy_Normal1),-meet(\v4,\l4,\l1,dummy_Normal1),-meet(\x,\l1,\l3,dummy_Normal1)].
+
+------------------ Solution No. 53 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,+[meet,[v3],[l3],[l4]],[+[meet,[v3],[l3],[l4]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Normal1)].
+[+meet(v2,l2,l3,dummy_Normal1)].
+[+meet(v3,l3,l4,dummy_Abnormal1)].
+[+meet(v4,l4,l1,dummy_Normal1)].
+[+meet(x,l1,l3,dummy_Normal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Normal1),-meet(\v2,\l2,\l3,dummy_Normal1),-meet(\v3,\l3,\l4,dummy_Normal1),-meet(\v4,\l4,\l1,dummy_Normal1),-meet(\x,\l1,\l3,dummy_Normal1)].
+
+------------------ Solution No. 54 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,+[meet,[v4],[l4],[l1]],[+[meet,[v4],[l4],[l1]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Normal1)].
+[+meet(v2,l2,l3,dummy_Normal1)].
+[+meet(v3,l3,l4,dummy_Normal1)].
+[+meet(v4,l4,l1,dummy_Abnormal1)].
+[+meet(x,l1,l3,dummy_Normal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Normal1),-meet(\v2,\l2,\l3,dummy_Normal1),-meet(\v3,\l3,\l4,dummy_Normal1),-meet(\v4,\l4,\l1,dummy_Normal1),-meet(\x,\l1,\l3,dummy_Normal1)].
+
+------------------ Solution No. 55 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,+[meet,[x],[l1],[l3]],[+[meet,[x],[l1],[l3]]],-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Normal1)].
+[+meet(v2,l2,l3,dummy_Normal1)].
+[+meet(v3,l3,l4,dummy_Normal1)].
+[+meet(v4,l4,l1,dummy_Normal1)].
+[+meet(x,l1,l3,dummy_Abnormal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Normal1),-meet(\v2,\l2,\l3,dummy_Normal1),-meet(\v3,\l3,\l4,dummy_Normal1),-meet(\v4,\l4,\l1,dummy_Normal1),-meet(\x,\l1,\l3,dummy_Normal1)].
+
+------------------ Solution No. 56 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(meet,-[meet,vble(v4),vble(l4),vble(l1)],[+[polygon,[eggtimer],[set_of,vble(v1),vble(v2),vble(v3),vble(v4)],[set_of,vble(l1),vble(l2),vble(l3),vble(l4)]],-[meet,vble(v1),vble(l1),vble(l2)],-[meet,vble(v2),vble(l2),vble(l3)],-[meet,vble(v3),vble(l3),vble(l4)],-[meet,vble(v4),vble(l4),vble(l1)],-[meet,vble(x),vble(l1),vble(l3)]],+[meet,[v1],[l1],[l2]],[+[meet,[v1],[l1],[l2]]]).
+
+
+Repaired Theory: 
+[+meet(v1,l1,l2,dummy_Normal1)].
+[+meet(v2,l2,l3,dummy_Normal1)].
+[+meet(v3,l3,l4,dummy_Normal1)].
+[+meet(v4,l4,l1,dummy_Normal1)].
+[+meet(x,l1,l3,dummy_Normal1)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2,dummy_Abnormal1),-meet(\v2,\l2,\l3,dummy_Abnormal1),-meet(\v3,\l3,\l4,dummy_Abnormal1),-meet(\v4,\l4,\l1,dummy_Abnormal1),-meet(\x,\l1,\l3,dummy_Abnormal1)].
+
+------------------ Solution No. 57 as below------------------
+Repair plans found at Round 1/1 :
+delete([+meet(v1,l1,l2)]).
+
+
+Repaired Theory: 
+[+meet(v2,l2,l3)].
+[+meet(v3,l3,l4)].
+[+meet(v4,l4,l1)].
+[+meet(x,l1,l3)].
+[+polygon(eggtimer,set_of(\v1,\v2,\v3,\v4),set_of(\l1,\l2,\l3,\l4)),-meet(\v1,\l1,\l2),-meet(\v2,\l2,\l3),-meet(\v3,\l3,\l4),-meet(\v4,\l4,\l1),-meet(\x,\l1,\l3)].
+
+Solutions are found at rounds:[1/1]

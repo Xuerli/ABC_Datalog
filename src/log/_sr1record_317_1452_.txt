@@ -1,0 +1,171 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[female,vble(x)],-[mum,vble(x),[william]]],[+[female,[george]]],[+[mum,[diana],[william]]],[+[mum,[kate],[george]]]]
+[+[female,vble(x)],-[mum,vble(x),[william]]]
+[+[female,[george]]]
+[+[mum,[diana],[william]]]
+[+[mum,[kate],[george]]]
+
+
+---------Equivalent classes are:------
+
+---------SufGoals is------
+
+---------InsufGoals is------
+[-[female,[kate]]],[[([-[female,[kate]]],[+[female,vble(x)],-[mum,vble(x),[william]]],[[kate]/vble(x)],[-[mum,[kate],[william]]],[1,0])]]
+
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[female,[kate]]]
+[([-[female,[kate]]],[+[female,vble(x)],-[mum,vble(x),[william]]],[[kate]/vble(x)],[-[mum,[kate],[william]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[female,[kate]]]
+
+--Reformation: Unresolvables:
+[-[female,[kate]]]
+
+Reformation: targeted evidence
+[female,[kate]]
+--------Reformation Candidates------
+[([+[female,[george]]],[+[female,[george]]],[([kate],[george])],1,[[([kate],[george])]],[([+[female,[george]]],[],[],[+[female,[george]]],[0,0])])]
+---------------Axiom is 1  [+[female,[george]]]
+---------------Mismatches is 1  [([kate],[george])]
+--renameArgs: Mismatches:
+[([kate],[george])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([george],[kate],[+[female,[george]]])])
+
+--renameArgs: TargCls:
+[[+[female,[george]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([george],[kate],[+[female,[george]]])])]
+[+[female,[george]]]
+
+
+--------Reformation Candidates------
+[([+[mum,[diana],[william]]],[+[female,[diana]]],[([kate],[diana])],1,[[([kate],[diana])]],[([+[mum,[diana],[william]]],[+[female,vble(x)],-[mum,vble(x),[william]]],[[diana]/vble(x)],[+[female,[diana]]],[1,0])])]
+---------------Axiom is 1  [+[mum,[diana],[william]]]
+---------------Mismatches is 1  [([kate],[diana])]
+--renameArgs: Mismatches:
+[([kate],[diana])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([diana],[kate],[+[mum,[diana],[william]]])])
+
+--renameArgs: TargCls:
+[[+[mum,[diana],[william]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([diana],[kate],[+[mum,[diana],[william]]])])]
+[+[mum,[diana],[william]]]
+
+
+--------Reformation Candidates------
+[([+[mum,[kate],[george]]],[+[mum,[kate],[george]]],(predicate,[[george]]),1,[],[([+[mum,[kate],[george]]],[],[],[+[mum,[kate],[george]]],[0,0])])]
+---------------Axiom is 1  [+[mum,[kate],[george]]]
+---------------Mismatches is 1  predicate,[[george]]
+--Unblocking 1: RepPlanS:
+[merge(mum,female,[[kate]],dec)]
+[+[female,vble(x)],-[mum,vble(x),[william]]]
+[+[mum,[diana],[william]]]
+[+[mum,[kate],[george]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[female,[kate]]])]
+[+[female,[kate]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[mum,[kate],[william]]]
+[([-[female,[kate]]],[+[female,vble(x)],-[mum,vble(x),[william]]],[[kate]/vble(x)],[-[mum,[kate],[william]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[mum,[kate],[william]]]
+
+--Reformation: Unresolvables:
+[-[mum,[kate],[william]]]
+
+Reformation: targeted evidence
+[mum,[kate],[william]]
+--------Reformation Candidates------
+[([+[mum,[kate],[george]]],[+[mum,[kate],[george]]],[([william],[george])],1,[[],[([william],[george])]],[([+[mum,[kate],[george]]],[],[],[+[mum,[kate],[george]]],[0,0])])]
+---------------Axiom is 1  [+[mum,[kate],[george]]]
+---------------Mismatches is 1  [([william],[george])]
+--renameArgs: Mismatches:
+[([william],[george])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([george],[william],[+[mum,[kate],[george]]])])
+
+--renameArgs: TargCls:
+[[+[mum,[kate],[george]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([george],[william],[+[mum,[kate],[george]]])])]
+[+[mum,[kate],[george]]]
+
+
+--renameArgs: Mismatches:
+[([william],[george])]
+[[arity(female)],[female]]
+
+--renameArgs: RepPlanS:
+rename([([william],[george],[+[female,vble(x)],-[mum,vble(x),[william]]])])
+
+--renameArgs: TargCls:
+[[+[female,vble(x)],-[mum,vble(x),[william]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([william],[george],[+[female,vble(x)],-[mum,vble(x),[william]]])])]
+[+[female,vble(x)],-[mum,vble(x),[william]]]
+
+
+--extC2V: RepPlanS:
+extC2V([([william],vble(z),[+[female,vble(x)],-[mum,vble(x),[william]]])])
+
+--extC2V: TargCls:
+[[+[female,vble(x)],-[mum,vble(x),[william]]]]
+
+--Unblocking 1: RepPlanS:
+[extC2V([([william],vble(z),[+[female,vble(x)],-[mum,vble(x),[william]]])])]
+[+[female,vble(x)],-[mum,vble(x),[william]]]
+
+
+--Unblocking 1: RepPlanS:
+[arityDec(mum,[[+[female,vble(x)],-[mum,vble(x),[william]]],[+[mum,[diana],[william]]],[+[mum,[kate],[george]]]],[2])]
+[+[female,vble(x)],-[mum,vble(x),[william]]]
+[+[mum,[diana],[william]]]
+[+[mum,[kate],[george]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[mum,[kate],[william]]])]
+[+[mum,[kate],[william]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[female,[kate]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[-[female,[kate]]],[-[mum,[kate],[william]]]]

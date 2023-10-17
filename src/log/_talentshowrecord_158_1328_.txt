@@ -1,0 +1,1401 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+[+[chaperone,vble(a)],-[inactive,vble(a)]]
+[+[engaged,vble(x)],-[talentShows,vble(x)]]
+[+[engaged,[bonnie]],-[students,[bonnie]]]
+[+[inactive,vble(y)],+[talentShows,vble(y)]]
+[+[students,vble(b)],-[academicCareer,vble(b)]]
+[+[students,[bonnie]],-[engaged,[bonnie]]]
+[-[chaperone,vble(z)],-[students,vble(z)]]
+
+
+---------Equivalent classes are:------
+
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[engaged,[bonnie]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[+[chaperone,[bonnie]]],[+[inactive,[bonnie]]],[-[academicCareer,[bonnie]]],[-[engaged,[bonnie]]],[-[students,[bonnie]]],[-[talentShows,[bonnie]]]]
+
+19repair plans  for buildP:[[-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]]]
+
+
+[insuff,([expand([+[academicCareer,[bonnie]]])],[[+[academicCareer,[bonnie]]]]),[[+[academicCareer,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[academicCareer,[bonnie]]])],[[+[academicCareer,[bonnie]]]]),[[+[academicCareer,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[academicCareer,[bonnie]]])],[[+[academicCareer,[bonnie]]]]),[[+[academicCareer,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[academicCareer,[bonnie]]])],[[+[academicCareer,[bonnie]]]]),[[+[academicCareer,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]]]
+
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+
+-------- Start to apply repair plans:
+expand([+[academicCareer,[bonnie]]])
+
+
+******** RepPlan: expand([+[academicCareer,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[engaged,[bonnie]]])
+
+
+******** RepPlan: expand([+[engaged,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[students,[bonnie]]])
+
+
+******** RepPlan: expand([+[students,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[talentShows,[bonnie]]])
+
+
+******** RepPlan: expand([+[talentShows,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[chaperone,[bonnie]]])
+
+
+******** RepPlan: expand([-[chaperone,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[inactive,[bonnie]]])
+
+
+******** RepPlan: expand([-[inactive,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-- There are 6 repaired states: 
+[[[],[expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[engaged,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[students,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[talentShows,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[chaperone,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[inactive,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+
+-- RepStatesFine [[[[],[expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+[+[chaperone,vble(a)],-[inactive,vble(a)]]
+[+[engaged,vble(x)],-[talentShows,vble(x)]]
+[+[engaged,[bonnie]],-[students,[bonnie]]]
+[+[inactive,vble(y)],+[talentShows,vble(y)]]
+[+[students,vble(b)],-[academicCareer,vble(b)]]
+[+[students,[bonnie]],-[engaged,[bonnie]]]
+[-[chaperone,vble(z)],-[students,vble(z)]]
+
+
+---------Equivalent classes are:------
+
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 1
+1,0,[[[],[expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+[[[],[expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+--The number of Optimals: 1
+[[[],[expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+--------- Start repInsInc round: 2
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[engaged,[bonnie]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[+[chaperone,[bonnie]]],[+[inactive,[bonnie]]],[-[academicCareer,[bonnie]]],[-[engaged,[bonnie]]],[-[students,[bonnie]]],[-[talentShows,[bonnie]]]]
+
+17repair plans  for buildP:[[-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]]]
+
+
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[engaged,[bonnie]]])],[[+[engaged,[bonnie]]]]),[[+[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]]]
+
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+
+-------- Start to apply repair plans:
+expand([+[engaged,[bonnie]]])
+
+
+******** RepPlan: expand([+[engaged,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[students,[bonnie]]])
+
+
+******** RepPlan: expand([+[students,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[talentShows,[bonnie]]])
+
+
+******** RepPlan: expand([+[talentShows,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[chaperone,[bonnie]]])
+
+
+******** RepPlan: expand([-[chaperone,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[inactive,[bonnie]]])
+
+
+******** RepPlan: expand([-[inactive,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-- There are 5 repaired states: 
+[[[],[expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[students,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[talentShows,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[chaperone,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[inactive,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+
+-- RepStatesFine [[[[],[expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+[+[chaperone,vble(a)],-[inactive,vble(a)]]
+[+[engaged,vble(x)],-[talentShows,vble(x)]]
+[+[engaged,[bonnie]],-[students,[bonnie]]]
+[+[inactive,vble(y)],+[talentShows,vble(y)]]
+[+[students,vble(b)],-[academicCareer,vble(b)]]
+[+[students,[bonnie]],-[engaged,[bonnie]]]
+[-[chaperone,vble(z)],-[students,vble(z)]]
+
+
+---------Equivalent classes are:------
+
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 1
+1,0,[[[],[expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+[[[],[expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+--The number of Optimals: 1
+[[[],[expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+--------- Start repInsInc round: 3
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[academicCareer,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[academicCareer,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[academicCareer,[bonnie]]]
+
+Reformation: targeted evidence
+[academicCareer,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[academicCareer,[bonnie]]])]
+[+[academicCareer,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[chaperone,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[chaperone,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[chaperone,[bonnie]]]
+
+Reformation: targeted evidence
+[chaperone,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[chaperone,[bonnie]]])]
+[-[chaperone,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[+[inactive,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[+[inactive,[bonnie]]]
+
+--Reformation: Unresolvables:
+[+[inactive,[bonnie]]]
+
+Reformation: targeted evidence
+[inactive,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([-[inactive,[bonnie]]])]
+[-[inactive,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[engaged,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[engaged,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[engaged,[bonnie]]]
+
+Reformation: targeted evidence
+[engaged,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[engaged,[bonnie]]])]
+[+[engaged,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[students,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[students,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[students,[bonnie]]]
+
+Reformation: targeted evidence
+[students,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[students,[bonnie]]])]
+[+[students,[bonnie]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[talentShows,[bonnie]]]
+[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]
+
+--Deleting unprovable preconditions:
+[-[talentShows,[bonnie]]]
+
+--Reformation: Unresolvables:
+[-[talentShows,[bonnie]]]
+
+Reformation: targeted evidence
+[talentShows,[bonnie]]
+--Unblocking 1: RepPlanS:
+[expand([+[talentShows,[bonnie]]])]
+[+[talentShows,[bonnie]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 2 by adding a rule ------
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[engaged,[bonnie]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[+[chaperone,[bonnie]]],[+[inactive,[bonnie]]],[-[academicCareer,[bonnie]]],[-[engaged,[bonnie]]],[-[students,[bonnie]]],[-[talentShows,[bonnie]]]]
+
+13repair plans  for buildP:[[-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]]]
+
+
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]]
+[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]
+
+
+1 fault's new repair plans found: [[[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[students,[bonnie]]])],[[+[students,[bonnie]]]]),[[+[students,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([+[talentShows,[bonnie]]])],[[+[talentShows,[bonnie]]]]),[[+[talentShows,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[chaperone,[bonnie]]])],[[-[chaperone,[bonnie]]]]),[[-[chaperone,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,vble(b)],-[academicCareer,vble(b)]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[-[chaperone,vble(z)],-[students,vble(z)]],[+[students,[bonnie]],-[engaged,[bonnie]]]]],[insuff,([expand([-[inactive,[bonnie]]])],[[-[inactive,[bonnie]]]]),[[-[inactive,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[chaperone,vble(a)],-[inactive,vble(a)]]]]]]
+
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+
+-------- Start to apply repair plans:
+expand([+[students,[bonnie]]])
+
+
+******** RepPlan: expand([+[students,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([+[talentShows,[bonnie]]])
+
+
+******** RepPlan: expand([+[talentShows,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[chaperone,[bonnie]]])
+
+
+******** RepPlan: expand([-[chaperone,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-------- Start to apply repair plans:
+expand([-[inactive,[bonnie]]])
+
+
+******** RepPlan: expand([-[inactive,[bonnie]]])
+
+******** Warning: verifyRep found a loop rule:[[+[engaged,[bonnie]],-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]]]
+
+-------- Finish applying repair plans.
+
+-- There are 4 repaired states: 
+[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([+[talentShows,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[chaperone,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+[[[],[expand([-[inactive,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+
+
+-- RepStatesFine [[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]]
+
+---------Start detInsInc, Input theory is:------
+
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+[+[chaperone,vble(a)],-[inactive,vble(a)]]
+[+[engaged,vble(x)],-[talentShows,vble(x)]]
+[+[engaged,[bonnie]],-[students,[bonnie]]]
+[+[inactive,vble(y)],+[talentShows,vble(y)]]
+[+[students,vble(b)],-[academicCareer,vble(b)]]
+[+[students,[bonnie]],-[engaged,[bonnie]]]
+[-[chaperone,vble(z)],-[students,vble(z)]]
+
+
+---------Equivalent classes are:------
+
+---------InComps are------
+
+---------Violations are------
+
+-- All faulty states: 1
+1,0,[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+An Optimal repaired theory with cost:1 and the fault state: [],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]
+--The number of Optimals: 1
+[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]],[],[([-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]])],[]
+
+******** Cost Limit is reached. *******
+Cost is: 0; Round: 3---------The current faulty TheoryState is------
+[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]]
+[[[bonnie]]]
+[]
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+[[+[engaged,[bonnie]]]]
+[]
+
+---------The remaining inffuficiencies are------
+[-[engaged,[bonnie]]],[[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[0,0]),([+[chaperone,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]],[[bonnie]/vble(z)],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,vble(b)],-[academicCareer,vble(b)]],[[bonnie]/vble(b)],[-[academicCareer,[bonnie]]],[1,0])],[([-[engaged,[bonnie]]],[+[engaged,[bonnie]],-[students,[bonnie]]],[],[-[students,[bonnie]]],[0,0]),([-[students,[bonnie]]],[+[students,[bonnie]],-[engaged,[bonnie]]],[],[-[engaged,[bonnie]]],[0,0]),([-[engaged,[bonnie]]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[[bonnie]/vble(x)],[-[talentShows,[bonnie]]],[0,0]),([-[talentShows,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[],[+[inactive,[bonnie]]],[0,0]),([+[inactive,[bonnie]]],[+[chaperone,vble(a)],-[inactive,vble(a)]],[[bonnie]/vble(a)],[+[chaperone,[bonnie]]],[1,0])]]
+
+---------The remaining incompatibilities are------
+
+--------------AllRepStates: [fault,3/3,[[[],[expand([+[students,[bonnie]]]),expand([+[engaged,[bonnie]]]),expand([+[academicCareer,[bonnie]]])]],[[[bonnie]]],[],[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]],[[+[engaged,[bonnie]]]],[]]]
+
+
+--------------executation time 2---
+time takes
+1192
+
+------------- TBSS -------------
+[[+[chaperone,vble(a)],-[inactive,vble(a)]],[+[engaged,vble(x)],-[talentShows,vble(x)]],[+[engaged,[bonnie]],-[students,[bonnie]]],[+[inactive,vble(y)],+[talentShows,vble(y)]],[+[students,vble(b)],-[academicCareer,vble(b)]],[+[students,[bonnie]],-[engaged,[bonnie]]],[-[chaperone,vble(z)],-[students,vble(z)]]]
+
+
+
+SemiNumRaw is: 1
+SemiNum is: 1

@@ -1,0 +1,11 @@
+[+animal(\y),-mammal(\y)].
+[+animal(monkey)].
+[+getMonkeyPox(c1)].
+[+getMonkeyPox(c3)].
+[+getMonkeyPox(human)].
+[+mammal(\x),-human(\x)].
+[+occurMonkeyPox(c1)].
+[+occurMonkeyPox(c2)].
+[+tired(\z),-flu(\z),-human(\z)].
+[+tired(c3)].
+
