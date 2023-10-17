@@ -19,9 +19,10 @@
 % True
 
 %Note: This example shows importance of renaming skolem constants to get the desired theory representation
-:- working_directory(_, '../code').
+:- working_directory(_, '../src').
 :-[main].
 
+logic(fol).
 theoryName(monkeypox).
 
 axiom([+occurMonkeyPox(c1)]).

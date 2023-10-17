@@ -1,7 +1,7 @@
 :- working_directory(_, '../src').
 :-[main].
 
-logic(datalog).
+logic(fol).
 
 theoryName(eggtimer).
 

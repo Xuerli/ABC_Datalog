@@ -13,8 +13,10 @@
 % Tom is an Eastern wild turkey.	Eastern(tom)	False
 % Tom is an Ocellated wild turkey.	Ocellated(tom)	True
 
-:- working_directory(_, '../code').
+:- working_directory(_, '../src').
 :-[main].
+
+logic(fol).
 
 theoryName(turkey).
 

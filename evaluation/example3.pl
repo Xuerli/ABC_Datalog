@@ -12,8 +12,10 @@
 %  The Legend of Zelda is in the Top 10 list.
 %  	Top10(thelegendofzelda)	
 %     True
-:- working_directory(_, '../code').
+:- working_directory(_, '../src').
 :-[main].
+
+logic(fol).
 
 theoryName(videogame).
 

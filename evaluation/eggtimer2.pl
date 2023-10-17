@@ -1,5 +1,7 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '../src').
 :-[main].
+
+logic(fol).
 
 theoryName(eggtimer2).
 

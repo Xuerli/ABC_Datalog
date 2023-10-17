@@ -22,8 +22,10 @@
 
 %Shows complex FOL including non-Horn cluases, equivalenc erules (blocked in Datalog due to looping)
 
-:- working_directory(_, '../code').
+:- working_directory(_, '../src').
 :-[main].
+
+logic(fol).
 
 theoryName(talentshow).
 
