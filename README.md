@@ -8,7 +8,7 @@ This repository contains two implementations of the ABC system, namely ABC_Datal
 
 Please refer to `FOL_ABC_thesis.pdf` for details such as the repair plans.
 
-## evaluation theories
+## Evaluation theories
 
 The folder `evaluation` contains the faulty theories tested in the evaluation in our project. The ones with name *h.pl is a theory with heuristics, while ones with name `*nh.pl` is the corresponding theory without heuristics.  
 
@@ -18,7 +18,7 @@ The folder `evaluation` contains the faulty theories tested in the evaluation in
 
 The theory file for the `eggtimer` example, as discussed in the CogAI2023 workshop, can be found in `evaluation/eggtimer.pl` and `evaluation/eggtimer2.pl`.
 
-## code structure
+## Code structure
 
 The implementations of `ABC_FOL` and `ABC_Datalog` are similar but independent. A corresponding folder in `src` contains the code for each implementation. There is a unified interface for calling the program of each implementation, which is `main.pl`. This is the file to be consulted when running the program.  
 
