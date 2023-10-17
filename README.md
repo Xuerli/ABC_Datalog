@@ -3,6 +3,7 @@ The ABC system is a domain-independent system for repairing faulty Datalog-like 
 
 # Desciptions of ABC System
 Please refer to `FOL_ABC_thesis.pdf` for details such as the repair plans.
+
 # Changes with the Datalog version 
 The FOL version supports full first order logic (without the standard equality). You can add non-Horn clauses, functions and equality axioms (for evaluating functions). The repair can generate solution with added functions, constraint axioms, theorems and potentially with orphan variables.
 
@@ -13,7 +14,10 @@ Changes are made to multiple files in the  `code` directory, notably:
 - `util.pl` for auxiliary functions
 
 # evaluation theories
-This folder contains the faulty theories tested in the evaluation in our project. The ones with name *h.pl is a theory with heuristics, while ones with name *nh.pl is the corresponding theory without heuristics.
+The folder `evaluation` contains the faulty theories tested in the evaluation in our project. The ones with name *h.pl is a theory with heuristics, while ones with name *nh.pl is the corresponding theory without heuristics.
+
+## CogAI2023 example
+The theory file for the `eggtimer` example, as discussed in the CogAI2023 workshop, can be found in `evaluation/eggtimer.pl` and `evaluation/eggtimer2.pl`.
 
 # code
 This folder contains the code of the ABC repair system, which is written in Prolog. The predicate abc/0 in file main.pl is the main entrance. An example of running the code is given below, where PATH is the directory to your code. Ideally, three commands below should be done one by one to make sure none is failed.
@@ -43,8 +47,5 @@ true.
 
 Step3. Call predicate _abc._ The output files include _abc_..._faultFree.txt_ which contains the repair solutions; _abc_..._record.txt_ which has the log information of ABC's procedure, and _abc_..._repNum.txt_ which is the pruned sub-optimal.
 
-# Reserved keywords
-- `axiom` : reserved for describing axioms in theory.
-- `eqAxiom` : reserved for describing equality relations.
 
 
