@@ -1,0 +1,6 @@
+Summary Json for an input is expected to contain the attributes below:
+inputTheory, PS, heuristics, protectList, outputDir, fullyRepaired(Yes or No), runningTime.
+
+outputDir is an output Json, expected to be a list of which each member contains the attributes below:
+repairPlans, repairedTheory.
+
