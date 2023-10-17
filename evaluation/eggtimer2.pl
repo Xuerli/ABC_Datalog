@@ -26,5 +26,4 @@ trueSet([]).
 falseSet([polygon(eggtimer)]).
 protect([ls,eq,arity(ls),arity(eq),[-vs(x),-ls(\l1),-ls(\l2),+eq(\l1,\l2),-meet(x,\l1,\l2),+polygon(eggtimer)]]).
 heuristics([]).     %noAxiomAdd
-
-theoryFile:- pass. 
+ 

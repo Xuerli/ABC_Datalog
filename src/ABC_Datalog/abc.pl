@@ -1,7 +1,7 @@
 :- use_module(library(lists)).
 :-[preprocess, equalities, repairPlanGen, repairApply, vitality, fileOps].
     % clear all assertions. So main has to be compiling before the input theory file.
-:-    maplist(retractall, [trueSet(_), falseSet(_), heuristics(_), protect(_), spec(_)]).
+% :-    maplist(retractall, [trueSet(_), falseSet(_), heuristics(_), protect(_), spec(_)]).
 
 /********************************************************************************************************************** Global Variable and their values.
 debugMode:    0 -- no write_term_c information.
