@@ -115,12 +115,12 @@ detRep(Theory, AllRepSolutions):-
             unaeMain(Theory,  OptimalUnae),
             member((TheoryState, InsufIncomp), OptimalUnae),
 
-            InsufIncomp = (_,INSUFF,ICOM),
+            InsufIncomp = (_,INSUFF,ICOM), % Insufficiency and Incompatibility faults here. 1. sufficiencies, 2. insufficienies, 3. incompatability
             length(INSUFF,InsuffNum),
             length(ICOM,IncompNum),
             assert(spec(faultsNum(InsuffNum, IncompNum))),
 
-             (InsufIncomp = (_,[],[])->
+             (InsufIncomp = (_,[],[])-> % if 2 and 3 are empty then it is fault free
                      TheoryRep = ([fault-free, 0, TheoryState]);    % if the theory is fault free.
              % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
               InsufIncomp \= (_,[],[])->
@@ -156,7 +156,7 @@ detRep(Theory, AllRepSolutions):-
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
 detInsInc(TheoryState, FaultState):-
-    TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
+    TheoryState = [RsRec, EC, _, Theory, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
     nl,write_term_c(Theory),nl,write_term_All(Theory),nl,finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
@@ -168,6 +168,7 @@ detInsInc(TheoryState, FaultState):-
               Goal = [-[Pre| Args]],
 
               % Get all proofs and failed proofs of the goal.
+
               findall( [Proof, Evidence],
                      ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
                      Proofs1),
@@ -192,7 +193,8 @@ detInsInc(TheoryState, FaultState):-
             % get all of a proof of Goal
             findall(Proof,
                     slRL(Goal, Theory, EC, Proof, [], []),
-                    UnwProofs),
+                    UnwProofsT),
+            sort(UnwProofsT,UnwProofs),    % get rid of duplicates.
             UnwProofs \= []),    % Detected incompatibility based on refutation.
            InComps),             % Find all incompatibilities.
 
@@ -208,7 +210,9 @@ detInsInc(TheoryState, FaultState):-
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
     append(InComps, Violations, Unwanted),
-    FaultState = (Suffs, InSuffs, Unwanted).
+    FaultState = (Suffs, InSuffs, Unwanted)，
+    append(InSuffs, Unwanted, faults),
+    (RsRec = [[],[]], faults = [] -> print('The input theory is fault-free.'), !;true).
 /**********************************************************************************************************************
     repInsInc(TheoryState, Layer, FaultState, TheoryRep):
             return a repaired theory w.r.t. one fault among the FaultStates by applying an Parento optimal repair.
