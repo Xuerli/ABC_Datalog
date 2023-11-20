@@ -1,7 +1,4 @@
-/*
-Date: 07 Jan 2019
-Macintosh HD⁩/⁨Users⁩/lixue⁩/GoogleDrive⁩/01PHD⁩/01program⁩/eclipse-workspace⁩/ABC_Clean⁩/src⁩
-*/
+
 
 :- use_module(library(lists)).
 :-[preprocess, equalities, repairPlanGen, repairApply, vitality, fileOps].
@@ -210,9 +207,9 @@ detInsInc(TheoryState, FaultState):-
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
     append(InComps, Violations, Unwanted),
-    FaultState = (Suffs, InSuffs, Unwanted)，
-    append(InSuffs, Unwanted, faults),
-    (RsRec = [[],[]], faults = [] -> print('The input theory is fault-free.'), !;true).
+    FaultState = (Suffs, InSuffs, Unwanted),
+    append(InSuffs, Unwanted, InitialAna),
+    (RsRec = [[],[]], InitialAna = [] -> print('The input theory is fault-free.'), !;true).
 /**********************************************************************************************************************
     repInsInc(TheoryState, Layer, FaultState, TheoryRep):
             return a repaired theory w.r.t. one fault among the FaultStates by applying an Parento optimal repair.
