@@ -113,6 +113,8 @@ output(AllRepStates, ExecutionTime, FileNo):-
     close(Stream2),
     nl, write_term_c('In total, there are '),write_term_c(SemiNum), write_term_c(' semi-repaired theories.'), nl.
 
+output([[fault-free,0,[[[],[]],_,_,_,_,_]]], _, _):-
+    nl,print('The input theory is fault free'), !.
 
 output(AllRepStates, ExecutionTime, NO):-
     setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
