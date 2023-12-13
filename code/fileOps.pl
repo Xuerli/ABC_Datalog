@@ -39,7 +39,7 @@ fileName(FileCore, Name, Postfix):-
     string_concat(Y1,X1,Date),
     string_concat(H1,M1,Time),
     appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
-    appAll(string_concat, [Postfix, '.', 'PS', FileCore, Time1, Date1, 'log/abc_'],[''], Name, 1).
+    appAll(string_concat, [Postfix, '.', FileCore, Time1, Date1, 'log/abc_'],[''], Name, 1).
 
 
 /**********************************************************************************************
