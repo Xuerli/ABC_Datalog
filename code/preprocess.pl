@@ -46,6 +46,7 @@ initTheory(Theory):-
     recSignature(Theory),
     % Initialise the protected list and heuristics.
     initProtList,
+    assert(second_json(false)), % A flag for writing output theories to json file.
     heuristics(HeursOld),
     (member(noRuleChange, HeursOld)->
         append([noPrecAdd, noPrecDele, noAss2Rule, noAnalogy], HeursOld, HeursNew),

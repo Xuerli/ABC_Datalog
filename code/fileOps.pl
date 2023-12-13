@@ -3,12 +3,12 @@
 /**********************************************************************************************
 
 ***********************************************************************************************/
-initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
+initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH,  Postfix):-
   (\+exists_directory('log')-> make_directory('log'); nl),
-  fileName('record', Fname),
+  fileName('record', Fname,  Postfix),
   open(Fname, write, StreamRec),
 
-  fileName('repNum', Fname2),
+  fileName('repNum', Fname2,  Postfix),
   open(Fname2, write, StreamRepNum),
   assert(spec(repNum(StreamRepNum))),
 
@@ -30,7 +30,7 @@ initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH):-
 
 
 
-fileName(FileCore, Name):-
+fileName(FileCore, Name, Postfix):-
     date(date(_,X,Y)),
     get_time(Stamp),
     stamp_date_time(Stamp, DateTime, local),
@@ -39,23 +39,17 @@ fileName(FileCore, Name):-
     string_concat(Y1,X1,Date),
     string_concat(H1,M1,Time),
     appEach([Date, Time], [string_concat, '_'], [Date1, Time1]),
-    appAll(string_concat, ['.txt', FileCore, Time1, Date1, 'log/abc_'],[''], Name, 1).
+    appAll(string_concat, [Postfix, '.', 'PS', FileCore, Time1, Date1, 'log/abc_'],[''], Name, 1).
 
-fileName(FileCore, Name, NO):-
-    fileName(FileCore, NameTem),
-    split_string(NameTem, ".","",[NameMain|_]),
-    string_concat(NameMain, NO, Name1),
-    string_concat(Name1, '.txt', Name).
 
 /**********************************************************************************************
    output: write_term_c screen and write record file abc_record.txt.
 ***********************************************************************************************/
-
 output(AllRepStates, ExecutionTime):-
     forall(member([fault-free, X,[_,_,_,_,_,_]], AllRepStates), X ==0),
     findall(ClS, (axiom(Cl), sort(Cl, ClS)), Facts),
     sort(Facts, OrigTheory),
-    fileName('faultFree', Fname1),
+    fileName('faultFree', Fname1, 'txt'),
     open(Fname1, write, Stream1),
     writeLog([nl, write_term('------------- AllRepStates -------------'), nl,
                   write_termAll(AllRepStates),nl,nl,nl, finishLog]),
@@ -87,9 +81,9 @@ output(AllRepStates, ExecutionTime):-
 
 
 % If no repairs found, output the current result of semi-repairs.
-output(AllRepStates, ExecutionTime, FileNo):-
+output(AllRepStates, ExecutionTime):-
     notin([fault-free|_], AllRepStates),!,
-    fileName('faulty', Fname2,FileNo ),
+    fileName('faulty', Fname2, 'txt'),
     open(Fname2, write, Stream2),
     write_term_c('******************************************'),
     write_term_c('Execution took '),
@@ -98,14 +92,14 @@ output(AllRepStates, ExecutionTime, FileNo):-
     nl, write_term_c('The faulty theory cannot be repaired.'),
     write_term_c('The semi-repaired theories are:'),
 
-    findall(RepTheory, member([fault,_,[[_,_], _, _, RepTheory, _, _]], AllRepStates),TBS),
+    findall(RepTheory, member([faulty,_,[[_,_], _, _, RepTheory, _, _]], AllRepStates),TBS),
     deleteAll(TBS, [], TBS1),
     sort(TBS1, TBSS),
     length(AllRepStates, SemiNumRaw),
     length(TBSS, SemiNum),
 
     write_Spec(Stream2, ExecutionTime, 0, SemiNum),
-    writeFile(fault, Stream2, TBSS, AllRepStates),
+    writeFile(faulty, Stream2, TBSS, AllRepStates),
     writeLog([nl, write_term_c('------------- TBSS -------------'), nl,
                   write_term_All(TBSS),nl,nl,nl,
                   write_term_c('SemiNumRaw is: '), write_term_c(SemiNumRaw),nl,
@@ -113,14 +107,14 @@ output(AllRepStates, ExecutionTime, FileNo):-
     close(Stream2),
     nl, write_term_c('In total, there are '),write_term_c(SemiNum), write_term_c(' semi-repaired theories.'), nl.
 
-output([[fault-free,0,[[[],[]],_,_,_,_,_]]], _, _):-
+output([[fault-free,0,[[[],[]],_,_,_,_,_]]], _):-
     nl,print('The input theory is fault free'), !.
 
-output(AllRepStates, ExecutionTime, NO):-
+output(AllRepStates, ExecutionTime):-
     setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
     length(OrigTheory, AxiomNum),
     assert(spec(axiomNu(AxiomNum))),
-    fileName('faultFree', Fname1, NO),
+    fileName('faultFree', Fname1, 'txt'),
     open(Fname1, write, Stream1),
 
     % output the execution time.
@@ -152,7 +146,7 @@ output(AllRepStates, ExecutionTime, NO):-
 
     findall([TheoryA, RepPlan, TheoryB],
             (member([fault-free, _,[[RepPlan,_],_,_,TheoryA,_,_]], AllRepStates), TheoryB = [];
-             member([fault, _,[_,_,_,TheoryB,_,_]], AllRepStates), TheoryA = []),
+             member([faulty, _,[_,_,_,TheoryB,_,_]], AllRepStates), TheoryA = []),
              AllResult),
 
     transposeF(AllResult, [TAS, RepPlanAll1, TBS]),
@@ -161,10 +155,10 @@ output(AllRepStates, ExecutionTime, NO):-
     sort(TAS1, TASS),
     sort(TBS1, TBSS),
     sort(RepPlanAll1, RepPlanAll),
-    length(TAS1, FullyNumRaw),
     length(TASS, FullyNum),
-    length(TBS1, SemiNumRaw),
     length(TBSS, SemiNum),
+    length(TASS, FullyNumRaw),
+    length(TBSS, SemiNumRaw),
 
     writeLog([nl, write_term_c('------------- TASS -------------'), nl,
                     write_term_c('FullyNumRaw is: '), write_term_c(FullyNumRaw),nl,
@@ -197,10 +191,10 @@ output(AllRepStates, ExecutionTime, NO):-
 
 
     writeFile(fault-free, Stream1, TASS, AllRepStates),
-    (TBSS \=[]-> fileName('faulty', Fname2),
+    (TBSS \=[]-> fileName('faulty', Fname2, 'txt'),
                 open(Fname2, write, Stream2),
                 write_Spec(Stream2, ExecutionTime, FullyNum, SemiNum),
-                writeFile(fault, Stream2, TBSS, AllRepStates),
+                writeFile(faulty, Stream2, TBSS, AllRepStates),
                 close(Stream2); true),
 
     findall(R, spec(round(R)), RoundsA),
@@ -250,10 +244,10 @@ write_term_All([C|Cs]) :-
 
 /**********************************************************************************************************************
     writeFile(Directory, OutFiles, DataList)
-            Write output files in Directory with the given output data.
-    Input:  Directory is the directory of output files.
-            FileName is a list of the names of output files.
-            DataList is a list of output data to write in order.
+            Write files in Directory with the given data.
+    Input:  Directory is the directory of files.
+            FileName is a list of the names of files.
+            DataList is a list of data to write in order.
 ***********************************************************************************************************************/
 writeFiles(_, [], []).
 writeFiles(Directory, [FileName| RestNames], [Data| RestData]):-
@@ -277,9 +271,9 @@ writeFile(_, _, [], _):-!.
 writeFile(Type, Stream, Theories, AllStates):-
     retractall(spec(round(_))),
     forall(member(RepTheory, Theories),
-            (    nth0(NO, Theories, RepTheory),    % RepTheory is the (NO+1)th solution
-                Rank is NO+1,
-                % ** unify every sigle repair in the list of repairs (SetOfRepairs) to RepairSorrted
+            (    nth0(Num, Theories, RepTheory),    % RepTheory is the (Num+1)th solution
+                Rank is Num+1,
+                % ** unify every single repair in the list of repairs (SetOfRepairs) to RepairSorrted
                    findall((Round, Repairs),
                                (member([Type, Round,[[Reps,_],_,_,RepTheory,_,_]], AllStates),
                                 appEach(Reps, [revertFormRep], Repairs)), % rever the form of repair information back to the input form
@@ -310,7 +304,15 @@ writeFile(Type, Stream, Theories, AllStates):-
 writeAll(_, []):- !.
 writeAll(Stream1,[C|Cs]) :- write(Stream1, C), write(Stream1, '.'), nl(Stream1), writeAll(Stream1, Cs).
 
+% write a list in one line connected
+writeList(_, []):- !.
+writeList(Stream1,[C|Cs]):- write(Stream1, C), writeList(Stream1, Cs).
 
+writeLists(_, _, []):- !.
+writeLists(Stream1,S, [C|Cs]):-
+    writeList(Stream1, C),
+    (length(Cs, 0)-> !;
+     \+length(Cs, 0)-> write(Stream1, S),writeLists(Stream1,S, Cs)).
 
 write_Spec(Stream, ExecutionTime, FullyNum, SemiNum):-
     spec(costLimit(Cost)),
@@ -334,3 +336,87 @@ write_Spec(Stream, ExecutionTime, FullyNum, SemiNum):-
     (SemiNum == []->write(Stream,'No incomplete repaired theory left.'),nl(Stream), !;
     SemiNum \= []->    write(Stream, 'Remaining semi-repaired theories: '), write(Stream, SemiNum),nl(Stream)),
     write(Stream, '----------------------------------------------------------------------------------'),nl(Stream).
+
+
+outputJsonFirst(Stream1):-
+    trueSet(TrueSet),
+    falseSet(FalseSet),
+    spec(costLimit(Cost)),
+    spec(roundLimit(Round)),
+    spec(heuris(Heuristics)),
+    spec(protList(Protected)), % if there is protected item(s)), output it(them).
+    spec(inputTheorySize(AxiomNum)),
+
+    setof(ClS, Cl^(axiom(Cl), sort(Cl, ClS)), OrigTheory),
+    length(OrigTheory, AxiomNum),
+    assert(spec(axiomNu(AxiomNum))),
+
+    date(Date), term_string(Date, DateStr),
+    writeList(Stream1, ['{\"job time\": \"', DateStr, '\", \"parameters\": {\"hueristics\":\"', Heuristics,
+                         '\", \"protected\":\"', Protected, '\", \"cost limit\":\"', Cost,
+                         '\", \"round limit\":\"', Round, '\"}, \"preferred structure\": {\"true set\":\"',
+                         TrueSet, '\", \"false set\":\"', FalseSet, '\"}, \"original theory\":\"', OrigTheory, '\", "output": [']).
+
+outputJsonSecond(Stream1, AllRepStates, ExecutionTime, NO):-
+    (second_json(true)->write(Stream1, ','), !; true),
+    assert(second_json(true)),
+    % TODO: update with instantiated ps, and avoid assert one vairable multiple times.
+    trueSet(TrueSetNew),
+    falseSet(FalseSetNew),
+    spec(faultsNum(InsuffNum, IncompNum)),
+    writeList(Stream1, ['{\"Instantiated PS Serial NO\": ', NO, ', \"execution time (ms)\": ', ExecutionTime,
+                    ', \"instantiated preferred structure\": {\"instantiated true set\":\"', TrueSetNew, '\", \"instantiated false set\":\"',
+                    FalseSetNew, '\"}, \"faults number\":{\"insufficiencies\":\"', InsuffNum, '\", \"incompatabilities\":\"', IncompNum, '\"},']),
+
+    findall((TheoryA,Round, RepPlan),
+            member([fault-free, Round,[[RepPlan,_],_,_,TheoryA,_,_]], AllRepStates),
+             TAS),
+
+    findall((TheoryB,Round, RepPlan),
+             member([faulty, Round,[[RepPlan,_],_,_,TheoryB,_,_]], AllRepStates),
+             TBS),
+
+    removeDuplicate(TAS, TASS),
+    removeDuplicate(TBS, TBSS),
+    length(TASS, FullyNum),
+    length(TBSS, SemiNum),
+
+    findall(R, spec(round(R)), RoundsA),
+    sort(RoundsA, RoundsAs), write_term_c(RoundsAs),
+
+    writeList(Stream1, ['\"fully repaired theories number\":\"', FullyNum, '\", \"semi repaired theories number\":\"', SemiNum,
+                        '\",\"all fully repaired theories (fault-free)\": [']),
+    print('OK'),
+    findall(FaultFreeList,
+            (member((RepTheory, Layer/N, Repairs), TASS),
+             appEach(RepTheory,[appEach, [appLiteral,revert]], Axioms),
+             FaultFreeList = ['{\"search depth of repairs generation\": ', Layer,
+             ', \"the current total number of calling repInsInc\":\"', N, '\",\"repairs\":\"', Repairs,
+             '\",\"repaired fault-free theory\":\"', Axioms, '\"}']),
+            FaultFreeLists1),
+    writeLists(Stream1, ',', FaultFreeLists1),
+
+    print('---------'),
+    print(TBSS),
+    write(Stream1, '],\"all semi-repaired theories (faulty)\": ['),
+    findall(FaultFreeList,
+            (member((RepTheory, Layer/N, Repairs), TBSS),
+             appEach(RepTheory,[appEach, [appLiteral,revert]], Axioms),
+             FaultFreeList = ['{\"search depth of repairs generation\": ', Layer,
+             ', \"the current total number of calling repInsInc\":\"', N, '\", \"repairs\":\"', Repairs,
+             '\", \"semi-repaired theory\":\"', Axioms, '\"}']),
+             FaultFreeLists2),
+    writeLists(Stream1, ',', FaultFreeLists2),
+    write(Stream1, ']}').
+
+
+removeDuplicate(AllRepStates, AllRepStatesFine):-
+    remDup(AllRepStates, [], AllRepStatesFine).
+
+remDup([], SOut, SOut):-!.
+
+% The theory state is already in SIn.
+remDup([(Theory, Round, Repair)|Rest], SIn, Sout):-
+    findall(M, (member(M, SIn), M = (Theory, _,_)), Duplicates),
+    (Duplicates = [] ->  remDup(Rest, [(Theory, Round, Repair)| SIn], Sout), !;
+    Duplicates \= [] ->  remDup(Rest, SIn, Sout)).

@@ -221,7 +221,8 @@ convert(E,[F|NArgs]) :-                     % If E is input and compound then
 revert([],[]):- !.
 
 % X is a variable
-revert(vble(X),\X) :-  !.                     % revert a variable
+%revert(vble(X),\X) :-  !.                     % revert a variable
+revert(vble(X),vble(X)) :-  !.                     % revert a variable
 
 % A is a constant or number
 revert([A],A) :- !.                          % revert a constant and number
