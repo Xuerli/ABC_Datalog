@@ -238,15 +238,14 @@ verifyRep(_, RsAppliedIn, _, RepPlan, RsBan, RsBan, _, [RepPlan|RsAppliedIn]).
 ************************************************************************************************************************/
 repCombine([], _, []):- !.
 repCombine(RepPlans, Theory, RepSolsOut):-
-
     findall(RepS,
-                    (repCombine(RepPlans, Theory, [[]], RawSols), % RawSols is a collection of groups:[[[Rep1,Rep2...]]]
-                     member(RawSol, RawSols),
-                     findall(Rep,
-                                 (member([_,(RepS,_),_],RawSol),
-                                  member(Rep, RepS)),
-                             RepS)),
-            RepSolsTem),
+            (repCombine(RepPlans, Theory, [[]], RawSols), % RawSols is a collection of groups:[[[Rep1,Rep2...]]]
+             member(RawSol, RawSols),
+             findall(Rep,
+                         (member([_,(RepS,_),_],RawSol),
+                          member(Rep, RepS)),
+                     RepS)),
+    RepSolsTem),
     % get the group which is not contained by others. TODO: revise updGroup
     findall(Group,
                     (member(Group, RepSolsTem),

@@ -66,8 +66,6 @@ abc:-
 
                  spec(pft(TrueSet)),
                  append(TrueSet, [+Clause_New], TrueSetNew),
-                 print('\nthe current TrueSetNew is '),
-                 print(TrueSetNew),
 
                  retractall(spec(pft(_))),
                  retractall(outputFile_No_Last(_)),

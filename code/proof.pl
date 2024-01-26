@@ -84,7 +84,7 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
       % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
     (member(+Head, Goal) -> delete(Goal, +Head, RestGoal),
                             append(RestGoal, [+Head], GoalNew),!;
-    notin(+_, Goal) -> GoalNew = Goal),
+    notin(+_notin, Goal) -> GoalNew = Goal),
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
 
     slRLMain(GoalNew, [], TheoryIn, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
@@ -108,43 +108,12 @@ slRLMain([+Literal], Evi, _, _, ProofOut, [], Theorem, _):-
 % When a proof is found, do not search further
 slRLMain([], Proof, _,_, Proof, [], [],_):- !.                                    % The proof is output. Reset the proofStatus to the default value 0.
 
-/*
-%% slRLMain3: reorder subgoals in Goal by moving the first equality predicate to the end.
-slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
-    Goals = [-Equ| GRest],          % get the predicate of the left most sub-goal to resolve.
-    member(Equ, [[=| Args], [\=| Args]]),
-
-    (% resolve the fist sub-goal if its arguments are all constants.
-     forall(member(X, Args), is_cons(X))->
-             retractall(spec(proofStatus(_))), assert(spec(proofStatus(1))),         % Set the proofStatus as 1, so the first sub-goal will be resolved if it can be.
-            equalSub(Equ, EC, Subs),
-            subst(Subs, GRest, GoalsNew),
-            noloopBack(GoalsNew, Deriv),      % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
-            retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),      % Reset the proofStatus flag to the default value 0.
-            CurDerStep = ((Goals, Subs), (unae, []), GoalsNew, [0, 0]),
-            updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
-            slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit); % Resolve the rest goals.
-
-     % if there is a variable in the sub-goal's arguments,
-     % and not all of the goal predicates are equality/inequality predicate.
-     occur(vble(_), Args),
-     setof(P, (member(-[P|_], GRest), notin(P, [=, \=])),_)->
-        % move the equality or inequality to the end of the goal clause.
-        % keep the positive literal in the end if there is one.
-        (last(GRest, -_) ->
-                    append(GRest, [-Equ], GoalsNew);
-         last(GRest, +_) ->
-                     reverse(GRest, [+P|GTail]),
-                     reverse([+P| [-Equ| GTail]], GoalsNew)),
-        updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
-         slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit)).
-*/
-
-%% slRLMain3: reorder subgoals in Goal by moving the first equality predicate to the end.
+%% slRLMain31: reorder subgoals in Goal by moving the first predicate that is of low priority to the end, including =, \= and negative predicate which starting with not.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-Equ| GRest],          % get the predicate of the left most sub-goal to resolve.
     Equ = [PG|_],
     member(PG, [=, \=]),
+
      % if there is a variable in the sub-goal's arguments,
      % and not all of the goal predicates are equality/inequality predicate.
 
@@ -156,9 +125,27 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
                     append(GRest, [-Equ], GoalsNew);
          last(GRest, +_) ->
                      reverse(GRest, [+P|GTail]),
-                     reverse([+P| [-Equ| GTail]], GoalsNew)),
+                     reverse([+P| [-Equ| GTail]], GoalsNew)), !,
         updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
-         slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit).
+        slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit).
+
+%% slRLMain32: reorder subgoals in Goal by moving the first predicate that is negative w.r.t. closed world assumption (NCWA), whose predicate which starting with not.
+slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
+    % check if it is a negative predicate,which starts with not.
+    Goals = [-[PG|Arugs]| GRest],          % get the predicate of the left most sub-goal to resolve.
+    atom_concat(not, _, PG),
+
+     % There is other predicates in the goal clause
+     setof(P, (member(-[P|_], GRest), \+sub_atom(P,_,_,_,_,'not')),_)->
+        % move the NCWA goal to the end of the goal clause.
+        (last(GRest, -_) ->
+                    append(GRest, [-[PG|Arugs]], GoalsNew);
+         last(GRest, +_) ->
+                     reverse(GRest, [+P|GTail]),
+                     reverse([+P| [-[PG|Arugs]| GTail]], GoalsNew)), !,
+        updateDeriv(Deriv, reorder, DerivNew),    % update the derivation record.
+        slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit).
+
 
 %% slRLMain33: Use an input assertion to resolve Goal which does not have = as its predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
@@ -209,16 +196,6 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     updateDeriv(Deriv, CurDerStep, firstNum, DerivNew),    % 1 stands for the resolution of non equality predicates.
     slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit). % Resolve the rest goals.
 
-%% slRLMain4: When there the firs sub-goal is irresolvable,return the evidence of the partial proof with [] as the proof and theorem.
-%% Notice that only the first subgoal in Goals is gaurenteed to be unresolvable. The following subgoals could be resolvable.
-slRLMain(Goals, Deriv, _, _, [], Evidence, [], _):-
-    spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
-    Goals \= [],                    % And they all failed in resolving the remaining Goal.
-    Goals \= [+_],                    % And it is not a derived assertion
-    (Deriv = []-> Evidence = [(Goals, [], [], Goals, [0, 0])];    % record the unprovable goal when no RS have been done.
-    Deriv \= []-> Evidence = Deriv),
-    retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))).   % The failed proof is output. Reset the proofStatus to the default value 0.
-
 
 %% slRLMain5: resolve Goal whose predicate is \= based on UNAE.
 slRLMain(Goals, Deriv, _, EC, Proof, Evidence, Theorem, RCostLimit):-
@@ -233,6 +210,54 @@ slRLMain(Goals, Deriv, _, EC, Proof, Evidence, Theorem, RCostLimit):-
             TypeUp),
     replace(TypeUp, Deriv, DerivNew),
     resolveEqu(Goals, DerivNew, EC, Proof, Evidence, Theorem, RCostLimit).
+
+
+%% slRLMain6: to resolve Goal which contains negative predicate.
+slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
+    Goals = [-[PG| Args]| GoalsRest],
+    % get the main predicate
+    atom_concat(not, MainPG, PG),
+
+    % convert the negative goal into its positive peer by removing the not, and find proofs of the corresponding positive goal.
+    % if there exists any of this proof, the original negative goal is concluded as not resolvable due to closed world assumption.
+    % get all possible fully instantiated goal, i.e. ground goal.
+    spec(signature(_, Constants)),
+    instantiate([MainPG|Args], Constants, [], Subs, PGround),
+    % search for the proof/evidence of the goal
+    findall([Proof1, Evidence1],
+              slRL([-PGround], TheoryIn, EC, Proof1, Evidence1, []),
+             Proofs2),
+    transposeF(Proofs2, [UnwantedProofs3, Evis]),
+    subst(Subs, GoalsRest, GoalsNew),
+    noloopBack(GoalsNew, Deriv),        % The new goal clause do not cause a loop in the way of conaining a previous goal clause.
+    retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
+    (UnwantedProofs3 = [] ->
+         % the subgoal is unresolvable so return the evidence
+         % Unique derivation step for NF goals to be added at the end of regular derivation steps.
+         % Instead of a clause that resolve the first subgoal, it is the proof recorded as the second element in the derivation step.
+         % The format of recorded proof is of 4-tuple, while an input clause is a list.
+         CurDerStep = (Goals, Subs, [-PGround], Evis, GoalsNew, [0, 0]),
+         updateDeriv(Deriv, CurDerStep, firstNum, DerivNew), !,   % 1 stands for the resolution of non equality predicates.
+         slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit); % Resolve the rest goals     % Reset the flag to the default value 0.
+
+     UnwantedProofs3 = [_|_] ->
+         % Unique derivation step for NF goals to be added at the end of regular derivation steps.
+         % Instead of a clause that resolve the first subgoal, it is the proof recorded as the second element in the derivation step.
+         % The format of recorded proof is of 4-tuple, while an input clause is a list.
+         CurDerStep = (Goals, Subs, [-PGround], UnwantedProofs3, GoalsNew, [0, 0]),
+         updateDeriv(Deriv, CurDerStep, firstNum, Evidence),    % 1 stands for the resolution of non equality predicates.
+         Proof = [],
+         Theorem = []).
+
+%% slRLMain4: When there the firs sub-goal is irresolvable,return the evidence of the partial proof with [] as the proof and theorem.
+%% Notice that only the first subgoal in Goals is gaurenteed to be unresolvable. The following subgoals could be resolvable.
+slRLMain(Goals, Deriv, _, _, [], Evidence, [], _):-
+    spec(proofStatus(1)),      % All axioms from the input theory have been tried for resolving the goal.
+    Goals \= [],                    % And they all failed in resolving the remaining Goal.
+    Goals \= [+_],                    % And it is not a derived assertion
+    (Deriv = []-> Evidence = [(Goals, [], [], Goals, [0, 0])];    % record the unprovable goal when no RS have been done.
+    Deriv \= []-> Evidence = Deriv),
+    retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))).   % The failed proof is output. Reset the proofStatus to the default value 0.
 
 /**********************************************************************************************************************
     resolveEqu(Goals, Derivation, EC, Proof, Theorem, RCostLimit):
@@ -317,19 +342,28 @@ resolveEqu(Goals, Deriv, _, [], Evidence, [], _):-
 updateDeriv(Deriv, reorder, DerivNew):-
     findall(E,
             (member(E, Deriv),
-             E = (_,  _, _, _, [0,0])),
+             E = (_,  _, _, _, [0,0]), !; E = (_,  _, _, [0,0])),
             ES),
     deleteAll(Deriv, ES, DerivRemain),
     last(DerivRemain, Target),
-    Target = (G1, Cl, S2, G2, [NumR1, NumR2]),
+    Target = (G1, ClorNFProof, S2, G2, [NumR1, NumR2]),
     NumR1New is NumR1 - 1,
     NumR2New is NumR2 + 1,
-    TargetNew = (G1, Cl, S2, G2, [NumR1New, NumR2New]),
+    TargetNew = (G1, ClorNFProof, S2, G2, [NumR1New, NumR2New]),
     replace(Target, TargetNew, Deriv, DerivNew).
+
 
 updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
     ResStep = ((G, SubG), (InputClause, SubCl), GoalsNew, Num),
-    CurrentStep = (G, InputClause, SubCl, GoalsNew, Num),
+    CurrentStep = (G, InputClause, SubCl, GoalsNew, Num), !,
+    reverse(DerivIn, Deriv1),      % the update will start from the last InputClause.
+    pairSub(G, SubG, GSPairs),    % get the list of pairs between a sub-goal and its new substitutions.
+    updateOldCls(Deriv1, GSPairs, PredType, Deriv2),
+    reverse([CurrentStep| Deriv2], DerivOut).    % make the derivation back in order.
+
+updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
+    ResStep = (G, SubG, _, ProofEvidence, GoalsNew, Num),
+    CurrentStep = (G, ProofEvidence, SubG, GoalsNew, Num),
     reverse(DerivIn, Deriv1),      % the update will start from the last InputClause.
     pairSub(G, SubG, GSPairs),    % get the list of pairs between a sub-goal and its new substitutions.
     updateOldCls(Deriv1, GSPairs, PredType, Deriv2),
