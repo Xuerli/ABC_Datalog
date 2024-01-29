@@ -1,1 +1,2 @@
 To repair an insufficiency, only the evidence with the least number of unresolvable subgoals will be unblocked.
+When there is other theorems of C, do not consider the inequalities of C.
