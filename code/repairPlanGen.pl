@@ -17,7 +17,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     statistics(walltime, [S1,_]),
     findall(RepairInfo,
                 (buildP((Goal, Evidences), TheoryState, Suffs, RepairInfo),
-                RepairInfo = [insuff, (RepPlans, _), _],
+                RepairInfo = [unblocking, (RepPlans, _), _],
                 RepPlans \= [],
                 % check if the repair plan conflicts previous ones or it has been suggested
                 intersection(RepPlans, RsBanned, []),
@@ -28,7 +28,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     statistics(walltime, [E1,_]),
 
     SFRTime is E1-S1,
-    write(RunTimeFile, SFRTime), write(RunTimeFile, '; Insuff:'),
+    write(RunTimeFile, SFRTime), write(RunTimeFile, '; unblocking:'),
     write(RunTimeFile, (Goal, Evidences)), write(RunTimeFile, ';'),
     write(RunTimeFile, TheoryState),write(RunTimeFile, ';'),
     write(RunTimeFile, RepPlansOut),
@@ -51,7 +51,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     statistics(walltime, [S1,_]),
     findall(RepairInfo,
                 (blockP(ProofInp, TheoryState, Suffs, RepairInfo),
-                RepairInfo = [incomp, (RepPlans, _), _],
+                RepairInfo = [_, (RepPlans, _), _],
                 RepPlans \= [],
                 % check if the repair plan conflicts previous ones or it has been suggested
                 intersection(RepPlans, RsBanned, []),
@@ -60,7 +60,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
     sort(RepPlansTem, RepPlansOut),
     statistics(walltime, [E1,_]),
     SFRTime is E1-S1,
-    write(RunTimeFile, SFRTime), write(RunTimeFile, '; Incomp: '),
+    write(RunTimeFile, SFRTime), write(RunTimeFile, '; blocking: '),
     write(RunTimeFile,ProofInp), write(RunTimeFile, ';'),
     write(RunTimeFile, TheoryState),write(RunTimeFile, ';'),
     write(RunTimeFile, RepPlansOut),
@@ -82,7 +82,7 @@ repairPlan(ProofInp, TheoryState, Suffs, RepPlansOut):-
             ClP: a collection of the clauses which constitute the proof.
 ************************************************************************************************************************/
 %% Block the unwanted proof by adding a unprovable precondition.
-blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
+blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], ClT), ClS]):-
     spec(heuris(Heuristics)),
     % not all three heuristics are employed.
     deleteAll([noRuleChange, noPrecAdd, noAss2Rule, noAxiomDele], Heuristics, [_|_]),
@@ -91,7 +91,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
     TheoryState = [_, EC, _, TheoryIn, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('TheoryIn is: '), write_term_c(TheoryIn),nl,nl,write_term_All(TheoryIn), finishLog]),
 
-    % get the clauses in the unwanted proof.
+    % get the clauses in the unwanted proof, and exclude resolution steps of negation as failure (NF).
     findall([Cl, Subs],
                     (member((_, Cl, Subs, _, _), Proof),
                     is_list(Cl)),
@@ -124,7 +124,7 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], ClT), ClS]):-
 
 
 %% Block the unwanted proof by reformation
-blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
+blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], [TargCl]), ClS]):-
     spec(heuris(Heuristics)),
     notin(noReform, Heuristics),
     spec(protList(ProtectedList0)),
@@ -215,20 +215,55 @@ blockP(Proof, TheoryState, SuffGoals, [incomp, ([RepPlan], [TargCl]), ClS]):-
                 nl, write_term_c(TargCl),nl, nl,
                 write_term_c(RepPlan),nl, finishLog]).
 
+%% Block the unwanted proof of a negated as failure (NF) subgoal by unblocking a proof of its NF peer.
+blockP(Proof, TheoryState, SuffGoals, [unblocking, (RepPlans, TargCls), ClS]):-
+    writeLog([nl, write_term_c('-------- Start blockProof3: -------- '),
+            nl, write_term_All(Proof), finishLog]),
+    pause,
+    % get the proof, which is contained by 4-tuple
+    findall((Goal1, Subs1, NFEvidence), member((Goal1, [nf, NFEvidence], Subs1, _, _), Proof), NFProofsAll),
+    member((Goal, Subs, Evidences), NFProofsAll),    % target at one resolution step, i.e. all evidence of one unresolvable NF peer,
+    Goal = [-[PG| Args]| _],
+    % get the peer predicate
+    atom_concat(not, MainPG, PG),
+    subst(Subs, [-MainPG|Args], PeerGoal),    % TODO: check
+    buildP((PeerGoal, Evidences), TheoryState, SuffGoals, [unblocking, (RepPlans, TargCls), ClS]),
+    writeLog([nl, write_term_c('The peer goal is: '), write_term_c(PeerGoal),
+              write_term_c('The repair plan is: '), write_term_c(RepPlans), nl, finishLog]).
+
 /**********************************************************************************************************************
-   buildProof(Evidences, TheoryState, Suffs, Output):
+   buildP((Goal, Evidences), TheoryState, SuffGoals, [blocking, (RepPlans, ClT), ClS]):
         Generate a repair to unblock a proof of Goal and try best to avoid introducing insufficiecy.
-   Input:    TheoryState = [[RsIn, RsBanned],EC, EProof, TheoryIn, TrueSetE, FalseSetE], for more information, please see unaeMain.
-               Evidences: [Goal, Evis], where
-                   Goal(-Assertion): the negative literal that cannot be resolved away by TheoryIn.
-                   Evidences: the partial proofs of Goal.
-               Suffs: all provable goals with their proofs.
+   Input:   Goal(-Assertion): the negative literal that cannot be resolved away by TheoryIn.
+            Evidences: the partial proofs of Goal.
+            TheoryState = [[RsIn, RsBanned],EC, EProof, TheoryIn, TrueSetE, FalseSetE], for more information, please see unaeMain.
+            Suffs: all provable goals with their proofs.
    Output:     RepairPlans = a list of repair plans for unblocking an evidence of the goal.
-               TargCls: a list of clauses to which the repair plan will apply.
-               ClE: a collection of the remaining unprovabe sub-goals in all the evidences of that Goal.
+               ClT: a list of clauses to which the repair plan will apply.
+               ClS: all the axioms involved in the unblocked proof
 ************************************************************************************************************************/
 buildP([], _, _, _):-fail,!.
 buildP(([], []), _, _, _):-fail,!.
+
+
+%% Build the proof of a negated as failure (NF) subgoal by blocking all proof of its NF resolutions.
+buildP((_, Evidences), TheoryState, SuffGoals, RepPlans2):-
+    writeLog([nl, write_term_c('-------- Start Build the proof of a negated as failure (NF) subgoal by blocking all proof of its NF resolutions.: -------- '),
+            nl, write_term_All(Evidences), finishLog]),
+
+    % get the failed resolution steps, of which the remaining Goal is the same as the goal, as the last resolution step in an evidence
+    findall((NumRemG, Goal1, Proofs1),
+            (member(Evi, Evidences),
+             last((Goal1,[nf, Proofs1], _, _, _),  Evi),
+             length(Goal1, NumRemG)),
+           Rems),
+    sort(Rems, SortedRems),
+    SortedRems = [(MiniRemG, _, _)|_],        % get the number of the least unresolvable subgoals
+    member((MiniRemG, GoalNF, UnwantedProofs), SortedRems),    % get one minimal group of the unresovable sub-goals.
+    % unblock the evidence by buiding the resolution step of the negation as failure goal. This can be done by blocking all proofs of the peer goal.
+    appEach(UnwantedProofs, [repairPlan, TheoryState, SuffGoals], RepPlans2),
+    writeLog([nl, write_term_c('The GoalNF is: '), write_term_c(GoalNF),
+              write_term_c('The repair plan is: '), write_term_c(RepPlans2), nl, finishLog]).
 
 
 buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):-
@@ -238,6 +273,7 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     TheoryState = [_,EC, _, TheoryIn, _, _],
     % Get one partial proof Evd and its clauses information lists ClsList.
     member(Evi, Evidences),
+    writeLog([nl,write_term_c('The evidence: '), write_term_c(Evi), nl, finishLog]),
 
     findall((Num, GoalsRem, ProofCur),
                ((member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
@@ -283,9 +319,8 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     writeLog([nl,write_term_c('--Unblocking 1: RepPlanS:'),nl,write_term_c(RepPlans),nl, write_term_All(TargCls),nl, finishLog]).
 
 
-
 %% Repair the insufficiency by adding a rule whose head is the goal.
-buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
+buildP((Goal, _), TheoryState, _, [unblocking, (RepPlans, RuleNew), ClS]):-
     %% Repair the insufficiency by abduction.
     spec(heuris(Heuris)),
     notin(noAxiomAdd, Heuris),
@@ -383,7 +418,7 @@ buildP((Goal, _), TheoryState, _, [insuff, (RepPlans, RuleNew), ClS]):-
    writeLog([nl,write_term_c('--Unblocking 2: RepPlanS/CLE'),nl,write_term_c(RepPlans),nl,write_term_All(ClS),nl, finishLog]).
 
 %% Repair the insufficiency by analogising an existing rule and give them different preconditions.
-buildP((Goal, Evidences), TheoryState, Suffs, [insuff, (RepPlans, RuleR7), ClS]):-
+buildP((Goal, Evidences), TheoryState, Suffs, [unblocking, (RepPlans, RuleR7), ClS]):-
     spec(heuris(Heuristics)),
     notin(noRuleChange, Heuristics),
     notin(noAnalogy, Heuristics),

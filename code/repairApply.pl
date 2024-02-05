@@ -302,11 +302,11 @@ updGroup(Group, Rep,Theory, GroupsOut):-
     Output: None. terminate with success if repair plan 1 conflicts with repair plan 2.
 ***********************************************************************************************************************/
 
-repConflict(incomp, incomp, _, TargetCls1, TargetCls2, ClP1, ClP2):- !,
+repConflict(blocking, blocking, _, TargetCls1, TargetCls2, ClP1, ClP2):- !,
     intersection(TargetCls1, ClP2, [_|_]), !; intersection(TargetCls2, ClP1, [_|_]).
 
-% insuff vs insuff
-repConflict(insuff, insuff, Theory, TargetCls1, TargetCls2, ClE1, ClE2):-
+% unblocking vs unblocking
+repConflict(unblocking, unblocking, Theory, TargetCls1, TargetCls2, ClE1, ClE2):-
     findall(P1, (member(Cl1, ClE1),
                  (member(+[P1|_], Cl1); member(-[P1|_], Cl1))),
             PCl1),
@@ -326,13 +326,13 @@ repConflict(insuff, insuff, Theory, TargetCls1, TargetCls2, ClE1, ClE2):-
             intersection(PBranch, PCl1, Int),
             Int = [_|_]),
         Conflicts)),
-    writeLog([nl,write_term_c('--Conflicts of insuff vs insuff:'),write_term_c(Conflicts),nl, finishLog]).
+    writeLog([nl,write_term_c('--Conflicts of unblocking vs unblocking:'),write_term_c(Conflicts),nl, finishLog]).
 
-repConflict(insuff, incomp, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
-    repConflict(incomp, insuff, Theory, TargetCls2, TargetCls1, ClP2, ClP1).
+repConflict(unblocking, blocking, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
+    repConflict(blocking, unblocking, Theory, TargetCls2, TargetCls1, ClP2, ClP1).
 
-% incomp vs insuff
-repConflict(incomp, insuff, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
+% blocking vs unblocking
+repConflict(blocking, unblocking, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
     intersection(TargetCls2, ClP1, [_|_]), !;
     intersection(TargetCls1, ClP2, [_|_]), !;
     findall(P2, (member(Cl2, ClP2),
@@ -344,4 +344,4 @@ repConflict(incomp, insuff, Theory, TargetCls1, TargetCls2, ClP1, ClP2):-
             intersection(PBranch, PCl2, Int),
             Int = [_|_]),    % there is an axiom which constitutes the proof of repairing the insufficiency whose predicate is under the scope of P's influence
         Conflicts),
-    writeLog([nl,write_term_c('--Conflicts of incomp vs insuff:'),write_term_c(Conflicts),nl, finishLog]).
+    writeLog([nl,write_term_c('--Conflicts of blocking vs unblocking:'),write_term_c(Conflicts),nl, finishLog]).

@@ -84,7 +84,7 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
       % if there is a head in the goal clause, then move the head to the end, which is for the derivation of an assertion theorem.
     (member(+Head, Goal) -> delete(Goal, +Head, RestGoal),
                             append(RestGoal, [+Head], GoalNew),!;
-    notin(+_notin, Goal) -> GoalNew = Goal),
+    notin(+_, Goal) -> GoalNew = Goal),
     retractall(spec(proofStatus(_))), assert(spec(proofStatus(0))),
 
     slRLMain(GoalNew, [], TheoryIn, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
@@ -215,7 +215,7 @@ slRLMain(Goals, Deriv, _, EC, Proof, Evidence, Theorem, RCostLimit):-
 %% slRLMain6: to resolve Goal which contains negative predicate.
 slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
     Goals = [-[PG| Args]| GoalsRest],
-    % get the main predicate
+    % get the peer predicate
     atom_concat(not, MainPG, PG),
 
     % convert the negative goal into its positive peer by removing the not, and find proofs of the corresponding positive goal.
@@ -236,7 +236,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
          % Unique derivation step for NF goals to be added at the end of regular derivation steps.
          % Instead of a clause that resolve the first subgoal, it is the proof recorded as the second element in the derivation step.
          % The format of recorded proof is of 4-tuple, while an input clause is a list.
-         CurDerStep = (Goals, Subs, [-PGround], Evis, GoalsNew, [0, 0]),
+         CurDerStep = (Goals, [nf, Evis], Subs, _, GoalsNew, [0, 0]),
          updateDeriv(Deriv, CurDerStep, firstNum, DerivNew), !,   % 1 stands for the resolution of non equality predicates.
          slRLMain(GoalsNew, DerivNew, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit); % Resolve the rest goals     % Reset the flag to the default value 0.
 
@@ -244,7 +244,7 @@ slRLMain(Goals, Deriv, TheoryIn, EC, Proof, Evidence, Theorem, RCostLimit):-
          % Unique derivation step for NF goals to be added at the end of regular derivation steps.
          % Instead of a clause that resolve the first subgoal, it is the proof recorded as the second element in the derivation step.
          % The format of recorded proof is of 4-tuple, while an input clause is a list.
-         CurDerStep = (Goals, Subs, [-PGround], UnwantedProofs3, GoalsNew, [0, 0]),
+         CurDerStep = (Goals, [nf, UnwantedProofs3], Subs, _, Goals, [0, 0]),
          updateDeriv(Deriv, CurDerStep, firstNum, Evidence),    % 1 stands for the resolution of non equality predicates.
          Proof = [],
          Theorem = []).
@@ -352,7 +352,6 @@ updateDeriv(Deriv, reorder, DerivNew):-
     TargetNew = (G1, ClorNFProof, S2, G2, [NumR1New, NumR2New]),
     replace(Target, TargetNew, Deriv, DerivNew).
 
-
 updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
     ResStep = ((G, SubG), (InputClause, SubCl), GoalsNew, Num),
     CurrentStep = (G, InputClause, SubCl, GoalsNew, Num), !,
@@ -361,9 +360,10 @@ updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
     updateOldCls(Deriv1, GSPairs, PredType, Deriv2),
     reverse([CurrentStep| Deriv2], DerivOut).    % make the derivation back in order.
 
+% Update resolution step for a goal of negation as failure.
 updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
-    ResStep = (G, SubG, _, ProofEvidence, GoalsNew, Num),
-    CurrentStep = (G, ProofEvidence, SubG, GoalsNew, Num),
+    ResStep = (G, [nf, Evis], SubG,  _, GoalsNew, Num),   % ProofEvidence is a 2-tuple, e.g., (nf, X), where X is the proofs and evidence.
+    CurrentStep = (G, [nf, Evis], SubG, GoalsNew, Num),
     reverse(DerivIn, Deriv1),      % the update will start from the last InputClause.
     pairSub(G, SubG, GSPairs),    % get the list of pairs between a sub-goal and its new substitutions.
     updateOldCls(Deriv1, GSPairs, PredType, Deriv2),
@@ -667,8 +667,10 @@ pairSub([SubG1| RestG], SubG, [(SubG1, SG1)| PRest]):-
     Output: ProofClean: a list of resolution steps where mid substitutions are deleted.
 ************************************************************************************************************************/
 cleanSubMid([], []):-!.
+
 cleanSubMid([RS| Rest], [RSC| RestC]):-
     RS = (G, InpClause, Sub, GN, Num),
+    InpClause \= [nf|_], !,
     (Sub = []-> RSC = RS;
      Sub = [_|_]->
     findall(vble(X),
@@ -682,3 +684,5 @@ cleanSubMid([RS| Rest], [RSC| RestC]):-
     sort(NewSubRaw, NewSub),
     RSC    = (G, InpClause, NewSub, GN, Num)),
     cleanSubMid(Rest, RestC).
+
+cleanSubMid([RS| Rest], [RS| RestC]):- cleanSubMid(Rest, RestC).

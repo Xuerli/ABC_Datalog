@@ -907,8 +907,8 @@ split(List, Ele, SubList1, SubList2):-
     append(SubList1,  SubList2, List),
     last(SubList1, Ele).
 /**********************************************************************************************
-
 % subst(V/E,E1,E2): E2 is the result of replacing E with V in E1.
+
 **********************************************************************************************/
 
 subst([Subst|Substs], E,NE) :- subst(Subst,E,NE1), subst(Substs,NE1,NE), !.
