@@ -278,7 +278,6 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     FaultStateIn = (SuffsIn, InsuffsIn, IncompsIn),
     TheoryStateIn = [_,_, _, TheoryIn, _, _],
     findall(Proof, (member((_, UnwProofs), IncompsIn), member(Proof, UnwProofs)),  IncompsProofs),
-
     appEach(InsuffsIn, [repairPlan, TheoryStateIn, SuffsIn], RepPlans1),
     appEach(IncompsProofs, [repairPlan, TheoryStateIn, SuffsIn], RepPlans2),
     append(RepPlans1, RepPlans2, RepPlans),

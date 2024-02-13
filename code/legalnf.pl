@@ -5,7 +5,7 @@ axiom([+p2(pv2)]).
 axiom([-p1(\y) , -p2(\x), +new(\x)]).
 
 
-:- working_directory(_, '/Users/xueli/Documents/code/cogAI_legal/ABC_Datalog-main/code').
+:- working_directory(_, '../code').
 :-[main].
 
 trueSet([]).

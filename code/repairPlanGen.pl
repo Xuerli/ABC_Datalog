@@ -90,7 +90,7 @@ blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], ClT), ClS]):-
             nl, write_term_All(Proof), finishLog]),
     TheoryState = [_, EC, _, TheoryIn, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('TheoryIn is: '), write_term_c(TheoryIn),nl,nl,write_term_All(TheoryIn), finishLog]),
-
+    
     % get the clauses in the unwanted proof, and exclude resolution steps of negation as failure (NF).
     findall([Cl, Subs],
                     (member((_, Cl, Subs, _, _), Proof),
@@ -99,7 +99,6 @@ blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], ClT), ClS]):-
     transposeF(CandRules, [ClS, _]),
     member([Axiom, IncomSubs], CandRules),    % target at one clause,
     writeLog([nl, write_term_c('Original Axiom is: '), write_term_c(Axiom),nl, finishLog]),
-
     spec(protList(ProtectedList)),
     notin(Axiom, ProtectedList),
 
@@ -138,7 +137,6 @@ blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], [TargCl]), ClS]):-
             nl, write_term_c('-------- Proof is:'),nl,write_term_c(Proof), nl,nl,
             nl, write_term_c('-------- SuffGoals is:'),nl,write_term_c(SuffGoals), nl,nl, finishLog]),
 
-    %print(' Proof is ' ), nl,print(Proof),nl,
     member(TrgResStep, Proof),
     %print(' TrgResStep is ' ), nl,print(TrgResStep),nl,
     TrgResStep = ([-PropGoal|_], InpCl1, _, _, _),
@@ -219,7 +217,6 @@ blockP(Proof, TheoryState, SuffGoals, [blocking, ([RepPlan], [TargCl]), ClS]):-
 blockP(Proof, TheoryState, SuffGoals, [unblocking, (RepPlans, TargCls), ClS]):-
     writeLog([nl, write_term_c('-------- Start blockProof3: -------- '),
             nl, write_term_All(Proof), finishLog]),
-    pause,
     % get the proof, which is contained by 4-tuple
     findall((Goal1, Subs1, NFEvidence), member((Goal1, [nf, NFEvidence], Subs1, _, _), Proof), NFProofsAll),
     member((Goal, Subs, Evidences), NFProofsAll),    % target at one resolution step, i.e. all evidence of one unresolvable NF peer,
@@ -250,7 +247,6 @@ buildP(([], []), _, _, _):-fail,!.
 buildP((_, Evidences), TheoryState, SuffGoals, RepPlans2):-
     writeLog([nl, write_term_c('-------- Start Build the proof of a negated as failure (NF) subgoal by blocking all proof of its NF resolutions.: -------- '),
             nl, write_term_All(Evidences), finishLog]),
-
     % get the failed resolution steps, of which the remaining Goal is the same as the goal, as the last resolution step in an evidence
     findall((NumRemG, Goal1, Proofs1),
             (member(Evi, Evidences),
@@ -266,7 +262,7 @@ buildP((_, Evidences), TheoryState, SuffGoals, RepPlans2):-
               write_term_c('The repair plan is: '), write_term_c(RepPlans2), nl, finishLog]).
 
 
-buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), ClS]):-
+buildP((Goal, Evidences), TheoryState, SuffGoals, [unblocking, (RepPlans, TargCls), ClS]):-
     spec(heuris(Heuristics)),
     writeLog([nl,write_term_c('--------Start unblocking 1 based on evidences  ------'),nl, finishLog]),
     Goal \= [],
@@ -274,7 +270,6 @@ buildP((Goal, Evidences), TheoryState, SuffGoals, [insuff, (RepPlans, TargCls), 
     % Get one partial proof Evd and its clauses information lists ClsList.
     member(Evi, Evidences),
     writeLog([nl,write_term_c('The evidence: '), write_term_c(Evi), nl, finishLog]),
-
     findall((Num, GoalsRem, ProofCur),
                ((member((Subgoals, _, _, _, _), Evi); member((_, _, _, Subgoals, _), Evi)),
                 findall([SubG, Proof],
