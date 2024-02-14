@@ -17,7 +17,7 @@ repairPlan((Goal, Evidences), TheoryState, Suffs, RepPlansOut):-
     statistics(walltime, [S1,_]),
     findall(RepairInfo,
                 (buildP((Goal, Evidences), TheoryState, Suffs, RepairInfo),
-                RepairInfo = [unblocking, (RepPlans, _), _],
+                RepairInfo = [_, (RepPlans, _), _],
                 RepPlans \= [],
                 % check if the repair plan conflicts previous ones or it has been suggested
                 intersection(RepPlans, RsBanned, []),
@@ -244,13 +244,13 @@ buildP(([], []), _, _, _):-fail,!.
 
 
 %% Build the proof of a negated as failure (NF) subgoal by blocking all proof of its NF resolutions.
-buildP((_, Evidences), TheoryState, SuffGoals, RepPlans2):-
+buildP((_, Evidences), TheoryState, SuffGoals, RepPlans4):-
     writeLog([nl, write_term_c('-------- Start Build the proof of a negated as failure (NF) subgoal by blocking all proof of its NF resolutions.: -------- '),
             nl, write_term_All(Evidences), finishLog]),
     % get the failed resolution steps, of which the remaining Goal is the same as the goal, as the last resolution step in an evidence
     findall((NumRemG, Goal1, Proofs1),
             (member(Evi, Evidences),
-             last((Goal1,[nf, Proofs1], _, _, _),  Evi),
+             last(Evi, (Goal1,[nf, Proofs1], _, _, _)),
              length(Goal1, NumRemG)),
            Rems),
     sort(Rems, SortedRems),
@@ -258,6 +258,8 @@ buildP((_, Evidences), TheoryState, SuffGoals, RepPlans2):-
     member((MiniRemG, GoalNF, UnwantedProofs), SortedRems),    % get one minimal group of the unresovable sub-goals.
     % unblock the evidence by buiding the resolution step of the negation as failure goal. This can be done by blocking all proofs of the peer goal.
     appEach(UnwantedProofs, [repairPlan, TheoryState, SuffGoals], RepPlans2),
+    member(RepPlans3,RepPlans2), %TODO: is this the desired behaviour?
+    member(RepPlans4,RepPlans3), %The result RepPlans2 is nested multiple times but the output requests one tuple only.
     writeLog([nl, write_term_c('The GoalNF is: '), write_term_c(GoalNF),
               write_term_c('The repair plan is: '), write_term_c(RepPlans2), nl, finishLog]).
 
